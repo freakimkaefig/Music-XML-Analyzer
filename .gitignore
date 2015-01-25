@@ -13,3 +13,4 @@
 .idea/vcs.xml
 .idea/workspace.xml
 Music-XML-Analyzer.iml
+*.project
