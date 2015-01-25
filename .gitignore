@@ -2,3 +2,4 @@
 .env.*.php
 .env.php
 *.sublime-project
+*.sublime-workspace
