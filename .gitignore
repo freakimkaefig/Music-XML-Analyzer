@@ -2,7 +2,7 @@
 .env.*.php
 .env.php
 *.sublime-project
-
+*.sublime-workspace
 .idea/.name
 .idea/compiler.xml
 .idea/copyright/profiles_settings.xml
