@@ -28,6 +28,8 @@ $env = $app->detectEnvironment(array(
 
     'local' => array('local.*','*.local'),
     'production' => array('*.lukaslamm.de'),
+    'pagodabox' => array('*.pagodabox.io'),
+    'fortrabbit' => array('*frbit.net'),
 
 ));
 
