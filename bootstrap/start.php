@@ -24,14 +24,21 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(array(
+$env = $app->detectEnvironment(function() {
 
-    'local' => array('LuitenantXPS', '*'),
-    'strato' => array('tim'),
-    'pagodabox' => array('*.gopagoda.io'),
-    'fortrabbit' => array('*.frbit.com'),
+	$_stratohost = 'tim';
+	$_localhosts = array('LuitenantXPS');
 
-));
+	if (isset($_SERVER['LARAVEL_ENV'])) {
+		return $_SERVER['LARAVEL_ENV'];
+	} elseif (gethostname() === $_stratohost) {
+		return 'strato';
+	} elseif (in_array(gethostname()), $_localhosts) {
+		return 'local';
+	} else {
+		return 'production';
+	}
+});
 
 /*
 |--------------------------------------------------------------------------
