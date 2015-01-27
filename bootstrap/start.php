@@ -27,9 +27,9 @@ $app = new Illuminate\Foundation\Application;
 $env = $app->detectEnvironment(array(
 
     'local' => array('LuitenantXPS', '*'),
-    'production' => array('*.lukaslamm.de'),
+    'strato' => array('tim'),
     'pagodabox' => array('*.gopagoda.io'),
-    'fortrabbit' => array('*frbit.net'),
+    'fortrabbit' => array('*.frbit.com'),
 
 ));
 
