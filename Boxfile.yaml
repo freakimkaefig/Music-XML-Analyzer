@@ -1,3 +1,5 @@
 web1:
-  document_root: src/
-  http_document_root: public/
+  document_root: public
+  after_build:
+   - "mv * .[^.]* .."
+   - "rm src"
