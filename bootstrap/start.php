@@ -33,7 +33,7 @@ $env = $app->detectEnvironment(function() {
 		return $_SERVER['LARAVEL_ENV'];
 	} elseif (gethostname() === $_stratohost) {
 		return 'strato';
-	} elseif (in_array(gethostname()), $_localhosts) {
+	} elseif (in_array(gethostname(), $_localhosts)) {
 		return 'local';
 	} else {
 		return 'production';
