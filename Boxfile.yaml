@@ -1,2 +1,3 @@
 web1:
-  document_root: src/public
+  document_root: src/
+  http_document_root: public/
