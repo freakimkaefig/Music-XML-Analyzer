@@ -1,5 +1,0 @@
-web1:
-  document_root: public
-  after_build:
-   - "mv * .[^.]* .."
-   - "rm src"
