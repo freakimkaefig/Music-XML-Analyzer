@@ -16,10 +16,6 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-// Route::get('/pattern', function()
-// {
-// 	print "test";
-// });
 Route::get('/pattern', array(
 	'as' => 'pattern',
 	'uses' => 'PatternController@home'
