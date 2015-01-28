@@ -15,3 +15,8 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::get('/search', array(
+	'as' => 'search',
+	'uses' => 'SearchController@search'
+));
