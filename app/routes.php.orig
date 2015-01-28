@@ -11,19 +11,27 @@
 |
 */
 
-<<<<<<< HEAD
-Route::get('/', function()
-{
-	return View::make('hello');
-});
-
-Route::get('/search', array(
-	'as' => 'search',
-	'uses' => 'SearchController@search'
-));
-=======
 Route::get('/', array(
 	'as' => 'home',
 	'uses' => 'HomeController@getHome'
 ));
+
+<<<<<<< HEAD
+Route::get('/search', array(
+	'as' => 'search',
+	'uses' => 'SearchController@search'
+=======
+// Route::get('/pattern', function()
+// {
+// 	print "test";
+// });
+Route::get('/imprint', array(
+	'as' => 'imprint',
+	'uses' => 'HomeController@getToImprint'
+));
+
+Route::get('/dashboard', array(
+	'as' => 'dashboard',
+	'uses' => 'DashboardController@getToDashboard'
 >>>>>>> origin/master
+));
