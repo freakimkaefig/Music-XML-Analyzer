@@ -29,8 +29,3 @@ Route::get('/dashboard', array(
 	'as' => 'dashboard',
 	'uses' => 'DashboardController@getToDashboard'
 ));
-
-Route::get('/search', array(
-	'as' => 'search',
-	'uses' => 'DashboardController@getToSearch'
-));
