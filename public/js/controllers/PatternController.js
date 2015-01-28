@@ -8,7 +8,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	referenceButtonListeners = function() {
 		$(".btn-note").click(function() {
-		  console.log("click");
+		  console.log("clicked: " + $(event.target).text());
 		});
 	}
 
