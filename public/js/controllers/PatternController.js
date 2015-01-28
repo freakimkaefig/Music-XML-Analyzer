@@ -2,12 +2,18 @@ MusicXMLAnalyzer.PatternController = function() {
 	var that = {},
 
 	init = function() {
-		console.info('MusicXMLAnalyzer.PatternController.init');
+		console.log('MusicXMLAnalyzer.PatternController.init');
+		referenceButtonListeners();
 	},
 
-	/**
-	 * Function to reset the instance of ARTEService
-	 */
+	referenceButtonListeners = function() {
+		$(".btn-note").click(function() {
+		  console.log("click");
+		});
+	}
+
+
+
 	dispose = function() {
 		that = {};
 	};

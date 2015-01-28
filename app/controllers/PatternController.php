@@ -1,7 +1,7 @@
 <?php
 
 class PatternController extends BaseController {
-	public function home() {
+	public function getCreatePattern() {
 		
 		return View::make('createPattern');	
 	}

@@ -16,10 +16,11 @@ Route::get('/', array(
 	'uses' => 'HomeController@getHome'
 ));
 
-// Route::get('/pattern', function()
-// {
-// 	print "test";
-// });
+Route::get('/pattern', array(
+	'as' => 'pattern',
+	'uses' => 'PatternController@getCreatePattern'
+));
+
 Route::get('/imprint', array(
 	'as' => 'imprint',
 	'uses' => 'HomeController@getToImprint'
