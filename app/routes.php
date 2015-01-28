@@ -16,6 +16,10 @@ Route::get('/', array(
 	'uses' => 'HomeController@getHome'
 ));
 
+// Route::get('/pattern', function()
+// {
+// 	print "test";
+// });
 Route::get('/imprint', array(
 	'as' => 'imprint',
 	'uses' => 'HomeController@getToImprint'
