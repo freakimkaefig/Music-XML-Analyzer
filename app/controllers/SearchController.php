@@ -16,7 +16,8 @@ class SearchController extends BaseController {
 		//"$this always refers to the object, in which a method exists, itself."
 		//echo $this->getNoteValues($xml);
 		//echo "</br></br>häufigste Note: " . $this->getMostFrequentNote($xml);
-		
+		echo "</br></br>Anzahl Pausen: " . $this->getRestQuantity($xml);
+		echo "</br></br>Anzahl Takte: " . $this->getMeasureQuantity($xml);
 		echo "</pre>";
 		
 		/////////////////////////
@@ -34,17 +35,39 @@ class SearchController extends BaseController {
 		return View::make('search');
 	}
 
-
+	///////////////
+	//Public Getter
+	///////////////
 	public function getNoteValues($xml){
 		return json_encode($this->countNoteValues($xml));
 	}
-
 	public function getMostFrequentNote($xml){
 		return json_encode($this->determineMostFrequentNote($xml));
 	}
+	public function getRestQuantity($xml){
+		return json_encode($this->countRests($xml));
+	}
+	public function getMeasureQuantity($xml){
+		return json_encode($this->countMeasures($xml));
+	}
+
+	/////////////////////////////
+	//Internal analysis functions
+	/////////////////////////////
+
+	function countMeasures($xml){
+		$measures = $xml->xpath("//measure");
+		return count($measures);
+	}
 
 
-	public function countNoteValues($xml){
+	function countRests($xml){
+		$rests = $xml->xpath("//rest");
+		return count($rests);
+	}
+
+
+	function countNoteValues($xml){
 
 		//"The descendant (double-slash) operator in xpath will search all descendants for a match."
 		//"The below is equivalent to the DOM method getElementsByTagName"
@@ -67,7 +90,7 @@ class SearchController extends BaseController {
 	}
 
 
-	public function determineMostFrequentNote($xml){
+	function determineMostFrequentNote($xml){
 
 		//häufigkeiten der Noten zählen
 		$countedNotes = $this->countNoteValues($xml);
