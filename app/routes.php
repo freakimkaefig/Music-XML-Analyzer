@@ -20,3 +20,17 @@ Route::get('/search', array(
 	'as' => 'search',
 	'uses' => 'SearchController@search'
 ));
+Route::get('/imprint', array(
+	'as' => 'imprint',
+	'uses' => 'HomeController@getToImprint'
+));
+
+Route::get('/dashboard', array(
+	'as' => 'dashboard',
+	'uses' => 'DashboardController@getToDashboard'
+));
+
+// Route::get('/pattern', function()
+// {
+// 	print "test";
+// });
