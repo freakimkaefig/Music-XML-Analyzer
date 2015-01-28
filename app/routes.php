@@ -34,3 +34,8 @@ Route::get('/search', array(
 	'as' => 'search',
 	'uses' => 'DashboardController@getToSearch'
 ));
+
+Route::post('/upload', array(
+	 'as' => 'upload',
+	'uses' => 'UploadController@uploadFiles'
+));
