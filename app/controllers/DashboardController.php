@@ -6,9 +6,4 @@ class DashboardController extends BaseController {
 	{
 		return View::make('dashboard');
 	}
-
-	public function getToSearch()
-	{
-		return View::make('search');
-	}
 }

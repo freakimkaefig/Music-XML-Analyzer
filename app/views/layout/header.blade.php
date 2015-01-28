@@ -7,7 +7,7 @@
 
      	<ul class="nav navbar-nav navbar-right">
       		<li><a href="{{ URL::route('dashboard') }}">Dashboard</a></li>
-      		<li><a href="{{ URL::route('search') }}">Search</a></li>
+      		<li><a href="#">Search</a></li>
   		</ul>
 	</div>
 </nav>
