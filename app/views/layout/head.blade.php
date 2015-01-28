@@ -1,4 +1,4 @@
-<title>Mediathek Crawler</title>
+<title>Music XML Analyzer</title>
 {{ HTML::style('libs/bootstrap-3.3.2/dist/css/bootstrap.min.css'); }}
 {{ HTML::style('/css/styles.css'); }}
 		
