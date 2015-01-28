@@ -39,9 +39,9 @@
 		<h1>You have arrived.</h1>
 		<p>Hostname: <strong><?php echo gethostname(); ?></strong></p>
 		<p>Environment: <strong><?php echo app()->environment(); ?></strong></p>
-		<?php //if(DB::connection()->getDatabaseName()): ?>
-			<p>Conncted sucessfully to database <strong><?php //echo DB::connection()->getDatabaseName(); ?></strong>.</p>
-		<?php //endif; ?>
+		<?php if(DB::connection()->getDatabaseName()): ?>
+			<p>Conncted sucessfully to database <strong><?php echo DB::connection()->getDatabaseName(); ?></strong>.</p>
+		<?php endif; ?>
 	</div>
 </body>
 </html>
