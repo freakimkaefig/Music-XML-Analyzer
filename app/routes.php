@@ -15,3 +15,12 @@ Route::get('/', array(
 	'as' => 'home',
 	'uses' => 'HomeController@getHome'
 ));
+
+// Route::get('/pattern', function()
+// {
+// 	print "test";
+// });
+Route::get('/pattern', array(
+	'as' => 'pattern',
+	'uses' => 'PatternController@home'
+));
