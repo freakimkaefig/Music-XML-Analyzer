@@ -5,11 +5,18 @@ MusicXMLAnalyzer.ApplicationController = function() {
 	patternController = null,
 	patternModel = null,
 
-	init = function() {   
+	init = function() {
 		console.info('MusicXMLAnalyzer.ApplicationController.init');
 
-		patternController = MusicXMLAnalyzer.PatternController();
-		patternController.init();
+		if (Route.check('/imprint')) {
+			console.log("Imprint");
+		}
+
+		if (Route.check('/pattern')) {
+			patternController = MusicXMLAnalyzer.PatternController();
+			patternController.init();
+		}
+
 
 	},
 	
