@@ -7,3 +7,16 @@
 #content {
 	margin-top: 120px;
 }
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: red;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+
+#pieChart div {
+	font: 40px sans-serif;		
+}
