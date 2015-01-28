@@ -12,7 +12,7 @@ class FilesResultsRelation extends Migration {
 	 */
 	public function up()
 	{
-		//Create users <-> files relation
+		//Create results <-> files relation
 		Schema::table('results', function($table) {
 			$table->integer('file_id')->unsigned();
 			$table->foreign('file_id')->references('id')->on('files');
@@ -26,7 +26,7 @@ class FilesResultsRelation extends Migration {
 	 */
 	public function down()
 	{
-		//Remove users <-> files relation
+		//Remove results <-> files relation
 		Schema::table('results', function($table) {
 			$table->dropForeign('results_file_id_foreign');
 		});
