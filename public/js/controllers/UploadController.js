@@ -1,9 +1,20 @@
 MusicXMLAnalyzer.UploadController = function() {
+
 	var that = {},
 
 	init = function() {
 		console.info('MusicXMLAnalyzer.UploadController.init');
-		// new Dropzone("#dropzone", { /* options */ });
+		
+		Dropzone.options.uploadDropzone = {
+			// acceptedFiles: '.xml',
+			maxFiles: 10,
+			queuecomplete: onQueueComplete
+		};
+		
+	},
+
+	onQueueComplete = function() {
+		console.warn("READY");
 	},
 
 	/**

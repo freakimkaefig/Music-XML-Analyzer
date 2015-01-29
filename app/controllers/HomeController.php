@@ -17,7 +17,28 @@ class HomeController extends BaseController {
 
 	public function getHome()
 	{
+		if (Cookie::get('user_id')) {
+			$user = User::find(Cookie::get('user_id'));
+			if ($user) {
+				$uploads = $user->uploads;
+				if (!$uploads->isEmpty()) {
+					return View::make('dashboard');
+				}
+			}
+		}
+		
 		return View::make('home');
+	}
+
+	public function createNewUser() {
+		$user = new User;
+		$user->last_activity = date('Y-m-d H:m:s');
+		$user->save();
+
+		$name = 'user_id';
+		$value = $user->id;
+		$minutes = 60;
+		Cookie::queue($name, $value, $minutes);
 	}
 
 	public function getToImprint()
