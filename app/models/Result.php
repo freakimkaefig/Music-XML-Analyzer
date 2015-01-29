@@ -8,7 +8,7 @@ class Result extends Eloquent {
 
 	protected $fillable = array('value');
 
-	public function file() {
+	public function upload() {
 		return $this->belongsTo('Upload');
 	}
 }

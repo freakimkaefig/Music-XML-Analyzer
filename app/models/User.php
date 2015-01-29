@@ -8,7 +8,7 @@ class User extends Eloquent {
 
 	protected $fillable = array('last_activity');
 
-	public function files() {
+	public function uploads() {
 		return $this->hasMany('Upload');
 	}
 
