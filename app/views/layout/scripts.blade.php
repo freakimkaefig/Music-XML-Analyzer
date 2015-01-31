@@ -3,6 +3,8 @@
 {{ HTML::script('libs/d3-v3/d3.min.js') }}
 {{ HTML::script('libs/d3-v3/d3pie.min.js') }}
 
+{{ HTML::script('libs/dropzone-4.0.0/dist/min/dropzone.min.js') }}
+
 {{ HTML::script('js/helpers/Route.js') }}
 
 {{ HTML::script('js/App.js') }}
@@ -13,6 +15,7 @@
 
 <!-- ===Controller=== -->
 {{ HTML::script('js/controllers/ApplicationController.js') }}
+{{ HTML::script('js/controllers/UploadController.js') }}
 {{ HTML::script('js/controllers/PatternController.js') }}
 
 

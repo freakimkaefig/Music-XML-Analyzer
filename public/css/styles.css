@@ -1,3 +1,8 @@
+/* === HELPER CLASSES === */
+.img-center {
+	margin: 0 auto;
+}
+
 /* === NAVBAR === */
 .navbar {
 	color: #ddd;
@@ -8,6 +13,45 @@
 	margin-top: 120px;
 }
 
+h1 {
+	text-transform: uppercase;
+	margin-bottom: 60px;
+}
+
+/* === UPLOAD === */
+#uploadModal .modal-dialog {
+	top: 50px;
+	bottom: 50px;
+	left: 50px;
+	right: 50px;
+	position: absolute;
+	width: auto;
+	height: auto;
+	background: #333 url('/img/upload.png') no-repeat center center;
+}
+#uploadModal .modal-dialog .dz-message {
+	margin-top: 60px;
+	color: #000;
+	font-size: 18px;
+}
+#uploadModal .modal-dialog .dz-message h4 {
+	font-size: 26px;
+	font-weight: bold;
+}
+#uploadDropzone {
+	border:none;
+	height: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	position: absolute;
+	padding: 0;
+	border-radius: 12px;
+	background:rgba(41, 41, 41, 0.8);
+}
+
+/* === DASHBOARD == */
 .chart div {
   font: 10px sans-serif;
   background-color: red;
