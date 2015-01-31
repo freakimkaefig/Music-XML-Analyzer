@@ -20,6 +20,7 @@ Route::get('/search', array(
 	'as' => 'search',
 	'uses' => 'SearchController@search'
 ));
+
 Route::get('/imprint', array(
 	'as' => 'imprint',
 	'uses' => 'HomeController@getToImprint'
@@ -30,10 +31,10 @@ Route::get('/dashboard', array(
 	'uses' => 'DashboardController@getToDashboard'
 ));
 
-// Route::get('/pattern', function()
-// {
-// 	print "test";
-// });
+Route::get('/pattern', array(
+	'as' => 'pattern',
+	'uses' => 'PatternController@getCreatePattern'
+));
 
 /* === UPLOAD === */
 Route::post('/upload', array(

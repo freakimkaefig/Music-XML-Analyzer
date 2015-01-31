@@ -28,10 +28,10 @@ MusicXMLAnalyzer.ApplicationController = function() {
 		}
 
 		if (Route.check('/pattern')) {
+			console.log("Pattern");
 			patternController = MusicXMLAnalyzer.PatternController();
 			patternController.init();
 		}
-
 	},
 	
 	dispose = function() {
