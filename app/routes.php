@@ -11,18 +11,21 @@
 |
 */
 
+/* === STATIC PAGE ROUTES === */
 Route::get('/', array(
 	'as' => 'home',
 	'uses' => 'HomeController@getHome'
 ));
-
-Route::get('/search', array(
-	'as' => 'search',
-	'uses' => 'SearchController@search'
-));
 Route::get('/imprint', array(
 	'as' => 'imprint',
 	'uses' => 'HomeController@getToImprint'
+));
+
+
+/* === SEARCH ROUTES === */
+Route::get('/search', array(
+	'as' => 'search',
+	'uses' => 'SearchController@search'
 ));
 
 Route::get('/dashboard', array(
