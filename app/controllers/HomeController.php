@@ -27,10 +27,11 @@ class HomeController extends BaseController {
 			}
 		}
 		
-		return View::make('home');
+		$this->_createNewUser();
+		return View::make('Home');
 	}
 
-	public function createNewUser() {
+	private function _createNewUser() {
 		$user = new User;
 		$user->last_activity = date('Y-m-d H:m:s');
 		$user->save();

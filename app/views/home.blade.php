@@ -40,6 +40,7 @@
 					<form id="uploadDropzone" class="dropzone dropzone-fullscreen dz-clickable" method="POST" action="/upload">
 						<div class="dz-message"></div>
 					</form>
+					<div id="progressWrapper"></div>
 				</div>
 			</div>
 		</div>

@@ -38,6 +38,13 @@ h1 {
 	font-size: 26px;
 	font-weight: bold;
 }
+#uploadModal .modal-dialog #progressWrapper {
+	color: #fff;
+	bottom: 60px;
+	position: absolute;
+	left: 60px;
+	right: 60px;
+}
 #uploadDropzone {
 	border:none;
 	height: auto;
