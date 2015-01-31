@@ -4,7 +4,7 @@ class User extends Eloquent {
 	
 	protected $table = 'users';
 
-	protected $softDelete = true;
+	protected $softDelete = false;
 
 	protected $fillable = array('last_activity');
 

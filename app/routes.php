@@ -35,17 +35,13 @@ Route::get('/dashboard', array(
 // 	print "test";
 // });
 
-Route::post('/upload', function () {
-    $file = Input::file('file');
-    if($file) {
-        $destinationPath = public_path() . '/uploads/';
-        $filename = $file->getClientOriginalName();
-        $upload_success = Input::file('file')->move($destinationPath, $filename);
-        
-        if ($upload_success) {
-            return Response::json('success', 200);
-        } else {
-            return Response::json('error', 400);
-        }
-    }
-});
+/* === UPLOAD === */
+Route::post('/upload', array(
+	'as' => 'postUpload',
+	'uses' => 'UploadController@postUpload'
+));
+
+Route::get('/upload-complete', array(
+	'as' => 'uploadComplete',
+	'uses' => 'UploadController@getUploadComplete'
+));

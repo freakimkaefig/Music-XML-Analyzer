@@ -4,7 +4,7 @@ class Upload extends Eloquent {
 
 	protected $table = 'uploads';
 
-	protected $softDelete = true;
+	protected $softDelete = false;
 
 	protected $fillable = array('url');
 
