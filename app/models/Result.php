@@ -4,7 +4,7 @@ class Result extends Eloquent {
 
 	protected $table = 'results';
 
-	protected $softDelete = true;
+	protected $softDelete = false;
 
 	protected $fillable = array('value');
 
