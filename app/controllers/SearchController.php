@@ -18,6 +18,8 @@ class SearchController extends BaseController {
 		//echo "</br></br>häufigste Note: " . $this->getMostFrequentNote($xml);
 		echo "</br></br>Anzahl Pausen: " . $this->getRestQuantity($xml);
 		echo "</br></br>Anzahl Takte: " . $this->getMeasureQuantity($xml);
+		echo "</br></br>Anzahl Noten: " . $this->getNoteQuantity($xml);
+		echo "</br></br>Takt: " . $this->getMeter($xml);
 		echo "</pre>";
 		
 		/////////////////////////
@@ -50,10 +52,25 @@ class SearchController extends BaseController {
 	public function getMeasureQuantity($xml){
 		return json_encode($this->countMeasures($xml));
 	}
+	public function getNoteQuantity($xml){
+		return json_encode($this->countNotes($xml));
+	}
+	public function getMeter($xml){
+		$json = json_encode($this->determinMeter($xml));
+		return str_replace('\\', '', $json);
+	}
 
 	/////////////////////////////
 	//Internal analysis functions
 	/////////////////////////////
+
+	function determinMeter($xml){
+		$beat = $xml->xpath("//beats");
+		$beatType =  $xml->xpath("//beat-type");
+		$meter = $beat[0] ."/". $beatType[0];
+		return $meter;
+	}
+
 
 	function countMeasures($xml){
 		$measures = $xml->xpath("//measure");
@@ -67,6 +84,12 @@ class SearchController extends BaseController {
 	}
 
 
+	function countNotes($xml){
+		$notes = $xml->xpath("//note");
+		return count($notes);
+	}
+
+
 	function countNoteValues($xml){
 
 		//"The descendant (double-slash) operator in xpath will search all descendants for a match."
@@ -74,10 +97,8 @@ class SearchController extends BaseController {
 		//fetch all <note> tags
 		$notes = $xml->xpath("//note");
 
-		//Array anlegen
 		$notesArray = array();
 
-		//Noten zählen:
 		foreach($notes as $note) {
 			$value = $note->pitch->step;
 			//check if note equals rest and therefore mustn't be counted
