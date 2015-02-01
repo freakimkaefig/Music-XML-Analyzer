@@ -37,6 +37,7 @@ class SearchController extends BaseController {
 		echo "</br></br>Anzahl Takte: " . $this->getMeasureQuantity($xml);
 		echo "</br></br>Anzahl Noten: " . $this->getNoteQuantity($xml);
 		echo "</br></br>Takt: " . $this->getMeter($xml);
+		echo "</br></br>Notenschlüssel: " . $this->getClef($xml);
 		echo "</pre>";
 		
 		/////////////////////////
@@ -56,6 +57,7 @@ class SearchController extends BaseController {
 
 	///////////////
 	//Public Getter
+	//UNNÖTIG?
 	///////////////
 	public function getNoteValues($xml){
 		return json_encode($this->countNoteValues($xml));
@@ -73,19 +75,52 @@ class SearchController extends BaseController {
 		return json_encode($this->countNotes($xml));
 	}
 	public function getMeter($xml){
-		$json = json_encode($this->determinMeter($xml));
+		$json = json_encode($this->determineMeter($xml));
 		return str_replace('\\', '', $json);
+	}
+	public function getClef($xml){
+		return json_encode($this->determineClef($xml));
 	}
 
 	/////////////////////////////
 	//Internal analysis functions
 	/////////////////////////////
 
-	function determinMeter($xml){
+	function determineMeter($xml){
 		$beat = $xml->xpath("//beats");
 		$beatType =  $xml->xpath("//beat-type");
 		$meter = $beat[0] ."/". $beatType[0];
 		return $meter;
+	}
+
+
+	function determineClef($xml){
+		$clefs = $xml->xpath("//clef");
+		$clefsArray = array();
+
+		foreach($clefs as $clef) {
+			$value = $clef->sign;
+			
+			if($value != null){
+				switch($value):
+					case "C":
+						$value = (string)$value."-Schluessel";
+						//C-Schlüssel näher bestimmen:
+						//$line = $clef->lign; //welche line == was? siehe: https://de.wikipedia.org/wiki/Notenschl%C3%BCssel#C-Schl.C3.BCssel
+						//if($value != null && (string)$value === "C")
+						break;
+					case "F":
+						$value = "Bass-Schluessel";
+						break;
+					case "G":
+						$value = "Violin-Schluessel";
+						break;
+						//missing cases: " percussion, TAB, none"
+				endswitch;
+				array_push($clefsArray,$value);
+			}
+	    }
+	    return array_count_values($clefsArray);;
 	}
 
 
