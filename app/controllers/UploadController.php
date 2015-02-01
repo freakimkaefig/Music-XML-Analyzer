@@ -12,7 +12,8 @@ class UploadController extends BaseController {
 			    $upload_success = Input::file('file')->move($destinationPath, $filename);
 			    
 			    if ($upload_success) {
-			    	$this->_saveFile($user, $destinationPath);
+					$url = URL::to('/uploads/') . '/' . $user->id . '/' . $filename; 
+			    	$this->_saveFile($user, $url);
 			    	return Response::json('success', 200);
 			    } else {
 			        return Response::json('error', 400);
@@ -31,7 +32,7 @@ class UploadController extends BaseController {
 	}
 
 	public function getUploadComplete() {
-		return Redirect::route('search_setFiles');
+		return Redirect::route('search');
 	}
 
 }

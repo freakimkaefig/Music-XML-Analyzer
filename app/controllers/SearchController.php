@@ -4,6 +4,23 @@ class SearchController extends BaseController {
 
 	public function search()
 	{
+		/////////////////////////
+		// Getting files for current user
+		/////////////////////////
+		echo "</br></br></br></br>";
+		if (Cookie::get('user_id')) {
+			$user = User::find(Cookie::get('user_id'));
+			$user->uploads->each(function($upload) {
+				echo $upload->id;
+				echo '<br>';
+				echo $upload->url;
+				echo '<hr>';
+				$files[] = array(
+					'id' => $upload->id,
+					'url' => $upload->url,
+				);
+			});
+		}
 
 		/////////////////////////
 		//Testing php xpath query
@@ -12,7 +29,7 @@ class SearchController extends BaseController {
 		//load xml file from url
 		$xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/8633542/xQuery/Test.xml");
 		
-		echo "<pre></br></br></br></br>";
+		echo "<pre>";
 		//"$this always refers to the object, in which a method exists, itself."
 		//echo $this->getNoteValues($xml);
 		//echo "</br></br>häufigste Note: " . $this->getMostFrequentNote($xml);
