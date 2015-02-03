@@ -28,7 +28,7 @@ class SearchController extends BaseController {
 
 		//load xml file from url
 		//for testing purpose
-		$xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/8633542/xQuery/Test.xml");
+		$xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
 
 		echo "<pre>";
 		//"$this always refers to the object, in which a method exists, itself."
@@ -81,7 +81,12 @@ class SearchController extends BaseController {
 		return str_replace('\\', '', $json);
 	}
 	public function getClef($xml){
-		return json_encode($this->determineClef($xml));
+		$json = json_encode($this->determineClef($xml));
+		//fix non utf-8 json-encoding for special german char 'ü'
+		$json = str_replace('\u00fce', 'ü', $json);
+		$json = str_replace('\u00fc', 'ü', $json);
+
+		return $json;
 	}
 	public function getKey($xml){
 		return json_encode($this->determineKey($xml));
@@ -208,41 +213,63 @@ class SearchController extends BaseController {
 				array_push($keysArray, $keyString."-Moll");
 			}
 	    }
-
-	    //Anzahl der Vorkommnisse bei Tonart sinnvoll? (z.B: bei vorzeichenwechsel?)
 	    return array_count_values($keysArray);;
 	}
 
 
 	function determineClef($xml){
 		$clefs = $xml->xpath("//clef");
+		//print_r($clefs);
 		$clefsArray = array();
 
 		foreach($clefs as $clef) {
 			$value = $clef->sign;
+			$line = $clef->line; //https://de.wikipedia.org/wiki/Notenschl%C3%BCssel#C-Schl.C3.BCssel
 			
 			if($value != null){
 				switch($value):
 					case "C":
-						$value = (string)$value."-Schluessel";
-						//C-Schlüssel näher bestimmen:
-						//$line = $clef->lign; //welche line == was? siehe: https://de.wikipedia.org/wiki/Notenschl%C3%BCssel#C-Schl.C3.BCssel
-						//if($value != null && (string)$value === "C")
+						//inspect C-Clef:
+						switch($line):
+							case 1:
+								$value = "Sopranschlüssel";
+								break;
+							case 2:
+								$value = "Mezzosopranschlüessel";
+								break;
+							case 3:
+								$value = "Altschlüessel";
+								break;
+							case 4:
+								$value = "Tenorschlüessel";
+								break;
+							case 5:
+								$value = "Baritonschlüessel";
+								break;
+						endswitch;
 						break;
 					case "F":
-						$value = "Bass-Schluessel";
+						$value = "Bassschlüessel";
 						break;
 					case "G":
-						$value = "Violin-Schluessel";
+						$value = "Violinschlüessel";
 						break;
-						//missing cases: " percussion, TAB, none"
+					case "percussion":
+						$value = "Perkussionsschlüssel";
+						break;
+					case "TAB":
+						$value = "Tabulatur";
+						break;
+					case "none":
+						$value = "none";
+						break;
 					default:
-						$value = "N/A";
+						break;
 				endswitch;
 				array_push($clefsArray,$value);
 			}
 	    }
-	    //Anzahl der Vorkommnisse bei Notenschlüssel sinnvoll? (z.B. bei Wechsel?)
+	    //print_R($clefsArray);
 	    return array_count_values($clefsArray);;
 	}
 
