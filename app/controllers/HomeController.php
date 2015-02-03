@@ -28,7 +28,7 @@ class HomeController extends BaseController {
 		}
 		
 		$this->_createNewUser();
-		return View::make('Home');
+		return View::make('home');
 	}
 
 	private function _createNewUser() {
