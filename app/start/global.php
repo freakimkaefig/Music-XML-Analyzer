@@ -90,8 +90,15 @@ require app_path().'/filters.php';
 |
 */
 Event::listen('cron.collectJobs', function() {
+	foreach (User::where('last_activity', '<', date('Y-m-d H:m:s', time() - 24*60*60*7))->get() as $user)
+	{
+	    $user->uploads->each(function($upload) {
 
-    Cron::add('garbageCollector', '27 * * * *', function() {
-    	Log::info('Cron run Successfull');
-    });
+			if (count($upload->result)) {
+				$upload->result->delete();
+			}
+			$upload->delete();
+	    });
+	    $user->delete();
+	}
 });
