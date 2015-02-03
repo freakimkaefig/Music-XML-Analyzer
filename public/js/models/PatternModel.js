@@ -8,9 +8,17 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	},
 
-	setCurrentNote = function() {
+	setCurrentNoteName = function(noteName) {
 
-	};
+	},
+
+	setCurrentNoteDuration = function(noteValue) {
+
+	},
+
+	setCurrentNoteRythSpecial = function(val) {
+
+	},
 
 	
 	

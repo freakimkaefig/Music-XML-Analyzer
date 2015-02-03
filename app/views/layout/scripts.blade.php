@@ -2,6 +2,7 @@
 {{ HTML::script('libs/bootstrap-3.3.2/dist/js/bootstrap.min.js') }}
 {{ HTML::script('libs/d3-v3/d3.min.js') }}
 {{ HTML::script('libs/d3-v3/d3pie.min.js') }}
+{{ HTML::script('libs/vexflow/vexflow-min.js') }}
 
 {{ HTML::script('libs/dropzone-4.0.0/dist/min/dropzone.min.js') }}
 
