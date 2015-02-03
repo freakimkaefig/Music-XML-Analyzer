@@ -32,18 +32,18 @@ class SearchController extends BaseController {
 
 		echo "<pre>";
 		//"$this always refers to the object, in which a method exists, itself."
-		echo "Notenverteilung: " . $this->getNoteValues($xml);
-		echo "</br></br>häufigste Note: " . $this->getMostFrequentNote($xml);
-		echo "</br></br>Anzahl Pausen: " . $this->getRestQuantity($xml);
-		echo "</br></br>Anzahl Takte: " . $this->getMeasureQuantity($xml);
-		echo "</br></br>Anzahl Noten: " . $this->getNoteQuantity($xml);
-		echo "</br></br>Takt: " . $this->getMeter($xml);
-		echo "</br></br>Notenschlüssel: " . $this->getClef($xml);
-		echo "</br></br>Tonart: " . $this->getKey($xml);
-		echo "</br></br>Notenlängen: " . $this->getNoteTypes($xml);
-		echo "</br></br>Instrumente: " . $this->getInstruments($xml);
-		echo "</br></br>Artist: " . $this->getArtist($xml);
-		echo "</br></br>Title: " . $this->getTitle($xml);
+		echo "Notenverteilung: " . json_encode($this->countNoteValues($xml));
+		echo "</br></br>häufigste Note: " . json_encode($this->determineMostFrequentNote($xml));
+		echo "</br></br>Anzahl Pausen: " . json_encode($this->countRests($xml));
+		echo "</br></br>Anzahl Takte: " . json_encode($this->countMeasures($xml));
+		echo "</br></br>Anzahl Noten: " . json_encode($this->countNotes($xml));
+		echo "</br></br>Takt: " . json_encode($this->determineMeter($xml));
+		echo "</br></br>Notenschlüssel: " . json_encode($this->determineClef($xml));
+		echo "</br></br>Tonart: " . json_encode($this->determineKey($xml));
+		echo "</br></br>Notenlängen: " . json_encode($this->countNoteTypes($xml));
+		echo "</br></br>Instrumente: " . json_encode($this->determineInstruments($xml));
+		echo "</br></br>Artist: " . $this->determineArtist($xml); //do not json_encode!
+		echo "</br></br>Title: " . $this->determineTitle($xml); //do not json_encode!
 		echo "</pre>";
 		
 		/////////////////////////
@@ -61,50 +61,6 @@ class SearchController extends BaseController {
 		return View::make('search');
 	}
 
-	///////////////
-	//Public Getter
-	//UNNÖTIG?
-	///////////////
-	public function getNoteValues($xml){
-		return json_encode($this->countNoteValues($xml));
-	}
-	public function getMostFrequentNote($xml){
-		return json_encode($this->determineMostFrequentNote($xml));
-	}
-	public function getRestQuantity($xml){
-		return json_encode($this->countRests($xml));
-	}
-	public function getMeasureQuantity($xml){
-		return json_encode($this->countMeasures($xml));
-	}
-	public function getNoteQuantity($xml){
-		return json_encode($this->countNotes($xml));
-	}
-	public function getMeter($xml){
-		$json = json_encode($this->determineMeter($xml));
-		return str_replace('\\', '', $json);
-	}
-	public function getClef($xml){
-		$json = json_encode($this->determineClef($xml));
-		return $json;
-	}
-	public function getKey($xml){
-		return json_encode($this->determineKey($xml));
-	}
-	public function getNoteTypes($xml){
-		return json_encode($this->countNoteTypes($xml));
-	}
-	public function getInstruments($xml){
-		return json_encode($this->determineInstruments($xml));
-	}
-	public function getArtist($xml){
-		// return json_encode($this->determineArtist($xml));
-		return $this->determineArtist($xml);
-	}
-	public function getTitle($xml){
-		// return json_encode($this->determineTitle($xml));
-		return $this->determineTitle($xml);
-	}
 
 	/////////////////////////////
 	//Internal analysis functions
