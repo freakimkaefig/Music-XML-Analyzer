@@ -32,12 +32,12 @@ class SearchController extends BaseController {
 
 		echo "<pre>";
 		//"$this always refers to the object, in which a method exists, itself."
-		//echo $this->getNoteValues($xml);
-		//echo "</br></br>häufigste Note: " . $this->getMostFrequentNote($xml);
-		//echo "</br></br>Anzahl Pausen: " . $this->getRestQuantity($xml);
-		//echo "</br></br>Anzahl Takte: " . $this->getMeasureQuantity($xml);
-		//echo "</br></br>Anzahl Noten: " . $this->getNoteQuantity($xml);
-		//echo "</br></br>Takt: " . $this->getMeter($xml);
+		echo $this->getNoteValues($xml);
+		echo "</br></br>häufigste Note: " . $this->getMostFrequentNote($xml);
+		echo "</br></br>Anzahl Pausen: " . $this->getRestQuantity($xml);
+		echo "</br></br>Anzahl Takte: " . $this->getMeasureQuantity($xml);
+		echo "</br></br>Anzahl Noten: " . $this->getNoteQuantity($xml);
+		echo "</br></br>Takt: " . $this->getMeter($xml);
 		echo "</br></br>Notenschlüssel: " . $this->getClef($xml);
 		echo "</br></br>Tonart: " . $this->getKey($xml);
 		echo "</pre>";
