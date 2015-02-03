@@ -41,6 +41,9 @@ class SearchController extends BaseController {
 		echo "</br></br>Notenschlüssel: " . $this->getClef($xml);
 		echo "</br></br>Tonart: " . $this->getKey($xml);
 		echo "</br></br>Notenlängen: " . $this->getNoteTypes($xml);
+		echo "</br></br>Instrumente: " . $this->getInstruments($xml);
+		echo "</br></br>Artist: " . $this->getArtist($xml);
+		echo "</br></br>Title: " . $this->getTitle($xml);
 		echo "</pre>";
 		
 		/////////////////////////
@@ -83,10 +86,6 @@ class SearchController extends BaseController {
 	}
 	public function getClef($xml){
 		$json = json_encode($this->determineClef($xml));
-		//fix non utf-8 json-encoding for special german char 'ü'
-		$json = str_replace('\u00fce', 'ü', $json);
-		$json = str_replace('\u00fc', 'ü', $json);
-
 		return $json;
 	}
 	public function getKey($xml){
@@ -95,12 +94,62 @@ class SearchController extends BaseController {
 	public function getNoteTypes($xml){
 		return json_encode($this->countNoteTypes($xml));
 	}
+	public function getInstruments($xml){
+		return json_encode($this->determineInstruments($xml));
+	}
+	public function getArtist($xml){
+		// return json_encode($this->determineArtist($xml));
+		return $this->determineArtist($xml);
+	}
+	public function getTitle($xml){
+		// return json_encode($this->determineTitle($xml));
+		return $this->determineTitle($xml);
+	}
 
 	/////////////////////////////
 	//Internal analysis functions
 	/////////////////////////////
 	function countIntervals($xml){
 		//toDo: magic.
+	}
+
+
+	function determineArtist($xml){
+		$artist = $xml->xpath("//credit[credit-type='composer']");
+		// var_dump($artist[0]);
+		return $artist[0]->{'credit-words'}->{0};
+	}
+
+
+	function determineTitle($xml){
+		$title = $xml->xpath("//credit[credit-type='title']");
+		// var_dump($title[0]->{'credit-words'});
+		return $title[0]->{'credit-words'}->{0};
+	}
+
+
+	function determineInstruments($xml){
+		$instruments = $xml->xpath("//score-part");
+		$instrumentsArray = array();
+
+		foreach($instruments as $instrument){
+			if (!preg_match('/[0-9]/', $instrument->{'part-name'})){
+			    $value = $instrument->{'part-name'};
+
+				array_push($instrumentsArray,(string)$value);
+			}
+		}
+		//get instruments summarized in groups:
+		$instruments2 = $xml->xpath("//part-group[group-name]");
+
+		foreach($instruments2 as $instrument2){
+			if(!preg_match('/[0-9]/', $instrument2->{'group-name'})){
+			    $value = $instrument2->{'group-name'};
+
+				array_push($instrumentsArray,(string)$value);
+			}
+		}
+		return $instrumentsArray;
 	}
 
 
@@ -116,7 +165,7 @@ class SearchController extends BaseController {
 				array_push($noteTypesArray,(string)$value);
 			}
 	    }
-	    return array_count_values($noteTypesArray);;
+	    return array_count_values($noteTypesArray);
 	}
 
 
@@ -157,10 +206,10 @@ class SearchController extends BaseController {
 						$keyString = "H";
 						break;
 					case "6":
-						$keyString = "Fis";
+						$keyString = "F sharp";
 						break;
 					case "7":
-						$keyString = "Cis";
+						$keyString = "C sharp";
 						break;
 					case "-1":
 						$keyString = "F";
@@ -175,16 +224,16 @@ class SearchController extends BaseController {
 						$keyString = "As";
 						break;
 					case "-5":
-						$keyString = "Des";
+						$keyString = "D flat";
 						break;
 					case "-6":
-						$keyString = "Ges";
+						$keyString = "G flat";
 						break;
 					case "-7":
-						$keyString = "Ces";
+						$keyString = "C flat";
 						break;
 				endswitch;
-				array_push($keysArray, $keyString."-Dur");
+				array_push($keysArray, $keyString." major");
 			}
 			elseif($fifths != null && $mode === "minor"){
 				switch($fifths):
@@ -198,19 +247,19 @@ class SearchController extends BaseController {
 						$keyString = "H";
 						break;
 					case "3":
-						$keyString = "Fis";
+						$keyString = "F sharp";
 						break;
 					case "4":
-						$keyString = "Cis";
+						$keyString = "C sharp";
 						break;
 					case "5":
-						$keyString = "Gis";
+						$keyString = "G sharp";
 						break;
 					case "6":
-						$keyString = "Dis";
+						$keyString = "D sharp";
 						break;
 					case "7":
-						$keyString = "Ais";
+						$keyString = "A sharp";
 						break;
 					case "-1":
 						$keyString = "D";
@@ -228,13 +277,13 @@ class SearchController extends BaseController {
 						$keyString = "B";
 						break;
 					case "-6":
-						$keyString = "Es";
+						$keyString = "E flat";
 						break;
 					case "-7":
-						$keyString = "As";
+						$keyString = "A flat";
 						break;
 				endswitch;
-				array_push($keysArray, $keyString."-Moll");
+				array_push($keysArray, $keyString." minor");
 			}
 	    }
 	    return array_count_values($keysArray);;
@@ -256,33 +305,33 @@ class SearchController extends BaseController {
 						//inspect C-Clef:
 						switch($line):
 							case 1:
-								$value = "Sopranschlüssel";
+								$value = "soprano clef";
 								break;
 							case 2:
-								$value = "Mezzosopranschlüessel";
+								$value = "mezzo-sopran clef";
 								break;
 							case 3:
-								$value = "Altschlüessel";
+								$value = "alto clef";
 								break;
 							case 4:
-								$value = "Tenorschlüessel";
+								$value = "tenor clef";
 								break;
 							case 5:
-								$value = "Baritonschlüessel";
+								$value = "baritone clef";
 								break;
 						endswitch;
 						break;
 					case "F":
-						$value = "Bassschlüessel";
+						$value = "bass clef";
 						break;
 					case "G":
-						$value = "Violinschlüessel";
+						$value = "G clef";
 						break;
 					case "percussion":
-						$value = "Perkussionsschlüssel";
+						$value = "percussion clef";
 						break;
 					case "TAB":
-						$value = "Tabulatur";
+						$value = "tablature";
 						break;
 					case "none":
 						$value = "none";
