@@ -20,9 +20,16 @@ class HomeController extends BaseController {
 		if (Cookie::get('user_id')) {
 			$user = User::find(Cookie::get('user_id'));
 			if ($user) {
+				$name = 'user_id';
+				$value = $user->id;
+				$minutes = 60*24*7;
+				Cookie::queue($name, $value, $minutes);
+				$user->resetLastActivity();
 				$uploads = $user->uploads;
 				if (!$uploads->isEmpty()) {
 					return View::make('dashboard');
+				} else {
+					return View::make('home');
 				}
 			}
 		}
@@ -38,7 +45,7 @@ class HomeController extends BaseController {
 
 		$name = 'user_id';
 		$value = $user->id;
-		$minutes = 60;
+		$minutes = 60*24*7;
 		Cookie::queue($name, $value, $minutes);
 	}
 
