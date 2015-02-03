@@ -27,14 +27,19 @@ class SearchController extends BaseController {
 		/////////////////////////
 
 		//load xml file from url
+		//for testing purpose
 		$xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/8633542/xQuery/Test.xml");
-		
+
 		echo "<pre>";
 		//"$this always refers to the object, in which a method exists, itself."
-		//echo $this->getNoteValues($xml);
-		//echo "</br></br>häufigste Note: " . $this->getMostFrequentNote($xml);
+		echo "Notenverteilung: " . $this->getNoteValues($xml);
+		echo "</br></br>häufigste Note: " . $this->getMostFrequentNote($xml);
 		echo "</br></br>Anzahl Pausen: " . $this->getRestQuantity($xml);
 		echo "</br></br>Anzahl Takte: " . $this->getMeasureQuantity($xml);
+		echo "</br></br>Anzahl Noten: " . $this->getNoteQuantity($xml);
+		echo "</br></br>Takt: " . $this->getMeter($xml);
+		echo "</br></br>Notenschlüssel: " . $this->getClef($xml);
+		echo "</br></br>Tonart: " . $this->getKey($xml);
 		echo "</pre>";
 		
 		/////////////////////////
@@ -54,6 +59,7 @@ class SearchController extends BaseController {
 
 	///////////////
 	//Public Getter
+	//UNNÖTIG?
 	///////////////
 	public function getNoteValues($xml){
 		return json_encode($this->countNoteValues($xml));
@@ -67,10 +73,179 @@ class SearchController extends BaseController {
 	public function getMeasureQuantity($xml){
 		return json_encode($this->countMeasures($xml));
 	}
+	public function getNoteQuantity($xml){
+		return json_encode($this->countNotes($xml));
+	}
+	public function getMeter($xml){
+		$json = json_encode($this->determineMeter($xml));
+		return str_replace('\\', '', $json);
+	}
+	public function getClef($xml){
+		return json_encode($this->determineClef($xml));
+	}
+	public function getKey($xml){
+		return json_encode($this->determineKey($xml));
+	}
 
 	/////////////////////////////
 	//Internal analysis functions
 	/////////////////////////////
+
+	function determineMeter($xml){
+		$beat = $xml->xpath("//beats");
+		$beatType =  $xml->xpath("//beat-type");
+		$meter = $beat[0] ."/". $beatType[0];
+		return $meter;
+	}
+
+
+	function determineKey($xml){
+		$keys = $xml->xpath("//key");
+		$keysArray = array();
+
+		foreach($keys as $key) {
+			$fifths = $key->fifths;
+			$mode = (string)$key->mode;
+			
+			if($fifths != null && $mode === "major"){
+				switch($fifths):
+					case "0":
+						$keyString = "C";
+						break;
+					case "1":
+						$keyString = "G";
+						break;
+					case "2":
+						$keyString = "D";
+						break;
+					case "3":
+						$keyString = "A";
+						break;
+					case "4":
+						$keyString = "E";
+						break;
+					case "5":
+						$keyString = "H";
+						break;
+					case "6":
+						$keyString = "Fis";
+						break;
+					case "7":
+						$keyString = "Cis";
+						break;
+					case "-1":
+						$keyString = "F";
+						break;
+					case "-2":
+						$keyString = "B";
+						break;
+					case "-3":
+						$keyString = "Es";
+						break;
+					case "-4":
+						$keyString = "As";
+						break;
+					case "-5":
+						$keyString = "Des";
+						break;
+					case "-6":
+						$keyString = "Ges";
+						break;
+					case "-7":
+						$keyString = "Ces";
+						break;
+				endswitch;
+				array_push($keysArray, $keyString."-Dur");
+			}
+			elseif($fifths != null && $mode === "minor"){
+				switch($fifths):
+					case "0":
+						$keyString = "a";
+						break;
+					case "1":
+						$keyString = "e";
+						break;
+					case "2":
+						$keyString = "h";
+						break;
+					case "3":
+						$keyString = "fis";
+						break;
+					case "4":
+						$keyString = "cis";
+						break;
+					case "5":
+						$keyString = "gis";
+						break;
+					case "6":
+						$keyString = "dis";
+						break;
+					case "7":
+						$keyString = "ais";
+						break;
+					case "-1":
+						$keyString = "d";
+						break;
+					case "-2":
+						$keyString = "g";
+						break;
+					case "-3":
+						$keyString = "c";
+						break;
+					case "-4":
+						$keyString = "f";
+						break;
+					case "-5":
+						$keyString = "b";
+						break;
+					case "-6":
+						$keyString = "es";
+						break;
+					case "-7":
+						$keyString = "as";
+						break;
+				endswitch;
+				array_push($keysArray, $keyString."-Moll");
+			}
+	    }
+
+	    //Anzahl der Vorkommnisse bei Tonart sinnvoll? (z.B: bei vorzeichenwechsel?)
+	    return array_count_values($keysArray);;
+	}
+
+
+	function determineClef($xml){
+		$clefs = $xml->xpath("//clef");
+		$clefsArray = array();
+
+		foreach($clefs as $clef) {
+			$value = $clef->sign;
+			
+			if($value != null){
+				switch($value):
+					case "C":
+						$value = (string)$value."-Schluessel";
+						//C-Schlüssel näher bestimmen:
+						//$line = $clef->lign; //welche line == was? siehe: https://de.wikipedia.org/wiki/Notenschl%C3%BCssel#C-Schl.C3.BCssel
+						//if($value != null && (string)$value === "C")
+						break;
+					case "F":
+						$value = "Bass-Schluessel";
+						break;
+					case "G":
+						$value = "Violin-Schluessel";
+						break;
+						//missing cases: " percussion, TAB, none"
+					default:
+						$value = "N/A";
+				endswitch;
+				array_push($clefsArray,$value);
+			}
+	    }
+	    //Anzahl der Vorkommnisse bei Notenschlüssel sinnvoll? (z.B. bei Wechsel?)
+	    return array_count_values($clefsArray);;
+	}
+
 
 	function countMeasures($xml){
 		$measures = $xml->xpath("//measure");
@@ -84,6 +259,12 @@ class SearchController extends BaseController {
 	}
 
 
+	function countNotes($xml){
+		$notes = $xml->xpath("//note");
+		return count($notes);
+	}
+
+
 	function countNoteValues($xml){
 
 		//"The descendant (double-slash) operator in xpath will search all descendants for a match."
@@ -91,10 +272,8 @@ class SearchController extends BaseController {
 		//fetch all <note> tags
 		$notes = $xml->xpath("//note");
 
-		//Array anlegen
 		$notesArray = array();
 
-		//Noten zählen:
 		foreach($notes as $note) {
 			$value = $note->pitch->step;
 			//check if note equals rest and therefore mustn't be counted

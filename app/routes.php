@@ -28,15 +28,16 @@ Route::get('/search', array(
 	'uses' => 'SearchController@search'
 ));
 
+
 Route::get('/dashboard', array(
 	'as' => 'dashboard',
 	'uses' => 'DashboardController@getToDashboard'
 ));
 
-// Route::get('/pattern', function()
-// {
-// 	print "test";
-// });
+Route::get('/pattern', array(
+	'as' => 'pattern',
+	'uses' => 'PatternController@getCreatePattern'
+));
 
 /* === UPLOAD === */
 Route::post('/upload', array(
