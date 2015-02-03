@@ -169,49 +169,49 @@ class SearchController extends BaseController {
 			elseif($fifths != null && $mode === "minor"){
 				switch($fifths):
 					case "0":
-						$keyString = "a";
+						$keyString = "A";
 						break;
 					case "1":
-						$keyString = "e";
+						$keyString = "E";
 						break;
 					case "2":
-						$keyString = "h";
+						$keyString = "H";
 						break;
 					case "3":
-						$keyString = "fis";
+						$keyString = "Fis";
 						break;
 					case "4":
-						$keyString = "cis";
+						$keyString = "Cis";
 						break;
 					case "5":
-						$keyString = "gis";
+						$keyString = "Gis";
 						break;
 					case "6":
-						$keyString = "dis";
+						$keyString = "Dis";
 						break;
 					case "7":
-						$keyString = "ais";
+						$keyString = "Ais";
 						break;
 					case "-1":
-						$keyString = "d";
+						$keyString = "D";
 						break;
 					case "-2":
-						$keyString = "g";
+						$keyString = "G";
 						break;
 					case "-3":
-						$keyString = "c";
+						$keyString = "C";
 						break;
 					case "-4":
-						$keyString = "f";
+						$keyString = "F";
 						break;
 					case "-5":
-						$keyString = "b";
+						$keyString = "B";
 						break;
 					case "-6":
-						$keyString = "es";
+						$keyString = "Es";
 						break;
 					case "-7":
-						$keyString = "as";
+						$keyString = "As";
 						break;
 				endswitch;
 				array_push($keysArray, $keyString."-Moll");
