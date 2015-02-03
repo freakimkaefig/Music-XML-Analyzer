@@ -15,6 +15,10 @@
 		
 	</div>
 
+	<div id="pie" class="col-xs-6">
+
+	</div>
+
 </div>
 
 @stop
