@@ -40,7 +40,7 @@ MusicXMLAnalyzer.NotationView = function(){
 			    staveId: i,
 			    colour: '#000000',
 			    width: elem.width,
-			    height: 5,
+			    height: 3,
 			    top: 20 * i,
 			    left: 0
 			});	
@@ -94,7 +94,6 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 
 	calcNotePositionHorizontal = function(mouseX) {
-		console.log("canvas: " + elem.width / 4);
 		var staveParts = elem.width / 4;
 		var notePosHorizontal = 0;
 

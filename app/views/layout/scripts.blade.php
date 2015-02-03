@@ -20,6 +20,9 @@
 {{ HTML::script('js/controllers/UploadController.js') }}
 {{ HTML::script('js/controllers/PatternController.js') }}
 
+<!-- ===Models=== -->
+{{ HTML::script('js/models/PatternModel.js') }}
+
 
 
 <script type="text/javascript">

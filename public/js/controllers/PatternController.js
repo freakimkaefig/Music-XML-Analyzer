@@ -9,10 +9,13 @@ MusicXMLAnalyzer.PatternController = function() {
 		notationView = MusicXMLAnalyzer.NotationView();
 		notationView.init();
 
-		referenceButtonListeners();
+		patternModel = MusicXMLAnalyzer.PatternModel();
+		patternModel.init();
+
+		registerButtonListeners();
 	},
 
-	referenceButtonListeners = function() {
+	registerButtonListeners = function() {
 		$(".btn-note").click(function() {
 		  console.log("clicked: " + $(event.target).text());
 		});
