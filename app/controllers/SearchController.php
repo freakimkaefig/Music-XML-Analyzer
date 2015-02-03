@@ -95,6 +95,10 @@ class SearchController extends BaseController {
 	/////////////////////////////
 	//Internal analysis functions
 	/////////////////////////////
+	function countIntervals($xml){
+
+	}
+
 
 	function determineMeter($xml){
 		$beat = $xml->xpath("//beats");
@@ -303,8 +307,17 @@ class SearchController extends BaseController {
 
 		foreach($notes as $note) {
 			$value = $note->pitch->step;
-			//check if note equals rest and therefore mustn't be counted
+
 			if($value != null){
+				//check for possible accidental
+				$alter = $note->pitch->alter;
+				if((int)$alter[0] === -1){
+					$value = $value . "b";
+				}
+				elseif((int)$alter[0] === 1){
+					$value = $value . "#";
+				}
+				//check if note equals rest and therefore mustn't be counted
 				//cast obj to string before pushing it to array
 				array_push($notesArray,(string)$value);
 			}
