@@ -11,6 +11,7 @@
 /* === CONTENT === */
 #content {
 	margin-top: 120px;
+	margin-bottom: 120px;
 }
 
 h1 {
@@ -62,15 +63,64 @@ h1 {
 }
 
 /* === DASHBOARD == */
-.chart div {
-  font: 10px sans-serif;
-  background-color: red;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
+
+/*PIE-CHART*/
+
+.pie {
+	font-weight: bold;
 }
 
-#pieChart div {
-	font: 40px sans-serif;		
+
+/*BAR-CHART1*/
+
+.chart rect {
+  stroke: white;
+  fill: steelblue;
 }
+
+.chart text {
+  fill: #fff;
+}
+
+.chart text.name {
+  fill: #000;
+}
+
+.chart line {
+  stroke: #c1c1c1;
+}
+
+.chart .rule {
+  fill: #000;
+}
+
+.chart rect:hover {
+  fill: #64707D;
+}
+
+/*BAR-CHART1*/
+
+#chart rect{
+  fill: #4aaeea;
+}
+
+#chart rect:hover{
+	fill: #64707D;
+}
+
+#chart text{
+  fill: black;
+  font: 10px sans-serif;
+  text-anchor: end; 
+}
+
+.axis text{
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line{
+  fill: none;
+  stroke : #fff;
+  shape-rendering: crispEdges;
+}
+
