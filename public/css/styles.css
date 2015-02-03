@@ -33,6 +33,7 @@ h1 {
 	margin-top: 60px;
 	color: #000;
 	font-size: 18px;
+	text-align: center;
 }
 #uploadModal .modal-dialog .dz-message h4 {
 	font-size: 26px;
@@ -44,6 +45,7 @@ h1 {
 	position: absolute;
 	left: 60px;
 	right: 60px;
+	text-align: center;
 }
 #uploadDropzone {
 	border:none;
@@ -56,6 +58,7 @@ h1 {
 	padding: 0;
 	border-radius: 12px;
 	background: rgba(81, 81, 81, 0.5);
+	text-align: center;
 }
 
 /* === DASHBOARD == */

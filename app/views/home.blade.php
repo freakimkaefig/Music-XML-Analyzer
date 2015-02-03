@@ -30,19 +30,7 @@
 			<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#uploadModal">
 			Start something beautiful ;)
 			</button>
-			<!-- Modal -->
-			<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="Upload" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="dz-message">
-						<h4>Drag your music xml files here!</h4>
-						<span>Or click to browse</span>
-					</div>
-					<form id="uploadDropzone" class="dropzone dropzone-fullscreen dz-clickable" method="POST" action="/upload">
-						<div class="dz-message"></div>
-					</form>
-					<div id="progressWrapper"></div>
-				</div>
-			</div>
+			@include('upload.dropzone')
 		</div>
 	</div>
 </div>
