@@ -12,6 +12,8 @@
 
 <!-- ===Views=== -->
 {{ HTML::script('js/views/DashboardView.js') }}
+{{ HTML::script('js/views/PatternView.js') }}
+{{ HTML::script('js/views/NotationView.js') }}
 
 <!-- ===Controller=== -->
 {{ HTML::script('js/controllers/ApplicationController.js') }}

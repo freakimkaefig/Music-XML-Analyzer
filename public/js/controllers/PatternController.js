@@ -3,6 +3,12 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	init = function() {
 		console.log('MusicXMLAnalyzer.PatternController.init');
+		patternView = MusicXMLAnalyzer.PatternView();
+		patternView.init();
+
+		notationView = MusicXMLAnalyzer.NotationView();
+		notationView.init();
+
 		referenceButtonListeners();
 	},
 
