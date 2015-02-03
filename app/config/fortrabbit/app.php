@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	'url' => 'http://music-xml-analyz.eu1.frbit.net/',
 
