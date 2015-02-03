@@ -19,7 +19,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(".btn-note").click(function() {
 		  console.log("clicked: " + $(event.target).text());
 		});
-	}
+	},
 
 
 

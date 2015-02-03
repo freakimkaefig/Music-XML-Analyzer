@@ -18,7 +18,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	setCurrentNoteRythSpecial = function(val) {
 
-	},
+	};
 
 	
 	
