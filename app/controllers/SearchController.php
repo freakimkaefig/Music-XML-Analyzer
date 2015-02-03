@@ -40,6 +40,7 @@ class SearchController extends BaseController {
 		echo "</br></br>Takt: " . $this->getMeter($xml);
 		echo "</br></br>Notenschlüssel: " . $this->getClef($xml);
 		echo "</br></br>Tonart: " . $this->getKey($xml);
+		echo "</br></br>Notenlängen: " . $this->getNoteTypes($xml);
 		echo "</pre>";
 		
 		/////////////////////////
@@ -91,12 +92,31 @@ class SearchController extends BaseController {
 	public function getKey($xml){
 		return json_encode($this->determineKey($xml));
 	}
+	public function getNoteTypes($xml){
+		return json_encode($this->countNoteTypes($xml));
+	}
 
 	/////////////////////////////
 	//Internal analysis functions
 	/////////////////////////////
 	function countIntervals($xml){
+		//toDo: magic.
+	}
 
+
+	function countNoteTypes($xml){
+		$notes = $xml->xpath("//note");
+
+		$noteTypesArray = array();
+
+		foreach($notes as $note) {
+			$value = $note->type;
+			$rest = $note->rest;
+			if(!$rest){
+				array_push($noteTypesArray,(string)$value);
+			}
+	    }
+	    return array_count_values($noteTypesArray);;
 	}
 
 
