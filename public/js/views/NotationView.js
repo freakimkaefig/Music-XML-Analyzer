@@ -7,18 +7,11 @@ MusicXMLAnalyzer.NotationView = function(){
 	elem = null,
 	elemLeft = null,
 	elemTop = null,
-	notesInfoGrid = [
-		[null, null, null, null],
-		[null, null, null, null],
-		[null, null, null, null],
-		[null, null, null, null],
-		[null, null, null, null],
-	] 
-
 
 	init = function() {
 		console.log("notation view");
 		initCanvas();
+		//initVexCanvas();
 		addStaveElements();
 		renderStaveElements();
 		addOnStaveClickListener();
