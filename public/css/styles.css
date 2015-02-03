@@ -64,33 +64,14 @@ h1 {
 
 /* === DASHBOARD == */
 
+/*PIE-CHART*/
 
-
-/*.chart div {
-  font: 15px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
-} 
-
-#pieChart div {
-	font: 40px sans-serif;		
+.pie {
+	font-weight: bold;
 }
 
-.chart rect {
-  fill: steelblue;
-}
 
-.chart text {
-  fill: white;
-  font: 10px sans-serif;
-  text-anchor: end;
-}*/
-
-
-/*BAR-CHART*/
+/*BAR-CHART1*/
 
 .chart rect {
   stroke: white;
@@ -116,3 +97,30 @@ h1 {
 .chart rect:hover {
   fill: #64707D;
 }
+
+/*BAR-CHART1*/
+
+#chart rect{
+  fill: #4aaeea;
+}
+
+#chart rect:hover{
+	fill: #64707D;
+}
+
+#chart text{
+  fill: black;
+  font: 10px sans-serif;
+  text-anchor: end; 
+}
+
+.axis text{
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line{
+  fill: none;
+  stroke : #fff;
+  shape-rendering: crispEdges;
+}
+
