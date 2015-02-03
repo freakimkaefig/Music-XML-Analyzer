@@ -79,3 +79,19 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+
+/*
+|--------------------------------------------------------------------------
+| Register Cron Event Listener
+|--------------------------------------------------------------------------
+|
+| Next we will register the cronjobs used for garbage collector
+|
+*/
+Event::listen('cron.collectJobs', function() {
+
+    Cron::add('garbageCollector', '27 * * * *', function() {
+    	Log::info('Cron run Successfull');
+    });
+});

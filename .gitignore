@@ -24,3 +24,7 @@ Music-XML-Analyzer.iml
 *.project
 push.sh
 *.orig
+
+*.dia~
+
+public/uploads

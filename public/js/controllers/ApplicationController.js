@@ -18,6 +18,11 @@ MusicXMLAnalyzer.ApplicationController = function() {
 			uploadController.init();
 		}
 
+		if (Route.check('/search')) {
+			uploadController = MusicXMLAnalyzer.UploadController();
+			uploadController.init();
+		}
+
 		if (Route.check('/imprint')) {
 			console.log("Imprint");
 		}

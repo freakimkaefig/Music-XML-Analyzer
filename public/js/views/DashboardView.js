@@ -5,7 +5,7 @@ var that = {},
 
 	init = function(){
 		console.info('MusicXMLAnalyzer.DashboardView.init');
-
+		//BAR-CHART
 		var data = [4, 8, 15, 16, 23, 42];
 
 		 x = d3.scale.linear()
@@ -18,90 +18,35 @@ var that = {},
 		  .enter().append("div")
 		    .style("width", function(d) { return x(d) + "px"; })
 		    .text(function(d) { return d; });
-
-
-		 var pie = new d3pie("pieChart", {
-			"header": {
-				"title": {
-					"text": "Notenverteilung",
-					"fontSize": 22,
-					"font": "verdana"
-				},
+		 
+		//PIE-CHART
+		var pie = new d3pie("pie", {
+			header: {
+				title: {
+					text: "Notenverteilung"
+				}
 			},
-			
-			"size": {
-				"canvasHeight": 400,
-				"canvasWidth": 590,
-				"pieInnerRadius": "25%",
-				"pieOuterRadius": "90%"
-			},
-			"data": {
-				"content": [
-					{
-						"label": "C",
-						"value": 8,
-						"color": "#7e3838"
-					},
-					{
-						"label": "D",
-						"value": 5,
-						"color": "#7e4a38"
-					},
-					{
-						"label": "E",
-						"value": 2,
-						"color": "#7e5838"
-					},
-					{
-						"label": "F",
-						"value": 3,
-						"color": "#7e6538"
-					},
-					{
-						"label": "G",
-						"value": 2,
-						"color": "#7e7238"
-					},
-					{
-						"label": "A",
-						"value": 1,
-						"color": "#7c7e38"
-					},
-					{
-						"label": "H",
-						"value": 3,
-						"color": "#707e38"
-					}
+			data: {
+				content: [
+					{ label: "C", value: 264131 },
+					{ label: "D", value: 218812 },
+					{ label: "E", value: 157618 },
+					{ label: "F", value: 264131 },
+					{ label: "G", value: 518812 },
+					{ label: "A", value: 265131 },
+					{ label: "H", value: 111112 }
 				]
 			},
-			"labels": {
-				"inner": {
-					"format": "value"
+			/*
+			callbacks: {
+				onMouseoverSegment: function(info) {
+					console.log("mouseover:", info);
 				},
-				"mainLabel": {
-					"font": "verdana"
-				},
-				"percentage": {
-					"color": "#e1e1e1",
-					"font": "verdana",
-					"decimalPlaces": 0
-				},
-				"value": {
-					"color": "#e1e1e1",
-					"font": "verdana"
-				},
-				"lines": {
-					"enabled": true,
-					"color": "#cccccc"
-				}
-			},
-			"effects": {
-				"pullOutSegmentOnClick": {
-					"effect": "linear",
-					"speed": 400,
-					"size": 8
+				onMouseoutSegment: function(info) {
+					console.log("mouseout:", info);
 				}
 			}
+			*/
 		});
 
 
