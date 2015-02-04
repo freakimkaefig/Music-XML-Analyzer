@@ -7,7 +7,6 @@ class SearchController extends BaseController {
 		/**
 		 * Getting files for current user
 		 */
-		echo "</br></br></br></br>";
 		if (Cookie::get('user_id')) {
 			$user = User::find(Cookie::get('user_id'));
 			$user->uploads->each(function($upload) {
@@ -35,6 +34,7 @@ class SearchController extends BaseController {
 				}
 			});
 		}
+		
 
 		/////////////////////////
 		//Testing php xpath query
