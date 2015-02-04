@@ -35,8 +35,8 @@ MusicXMLAnalyzer.ApplicationController = function() {
 			dashboardModel.init();
 			dashboardView = MusicXMLAnalyzer.DashboardView();
 			dashboardView.init();
-			dashboardController = MusicXMLAnalyzer.DashboardController(dashboardModel, dashboardView);
-			dashboardController.init();
+			dashboardController = MusicXMLAnalyzer.DashboardController();
+			dashboardController.init(dashboardModel, dashboardView);
 		}
 
 		if (Route.check('/pattern')) {

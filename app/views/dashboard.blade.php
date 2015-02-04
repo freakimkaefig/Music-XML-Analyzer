@@ -4,15 +4,25 @@
 
 <div class="row">
 	<div class="col-xs-12">
-		<h1><center>Welcome to the Dashboard</h1>
+		<h1 class="text-center">Dashboard</h1>
+
+		<div class="row">
+			<div id="fileSelector" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4">
+				<h4 class="text-center">Fetching results from database ...</h4>
+			</div>
+		</div>
 	
-		<div id="pie1" class="pie col-xs-4"></div>
-		<div id="pie2" class="pie col-xs-4"></div>
-		<div id="pie3" class="pie col-xs-4"></div>
+		<div class="row">
+			<div id="pie_noteDistribution" class="pie col-xs-6"></div>
+			<div id="pie_intervalDistribution" class="pie col-xs-6"></div>
+		</div>
+		<div class="row"></div>
+			<div id="pie2" class="pie col-xs-6"></div>
+			<div id="pie3" class="pie col-xs-6"></div>
+		</div>
 
 
 		<div class="chart col-xs-6">
-			<h4>Different Statistics</h4>
 		</div>
 
 
