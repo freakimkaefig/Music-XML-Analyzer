@@ -99,6 +99,9 @@ Event::listen('cron.collectJobs', function() {
 			}
 			$upload->delete();
 	    });
+
+		$directory = public_path() . '/uploads/' . $user->id;
+		$success = Upload::delTree($directory);
 	    $user->delete();
 	}
 });
