@@ -14,7 +14,15 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	},
 
+	setCurrentAccidential = function(accidential) {
+
+	},
+
 	setCurrentNoteDuration = function(noteValue) {
+
+	},
+
+	setCurrentClef = function(clef) {
 
 	},
 
@@ -22,8 +30,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	},
 
-	addNoteElement = function(name, duration) {
+	addNoteElement = function() {
+		console.log("add note");
+	},
 
+	removeLastNoteElement = function() {
+	    console.log("remove last note");
 	},
 
 	getAllNoteElements = function() {
@@ -34,9 +46,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 	
 	that.init = init;
 	that.setCurrentNoteName = setCurrentNoteName;
+	that.setCurrentAccidential = setCurrentAccidential;
 	that.setCurrentNoteDuration = setCurrentNoteDuration;
+	that.setCurrentClef = setCurrentClef;
 	that.setCurrentNoteRythSpecial = setCurrentNoteRythSpecial;
 	that.addNoteElement = addNoteElement;
+	that.removeLastNoteElement = removeLastNoteElement;
 	that.getAllNoteElements = getAllNoteElements;
 
 	return that;

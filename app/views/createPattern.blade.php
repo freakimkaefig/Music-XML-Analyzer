@@ -54,15 +54,15 @@
 <div class="row">
 	<div class="col-xs-6">
 		<p></p>
-		<p>Special: </p>
-		<button type="button" class="btn btn-default btn-interaction">Triplet</button>
-		<button type="button" class="btn btn-default btn-interaction">Dotted</button>
+		<p>Special Ryth: </p>
+		<button type="button" class="btn btn-default btn-special-ryth">Triplet</button>
+		<button type="button" class="btn btn-default btn-special-ryth">Dotted</button>
 	</div>
 	<div class="col-xs-6">
 		<p></p>
 		<p>Controlls: </p>
-		<button type="button" class="btn btn-default btn-interaction">Delete</button>
-		<button type="button" class="btn btn-default btn-interaction">Add</button>
+		<button id="btn-add-note" type="button" class="btn btn-default">Delete</button>
+		<button id="btn-remove-note" type="button" class="btn btn-default">Add</button>
 	</div>
 </div>
 
