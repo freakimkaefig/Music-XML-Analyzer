@@ -4,23 +4,37 @@ class SearchController extends BaseController {
 
 	public function search()
 	{
-		/////////////////////////
-		// Getting files for current user
-		/////////////////////////
-		echo "</br></br></br></br>";
+		/**
+		 * Getting files for current user
+		 */
 		if (Cookie::get('user_id')) {
 			$user = User::find(Cookie::get('user_id'));
 			$user->uploads->each(function($upload) {
-				echo $upload->id;
-				echo '<br>';
-				echo $upload->url;
-				echo '<hr>';
-				$files[] = array(
-					'id' => $upload->id,
-					'url' => $upload->url,
-				);
+				if (!$upload->result) {
+					$xml = simplexml_load_file($upload->url);
+
+					$resultObject = new stdClass();
+					$resultObject->artist = (string) $this->determineArtist($xml);
+					$resultObject->title = (string) $this->determineTitle($xml);
+					$resultObject->clef = $this->determineClef($xml);
+					$resultObject->key = $this->determineKey($xml);
+					$resultObject->meter = $this->determineMeter($xml);
+					$resultObject->instruments = $this->determineInstruments($xml);
+					$resultObject->count_measures = $this->countMeasures($xml);
+					$resultObject->count_notes = $this->countNotes($xml);
+					$resultObject->note_distribution = $this->countNoteValues($xml);
+					$resultObject->note_types = $this->countNoteTypes($xml);
+					$resultObject->count_rests = $this->countRests($xml);
+					$resultObject->most_frequent_note = $this->determineMostFrequentNote($xml);
+
+					$result = new Result;
+					$result->value = json_encode($resultObject);
+					$result->upload()->associate($upload);
+					$result->save();
+				}
 			});
 		}
+		
 
 		/////////////////////////
 		//Testing php xpath query
@@ -28,19 +42,23 @@ class SearchController extends BaseController {
 
 		//load xml file from url
 		//for testing purpose
-		$xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/8633542/xQuery/Test.xml");
+		// $xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
 
-		echo "<pre>";
-		//"$this always refers to the object, in which a method exists, itself."
-		echo "Notenverteilung: " . $this->getNoteValues($xml);
-		echo "</br></br>häufigste Note: " . $this->getMostFrequentNote($xml);
-		echo "</br></br>Anzahl Pausen: " . $this->getRestQuantity($xml);
-		echo "</br></br>Anzahl Takte: " . $this->getMeasureQuantity($xml);
-		echo "</br></br>Anzahl Noten: " . $this->getNoteQuantity($xml);
-		echo "</br></br>Takt: " . $this->getMeter($xml);
-		echo "</br></br>Notenschlüssel: " . $this->getClef($xml);
-		echo "</br></br>Tonart: " . $this->getKey($xml);
-		echo "</pre>";
+		// echo "<pre>";
+		// //"$this always refers to the object, in which a method exists, itself."
+		// echo "Notenverteilung: " . json_encode($this->countNoteValues($xml)); // 
+		// echo "</br></br>häufigste Note: " . json_encode($this->determineMostFrequentNote($xml)); //
+		// echo "</br></br>Anzahl Pausen: " . json_encode($this->countRests($xml)); //
+		// echo "</br></br>Anzahl Takte: " . json_encode($this->countMeasures($xml)); // 
+		// echo "</br></br>Anzahl Noten: " . json_encode($this->countNotes($xml)); // 
+		// echo "</br></br>Takt: " . json_encode($this->determineMeter($xml)); // 
+		// echo "</br></br>Notenschlüssel: " . json_encode($this->determineClef($xml)); //
+		// echo "</br></br>Tonart: " . json_encode($this->determineKey($xml)); //
+		// echo "</br></br>Notenlängen: " . json_encode($this->countNoteTypes($xml)); //
+		// echo "</br></br>Instrumente: " . json_encode($this->determineInstruments($xml)); //
+		// echo "</br></br>Artist: " . $this->determineArtist($xml); //do not json_encode! //
+		// echo "</br></br>Title: " . $this->determineTitle($xml); //do not json_encode! //
+		// echo "</pre>";
 		
 		/////////////////////////
 		/////////////////////////
@@ -51,45 +69,87 @@ class SearchController extends BaseController {
 		//jsonencode bzw jsondecode zur umwandlung von php objekten in json
 
 
+		// save result to database
+		
+
+
 
 
 		//return search view
 		return View::make('search');
 	}
 
-	///////////////
-	//Public Getter
-	//UNNÖTIG?
-	///////////////
-	public function getNoteValues($xml){
-		return json_encode($this->countNoteValues($xml));
-	}
-	public function getMostFrequentNote($xml){
-		return json_encode($this->determineMostFrequentNote($xml));
-	}
-	public function getRestQuantity($xml){
-		return json_encode($this->countRests($xml));
-	}
-	public function getMeasureQuantity($xml){
-		return json_encode($this->countMeasures($xml));
-	}
-	public function getNoteQuantity($xml){
-		return json_encode($this->countNotes($xml));
-	}
-	public function getMeter($xml){
-		$json = json_encode($this->determineMeter($xml));
-		return str_replace('\\', '', $json);
-	}
-	public function getClef($xml){
-		return json_encode($this->determineClef($xml));
-	}
-	public function getKey($xml){
-		return json_encode($this->determineKey($xml));
-	}
 
 	/////////////////////////////
 	//Internal analysis functions
 	/////////////////////////////
+	function countIntervals($xml){
+		//toDo: magic.
+	}
+
+
+	function determineArtist($xml){
+		$artist = $xml->xpath("//credit[credit-type='composer']");
+		// var_dump($artist[0]);
+		if ($artist) {
+			return $artist[0]->{'credit-words'}->{0};
+		} else {
+			return "Unknown";
+		}
+	}
+
+
+	function determineTitle($xml){
+		$title = $xml->xpath("//credit[credit-type='title']");
+		// var_dump($title[0]->{'credit-words'});
+		if ($title) {
+			return $title[0]->{'credit-words'}->{0};
+		} else {
+			return "Unknown";
+		}
+	}
+
+
+	function determineInstruments($xml){
+		$instruments = $xml->xpath("//score-part");
+		$instrumentsArray = array();
+
+		foreach($instruments as $instrument){
+			if (!preg_match('/[0-9]/', $instrument->{'part-name'})){
+			    $value = $instrument->{'part-name'};
+
+				array_push($instrumentsArray,(string)$value);
+			}
+		}
+		//get instruments summarized in groups:
+		$instruments2 = $xml->xpath("//part-group[group-name]");
+
+		foreach($instruments2 as $instrument2){
+			if(!preg_match('/[0-9]/', $instrument2->{'group-name'})){
+			    $value = $instrument2->{'group-name'};
+
+				array_push($instrumentsArray,(string)$value);
+			}
+		}
+		return $instrumentsArray;
+	}
+
+
+	function countNoteTypes($xml){
+		$notes = $xml->xpath("//note");
+
+		$noteTypesArray = array();
+
+		foreach($notes as $note) {
+			$value = $note->type;
+			$rest = $note->rest;
+			if(!$rest){
+				array_push($noteTypesArray,(string)$value);
+			}
+	    }
+	    return array_count_values($noteTypesArray);
+	}
+
 
 	function determineMeter($xml){
 		$beat = $xml->xpath("//beats");
@@ -128,10 +188,10 @@ class SearchController extends BaseController {
 						$keyString = "H";
 						break;
 					case "6":
-						$keyString = "Fis";
+						$keyString = "F sharp";
 						break;
 					case "7":
-						$keyString = "Cis";
+						$keyString = "C sharp";
 						break;
 					case "-1":
 						$keyString = "F";
@@ -146,103 +206,125 @@ class SearchController extends BaseController {
 						$keyString = "As";
 						break;
 					case "-5":
-						$keyString = "Des";
+						$keyString = "D flat";
 						break;
 					case "-6":
-						$keyString = "Ges";
+						$keyString = "G flat";
 						break;
 					case "-7":
-						$keyString = "Ces";
+						$keyString = "C flat";
 						break;
 				endswitch;
-				array_push($keysArray, $keyString."-Dur");
+				array_push($keysArray, $keyString." major");
 			}
 			elseif($fifths != null && $mode === "minor"){
 				switch($fifths):
 					case "0":
-						$keyString = "a";
+						$keyString = "A";
 						break;
 					case "1":
-						$keyString = "e";
+						$keyString = "E";
 						break;
 					case "2":
-						$keyString = "h";
+						$keyString = "H";
 						break;
 					case "3":
-						$keyString = "fis";
+						$keyString = "F sharp";
 						break;
 					case "4":
-						$keyString = "cis";
+						$keyString = "C sharp";
 						break;
 					case "5":
-						$keyString = "gis";
+						$keyString = "G sharp";
 						break;
 					case "6":
-						$keyString = "dis";
+						$keyString = "D sharp";
 						break;
 					case "7":
-						$keyString = "ais";
+						$keyString = "A sharp";
 						break;
 					case "-1":
-						$keyString = "d";
+						$keyString = "D";
 						break;
 					case "-2":
-						$keyString = "g";
+						$keyString = "G";
 						break;
 					case "-3":
-						$keyString = "c";
+						$keyString = "C";
 						break;
 					case "-4":
-						$keyString = "f";
+						$keyString = "F";
 						break;
 					case "-5":
-						$keyString = "b";
+						$keyString = "B";
 						break;
 					case "-6":
-						$keyString = "es";
+						$keyString = "E flat";
 						break;
 					case "-7":
-						$keyString = "as";
+						$keyString = "A flat";
 						break;
 				endswitch;
-				array_push($keysArray, $keyString."-Moll");
+				array_push($keysArray, $keyString." minor");
 			}
 	    }
-
-	    //Anzahl der Vorkommnisse bei Tonart sinnvoll? (z.B: bei vorzeichenwechsel?)
 	    return array_count_values($keysArray);;
 	}
 
 
 	function determineClef($xml){
 		$clefs = $xml->xpath("//clef");
+		//print_r($clefs);
 		$clefsArray = array();
 
 		foreach($clefs as $clef) {
 			$value = $clef->sign;
+			$line = $clef->line; //https://de.wikipedia.org/wiki/Notenschl%C3%BCssel#C-Schl.C3.BCssel
 			
 			if($value != null){
 				switch($value):
 					case "C":
-						$value = (string)$value."-Schluessel";
-						//C-Schlüssel näher bestimmen:
-						//$line = $clef->lign; //welche line == was? siehe: https://de.wikipedia.org/wiki/Notenschl%C3%BCssel#C-Schl.C3.BCssel
-						//if($value != null && (string)$value === "C")
+						//inspect C-Clef:
+						switch($line):
+							case 1:
+								$value = "soprano clef";
+								break;
+							case 2:
+								$value = "mezzo-sopran clef";
+								break;
+							case 3:
+								$value = "alto clef";
+								break;
+							case 4:
+								$value = "tenor clef";
+								break;
+							case 5:
+								$value = "baritone clef";
+								break;
+						endswitch;
 						break;
 					case "F":
-						$value = "Bass-Schluessel";
+						$value = "bass clef";
 						break;
 					case "G":
-						$value = "Violin-Schluessel";
+						$value = "G clef";
 						break;
-						//missing cases: " percussion, TAB, none"
+					case "percussion":
+						$value = "percussion clef";
+						break;
+					case "TAB":
+						$value = "tablature";
+						break;
+					case "none":
+						$value = "none";
+						break;
 					default:
-						$value = "N/A";
+						break;
 				endswitch;
 				array_push($clefsArray,$value);
 			}
 	    }
-	    //Anzahl der Vorkommnisse bei Notenschlüssel sinnvoll? (z.B. bei Wechsel?)
+	    //print_R($clefsArray);
 	    return array_count_values($clefsArray);;
 	}
 
@@ -276,8 +358,17 @@ class SearchController extends BaseController {
 
 		foreach($notes as $note) {
 			$value = $note->pitch->step;
-			//check if note equals rest and therefore mustn't be counted
+
 			if($value != null){
+				//check for possible accidental
+				$alter = $note->pitch->alter;
+				if((int)$alter[0] === -1){
+					$value = $value . "b";
+				}
+				elseif((int)$alter[0] === 1){
+					$value = $value . "#";
+				}
+				//check if note equals rest and therefore mustn't be counted
 				//cast obj to string before pushing it to array
 				array_push($notesArray,(string)$value);
 			}
