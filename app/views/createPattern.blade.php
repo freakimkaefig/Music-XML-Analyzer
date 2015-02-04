@@ -61,8 +61,8 @@
 	<div class="col-xs-6">
 		<p></p>
 		<p>Controlls: </p>
-		<button id="btn-add-note" type="button" class="btn btn-default">Delete</button>
-		<button id="btn-remove-note" type="button" class="btn btn-default">Add</button>
+		<button id="btn-add-note" type="button" class="btn btn-default">Add</button>
+		<button id="btn-remove-note" type="button" class="btn btn-default">Delete</button>
 	</div>
 </div>
 

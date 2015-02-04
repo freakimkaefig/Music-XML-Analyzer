@@ -4,38 +4,52 @@ MusicXMLAnalyzer.PatternModel = function(){
 	noteElements = [],
 	noteElement = null,
 
+	curNoteName = null,
+	curAccidential = null,
+	curNoteDuration = null,
+	curClef = null,
+	curRythSpec = null,
+
 
 	init = function(){
 		console.log("pattern model");
-
 	},
 
 	setCurrentNoteName = function(noteName) {
-
+		console.log(noteName);
+		curNoteName = noteName;
 	},
 
 	setCurrentAccidential = function(accidential) {
-
+		console.log(accidential);
+		curAccidential = accidential;
 	},
 
-	setCurrentNoteDuration = function(noteValue) {
-
+	setCurrentNoteDuration = function(noteDuration) {
+		console.log(noteDuration);
+		curNoteDuration = noteDuration;
 	},
 
 	setCurrentClef = function(clef) {
-
+		console.log(clefVal);
+		curClef = clef;
 	},
 
-	setCurrentNoteRythSpecial = function(val) {
-
+	setCurrentNoteRythSpecial = function(rythSpec) {
+		console.log(rythSpec);
+		this.rythSpec = rythSpec;
 	},
 
 	addNoteElement = function() {
-		console.log("add note");
+		if (!curNoteName) {
+			console.log("noteName missing");
+		} else {
+			console.log("note added");
+		}
 	},
 
 	removeLastNoteElement = function() {
-	    console.log("remove last note");
+	    console.log("remove last note button");
 	},
 
 	getAllNoteElements = function() {
