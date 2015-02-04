@@ -4,23 +4,37 @@ class SearchController extends BaseController {
 
 	public function search()
 	{
-		/////////////////////////
-		// Getting files for current user
-		/////////////////////////
-		echo "</br></br></br></br>";
+		/**
+		 * Getting files for current user
+		 */
 		if (Cookie::get('user_id')) {
 			$user = User::find(Cookie::get('user_id'));
 			$user->uploads->each(function($upload) {
-				echo $upload->id;
-				echo '<br>';
-				echo $upload->url;
-				echo '<hr>';
-				$files[] = array(
-					'id' => $upload->id,
-					'url' => $upload->url,
-				);
+				if (!$upload->result) {
+					$xml = simplexml_load_file($upload->url);
+
+					$resultObject = new stdClass();
+					$resultObject->artist = (string) $this->determineArtist($xml);
+					$resultObject->title = (string) $this->determineTitle($xml);
+					$resultObject->clef = $this->determineClef($xml);
+					$resultObject->key = $this->determineKey($xml);
+					$resultObject->meter = $this->determineMeter($xml);
+					$resultObject->instruments = $this->determineInstruments($xml);
+					$resultObject->count_measures = $this->countMeasures($xml);
+					$resultObject->count_notes = $this->countNotes($xml);
+					$resultObject->note_distribution = $this->countNoteValues($xml);
+					$resultObject->note_types = $this->countNoteTypes($xml);
+					$resultObject->count_rests = $this->countRests($xml);
+					$resultObject->most_frequent_note = $this->determineMostFrequentNote($xml);
+
+					$result = new Result;
+					$result->value = json_encode($resultObject);
+					$result->upload()->associate($upload);
+					$result->save();
+				}
 			});
 		}
+		
 
 		/////////////////////////
 		//Testing php xpath query
@@ -28,10 +42,10 @@ class SearchController extends BaseController {
 
 		//load xml file from url
 		//for testing purpose
-		$xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
+		// $xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
 
-		echo "<pre>";
-		//"$this always refers to the object, in which a method exists, itself."
+		// echo "<pre>";
+		// //"$this always refers to the object, in which a method exists, itself."
 		// echo "Notenverteilung: " . json_encode($this->countNoteValues($xml));
 		// echo "</br></br>häufigste Note: " . json_encode($this->determineMostFrequentNote($xml));
 		// echo "</br></br>Anzahl Pausen: " . json_encode($this->countRests($xml));
@@ -47,6 +61,10 @@ class SearchController extends BaseController {
 		echo "</br></br>Intervalle: " . json_encode($this->countIntervals($xml));
 		echo "</pre>";
 		
+		// save result to database
+		
+
+
 
 		//return search view
 		return View::make('search');
@@ -242,14 +260,22 @@ class SearchController extends BaseController {
 	function determineArtist($xml){
 		$artist = $xml->xpath("//credit[credit-type='composer']");
 		// var_dump($artist[0]);
-		return $artist[0]->{'credit-words'}->{0};
+		if ($artist) {
+			return $artist[0]->{'credit-words'}->{0};
+		} else {
+			return "Unknown";
+		}
 	}
 
 
 	function determineTitle($xml){
 		$title = $xml->xpath("//credit[credit-type='title']");
 		// var_dump($title[0]->{'credit-words'});
-		return $title[0]->{'credit-words'}->{0};
+		if ($title) {
+			return $title[0]->{'credit-words'}->{0};
+		} else {
+			return "Unknown";
+		}
 	}
 
 
