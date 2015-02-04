@@ -4,21 +4,35 @@ class SearchController extends BaseController {
 
 	public function search()
 	{
-		/////////////////////////
-		// Getting files for current user
-		/////////////////////////
+		/**
+		 * Getting files for current user
+		 */
 		echo "</br></br></br></br>";
 		if (Cookie::get('user_id')) {
 			$user = User::find(Cookie::get('user_id'));
 			$user->uploads->each(function($upload) {
-				echo $upload->id;
-				echo '<br>';
-				echo $upload->url;
-				echo '<hr>';
-				$files[] = array(
-					'id' => $upload->id,
-					'url' => $upload->url,
-				);
+				if (!$upload->result) {
+					$xml = simplexml_load_file($upload->url);
+
+					$resultObject = new stdClass();
+					$resultObject->artist = (string) $this->determineArtist($xml);
+					$resultObject->title = (string) $this->determineTitle($xml);
+					$resultObject->clef = $this->determineClef($xml);
+					$resultObject->key = $this->determineKey($xml);
+					$resultObject->meter = $this->determineMeter($xml);
+					$resultObject->instruments = $this->determineInstruments($xml);
+					$resultObject->count_measures = $this->countMeasures($xml);
+					$resultObject->count_notes = $this->countNotes($xml);
+					$resultObject->note_distribution = $this->countNoteValues($xml);
+					$resultObject->note_types = $this->countNoteTypes($xml);
+					$resultObject->count_rests = $this->countRests($xml);
+					$resultObject->most_frequent_note = $this->determineMostFrequentNote($xml);
+
+					$result = new Result;
+					$result->value = json_encode($resultObject);
+					$result->upload()->associate($upload);
+					$result->save();
+				}
 			});
 		}
 
@@ -28,23 +42,23 @@ class SearchController extends BaseController {
 
 		//load xml file from url
 		//for testing purpose
-		$xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
+		// $xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
 
-		echo "<pre>";
-		//"$this always refers to the object, in which a method exists, itself."
-		echo "Notenverteilung: " . json_encode($this->countNoteValues($xml));
-		echo "</br></br>häufigste Note: " . json_encode($this->determineMostFrequentNote($xml));
-		echo "</br></br>Anzahl Pausen: " . json_encode($this->countRests($xml));
-		echo "</br></br>Anzahl Takte: " . json_encode($this->countMeasures($xml));
-		echo "</br></br>Anzahl Noten: " . json_encode($this->countNotes($xml));
-		echo "</br></br>Takt: " . json_encode($this->determineMeter($xml));
-		echo "</br></br>Notenschlüssel: " . json_encode($this->determineClef($xml));
-		echo "</br></br>Tonart: " . json_encode($this->determineKey($xml));
-		echo "</br></br>Notenlängen: " . json_encode($this->countNoteTypes($xml));
-		echo "</br></br>Instrumente: " . json_encode($this->determineInstruments($xml));
-		echo "</br></br>Artist: " . $this->determineArtist($xml); //do not json_encode!
-		echo "</br></br>Title: " . $this->determineTitle($xml); //do not json_encode!
-		echo "</pre>";
+		// echo "<pre>";
+		// //"$this always refers to the object, in which a method exists, itself."
+		// echo "Notenverteilung: " . json_encode($this->countNoteValues($xml)); // 
+		// echo "</br></br>häufigste Note: " . json_encode($this->determineMostFrequentNote($xml)); //
+		// echo "</br></br>Anzahl Pausen: " . json_encode($this->countRests($xml)); //
+		// echo "</br></br>Anzahl Takte: " . json_encode($this->countMeasures($xml)); // 
+		// echo "</br></br>Anzahl Noten: " . json_encode($this->countNotes($xml)); // 
+		// echo "</br></br>Takt: " . json_encode($this->determineMeter($xml)); // 
+		// echo "</br></br>Notenschlüssel: " . json_encode($this->determineClef($xml)); //
+		// echo "</br></br>Tonart: " . json_encode($this->determineKey($xml)); //
+		// echo "</br></br>Notenlängen: " . json_encode($this->countNoteTypes($xml)); //
+		// echo "</br></br>Instrumente: " . json_encode($this->determineInstruments($xml)); //
+		// echo "</br></br>Artist: " . $this->determineArtist($xml); //do not json_encode! //
+		// echo "</br></br>Title: " . $this->determineTitle($xml); //do not json_encode! //
+		// echo "</pre>";
 		
 		/////////////////////////
 		/////////////////////////
@@ -53,6 +67,10 @@ class SearchController extends BaseController {
 
 		//toJson:
 		//jsonencode bzw jsondecode zur umwandlung von php objekten in json
+
+
+		// save result to database
+		
 
 
 
@@ -73,14 +91,22 @@ class SearchController extends BaseController {
 	function determineArtist($xml){
 		$artist = $xml->xpath("//credit[credit-type='composer']");
 		// var_dump($artist[0]);
-		return $artist[0]->{'credit-words'}->{0};
+		if ($artist) {
+			return $artist[0]->{'credit-words'}->{0};
+		} else {
+			return "Unknown";
+		}
 	}
 
 
 	function determineTitle($xml){
 		$title = $xml->xpath("//credit[credit-type='title']");
 		// var_dump($title[0]->{'credit-words'});
-		return $title[0]->{'credit-words'}->{0};
+		if ($title) {
+			return $title[0]->{'credit-words'}->{0};
+		} else {
+			return "Unknown";
+		}
 	}
 
 
