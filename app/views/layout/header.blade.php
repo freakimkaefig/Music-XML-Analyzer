@@ -14,7 +14,7 @@
                 <?php if (!$uploads->isEmpty()): ?>
 			     	<li>
                         <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#uploadModal">Uploads</button>
-			     			@include('upload.dropzone')
+			     		@include('upload.dropzone')
 			     	</li>
 			      	<li><a href="{{ URL::route('dashboard') }}">Dashboard</a></li>
       		        <li><a href="{{ URL::route('search') }}">Search</a></li>
