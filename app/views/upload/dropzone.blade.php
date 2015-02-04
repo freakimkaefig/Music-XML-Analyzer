@@ -11,17 +11,19 @@
 			<?php if (Cookie::get('user_id')): ?>
 			<?php
 				$user = User::find(Cookie::get('user_id'));
-				$user->uploads->each(function($upload) {
+				if (!count($user->uploads)) {
+					$user->uploads->each(function($upload) {
 			?>
-				<div class="dz-preview dz-file-preview dz-processing dz-complete">
-					<div class="dz-image"><img data-dz-thumbnail=""></div>
-					<div class="dz-details">
-						<div class="dz-size"><span data-dz-size=""><strong>13.2</strong> KB</span></div>
-						<div class="dz-filename"><span data-dz-name="">{{ $upload->name() }}</span></div>
+					<div class="dz-preview dz-file-preview dz-processing dz-complete">
+						<div class="dz-image"><img data-dz-thumbnail=""></div>
+						<div class="dz-details">
+							<div class="dz-size"><span data-dz-size=""><strong>13.2</strong> KB</span></div>
+							<div class="dz-filename"><span data-dz-name="">{{ $upload->name() }}</span></div>
+						</div>
 					</div>
-				</div>
 			<?php
-				});
+					});
+				}
 			?>
 			<?php endif; ?>
 		</form>

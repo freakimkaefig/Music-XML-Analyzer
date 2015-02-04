@@ -8,18 +8,18 @@
      	<?php if (Cookie::get('user_id')): ?>
      		<?php $user = User::find(Cookie::get('user_id')); ?>
      		<?php if ($user): ?>
-     			<?php $uploads = $user->uploads; ?>
-     			<?php if (!$uploads->isEmpty()): ?>
-			     	<ul class="nav navbar-nav navbar-right">
-			     		<li>
-                                   <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#uploadModal">Uploads
-                                   </button>
+		     	<ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">User ID: {{ $user->id }}</a></li>
+                <?php $uploads = $user->uploads; ?>
+                <?php if (!$uploads->isEmpty()): ?>
+			     	<li>
+                        <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#uploadModal">Uploads</button>
 			     			@include('upload.dropzone')
-			     		</li>
-			      		<li><a href="{{ URL::route('dashboard') }}">Dashboard</a></li>
-      		<li><a href="{{ URL::route('search') }}">Search</a></li>
-			  		</ul>
-     			<?php endif; ?>
+			     	</li>
+			      	<li><a href="{{ URL::route('dashboard') }}">Dashboard</a></li>
+      		        <li><a href="{{ URL::route('search') }}">Search</a></li>
+                <?php endif; ?>
+			  	</ul>
      		<?php endif; ?>
      	<?php endif; ?>
 
