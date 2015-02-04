@@ -7,88 +7,218 @@ class SearchController extends BaseController {
 		/**
 		 * Getting files for current user
 		 */
-		if (Cookie::get('user_id')) {
-			$user = User::find(Cookie::get('user_id'));
-			$user->uploads->each(function($upload) {
-				if (!$upload->result) {
-					$xml = simplexml_load_file($upload->url);
+		$user = User::find(Cookie::get('user_id'));
+		$user->uploads->each(function($upload) {
+			if (!$upload->result) {
+				$xml = simplexml_load_file($upload->url);
 
-					$resultObject = new stdClass();
-					$resultObject->artist = (string) $this->determineArtist($xml);
-					$resultObject->title = (string) $this->determineTitle($xml);
-					$resultObject->clef = $this->determineClef($xml);
-					$resultObject->key = $this->determineKey($xml);
-					$resultObject->meter = $this->determineMeter($xml);
-					$resultObject->instruments = $this->determineInstruments($xml);
-					$resultObject->count_measures = $this->countMeasures($xml);
-					$resultObject->count_notes = $this->countNotes($xml);
-					$resultObject->note_distribution = $this->countNoteValues($xml);
-					$resultObject->note_types = $this->countNoteTypes($xml);
-					$resultObject->count_rests = $this->countRests($xml);
-					$resultObject->most_frequent_note = $this->determineMostFrequentNote($xml);
+				$resultObject = new stdClass();
+				$resultObject->artist = (string) $this->_determineArtist($xml);
+				$resultObject->title = (string) $this->_determineTitle($xml);
+				$resultObject->clef = $this->_determineClef($xml);
+				$resultObject->key = $this->_determineKey($xml);
+				$resultObject->meter = $this->_determineMeter($xml);
+				$resultObject->instruments = $this->_determineInstruments($xml);
+				$resultObject->count_measures = $this->_countMeasures($xml);
+				$resultObject->count_notes = $this->_countNotes($xml);
+				$resultObject->note_distribution = $this->_countNoteValues($xml);
+				$resultObject->note_types = $this->_countNoteTypes($xml);
+				$resultObject->count_rests = $this->_countRests($xml);
+				$resultObject->most_frequent_note = $this->_determineMostFrequentNote($xml);
+				$resultObject->intervals = $this->_countIntervals($xml);
 
-					$result = new Result;
-					$result->value = json_encode($resultObject);
-					$result->upload()->associate($upload);
-					$result->save();
-				}
-			});
-		}
-		
+				$result = new Result;
+				$result->value = json_encode($resultObject);
+				$result->upload()->associate($upload);
+				$result->save();
+			}
+		});
 
-		/////////////////////////
-		//Testing php xpath query
-		/////////////////////////
-
-		//load xml file from url
-		//for testing purpose
-		// $xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
-
-		// echo "<pre>";
-		// //"$this always refers to the object, in which a method exists, itself."
-		// echo "Notenverteilung: " . json_encode($this->countNoteValues($xml)); // 
-		// echo "</br></br>häufigste Note: " . json_encode($this->determineMostFrequentNote($xml)); //
-		// echo "</br></br>Anzahl Pausen: " . json_encode($this->countRests($xml)); //
-		// echo "</br></br>Anzahl Takte: " . json_encode($this->countMeasures($xml)); // 
-		// echo "</br></br>Anzahl Noten: " . json_encode($this->countNotes($xml)); // 
-		// echo "</br></br>Takt: " . json_encode($this->determineMeter($xml)); // 
-		// echo "</br></br>Notenschlüssel: " . json_encode($this->determineClef($xml)); //
-		// echo "</br></br>Tonart: " . json_encode($this->determineKey($xml)); //
-		// echo "</br></br>Notenlängen: " . json_encode($this->countNoteTypes($xml)); //
-		// echo "</br></br>Instrumente: " . json_encode($this->determineInstruments($xml)); //
-		// echo "</br></br>Artist: " . $this->determineArtist($xml); //do not json_encode! //
-		// echo "</br></br>Title: " . $this->determineTitle($xml); //do not json_encode! //
-		// echo "</pre>";
-		
-		/////////////////////////
-		/////////////////////////
-		/////////////////////////
-
-
-		//toJson:
-		//jsonencode bzw jsondecode zur umwandlung von php objekten in json
-
-
-		// save result to database
-		
-
-
-
-
-		//return search view
 		return View::make('search');
 	}
 
-
 	/////////////////////////////
-	//Internal analysis functions
+	//Internal analysis private functions
 	/////////////////////////////
-	function countIntervals($xml){
+	private function _countIntervals($xml){
 		//toDo: magic.
+		//Halbtonschritte zur Tonika (C-Dur)
+		// C = 0
+		// C#/Db = 1
+		// D = 2
+		// D#/Eb = 3
+		// E = 4
+		// F = 5
+		// F#/Gb = 6
+		// G = 7
+		// G#/Ab = 8
+		// A = 9
+		// A#/Bb = 10
+		// B = 11
+		$tonika = array("C" => 0,
+						"D" => 2,
+						"E" => 4,
+						"F" => 5,
+						"G" => 7,
+						"A" => 9,
+						"B" => 11);
+
+		$notes = $xml->xpath("//note");
+		$notesArray = array();
+		$intervalArray = array();
+		foreach($notes as $note){
+			$rest = $note->rest;
+			if(!$rest){
+				// echo "rest is null<br/>";
+				$noteStep = $note->pitch->step;
+				$noteAlter = $note->pitch->alter;
+				$noteOctave = $note->pitch->octave;
+
+				/*if(!$noteStep){
+					echo "<br/>ERROR: $noteStep is null!<br/>";
+					print_r($noteStep);
+					var_dump($noteStep);
+					echo "<br/>".$noteStep[0];
+					// echo "<br/>".$noteStep->{0}; //"trying to get property of non-object"
+					echo "<br/>";
+				}else*/if($noteStep && $noteOctave){
+
+					$noteValue = $tonika[(string)$noteStep];
+					if($noteAlter){
+						// var_dump($noteAlter);
+						//notevalue += 1 or -1 (alter)
+						// echo "<br/>step ".$noteStep;
+						// echo "<br/>value before alter ".$noteValue;
+						$noteValue = (int)$noteValue + (int)$noteAlter;
+						// echo "<br/>alter ".$noteAlter;
+						// echo "<br/>value after alter ".$noteValue."<br/>";
+					}
+					$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
+					//array befüllen
+					array_push($notesArray, $noteValue);
+				}
+			}
+			else{
+				//Pause?
+				// echo "<br/>REST?: ";
+				// var_dump($note);
+			}
+		}//end foreach
+		// var_dump($notesArray);
+		for($i = 0; $i < count($notesArray) - 1;$i++){
+			$intervalValue = abs((int)$notesArray[$i] - (int)$notesArray[++$i]);
+			// echo "<br/>intervall: ".$intervalValue;
+			switch($intervalValue):
+				case 0:
+					array_push(($intervalArray), "Perfect unison");
+					break;
+				case 1:
+					array_push(($intervalArray), "Minor second");
+					break;
+				case 2:
+					array_push(($intervalArray), "Major second");
+					break;
+				case 3:
+					array_push(($intervalArray), "Minor third");
+					break;
+				case 4:
+					array_push(($intervalArray), "Major third");
+					break;
+				case 5:
+					array_push(($intervalArray), "Perfect fourth");
+					break;
+				case 6:
+					array_push(($intervalArray), "Tritone");
+					break;
+				case 7:
+					array_push(($intervalArray), "Perfect fifth");
+					break;
+				case 8:
+					array_push(($intervalArray), "Minor sixth");
+					break;
+				case 9:
+					array_push(($intervalArray), "Major sixth");
+					break;
+				case 10:
+					array_push(($intervalArray), "Minor seventh");
+					break;
+				case 11:
+					array_push(($intervalArray), "Major seventh");
+					break;
+				case 12:
+					array_push(($intervalArray), "Perfect octave");
+					break;
+				case 13:
+					array_push(($intervalArray), "Minor ninth");
+					break;
+				case 14:
+					array_push(($intervalArray), "Major ninth");
+					break;
+				case 15:
+					array_push(($intervalArray), "Minor tenth");
+					break;
+				case 16:
+					array_push(($intervalArray), "Major tenth");
+					break;
+				case 17:
+					array_push(($intervalArray), "Perfect eleventh");
+					break;
+				case 18:
+					array_push(($intervalArray), "Augmented eleventh");
+					break;
+				case 19:
+					array_push(($intervalArray), "Perfect twelfth");
+					break;
+				case 20:
+					array_push(($intervalArray), "Minor thirteenth");
+					break;
+				case 21:
+					array_push(($intervalArray), "Major thirteenth");
+					break;
+				case 22:
+					array_push(($intervalArray), "Minor fourteenth");
+					break;
+				case 23:
+					array_push(($intervalArray), "Major fourteenth");
+					break;
+				case 24:
+					array_push(($intervalArray), "Double octave");
+					break;
+				case 25:
+					array_push(($intervalArray), "Double octaven + Minor second");
+					break;
+				case 26:
+					array_push(($intervalArray), "Double octave + Major second");
+					break;
+				case 27:
+					array_push(($intervalArray), "Double octave + Minor third");
+					break;
+				case 28:
+					array_push(($intervalArray), "Double octave + Major third");
+					break;
+				case 29:
+					array_push(($intervalArray), "Double octave + Perfect fourth");
+					break;
+				case 30:
+					array_push(($intervalArray), "Double octave + Tritone");
+					break;
+				case 31:
+					array_push(($intervalArray), "Double octave + Perfect fifth");
+					break;
+				case 32:
+					array_push(($intervalArray), "Double octave + Minor sixth");
+					break;
+				case 33:
+					array_push(($intervalArray), "Double octave + Major sixth");
+					break;
+			endswitch;
+		}
+
+		return array_count_values($intervalArray);
 	}
 
 
-	function determineArtist($xml){
+	private function _determineArtist($xml){
 		$artist = $xml->xpath("//credit[credit-type='composer']");
 		// var_dump($artist[0]);
 		if ($artist) {
@@ -99,7 +229,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineTitle($xml){
+	private function _determineTitle($xml){
 		$title = $xml->xpath("//credit[credit-type='title']");
 		// var_dump($title[0]->{'credit-words'});
 		if ($title) {
@@ -110,7 +240,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineInstruments($xml){
+	private function _determineInstruments($xml){
 		$instruments = $xml->xpath("//score-part");
 		$instrumentsArray = array();
 
@@ -135,7 +265,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function countNoteTypes($xml){
+	private function _countNoteTypes($xml){
 		$notes = $xml->xpath("//note");
 
 		$noteTypesArray = array();
@@ -151,7 +281,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineMeter($xml){
+	private function _determineMeter($xml){
 		$beat = $xml->xpath("//beats");
 		$beatType =  $xml->xpath("//beat-type");
 		$meter = $beat[0] ."/". $beatType[0];
@@ -159,7 +289,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineKey($xml){
+	private function _determineKey($xml){
 		$keys = $xml->xpath("//key");
 		$keysArray = array();
 
@@ -272,7 +402,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineClef($xml){
+	private function _determineClef($xml){
 		$clefs = $xml->xpath("//clef");
 		//print_r($clefs);
 		$clefsArray = array();
@@ -329,25 +459,25 @@ class SearchController extends BaseController {
 	}
 
 
-	function countMeasures($xml){
+	private function _countMeasures($xml){
 		$measures = $xml->xpath("//measure");
 		return count($measures);
 	}
 
 
-	function countRests($xml){
+	private function _countRests($xml){
 		$rests = $xml->xpath("//rest");
 		return count($rests);
 	}
 
 
-	function countNotes($xml){
+	private function _countNotes($xml){
 		$notes = $xml->xpath("//note");
 		return count($notes);
 	}
 
 
-	function countNoteValues($xml){
+	private function _countNoteValues($xml){
 
 		//"The descendant (double-slash) operator in xpath will search all descendants for a match."
 		//"The below is equivalent to the DOM method getElementsByTagName"
@@ -368,7 +498,6 @@ class SearchController extends BaseController {
 				elseif((int)$alter[0] === 1){
 					$value = $value . "#";
 				}
-				//check if note equals rest and therefore mustn't be counted
 				//cast obj to string before pushing it to array
 				array_push($notesArray,(string)$value);
 			}
@@ -377,10 +506,10 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineMostFrequentNote($xml){
+	private function _determineMostFrequentNote($xml){
 
 		//häufigkeiten der Noten zählen
-		$countedNotes = $this->countNoteValues($xml);
+		$countedNotes = $this->_countNoteValues($xml);
 
 	    //häufigste note ausgeben
 	    return array_search(max($countedNotes), $countedNotes);
