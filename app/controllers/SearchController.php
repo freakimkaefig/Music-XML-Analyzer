@@ -42,30 +42,25 @@ class SearchController extends BaseController {
 
 		//load xml file from url
 		//for testing purpose
-		// $xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
+		$xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
 
-		// echo "<pre>";
+		echo "<pre><br/><br/>";
 		// //"$this always refers to the object, in which a method exists, itself."
-		// echo "Notenverteilung: " . json_encode($this->countNoteValues($xml));
-		// echo "</br></br>häufigste Note: " . json_encode($this->determineMostFrequentNote($xml));
-		// echo "</br></br>Anzahl Pausen: " . json_encode($this->countRests($xml));
-		// echo "</br></br>Anzahl Takte: " . json_encode($this->countMeasures($xml));
-		// echo "</br></br>Anzahl Noten: " . json_encode($this->countNotes($xml));
-		// echo "</br></br>Takt: " . str_replace("\\","",json_encode($this->determineMeter($xml)));
-		// echo "</br></br>Notenschlüssel: " . json_encode($this->determineClef($xml));
-		// echo "</br></br>Tonart: " . json_encode($this->determineKey($xml));
-		// echo "</br></br>Notenlängen: " . json_encode($this->countNoteTypes($xml));
-		// echo "</br></br>Instrumente: " . json_encode($this->determineInstruments($xml));
-		// echo "</br></br>Artist: " . $this->determineArtist($xml);
-		// echo "</br></br>Title: " . $this->determineTitle($xml);
+		echo "Notenverteilung: " . json_encode($this->countNoteValues($xml));
+		echo "</br></br>häufigste Note: " . json_encode($this->determineMostFrequentNote($xml));
+		echo "</br></br>Anzahl Pausen: " . json_encode($this->countRests($xml));
+		echo "</br></br>Anzahl Takte: " . json_encode($this->countMeasures($xml));
+		echo "</br></br>Anzahl Noten: " . json_encode($this->countNotes($xml));
+		echo "</br></br>Takt: " . str_replace("\\","",json_encode($this->determineMeter($xml)));
+		echo "</br></br>Notenschlüssel: " . json_encode($this->determineClef($xml));
+		echo "</br></br>Tonart: " . json_encode($this->determineKey($xml));
+		echo "</br></br>Notenlängen: " . json_encode($this->countNoteTypes($xml));
+		echo "</br></br>Instrumente: " . json_encode($this->determineInstruments($xml));
+		echo "</br></br>Artist: " . $this->determineArtist($xml);
+		echo "</br></br>Title: " . $this->determineTitle($xml);
 		echo "</br></br>Intervalle: " . json_encode($this->countIntervals($xml));
 		echo "</pre>";
 		
-		// save result to database
-		
-
-
-
 		//return search view
 		return View::make('search');
 	}
