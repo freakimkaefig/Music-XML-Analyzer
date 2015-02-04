@@ -2,6 +2,7 @@ MusicXMLAnalyzer.UploadController = function() {
 
 	var that = {},
 	$uploadModal = null,
+	$uploadDropzone = null,
 	$progressWrapper = null,
 	$uploadSubmit = null,
 	$uploadClose = null,
@@ -13,6 +14,8 @@ MusicXMLAnalyzer.UploadController = function() {
 		$uploadModal = $('#uploadModal');
 		$uploadModal.data('backdrop', 'static');
 		$uploadModal.data('keyboard', false);
+
+		$uploadDropzone = $('#uploadDropzone');
 
 		$progressWrapper = $('#progressWrapper');
 
@@ -34,7 +37,6 @@ MusicXMLAnalyzer.UploadController = function() {
 			success: onSuccess,
 			queuecomplete: onQueueComplete
 		};
-
 	},
 
 	setUploadSubmit = function(value) {
@@ -45,12 +47,19 @@ MusicXMLAnalyzer.UploadController = function() {
 			$uploadSubmit.attr('disabled', 'disabled');
 			$uploadClose.removeAttr('disabled');
 		}
-	}
+	},
+
+	disableAllInputs = function() {
+		$uploadSubmit.attr('disabled', 'disabled');
+		$uploadClose.attr('disabled', 'disabled');
+	},
 
 	onUploadSubmit = function(event) {
 		console.info("MusicXMLAnalyzer.UploadController.onUploadSubmit");
 
 		if (gotValidFile) {
+			$progressWrapper.prepend('<p>Analyzing files ...</p>');
+			disableAllInputs();
 			window.location.href = '/upload-complete';
 		} else {
 			var errorMessage = 'You have no new files to analyze!'

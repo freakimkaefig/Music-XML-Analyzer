@@ -10,12 +10,16 @@
 {{ HTML::script('js/App.js') }}
 
 
-<!-- ===Views=== -->
+<!-- === Models === -->
+{{ HTML::script('js/models/DashboardModel.js') }}
+
+<!-- === Views === -->
 {{ HTML::script('js/views/DashboardView.js') }}
 
-<!-- ===Controller=== -->
+<!-- === Controller === -->
 {{ HTML::script('js/controllers/ApplicationController.js') }}
 {{ HTML::script('js/controllers/UploadController.js') }}
+{{ HTML::script('js/controllers/DashboardController.js') }}
 {{ HTML::script('js/controllers/PatternController.js') }}
 
 

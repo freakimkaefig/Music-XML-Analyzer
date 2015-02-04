@@ -27,7 +27,7 @@ class HomeController extends BaseController {
 				$user->resetLastActivity();
 				$uploads = $user->uploads;
 				if (!$uploads->isEmpty()) {
-					return View::make('dashboard');
+					return Redirect::route('dashboard');
 				} else {
 					return View::make('home');
 				}

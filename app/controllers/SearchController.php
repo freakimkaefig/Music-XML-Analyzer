@@ -34,7 +34,7 @@ class SearchController extends BaseController {
 			}
 		});
 
-		return View::make('search');
+		return Redirect::route('dashboard');
 	}
 
 	/////////////////////////////
