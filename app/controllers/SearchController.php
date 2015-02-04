@@ -7,70 +7,40 @@ class SearchController extends BaseController {
 		/**
 		 * Getting files for current user
 		 */
-		if (Cookie::get('user_id')) {
-			$user = User::find(Cookie::get('user_id'));
-			$user->uploads->each(function($upload) {
-				if (!$upload->result) {
-					$xml = simplexml_load_file($upload->url);
+		$user = User::find(Cookie::get('user_id'));
+		$user->uploads->each(function($upload) {
+			if (!$upload->result) {
+				$xml = simplexml_load_file($upload->url);
 
-					$resultObject = new stdClass();
-					$resultObject->artist = (string) $this->determineArtist($xml);
-					$resultObject->title = (string) $this->determineTitle($xml);
-					$resultObject->clef = $this->determineClef($xml);
-					$resultObject->key = $this->determineKey($xml);
-					$resultObject->meter = $this->determineMeter($xml);
-					$resultObject->instruments = $this->determineInstruments($xml);
-					$resultObject->count_measures = $this->countMeasures($xml);
-					$resultObject->count_notes = $this->countNotes($xml);
-					$resultObject->note_distribution = $this->countNoteValues($xml);
-					$resultObject->note_types = $this->countNoteTypes($xml);
-					$resultObject->count_rests = $this->countRests($xml);
-					$resultObject->most_frequent_note = $this->determineMostFrequentNote($xml);
-					$resultObject->intervals = $this->countIntervals($xml);
+				$resultObject = new stdClass();
+				$resultObject->artist = (string) $this->_determineArtist($xml);
+				$resultObject->title = (string) $this->_determineTitle($xml);
+				$resultObject->clef = $this->_determineClef($xml);
+				$resultObject->key = $this->_determineKey($xml);
+				$resultObject->meter = $this->_determineMeter($xml);
+				$resultObject->instruments = $this->_determineInstruments($xml);
+				$resultObject->count_measures = $this->_countMeasures($xml);
+				$resultObject->count_notes = $this->_countNotes($xml);
+				$resultObject->note_distribution = $this->_countNoteValues($xml);
+				$resultObject->note_types = $this->_countNoteTypes($xml);
+				$resultObject->count_rests = $this->_countRests($xml);
+				$resultObject->most_frequent_note = $this->_determineMostFrequentNote($xml);
+				$resultObject->intervals = $this->_countIntervals($xml);
 
-					$result = new Result;
-					$result->value = json_encode($resultObject);
-					$result->upload()->associate($upload);
-					$result->save();
-				}
-			});
-		}
-		
+				$result = new Result;
+				$result->value = json_encode($resultObject);
+				$result->upload()->associate($upload);
+				$result->save();
+			}
+		});
 
-		/////////////////////////
-		//Testing php xpath query
-		/////////////////////////
-
-		//load xml file from url
-		//for testing purpose
-		$xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
-
-		echo "<pre><hr/><br/>";
-		// //"$this always refers to the object, in which a method exists, itself."
-		echo "Notenverteilung: " . json_encode($this->countNoteValues($xml));
-		echo "</br></br>häufigste Note: " . json_encode($this->determineMostFrequentNote($xml));
-		echo "</br></br>Anzahl Pausen: " . json_encode($this->countRests($xml));
-		echo "</br></br>Anzahl Takte: " . json_encode($this->countMeasures($xml));
-		echo "</br></br>Anzahl Noten: " . json_encode($this->countNotes($xml));
-		echo "</br></br>Takt: " . str_replace("\\","",json_encode($this->determineMeter($xml)));
-		echo "</br></br>Notenschlüssel: " . json_encode($this->determineClef($xml));
-		echo "</br></br>Tonart: " . json_encode($this->determineKey($xml));
-		echo "</br></br>Notenlängen: " . json_encode($this->countNoteTypes($xml));
-		echo "</br></br>Instrumente: " . json_encode($this->determineInstruments($xml));
-		echo "</br></br>Artist: " . $this->determineArtist($xml);
-		echo "</br></br>Title: " . $this->determineTitle($xml);
-		echo "</br></br>Intervalle: " . json_encode($this->countIntervals($xml));
-		echo "</pre>";
-		
-		//return search view
 		return View::make('search');
 	}
 
-
 	/////////////////////////////
-	//Internal analysis functions
+	//Internal analysis private functions
 	/////////////////////////////
-	function countIntervals($xml){
+	private function _countIntervals($xml){
 		//toDo: magic.
 		//Halbtonschritte zur Tonika (C-Dur)
 		// C = 0
@@ -96,7 +66,6 @@ class SearchController extends BaseController {
 		$notes = $xml->xpath("//note");
 		$notesArray = array();
 		$intervalArray = array();
-
 		foreach($notes as $note){
 			$rest = $note->rest;
 			if(!$rest){
@@ -115,16 +84,12 @@ class SearchController extends BaseController {
 				}else*/if($noteStep && $noteOctave){
 
 					$noteValue = $tonika[(string)$noteStep];
-
 					if($noteAlter){
 						// var_dump($noteAlter);
-
 						//notevalue += 1 or -1 (alter)
 						// echo "<br/>step ".$noteStep;
 						// echo "<br/>value before alter ".$noteValue;
-
 						$noteValue = (int)$noteValue + (int)$noteAlter;
-
 						// echo "<br/>alter ".$noteAlter;
 						// echo "<br/>value after alter ".$noteValue."<br/>";
 					}
@@ -253,7 +218,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineArtist($xml){
+	private function _determineArtist($xml){
 		$artist = $xml->xpath("//credit[credit-type='composer']");
 		// var_dump($artist[0]);
 		if ($artist) {
@@ -264,7 +229,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineTitle($xml){
+	private function _determineTitle($xml){
 		$title = $xml->xpath("//credit[credit-type='title']");
 		// var_dump($title[0]->{'credit-words'});
 		if ($title) {
@@ -275,7 +240,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineInstruments($xml){
+	private function _determineInstruments($xml){
 		$instruments = $xml->xpath("//score-part");
 		$instrumentsArray = array();
 
@@ -300,7 +265,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function countNoteTypes($xml){
+	private function _countNoteTypes($xml){
 		$notes = $xml->xpath("//note");
 
 		$noteTypesArray = array();
@@ -316,7 +281,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineMeter($xml){
+	private function _determineMeter($xml){
 		$beat = $xml->xpath("//beats");
 		$beatType =  $xml->xpath("//beat-type");
 		$meter = $beat[0] ."/". $beatType[0];
@@ -324,7 +289,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineKey($xml){
+	private function _determineKey($xml){
 		$keys = $xml->xpath("//key");
 		$keysArray = array();
 
@@ -437,7 +402,7 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineClef($xml){
+	private function _determineClef($xml){
 		$clefs = $xml->xpath("//clef");
 		//print_r($clefs);
 		$clefsArray = array();
@@ -494,25 +459,25 @@ class SearchController extends BaseController {
 	}
 
 
-	function countMeasures($xml){
+	private function _countMeasures($xml){
 		$measures = $xml->xpath("//measure");
 		return count($measures);
 	}
 
 
-	function countRests($xml){
+	private function _countRests($xml){
 		$rests = $xml->xpath("//rest");
 		return count($rests);
 	}
 
 
-	function countNotes($xml){
+	private function _countNotes($xml){
 		$notes = $xml->xpath("//note");
 		return count($notes);
 	}
 
 
-	function countNoteValues($xml){
+	private function _countNoteValues($xml){
 
 		//"The descendant (double-slash) operator in xpath will search all descendants for a match."
 		//"The below is equivalent to the DOM method getElementsByTagName"
@@ -541,10 +506,10 @@ class SearchController extends BaseController {
 	}
 
 
-	function determineMostFrequentNote($xml){
+	private function _determineMostFrequentNote($xml){
 
 		//häufigkeiten der Noten zählen
-		$countedNotes = $this->countNoteValues($xml);
+		$countedNotes = $this->_countNoteValues($xml);
 
 	    //häufigste note ausgeben
 	    return array_search(max($countedNotes), $countedNotes);
