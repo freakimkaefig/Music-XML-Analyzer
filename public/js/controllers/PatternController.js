@@ -3,6 +3,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	init = function() {
 		console.log('MusicXMLAnalyzer.PatternController.init');
+		
 		patternView = MusicXMLAnalyzer.PatternView();
 		patternView.init();
 
@@ -12,42 +13,35 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternModel = MusicXMLAnalyzer.PatternModel();
 		patternModel.init();
 
-		registerButtonListeners();
 	},
 
-	registerButtonListeners = function() {
-		//note button clicked
-		$(".btn-note").click(function() {
-		  patternModel.setCurrentNoteName($(event.target).text());
-		});
-		//accidential button clicked
-		$(".btn-accidential").click(function() {
-		  patternModel.setCurrentAccidential($(event.target).text());
-		});
-		//duration button clicked
-		$(".btn-duration").click(function() {
-		  patternModel.setCurrentNoteDuration($(event.target).text());
-		});
-		//clef button clicked
-		$(".btn-clef").click(function() {
-		  patternModel.setCurrentClef($(event.target).text());
-		});
-		//special ryth button clicked
-		$(".btn-special-ryth").click(function() {
-		  patternModel.setCurrentNoteRythSpecial($(event.target).text());
-		});
-
-		//add note button
-		$("#btn-add-note").click(function() {
-		  patternModel.addNoteElement();
-		});
-		//remove last note button
-		$("#btn-remove-note").click(function() {
-		  patternModel.removeLastNoteElement();
-		});
+	changeNote = function(val) {
+		patternModel.setCurrentNoteName(val);
 	},
 
+	changeAccidential = function(val) {
+		patternModel.setCurrentAccidential(val);
+	},
 
+	changeDuration = function(val) {
+		patternModel.setCurrentNoteDuration(val);
+	},
+
+	changeClef = function(val) {
+		patternModel.setCurrentClef(val);
+	},
+
+	changeSpecialRyth = function(val) {
+		patternModel.setCurrentNoteRythSpecial(val);
+	},
+
+	addNote = function() {
+		patternModel.addNoteElement();
+	},
+
+	removeLastNote = function() {
+		patternModel.removeLastNoteElement();
+	},
 
 	dispose = function() {
 		that = {};
@@ -55,6 +49,13 @@ MusicXMLAnalyzer.PatternController = function() {
 
 
 	that.init = init;
+	that.changeNote = changeNote;
+	that.changeAccidential = changeAccidential;
+	that.changeDuration = changeDuration;
+	that.changeClef = changeClef;
+	that.changeSpecialRyth = changeSpecialRyth;
+	that.addNote = addNote;
+	that.removeLastNote = removeLastNote;
 	that.dispose = dispose;
 
 	return that;

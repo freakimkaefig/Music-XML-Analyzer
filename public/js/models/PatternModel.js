@@ -16,27 +16,27 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentNoteName = function(noteName) {
-		console.log(noteName);
+		console.log("model " + noteName);
 		curName = noteName;
 	},
 
 	setCurrentAccidential = function(accidential) {
-		console.log(accidential);
+		console.log("model " + accidential);
 		curAccidential = accidential;
 	},
 
 	setCurrentNoteDuration = function(noteDuration) {
-		console.log(noteDuration);
+		console.log("model " + noteDuration);
 		curDuration = noteDuration;
 	},
 
 	setCurrentClef = function(clef) {
-		console.log(clef);
+		console.log("model " + clef);
 		curClef = clef;
 	},
 
 	setCurrentNoteRythSpecial = function(rythSpec) {
-		console.log(rythSpec);
+		console.log("model " + rythSpec);
 		curRythSpec = rythSpec;
 	},
 
@@ -70,7 +70,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	getAllNoteElements = function() {
-
+		return noteElements;
 	};
 
 	

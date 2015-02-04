@@ -10,6 +10,8 @@
 
 {{ HTML::script('js/App.js') }}
 
+<!-- ===Models=== -->
+{{ HTML::script('js/models/PatternModel.js') }}
 
 <!-- ===Views=== -->
 {{ HTML::script('js/views/DashboardView.js') }}
@@ -21,8 +23,7 @@
 {{ HTML::script('js/controllers/UploadController.js') }}
 {{ HTML::script('js/controllers/PatternController.js') }}
 
-<!-- ===Models=== -->
-{{ HTML::script('js/models/PatternModel.js') }}
+
 
 
 

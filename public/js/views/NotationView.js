@@ -40,6 +40,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		
 	},
 
+	// display the 5 staves on the canvas
 	renderStaveElements = function() {
 		staveElements.forEach(function(element) {
 		    context.fillStyle = element.colour;
@@ -47,6 +48,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		});
 	},
 
+	// display note elements on the canvas and get them from model
 	renderNoteElements = function() {
 		noteElements.forEach(function(element) {
 		    context.fillStyle = element.colour;
