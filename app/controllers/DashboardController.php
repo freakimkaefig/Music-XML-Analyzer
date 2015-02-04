@@ -9,27 +9,29 @@ class DashboardController extends BaseController {
 
 	public function getUploadIds() {
 		$uploads = [];
-		$user = User::find(Cookie::get('user_id'));
-		$user->uploads->each(function($upload) {
+
+		foreach (Upload::where('user_id', '=', Cookie::get('user_id'))->get() as $upload) {
 			$uploads[] = $upload->id;
-		});
+		}
+
 		return json_encode($uploads);
 	}
 
 	public function getResultIds() {
 		$results = [];
-		$user = User::find(Cookie::get('user_id'));
-		$user->uploads->each(function($upload) {
+
+		foreach (Upload::where('user_id', '=', Cookie::get('user_id'))->get() as $upload) {
 			if ($upload->result) {
 				$result = $upload->result;
 				$results[] = $result->id;
 			}
-		});
+		}
+
 		return json_encode($results);
 	}
 
 	public function getResultValueById($id) {
 		$result = Result::find($id);
-		return json_encode($result->value);
+		return $result->value;
 	}
 }
