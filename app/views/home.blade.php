@@ -6,21 +6,21 @@
 		<div class="row">
 			<div class="col-xs-4">
 				<div class="col-xs-12">
-					<img class="img-circle img-responsive img-center" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Placeholder" style="width: 140px;">
+					<img class="img-responsive img-center" src='/img/upload3.png' alt="Placeholder" style="width: 140px;">
 					<h2>Upload your music xml files</h2>
 					<p>Upload one or more of your music-xml-files per drag'n'drop.</p>
 				</div>
 			</div>
 			<div class="col-xs-4">
 				<div class="col-xs-12">
-					<img class="img-circle img-responsive img-center" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Placeholder" style="width: 140px;">
+					<img class="img-circle img-responsive img-center" src='/img/analysis.png' alt="Placeholder" style="width: 140px;">
 					<h2>Automatic Analysis</h2>
 					<p>Your uploaded data will be analysed and some fancy statistics will be created.</p>
 				</div>
 			</div>
 			<div class="col-xs-4">
 				<div class="col-xs-12">
-					<img class="img-circle img-responsive img-center" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Placeholder" style="width: 140px;">
+					<img class="img-responsive img-center" src='/img/patternsearch2.png' alt="Placeholder" style="width: 140px;">
 					<h2>Search for patterns</h2>
 					<p>Melodic patterns, rhythms and tone-sequences can be found</p>
 				</div>
