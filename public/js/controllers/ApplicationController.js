@@ -3,9 +3,12 @@ MusicXMLAnalyzer.ApplicationController = function() {
 	var that = {},
 
 	uploadController = null,
+
 	patternController = null,
 	
+	dashboardModel = null,
 	dashboardView = null,
+	dashboardController = null,
 	
 	patternModel = null,
 
@@ -28,8 +31,12 @@ MusicXMLAnalyzer.ApplicationController = function() {
 		}
 
 		if (Route.check('/dashboard')) {
+			dashboardModel = MusicXMLAnalyzer.DashboardModel();
+			dashboardModel.init();
 			dashboardView = MusicXMLAnalyzer.DashboardView();
 			dashboardView.init();
+			dashboardController = MusicXMLAnalyzer.DashboardController(dashboardModel, dashboardView);
+			dashboardController.init();
 		}
 
 		if (Route.check('/pattern')) {
