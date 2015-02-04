@@ -4,25 +4,24 @@ MusicXMLAnalyzer.NotationView = function(){
 	staveElements = [],
 	noteElements = [],
 	context = null,
-	elem = null,
-	elemLeft = null,
-	elemTop = null,
+	canvas = null,
+	canvasLeft = null,
+	canvasTop = null,
 
 	init = function() {
 		console.log("notation view");
 		initCanvas();
-		//initVexCanvas();
 		addStaveElements();
 		renderStaveElements();
 		addOnStaveClickListener();
 	},
 
 	initCanvas = function() {
-		elem = document.getElementById('myCanvas');
-	    elemLeft = elem.offsetLeft;
-	    elemTop = elem.offsetTop;
+		canvas = document.getElementById('myCanvas');
+	    canvasLeft = canvas.offsetLeft;
+	    canvasTop = canvas.offsetTop;
 
-	    context = elem.getContext('2d');
+	    context = canvas.getContext('2d');
 	},
 
 	addStaveElements = function() {
@@ -32,7 +31,7 @@ MusicXMLAnalyzer.NotationView = function(){
 			staveElements.push({
 			    staveId: i,
 			    colour: '#000000',
-			    width: elem.width,
+			    width: canvas.width,
 			    height: 3,
 			    top: 20 * i,
 			    left: 0
@@ -67,9 +66,9 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 	
 	addOnStaveClickListener = function() {
-		elem.addEventListener('click', function(event) {
-		    var x = event.pageX - elemLeft,
-		        y = event.pageY - elemTop;
+		canvas.addEventListener('click', function(event) {
+		    var x = event.pageX - canvasLeft,
+		        y = event.pageY - canvasTop;
 		    	console.log(x, y);
 		    staveElements.forEach(function(element) {
 		        console.log("top" )
@@ -87,7 +86,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 
 	calcNotePositionHorizontal = function(mouseX) {
-		var staveParts = elem.width / 4;
+		var staveParts = canvas.width / 4;
 		var notePosHorizontal = 0;
 
 		if (mouseX < staveParts * 1) {
