@@ -26,6 +26,7 @@ class SearchController extends BaseController {
 					$resultObject->note_types = $this->countNoteTypes($xml);
 					$resultObject->count_rests = $this->countRests($xml);
 					$resultObject->most_frequent_note = $this->determineMostFrequentNote($xml);
+					$resultObject->intervals = $this->countIntervals($xml);
 
 					$result = new Result;
 					$result->value = json_encode($resultObject);
@@ -44,7 +45,7 @@ class SearchController extends BaseController {
 		//for testing purpose
 		$xml = simplexml_load_file("https://dl.dropboxusercontent.com/u/58016505/ActorPreludeSample.xml");
 
-		echo "<pre><br/><br/>";
+		echo "<pre><hr/><br/>";
 		// //"$this always refers to the object, in which a method exists, itself."
 		echo "Notenverteilung: " . json_encode($this->countNoteValues($xml));
 		echo "</br></br>häufigste Note: " . json_encode($this->determineMostFrequentNote($xml));
