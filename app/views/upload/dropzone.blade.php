@@ -11,7 +11,7 @@
 			<?php if (Cookie::get('user_id')): ?>
 			<?php
 				$user = User::find(Cookie::get('user_id'));
-				if (!count($user->uploads)) {
+				if (count($user->uploads)) {
 					$user->uploads->each(function($upload) {
 			?>
 					<div class="dz-preview dz-file-preview dz-processing dz-complete">
@@ -30,9 +30,6 @@
 		<div id="progressWrapper">
 			<button type="button" id="uploadClose" class="btn btn-default pull-left btn-lg">Close</button>
 			<button type="button" id="uploadSubmit" class="btn btn-primary pull-right btn-lg">Analyze</button>
-		</div>
-		<div>
-			
 		</div>
 	</div>
 </div>
