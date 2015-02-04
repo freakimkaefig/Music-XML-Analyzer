@@ -2,11 +2,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	var that = {},
 	noteElements = [],
-	noteElement = null,
+	//noteElement = null,
 
-	curNoteName = null,
+	curName = null,
 	curAccidential = null,
-	curNoteDuration = null,
+	curDuration = null,
 	curClef = null,
 	curRythSpec = null,
 
@@ -17,7 +17,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	setCurrentNoteName = function(noteName) {
 		console.log(noteName);
-		curNoteName = noteName;
+		curName = noteName;
 	},
 
 	setCurrentAccidential = function(accidential) {
@@ -27,25 +27,42 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	setCurrentNoteDuration = function(noteDuration) {
 		console.log(noteDuration);
-		curNoteDuration = noteDuration;
+		curDuration = noteDuration;
 	},
 
 	setCurrentClef = function(clef) {
-		console.log(clefVal);
+		console.log(clef);
 		curClef = clef;
 	},
 
 	setCurrentNoteRythSpecial = function(rythSpec) {
 		console.log(rythSpec);
-		this.rythSpec = rythSpec;
+		curRythSpec = rythSpec;
 	},
 
 	addNoteElement = function() {
-		if (!curNoteName) {
-			console.log("noteName missing");
-		} else {
-			console.log("note added");
+		if (!curName) {
+			alert("name missing");
+		} else if (!curAccidential) {
+			alert("accidential missing");
+		} else if (!curDuration) {
+			alert("duration missing");
+		} else if (!curClef) {
+			alert("clef missing");
+		} else if (!curRythSpec) {
+			alert("ryth spec missing");
 		}
+		else {
+			console.log("note added");
+
+			noteElements.push({
+				name: curName,
+				accidential: curAccidential,
+				duration: curDuration,
+				rythSpecial: curRythSpec
+			});
+		}
+		console.log(noteElements)
 	},
 
 	removeLastNoteElement = function() {

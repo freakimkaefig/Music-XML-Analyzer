@@ -50,7 +50,6 @@
 		<button type="button" class="btn btn-default btn-clef">G</button>
 	</div>
 </div>
-
 <div class="row">
 	<div class="col-xs-6">
 		<p></p>
@@ -65,5 +64,6 @@
 		<button id="btn-remove-note" type="button" class="btn btn-default">Delete</button>
 	</div>
 </div>
+<!-- oktave missing -->
 
 @stop
