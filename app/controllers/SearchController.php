@@ -39,6 +39,7 @@ class SearchController extends BaseController {
 
 		/////////////////////////
 		//Testing php xpath query
+		//Remove me:
 		/////////////////////////
 
 		//load xml file from url
