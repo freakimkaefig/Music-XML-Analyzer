@@ -69,7 +69,9 @@ h1 {
 .pie {
 	font-weight: bold;
 }
-
+.pie svg {
+	margin: 0 auto;
+}
 
 /*BAR-CHART1*/
 
@@ -124,3 +126,4 @@ h1 {
   shape-rendering: crispEdges;
 }
 
+/*RESULTLIST*/
