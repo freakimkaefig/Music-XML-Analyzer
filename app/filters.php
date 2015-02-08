@@ -108,7 +108,7 @@ Route::filter('user', function() {
 	if (!Cookie::get('user_id')) {
 		return Redirect::to('/');
 	} else {
-		if (User::find(Cookie::get('user_id'))) {
+		if (!User::find(Cookie::get('user_id'))) {
 			return Redirect::to('/');
 		}
 	}
