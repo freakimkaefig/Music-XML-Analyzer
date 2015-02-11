@@ -59,14 +59,11 @@ Route::group(array('before' => 'uploads'), function()
 		'uses' => 'DashboardController@getResultValueById'
 	));
 
-
 	/* === PATTERN ROUTES === */
 	Route::get('/pattern', array(
 		'as' => 'pattern',
 		'uses' => 'PatternController@getCreatePattern'
 	));
-
-
 });
 
 
