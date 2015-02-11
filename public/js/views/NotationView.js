@@ -51,6 +51,14 @@ MusicXMLAnalyzer.NotationView = function(){
 		
 	},
 
+	/* this method renders the 5 staves on the canvas by getting them from the staveElements Array */
+	renderStaveElements = function() {
+		staveElements.forEach(function(element) {
+		    context.fillStyle = element.colour;
+		    context.fillRect(element.left, element.top, element.width, element.height);
+		});
+	},
+
 	/* This method handels the mouseover event of canvas */
 	onMouseMoveCanvas = function(event) {
 
@@ -62,7 +70,7 @@ MusicXMLAnalyzer.NotationView = function(){
     	checkHorizontalArea(y);
 
 	//TODO
-	//hier die erkennung für notenlinien abfragen
+	//einzelne noten rendern
 	},
 
 	checkHorizontalArea = function(y) {
@@ -70,41 +78,41 @@ MusicXMLAnalyzer.NotationView = function(){
 		var horizontalArea = -1;
 
 		if (y > spaceBetweenLines * 1.25 && y <= spaceBetweenLines * 1.75) {
-			console.log("f");
+			console.log("f3");
 		} else if (y > spaceBetweenLines * 1.75 && y <= spaceBetweenLines * 2.25) {
-			console.log("e");
+			console.log("e3");
 		} else if (y > spaceBetweenLines * 2.25 && y <= spaceBetweenLines * 2.75) {
-			console.log("d");
+			console.log("d3");
 		} else if (y > spaceBetweenLines * 2.75 && y <= spaceBetweenLines * 3.25) {
-			console.log("c");
+			console.log("c3");
 		} else if (y > spaceBetweenLines * 3.25 && y <= spaceBetweenLines * 3.75) {
-			console.log("h");
+			console.log("h2");
 		} else if (y > spaceBetweenLines * 3.75 && y <= spaceBetweenLines * 4.25) {
-			console.log("a");
+			console.log("a2");
 		} else if (y > spaceBetweenLines * 4.25 && y <= spaceBetweenLines * 4.75) {
-			console.log("g");
+			console.log("g2");
 		} else if (y > spaceBetweenLines * 4.75 && y <= spaceBetweenLines * 5.25) {
-			console.log("f");
+			console.log("f2");
 		} else if (y > spaceBetweenLines * 5.25 && y <= spaceBetweenLines * 5.75) {
-			console.log("e");
+			console.log("e2");
 		} else if (y > spaceBetweenLines * 5.75 && y <= spaceBetweenLines * 6.25) {
-			console.log("d");
+			console.log("d2");
 		} else if (y > spaceBetweenLines * 6.25 && y <= spaceBetweenLines * 6.75) {
-			console.log("c");
+			console.log("c2");
 		} else if (y > spaceBetweenLines * 6.75 && y <= spaceBetweenLines * 7.25) {
-			console.log("h");
+			console.log("h1");
 		} else if (y > spaceBetweenLines * 7.25 && y <= spaceBetweenLines * 7.75) {
-			console.log("a");
+			console.log("a1");
 		} else if (y > spaceBetweenLines * 7.75 && y <= spaceBetweenLines * 8.25) {
-			console.log("g");
+			console.log("g1");
 		} else if (y > spaceBetweenLines * 8.25 && y <= spaceBetweenLines * 8.75) {
-			console.log("f");
+			console.log("f1");
 		} else if (y > spaceBetweenLines * 8.75 && y <= spaceBetweenLines * 9.25) {
-			console.log("e");
+			console.log("e1");
 		} else if (y > spaceBetweenLines * 9.25 && y <= spaceBetweenLines * 9.75) {
-			console.log("d");
+			console.log("d1");
 		} else if (y > spaceBetweenLines * 9.75 && y <= spaceBetweenLines * 10.25) {
-			console.log("c");
+			console.log("c1");
 		} else if (y > spaceBetweenLines * 10.25 && y <= spaceBetweenLines * 10.75) {
 			console.log("h");
 		} else if (y > spaceBetweenLines * 10.75 && y <= spaceBetweenLines * 11.25) {
@@ -139,14 +147,6 @@ MusicXMLAnalyzer.NotationView = function(){
 		    });
 
 		}, false);
-	},
-
-	/* this method renders the 5 staves on the canvas by getting them from the staveElements Array */
-	renderStaveElements = function() {
-		staveElements.forEach(function(element) {
-		    context.fillStyle = element.colour;
-		    context.fillRect(element.left, element.top, element.width, element.height);
-		});
 	},
 
 	// display note elements on the canvas and get them from model
