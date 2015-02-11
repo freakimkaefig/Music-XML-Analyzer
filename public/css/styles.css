@@ -19,6 +19,15 @@ h1 {
 	margin-bottom: 60px;
 }
 
+/* === HOME ==== */
+#start_row .icon {
+	font-size: 60px;
+	margin: 60px 0;
+}
+#buttons_row {
+	margin-top: 120px;
+}
+
 /* === UPLOAD === */
 #uploadModal .modal-dialog {
 	top: 50px;

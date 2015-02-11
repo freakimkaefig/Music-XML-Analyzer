@@ -4,6 +4,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	$fileSelector = null,
 
+	noteDistribution = null,
+	intervalDistribution = null,
+	meterDistribution = null,
+	instruments = null,
+
+
 	init = function(){
 		console.info('MusicXMLAnalyzer.DashboardView.init');
 
@@ -26,10 +32,18 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	onFileSelectorChange = function(event) {
 		console.info('MusicXMLAnalyzer.DashboardView.onFileSelectorChange', $fileSelector.find('select').val());
-	}
+		$(that).trigger('onFileSelectorChange', [ $fileSelector.find('select').val() ]);
+	},
+
+	changeFile = function(result) {
+
+	},
 
 	initNoteDistribution = function(data) {
-		var pie = new d3pie("pie_noteDistribution", {
+		if (noteDistribution) {
+			noteDistribution.destroy();
+		}
+		noteDistribution = new d3pie("pie_noteDistribution", {
 			header: {
 				title: {
 					text: "Note Distribution"
@@ -72,7 +86,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	initIntervalDistribution = function(data) {
-		var pie = new d3pie("pie_intervalDistribution", {
+		if (intervalDistribution) {
+			intervalDistribution.destroy();
+		}
+		intervalDistribution = new d3pie("pie_intervalDistribution", {
 			header: {
 				title: {
 					text: "Interval Distribution"
@@ -117,8 +134,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	initMeterDistribution = function() {
-
-		var pie = new d3pie("pie2", {
+		if (meterDistribution) {
+			meterDistribution.destroy();
+		}
+		meterDistribution = new d3pie("pie2", {
 			header: {
 				title: {
 					text: "Taktarten"
@@ -137,7 +156,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	initInstruments = function() {
-		pie = new d3pie("pie3", {
+		instruments = new d3pie("pie3", {
 			header: {
 				title: {
 					text: "Instrumente"
@@ -332,6 +351,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.initFileSelector = initFileSelector;
 	that.initNoteDistribution = initNoteDistribution;
 	that.initIntervalDistribution = initIntervalDistribution;
+
+	that.changeFile = changeFile;
 
 	return that;
 }

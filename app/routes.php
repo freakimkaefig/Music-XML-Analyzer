@@ -11,6 +11,12 @@
 |
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| Public routes
+|--------------------------------------------------------------------------
+*/
 /* === STATIC PAGE ROUTES === */
 Route::get('/', array(
 	'as' => 'home',
@@ -22,7 +28,12 @@ Route::get('/imprint', array(
 ));
 
 
-Route::group(array('before' => 'user'), function() 
+/*
+|--------------------------------------------------------------------------
+| Routes only available, when user has uploaded files
+|--------------------------------------------------------------------------
+*/
+Route::group(array('before' => 'uploads'), function() 
 {
 	/* === SEARCH ROUTES === */
 	Route::get('/search', array(
@@ -49,22 +60,30 @@ Route::group(array('before' => 'user'), function()
 	));
 
 
-
-
-});
 	/* === PATTERN ROUTES === */
 	Route::get('/pattern', array(
 		'as' => 'pattern',
 		'uses' => 'PatternController@getCreatePattern'
 	));
 
-/* === UPLOAD ROUTES === */
-Route::post('/upload', array(
-	'as' => 'postUpload',
-	'uses' => 'UploadController@postUpload'
-));
-Route::get('/upload-complete', array(
-	'as' => 'uploadComplete',
-	'uses' => 'UploadController@getUploadComplete'
-));
 
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Routes only available, when user is recognized
+|--------------------------------------------------------------------------
+*/
+Route::group(array('before' => 'user'), function() 
+{
+	/* === UPLOAD ROUTES === */
+	Route::post('/upload', array(
+		'as' => 'postUpload',
+		'uses' => 'UploadController@postUpload'
+	));
+	Route::get('/upload-complete', array(
+		'as' => 'uploadComplete',
+		'uses' => 'UploadController@getUploadComplete'
+	));
+});
