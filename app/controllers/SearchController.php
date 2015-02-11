@@ -89,40 +89,40 @@ class SearchController extends BaseController {
 		}//end foreach
 		// var_dump($notesArray);
 		$intervalArray = array(
-			(object)array("Interval" => "Perfect unison", "count" => 0 ),
-			(object)array("Interval" => "Minor second", "count" => 0 ),
-			(object)array("Interval" => "Major second", "count" => 0 ),
-			(object)array("Interval" => "Minor third", "count" => 0 ),
-			(object)array("Interval" => "Major third", "count" => 0 ),
-			(object)array("Interval" => "Perfect fourth", "count" => 0 ),
-			(object)array("Interval" => "Tritone", "count" => 0 ),
-			(object)array("Interval" => "Perfect fifth", "count" => 0 ),
-			(object)array("Interval" => "Minor sixth", "count" => 0 ),
-			(object)array("Interval" => "Major sixth", "count" => 0 ),
-			(object)array("Interval" => "Minor seventh", "count" => 0 ),
-			(object)array("Interval" => "Major seventh", "count" => 0 ),
-			(object)array("Interval" => "Perfect octave", "count" => 0 ),
-			(object)array("Interval" => "Minor ninth", "count" => 0 ),
-			(object)array("Interval" => "Major ninth", "count" => 0 ),
-			(object)array("Interval" => "Minor tenth", "count" => 0 ),
-			(object)array("Interval" => "Major tenth", "count" => 0 ),
-			(object)array("Interval" => "Perfect eleventh", "count" => 0 ),
-			(object)array("Interval" => "Augmented eleventh", "count" => 0 ),
-			(object)array("Interval" => "Perfect twelfth", "count" => 0 ),
-			(object)array("Interval" => "Minor thirteenth", "count" => 0 ),
-			(object)array("Interval" => "Major thirteenth", "count" => 0 ),
-			(object)array("Interval" => "Minor fourteenth", "count" => 0 ),
-			(object)array("Interval" => "Major fourteenth", "count" => 0 ),
-			(object)array("Interval" => "Double octave", "count" => 0 ),
-			(object)array("Interval" => "Double octaven + Minor second", "count" => 0 ),
-			(object)array("Interval" => "Double octave + Major second", "count" => 0 ),
-			(object)array("Interval" => "Double octave + Minor third", "count" => 0 ),
-			(object)array("Interval" => "Double octave + Major third", "count" => 0 ),
-			(object)array("Interval" => "Double octave + Perfect fourth", "count" => 0 ),
-			(object)array("Interval" => "Double octave + Tritone", "count" => 0 ),
-			(object)array("Interval" => "Double octave + Perfect fifth", "count" => 0 ),
-			(object)array("Interval" => "Double octave + Minor sixth", "count" => 0 ),
-			(object)array("Interval" => "Double octave + Major sixth", "count" => 0 )
+			(object)array("label" => "Perfect unison", "value" => 0 ),
+			(object)array("label" => "Minor second", "value" => 0 ),
+			(object)array("label" => "Major second", "value" => 0 ),
+			(object)array("label" => "Minor third", "value" => 0 ),
+			(object)array("label" => "Major third", "value" => 0 ),
+			(object)array("label" => "Perfect fourth", "value" => 0 ),
+			(object)array("label" => "Tritone", "value" => 0 ),
+			(object)array("label" => "Perfect fifth", "value" => 0 ),
+			(object)array("label" => "Minor sixth", "value" => 0 ),
+			(object)array("label" => "Major sixth", "value" => 0 ),
+			(object)array("label" => "Minor seventh", "value" => 0 ),
+			(object)array("label" => "Major seventh", "value" => 0 ),
+			(object)array("label" => "Perfect octave", "value" => 0 ),
+			(object)array("label" => "Minor ninth", "value" => 0 ),
+			(object)array("label" => "Major ninth", "value" => 0 ),
+			(object)array("label" => "Minor tenth", "value" => 0 ),
+			(object)array("label" => "Major tenth", "value" => 0 ),
+			(object)array("label" => "Perfect eleventh", "value" => 0 ),
+			(object)array("label" => "Augmented eleventh", "value" => 0 ),
+			(object)array("label" => "Perfect twelfth", "value" => 0 ),
+			(object)array("label" => "Minor thirteenth", "value" => 0 ),
+			(object)array("label" => "Major thirteenth", "value" => 0 ),
+			(object)array("label" => "Minor fourteenth", "value" => 0 ),
+			(object)array("label" => "Major fourteenth", "value" => 0 ),
+			(object)array("label" => "Double octave", "value" => 0 ),
+			(object)array("label" => "Double octaven + Minor second", "value" => 0 ),
+			(object)array("label" => "Double octave + Major second", "value" => 0 ),
+			(object)array("label" => "Double octave + Minor third", "value" => 0 ),
+			(object)array("label" => "Double octave + Major third", "value" => 0 ),
+			(object)array("label" => "Double octave + Perfect fourth", "value" => 0 ),
+			(object)array("label" => "Double octave + Tritone", "value" => 0 ),
+			(object)array("label" => "Double octave + Perfect fifth", "value" => 0 ),
+			(object)array("label" => "Double octave + Minor sixth", "value" => 0 ),
+			(object)array("label" => "Double octave + Major sixth", "value" => 0 )
 			);
 
 		for($i = 0; $i < count($notesArray) - 1;$i++){
@@ -130,106 +130,106 @@ class SearchController extends BaseController {
 			// echo "<br/>intervall: ".$intervalValue;
 			switch($intervalValue):
 				case 0:
-					$intervalArray[0]->count = $intervalArray[0]->count + 1;
+					$intervalArray[0]->value = $intervalArray[0]->value + 1;
 					break;
 				case 1:
-					$intervalArray[1]->count = $intervalArray[1]->count + 1;
+					$intervalArray[1]->value = $intervalArray[1]->value + 1;
 					break;
 				case 2:
-					$intervalArray[2]->count = $intervalArray[2]->count + 1;
+					$intervalArray[2]->value = $intervalArray[2]->value + 1;
 					break;
 				case 3:
-					$intervalArray[3]->count = $intervalArray[3]->count + 1;
+					$intervalArray[3]->value = $intervalArray[3]->value + 1;
 					break;
 				case 4:
-					$intervalArray[4]->count = $intervalArray[4]->count + 1;
+					$intervalArray[4]->value = $intervalArray[4]->value + 1;
 					break;
 				case 5:
-					$intervalArray[5]->count = $intervalArray[5]->count + 1;
+					$intervalArray[5]->value = $intervalArray[5]->value + 1;
 					break;
 				case 6:
-					$intervalArray[5]->count = $intervalArray[5]->count + 1;
+					$intervalArray[5]->value = $intervalArray[5]->value + 1;
 					break;
 				case 7:
-					$intervalArray[7]->count = $intervalArray[7]->count + 1;
+					$intervalArray[7]->value = $intervalArray[7]->value + 1;
 					break;
 				case 8:
-					$intervalArray[8]->count = $intervalArray[8]->count + 1;
+					$intervalArray[8]->value = $intervalArray[8]->value + 1;
 					break;
 				case 9:
-					$intervalArray[9]->count = $intervalArray[9]->count + 1;
+					$intervalArray[9]->value = $intervalArray[9]->value + 1;
 					break;
 				case 10:
-					$intervalArray[10]->count = $intervalArray[10]->count + 1;
+					$intervalArray[10]->value = $intervalArray[10]->value + 1;
 					break;
 				case 11:
-					$intervalArray[1]->count = $intervalArray[1]->count + 1;
+					$intervalArray[1]->value = $intervalArray[1]->value + 1;
 					break;
 				case 12:
-					$intervalArray[12]->count = $intervalArray[12]->count + 1;
+					$intervalArray[12]->value = $intervalArray[12]->value + 1;
 					break;
 				case 13:
-					$intervalArray[13]->count = $intervalArray[13]->count + 1;
+					$intervalArray[13]->value = $intervalArray[13]->value + 1;
 					break;
 				case 14:
-					$intervalArray[14]->count = $intervalArray[14]->count + 1;
+					$intervalArray[14]->value = $intervalArray[14]->value + 1;
 					break;
 				case 15:
-					$intervalArray[15]->count = $intervalArray[15]->count + 1;
+					$intervalArray[15]->value = $intervalArray[15]->value + 1;
 					break;
 				case 16:
-					$intervalArray[16]->count = $intervalArray[16]->count + 1;
+					$intervalArray[16]->value = $intervalArray[16]->value + 1;
 					break;
 				case 17:
-					$intervalArray[17]->count = $intervalArray[17]->count + 1;
+					$intervalArray[17]->value = $intervalArray[17]->value + 1;
 					break;
 				case 18:
-					$intervalArray[18]->count = $intervalArray[18]->count + 1;
+					$intervalArray[18]->value = $intervalArray[18]->value + 1;
 					break;
 				case 19:
-					$intervalArray[19]->count = $intervalArray[19]->count + 1;
+					$intervalArray[19]->value = $intervalArray[19]->value + 1;
 					break;
 				case 20:
-					$intervalArray[20]->count = $intervalArray[20]->count + 1;
+					$intervalArray[20]->value = $intervalArray[20]->value + 1;
 					break;
 				case 21:
-					$intervalArray[21]->count = $intervalArray[21]->count + 1;
+					$intervalArray[21]->value = $intervalArray[21]->value + 1;
 					break;
 				case 22:
-					$intervalArray[22]->count = $intervalArray[22]->count + 1;
+					$intervalArray[22]->value = $intervalArray[22]->value + 1;
 					break;
 				case 23:
-					$intervalArray[23]->count = $intervalArray[23]->count + 1;
+					$intervalArray[23]->value = $intervalArray[23]->value + 1;
 					break;
 				case 24:
-					$intervalArray[24]->count = $intervalArray[24]->count + 1;
+					$intervalArray[24]->value = $intervalArray[24]->value + 1;
 					break;
 				case 25:
-					$intervalArray[25]->count = $intervalArray[25]->count + 1;
+					$intervalArray[25]->value = $intervalArray[25]->value + 1;
 					break;
 				case 26:
-					$intervalArray[26]->count = $intervalArray[26]->count + 1;
+					$intervalArray[26]->value = $intervalArray[26]->value + 1;
 					break;
 				case 27:
-					$intervalArray[27]->count = $intervalArray[27]->count + 1;
+					$intervalArray[27]->value = $intervalArray[27]->value + 1;
 					break;
 				case 28:
-					$intervalArray[28]->count = $intervalArray[28]->count + 1;
+					$intervalArray[28]->value = $intervalArray[28]->value + 1;
 					break;
 				case 29:
-					$intervalArray[29]->count = $intervalArray[29]->count + 1;
+					$intervalArray[29]->value = $intervalArray[29]->value + 1;
 					break;
 				case 30:
-					$intervalArray[30]->count = $intervalArray[30]->count + 1;
+					$intervalArray[30]->value = $intervalArray[30]->value + 1;
 					break;
 				case 31:
-					$intervalArray[31]->count = $intervalArray[31]->count + 1;
+					$intervalArray[31]->value = $intervalArray[31]->value + 1;
 					break;
 				case 32:
-					$intervalArray[32]->count = $intervalArray[32]->count + 1;
+					$intervalArray[32]->value = $intervalArray[32]->value + 1;
 					break;
 				case 33:
-					$intervalArray[33]->count = $intervalArray[33]->count + 1;
+					$intervalArray[33]->value = $intervalArray[33]->value + 1;
 					break;
 			endswitch;
 		}
@@ -292,13 +292,13 @@ class SearchController extends BaseController {
 		$notes = $xml->xpath("//note");
 
 		$noteTypesArray = array(
-			(object)array("type" => "whole", "count" => 0 ),
-			(object)array("type" => "half", "count" => 0 ),
-			(object)array("type" => "quarter", "count" => 0 ),
-			(object)array("type" => "eighth", "count" => 0 ),
-			(object)array("type" => "16th", "count" => 0 ),
-			(object)array("type" => "32nd", "count" => 0 ),
-			(object)array("type" => "64th", "count" => 0 )
+			(object)array("label" => "whole", "value" => 0 ),
+			(object)array("label" => "half", "value" => 0 ),
+			(object)array("label" => "quarter", "value" => 0 ),
+			(object)array("label" => "eighth", "value" => 0 ),
+			(object)array("label" => "16th", "value" => 0 ),
+			(object)array("label" => "32nd", "value" => 0 ),
+			(object)array("label" => "64th", "value" => 0 )
 			);
 
 		foreach($notes as $note) {
@@ -307,25 +307,25 @@ class SearchController extends BaseController {
 			if($value){
 				switch($value):
 					case "whole":
-						$noteTypesArray[0]->count = $noteTypesArray[0]->count + 1;
+						$noteTypesArray[0]->value = $noteTypesArray[0]->value + 1;
 						break;
 					case "half":
-						$noteTypesArray[1]->count = $noteTypesArray[1]->count + 1;
+						$noteTypesArray[1]->value = $noteTypesArray[1]->value + 1;
 						break;
 					case "quarter":
-						$noteTypesArray[2]->count = $noteTypesArray[2]->count + 1;
+						$noteTypesArray[2]->value = $noteTypesArray[2]->value + 1;
 						break;
 					case "eighth":
-						$noteTypesArray[3]->count = $noteTypesArray[3]->count + 1;
+						$noteTypesArray[3]->value = $noteTypesArray[3]->value + 1;
 						break;
 					case "16th":
-						$noteTypesArray[4]->count = $noteTypesArray[4]->count + 1;
+						$noteTypesArray[4]->value = $noteTypesArray[4]->value + 1;
 						break;
 					case "32nd":
-						$noteTypesArray[5]->count = $noteTypesArray[5]->count + 1;
+						$noteTypesArray[5]->value = $noteTypesArray[5]->value + 1;
 						break;	
 					case "64th":
-						$noteTypesArray[6]->count = $noteTypesArray[6]->count + 1;
+						$noteTypesArray[6]->value = $noteTypesArray[6]->value + 1;
 						break;				
 				endswitch;
 			}
@@ -348,36 +348,36 @@ class SearchController extends BaseController {
 	private function _determineKey($xml){
 		$keys = $xml->xpath("//key");
 		$keysArray = array(
-			(object)array("note" => "C major", "count" => 0 ),
-			(object)array("note" => "G major", "count" => 0 ),
-			(object)array("note" => "D major", "count" => 0 ),
-			(object)array("note" => "A major", "count" => 0 ),
-			(object)array("note" => "E major", "count" => 0 ),
-			(object)array("note" => "H major", "count" => 0 ),
-			(object)array("note" => "F sharp major", "count" => 0 ),
-			(object)array("note" => "C sharp major", "count" => 0 ),
-			(object)array("note" => "F major", "count" => 0 ),
-			(object)array("note" => "B major", "count" => 0 ),
-			(object)array("note" => "Es major", "count" => 0 ),
-			(object)array("note" => "As major", "count" => 0 ),
-			(object)array("note" => "D flat major", "count" => 0 ),
-			(object)array("note" => "G flat major", "count" => 0 ),
-			(object)array("note" => "C flat major", "count" => 0 ),
-			(object)array("note" => "A minor", "count" => 0 ),
-			(object)array("note" => "E minor", "count" => 0 ),
-			(object)array("note" => "H minor", "count" => 0 ),
-			(object)array("note" => "F sharp minor", "count" => 0 ),
-			(object)array("note" => "C sharp minor", "count" => 0 ),
-			(object)array("note" => "G sharp minor", "count" => 0 ),
-			(object)array("note" => "D sharp minor", "count" => 0 ),
-			(object)array("note" => "A sharp minor", "count" => 0 ),
-			(object)array("note" => "D minor", "count" => 0 ),
-			(object)array("note" => "G minor", "count" => 0 ),
-			(object)array("note" => "C minor", "count" => 0 ),
-			(object)array("note" => "F minor", "count" => 0 ),
-			(object)array("note" => "B minor", "count" => 0 ),
-			(object)array("note" => "E flat minor", "count" => 0 ),
-			(object)array("note" => "A flat minor", "count" => 0 )
+			(object)array("label" => "C major", "value" => 0 ),
+			(object)array("label" => "G major", "value" => 0 ),
+			(object)array("label" => "D major", "value" => 0 ),
+			(object)array("label" => "A major", "value" => 0 ),
+			(object)array("label" => "E major", "value" => 0 ),
+			(object)array("label" => "H major", "value" => 0 ),
+			(object)array("label" => "F sharp major", "value" => 0 ),
+			(object)array("label" => "C sharp major", "value" => 0 ),
+			(object)array("label" => "F major", "value" => 0 ),
+			(object)array("label" => "B major", "value" => 0 ),
+			(object)array("label" => "Es major", "value" => 0 ),
+			(object)array("label" => "As major", "value" => 0 ),
+			(object)array("label" => "D flat major", "value" => 0 ),
+			(object)array("label" => "G flat major", "value" => 0 ),
+			(object)array("label" => "C flat major", "value" => 0 ),
+			(object)array("label" => "A minor", "value" => 0 ),
+			(object)array("label" => "E minor", "value" => 0 ),
+			(object)array("label" => "H minor", "value" => 0 ),
+			(object)array("label" => "F sharp minor", "value" => 0 ),
+			(object)array("label" => "C sharp minor", "value" => 0 ),
+			(object)array("label" => "G sharp minor", "value" => 0 ),
+			(object)array("label" => "D sharp minor", "value" => 0 ),
+			(object)array("label" => "A sharp minor", "value" => 0 ),
+			(object)array("label" => "D minor", "value" => 0 ),
+			(object)array("label" => "G minor", "value" => 0 ),
+			(object)array("label" => "C minor", "value" => 0 ),
+			(object)array("label" => "F minor", "value" => 0 ),
+			(object)array("label" => "B minor", "value" => 0 ),
+			(object)array("label" => "E flat minor", "value" => 0 ),
+			(object)array("label" => "A flat minor", "value" => 0 )
 			);
 
 		foreach($keys as $key) {
@@ -387,49 +387,49 @@ class SearchController extends BaseController {
 			if($fifths != null && $mode === "major"){
 				switch($fifths):
 					case "0":
-						$keysArray[0]->count = $keysArray[0]->count + 1;
+						$keysArray[0]->value = $keysArray[0]->value + 1;
 						break;
 					case "1":
-						$keysArray[1]->count = $keysArray[1]->count + 1;
+						$keysArray[1]->value = $keysArray[1]->value + 1;
 						break;
 					case "2":
-						$keysArray[2]->count = $keysArray[2]->count + 1;
+						$keysArray[2]->value = $keysArray[2]->value + 1;
 						break;
 					case "3":
-						$keysArray[3]->count = $keysArray[3]->count + 1;
+						$keysArray[3]->value = $keysArray[3]->value + 1;
 						break;
 					case "4":
-						$keysArray[4]->count = $keysArray[4]->count + 1;
+						$keysArray[4]->value = $keysArray[4]->value + 1;
 						break;
 					case "5":
-						$keysArray[5]->count = $keysArray[5]->count + 1;
+						$keysArray[5]->value = $keysArray[5]->value + 1;
 						break;
 					case "6":
-						$keysArray[6]->count = $keysArray[6]->count + 1;
+						$keysArray[6]->value = $keysArray[6]->value + 1;
 						break;
 					case "7":
-						$keysArray[7]->count = $keysArray[7]->count + 1;
+						$keysArray[7]->value = $keysArray[7]->value + 1;
 						break;
 					case "-1":
-						$keysArray[8]->count = $keysArray[8]->count + 1;
+						$keysArray[8]->value = $keysArray[8]->value + 1;
 						break;
 					case "-2":
-						$keysArray[9]->count = $keysArray[9]->count + 1;
+						$keysArray[9]->value = $keysArray[9]->value + 1;
 						break;
 					case "-3":
-						$keysArray[10]->count = $keysArray[10]->count + 1;
+						$keysArray[10]->value = $keysArray[10]->value + 1;
 						break;
 					case "-4":
-						$keysArray[11]->count = $keysArray[11]->count + 1;
+						$keysArray[11]->value = $keysArray[11]->value + 1;
 						break;
 					case "-5":
-						$keysArray[12]->count = $keysArray[12]->count + 1;
+						$keysArray[12]->value = $keysArray[12]->value + 1;
 						break;
 					case "-6":
-						$keysArray[13]->count = $keysArray[13]->count + 1;
+						$keysArray[13]->value = $keysArray[13]->value + 1;
 						break;
 					case "-7":
-						$keysArray[14]->count = $keysArray[14]->count + 1;
+						$keysArray[14]->value = $keysArray[14]->value + 1;
 						break;
 				endswitch;
 				// array_push($keysArray, $keyString." major");
@@ -437,49 +437,49 @@ class SearchController extends BaseController {
 			elseif($fifths != null && $mode === "minor"){
 				switch($fifths):
 					case "0":
-						$keysArray[15]->count = $keysArray[15]->count + 1;
+						$keysArray[15]->value = $keysArray[15]->value + 1;
 						break;
 					case "1":
-						$keysArray[16]->count = $keysArray[16]->count + 1;
+						$keysArray[16]->value = $keysArray[16]->value + 1;
 						break;
 					case "2":
-						$keysArray[17]->count = $keysArray[17]->count + 1;
+						$keysArray[17]->value = $keysArray[17]->value + 1;
 						break;
 					case "3":
-						$keysArray[18]->count = $keysArray[18]->count + 1;
+						$keysArray[18]->value = $keysArray[18]->value + 1;
 						break;
 					case "4":
-						$keysArray[19]->count = $keysArray[19]->count + 1;
+						$keysArray[19]->value = $keysArray[19]->value + 1;
 						break;
 					case "5":
-						$keysArray[20]->count = $keysArray[20]->count + 1;
+						$keysArray[20]->value = $keysArray[20]->value + 1;
 						break;
 					case "6":
-						$keysArray[21]->count = $keysArray[21]->count + 1;
+						$keysArray[21]->value = $keysArray[21]->value + 1;
 						break;
 					case "7":
-						$keysArray[22]->count = $keysArray[22]->count + 1;
+						$keysArray[22]->value = $keysArray[22]->value + 1;
 						break;
 					case "-1":
-						$keysArray[23]->count = $keysArray[23]->count + 1;
+						$keysArray[23]->value = $keysArray[23]->value + 1;
 						break;
 					case "-2":
-						$keysArray[24]->count = $keysArray[24]->count + 1;
+						$keysArray[24]->value = $keysArray[24]->value + 1;
 						break;
 					case "-3":
-						$keysArray[25]->count = $keysArray[25]->count + 1;
+						$keysArray[25]->value = $keysArray[25]->value + 1;
 						break;
 					case "-4":
-						$keysArray[26]->count = $keysArray[26]->count + 1;
+						$keysArray[26]->value = $keysArray[26]->value + 1;
 						break;
 					case "-5":
-						$keysArray[27]->count = $keysArray[27]->count + 1;
+						$keysArray[27]->value = $keysArray[27]->value + 1;
 						break;
 					case "-6":
-						$keysArray[28]->count = $keysArray[28]->count + 1;
+						$keysArray[28]->value = $keysArray[28]->value + 1;
 						break;
 					case "-7":
-						$keysArray[29]->count = $keysArray[29]->count + 1;
+						$keysArray[29]->value = $keysArray[29]->value + 1;
 						break;
 				endswitch;
 				// array_push($keysArray, $keyString." minor");
@@ -495,18 +495,18 @@ class SearchController extends BaseController {
 	private function _determineClef($xml){
 		$clefs = $xml->xpath("//clef");
 		//print_r($clefs);
-		// $a = (object)array("clef" => "soprano clef", "count" => 0 );
+		// $a = (object)array("label" => "soprano clef", "value" => 0 );
 		$clefsArray = array(
-			(object)array("clef" => "soprano clef", "count" => 0 ),
-			(object)array("clef" => "mezzo-sopran clef", "count" => 0 ),
-			(object)array("clef" => "alto clef", "count" => 0 ),
-			(object)array("clef" => "tenor clef", "count" => 0 ),
-			(object)array("clef" => "baritone clef", "count" => 0 ),
-			(object)array("clef" => "bass clef", "count" => 0 ),
-			(object)array("clef" => "G clef", "count" => 0 ),
-			(object)array("clef" => "percussion clef", "count" => 0 ),
-			(object)array("clef" => "tablature", "count" => 0 ),
-			(object)array("clef" => "none", "count" => 0 )
+			(object)array("label" => "soprano clef", "value" => 0 ),
+			(object)array("label" => "mezzo-sopran clef", "value" => 0 ),
+			(object)array("label" => "alto clef", "value" => 0 ),
+			(object)array("label" => "tenor clef", "value" => 0 ),
+			(object)array("label" => "baritone clef", "value" => 0 ),
+			(object)array("label" => "bass clef", "value" => 0 ),
+			(object)array("label" => "G clef", "value" => 0 ),
+			(object)array("label" => "percussion clef", "value" => 0 ),
+			(object)array("label" => "tablature", "value" => 0 ),
+			(object)array("label" => "none", "value" => 0 )
 			);
 		// var_dump($clefsArray);
 		foreach($clefs as $clef) {
@@ -520,45 +520,45 @@ class SearchController extends BaseController {
 						switch($line):
 							case 1:
 								// $value = "soprano clef";
-								$clefsArray[0]->count = $clefsArray[0]->count + 1;
+								$clefsArray[0]->value = $clefsArray[0]->value + 1;
 								break;
 							case 2:
 								// $value = "mezzo-sopran clef";
-								$clefsArray[1]->count = $clefsArray[1]->count + 1;
+								$clefsArray[1]->value = $clefsArray[1]->value + 1;
 								break;
 							case 3:
 								// $value = "alto clef";
-								$clefsArray[2]->count = $clefsArray[2]->count + 1;
+								$clefsArray[2]->value = $clefsArray[2]->value + 1;
 								break;
 							case 4:
 								// $value = "tenor clef";
-								$clefsArray[3]->count = $clefsArray[3]->count + 1;
+								$clefsArray[3]->value = $clefsArray[3]->value + 1;
 								break;
 							case 5:
 								// $value = "baritone clef";
-								$clefsArray[4]->count = $clefsArray[4]->count + 1;
+								$clefsArray[4]->value = $clefsArray[4]->value + 1;
 								break;
 						endswitch;
 						break;
 					case "F":
 						// $value = "bass clef";
-						$clefsArray[5]->count = $clefsArray[5]->count + 1;
+						$clefsArray[5]->value = $clefsArray[5]->value + 1;
 						break;
 					case "G":
 						// $value = "G clef";
-						$clefsArray[6]->count = $clefsArray[6]->count + 1;
+						$clefsArray[6]->value = $clefsArray[6]->value + 1;
 						break;
 					case "percussion":
 						// $value = "percussion clef";
-						$clefsArray[7]->count = $clefsArray[7]->count + 1;
+						$clefsArray[7]->value = $clefsArray[7]->value + 1;
 						break;
 					case "TAB":
 						// $value = "tablature";
-						$clefsArray[8]->count = $clefsArray[8]->count + 1;
+						$clefsArray[8]->value = $clefsArray[8]->value + 1;
 						break;
 					case "none":
 						// $value = "none";
-						$clefsArray[9]->count = $clefsArray[9]->count + 1;
+						$clefsArray[9]->value = $clefsArray[9]->value + 1;
 						break;
 					default:
 						break;
@@ -601,25 +601,25 @@ class SearchController extends BaseController {
 		$notes = $xml->xpath("//note");
 
 		$notesArray = array(
-			(object)array("note" => "B", "count" => 0 ),
-			(object)array("note" => "C", "count" => 0 ),
-			(object)array("note" => "D", "count" => 0 ),
-			(object)array("note" => "Eb", "count" => 0 ),
-			(object)array("note" => "F", "count" => 0 ),
-			(object)array("note" => "D#", "count" => 0 ),
-			(object)array("note" => "E", "count" => 0 ),
-			(object)array("note" => "F#", "count" => 0 ),
-			(object)array("note" => "G", "count" => 0 ),
-			(object)array("note" => "A", "count" => 0 ),
-			(object)array("note" => "Bb", "count" => 0 ),
-			(object)array("note" => "C#", "count" => 0 ),
-			(object)array("note" => "A#", "count" => 0 ),
-			(object)array("note" => "E#", "count" => 0 ),
-			(object)array("note" => "Db", "count" => 0 ),
-			(object)array("note" => "Gb", "count" => 0 ),
-			(object)array("note" => "G#", "count" => 0 ),
-			(object)array("note" => "Cb", "count" => 0 ),
-			(object)array("note" => "Ab", "count" => 0 ),
+			(object)array("label" => "B", "value" => 0 ),
+			(object)array("label" => "C", "value" => 0 ),
+			(object)array("label" => "D", "value" => 0 ),
+			(object)array("label" => "Eb", "value" => 0 ),
+			(object)array("label" => "F", "value" => 0 ),
+			(object)array("label" => "D#", "value" => 0 ),
+			(object)array("label" => "E", "value" => 0 ),
+			(object)array("label" => "F#", "value" => 0 ),
+			(object)array("label" => "G", "value" => 0 ),
+			(object)array("label" => "A", "value" => 0 ),
+			(object)array("label" => "Bb", "value" => 0 ),
+			(object)array("label" => "C#", "value" => 0 ),
+			(object)array("label" => "A#", "value" => 0 ),
+			(object)array("label" => "E#", "value" => 0 ),
+			(object)array("label" => "Db", "value" => 0 ),
+			(object)array("label" => "Gb", "value" => 0 ),
+			(object)array("label" => "G#", "value" => 0 ),
+			(object)array("label" => "Cb", "value" => 0 ),
+			(object)array("label" => "Ab", "value" => 0 ),
 
 			);
 
@@ -638,61 +638,61 @@ class SearchController extends BaseController {
 			}
 			switch($value):
 				case "B":
-					$notesArray[0]->count = $notesArray[0]->count + 1;
+					$notesArray[0]->value = $notesArray[0]->value + 1;
 					break;
 				case "C":
-					$notesArray[1]->count = $notesArray[1]->count + 1;
+					$notesArray[1]->value = $notesArray[1]->value + 1;
 					break;
 				case "D":
-					$notesArray[2]->count = $notesArray[2]->count + 1;
+					$notesArray[2]->value = $notesArray[2]->value + 1;
 					break;
 				case "Eb":
-					$notesArray[3]->count = $notesArray[3]->count + 1;
+					$notesArray[3]->value = $notesArray[3]->value + 1;
 					break;
 				case "F":
-					$notesArray[4]->count = $notesArray[4]->count + 1;
+					$notesArray[4]->value = $notesArray[4]->value + 1;
 					break;
 				case "D#":
-					$notesArray[5]->count = $notesArray[5]->count + 1;
+					$notesArray[5]->value = $notesArray[5]->value + 1;
 					break;
 				case "E":
-					$notesArray[6]->count = $notesArray[6]->count + 1;
+					$notesArray[6]->value = $notesArray[6]->value + 1;
 					break;
 				case "F#":
-					$notesArray[7]->count = $notesArray[7]->count + 1;
+					$notesArray[7]->value = $notesArray[7]->value + 1;
 					break;
 				case "G":
-					$notesArray[8]->count = $notesArray[8]->count + 1;
+					$notesArray[8]->value = $notesArray[8]->value + 1;
 					break;
 				case "A":
-					$notesArray[9]->count = $notesArray[9]->count + 1;
+					$notesArray[9]->value = $notesArray[9]->value + 1;
 					break;
 				case "Bb":
-					$notesArray[10]->count = $notesArray[10]->count + 1;
+					$notesArray[10]->value = $notesArray[10]->value + 1;
 					break;
 				case "C#":
-					$notesArray[11]->count = $notesArray[11]->count + 1;
+					$notesArray[11]->value = $notesArray[11]->value + 1;
 					break;
 				case "A#":
-					$notesArray[12]->count = $notesArray[12]->count + 1;
+					$notesArray[12]->value = $notesArray[12]->value + 1;
 					break;
 				case "E#":
-					$notesArray[13]->count = $notesArray[13]->count + 1;
+					$notesArray[13]->value = $notesArray[13]->value + 1;
 					break;
 				case "Db":
-					$notesArray[14]->count = $notesArray[14]->count + 1;
+					$notesArray[14]->value = $notesArray[14]->value + 1;
 					break;
 				case "Gb":
-					$notesArray[15]->count = $notesArray[15]->count + 1;
+					$notesArray[15]->value = $notesArray[15]->value + 1;
 					break;
 				case "G#":
-					$notesArray[16]->count = $notesArray[16]->count + 1;
+					$notesArray[16]->value = $notesArray[16]->value + 1;
 					break;
 				case "Cb":
-					$notesArray[17]->count = $notesArray[17]->count + 1;
+					$notesArray[17]->value = $notesArray[17]->value + 1;
 					break;
 				case "Ab":
-					$notesArray[18]->count = $notesArray[18]->count + 1;
+					$notesArray[18]->value = $notesArray[18]->value + 1;
 					break;
 			endswitch;
 	    }
