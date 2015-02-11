@@ -67,6 +67,7 @@
 		<p>Special Ryth: </p>
 		<button type="button" class="btn btn-default btn-special-ryth">Triplet</button>
 		<button type="button" class="btn btn-default btn-special-ryth">Dotted</button>
+		<button type="button" class="btn btn-default btn-special-ryth">None</button>
 	</div>
 	<div class="col-xs-2">
 		<p></p>
