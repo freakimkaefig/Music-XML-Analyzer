@@ -31,6 +31,8 @@ MusicXMLAnalyzer.ApplicationController = function() {
 		}
 
 		if (Route.check('/dashboard')) {
+			uploadController = MusicXMLAnalyzer.UploadController();
+			uploadController.init();
 			dashboardModel = MusicXMLAnalyzer.DashboardModel();
 			dashboardModel.init();
 			dashboardView = MusicXMLAnalyzer.DashboardView();
