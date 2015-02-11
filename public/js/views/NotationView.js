@@ -13,10 +13,12 @@ MusicXMLAnalyzer.NotationView = function(){
 		initCanvas();
 		addStaveElements();
 		renderStaveElements();
-		addOnStaveClickListener();
+		//addOnStaveClickListener();
+
+		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
 	},
 
-	/* This method inits canvas and context */
+	/* This method inits canvas and context and sets canvas top and left to variable*/
 	initCanvas = function() {
 		canvas = document.getElementById('myCanvas');
 	    canvasLeft = canvas.offsetLeft;
@@ -44,7 +46,17 @@ MusicXMLAnalyzer.NotationView = function(){
 		
 	},
 
+	onMouseMoveCanvas = function(event) {
+		console.log("mouse over canvas");
+		var x = event.pageX - canvasLeft,
+		        y = event.pageY - canvasTop;
+		    	console.log(x, y);
+		//TODO
+		//hier die erkennung für notenlinien abfragen
+	},
+
 	addOnStaveClickListener = function() {
+		
 		canvas.addEventListener('click', function(event) {
 		    var x = event.pageX - canvasLeft,
 		        y = event.pageY - canvasTop;

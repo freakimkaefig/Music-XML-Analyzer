@@ -19,15 +19,9 @@
 	</div>
 </div>
 
-
-<div class="row">
-	<div class="col-xs-12">
-		<canvas id="myCanvas" width="970px" height="168px" style="border:1px solid #000000;">
-		</canvas>
-	</div>
-</div>
-
-
+<!-- HINT: if theres a column arround you get problems with mouse x and y-->
+<canvas id="myCanvas" width="970px" height="168px" style="border:1px solid #000000;">
+</canvas>
 
 <div class="row">
 	<div class="col-xs-6">
