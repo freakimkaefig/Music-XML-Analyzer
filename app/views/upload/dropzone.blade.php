@@ -5,7 +5,7 @@
 			<h4>Drag your music xml files here!</h4>
 			<span>Or click to browse</span>
 		</div>
-		<form id="uploadDropzone" class="dropzone dropzone-fullscreen dz-clickable" method="POST" action="/upload">
+		<form id="uploadDropzone" class="dropzone dropzone-fullscreen dz-clickable" method="POST" action="{{ URL::route('postUpload') }}">
 			<div class="dz-message"></div>
 			
 			<?php if (Cookie::get('user_id')): ?>
