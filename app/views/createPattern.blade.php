@@ -3,22 +3,31 @@
 @section('content')
 
 <div class="row">
-	<h2>Create Your Pattern</h2>
+	<div class="col-xs-offset-4 col-xs-4">
+		<h2>Create Your Pattern</h2>
+	</div>	
 </div>
 
 <div class="row">
-	<div class="col-xs-6">
-		<p></p>
+	<div class="col-xs-offset-4 col-xs-4">
 		<p>Choose Mode: </p>
 		<button type="button" class="btn btn-default btn-mode">melody</button>
 		<button type="button" class="btn btn-default btn-mode">sound sequence</button>
 		<button type="button" class="btn btn-default btn-mode">rhythm</button>
 		<p></p>
+		<p></p>
 	</div>
 </div>
 
-<canvas id="myCanvas" width="1024" height="200" style="border:1px solid #000000;">
-</canvas>
+
+<div class="row">
+	<div class="col-xs-12">
+		<canvas id="myCanvas" width="970px" height="210px" style="border:1px solid #000000;">
+		</canvas>
+	</div>
+</div>
+
+
 
 <div class="row">
 	<div class="col-xs-6">

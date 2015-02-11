@@ -16,6 +16,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		addOnStaveClickListener();
 	},
 
+	/* This method inits canvas and context */
 	initCanvas = function() {
 		canvas = document.getElementById('myCanvas');
 	    canvasLeft = canvas.offsetLeft;
@@ -24,6 +25,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	    context = canvas.getContext('2d');
 	},
 
+	/* This method adds the 5 note lines to canvas */
 	addStaveElements = function() {
 
 		for(var i = 1; i <= 5; i++) {
@@ -31,8 +33,8 @@ MusicXMLAnalyzer.NotationView = function(){
 			    staveId: i,
 			    colour: '#000000',
 			    width: canvas.width,
-			    height: 3,
-			    top: 20 * i,
+			    height: 1.5,
+			    top: 15 * i,
 			    left: 0
 			});	
 		}
