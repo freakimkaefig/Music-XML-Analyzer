@@ -3,10 +3,24 @@
 @section('content')
 
 <div class="row">
-	<h2>Create Your Pattern</h2>
+	<div class="col-xs-offset-4 col-xs-4">
+		<h2>Create Your Pattern</h2>
+	</div>	
 </div>
 
-<canvas id="myCanvas" width="1024" height="200" style="border:1px solid #000000;">
+<div class="row">
+	<div class="col-xs-offset-4 col-xs-4">
+		<p>Choose Mode: </p>
+		<button type="button" class="btn btn-default btn-mode">melody</button>
+		<button type="button" class="btn btn-default btn-mode">sound sequence</button>
+		<button type="button" class="btn btn-default btn-mode">rhythm</button>
+		<p></p>
+		<p></p>
+	</div>
+</div>
+
+<!-- HINT: if theres a column arround you get problems with mouse x and y-->
+<canvas id="myCanvas" width="970px" height="168px" style="border:1px solid #000000;">
 </canvas>
 
 <div class="row">
@@ -56,12 +70,26 @@
 		<p>Special Ryth: </p>
 		<button type="button" class="btn btn-default btn-special-ryth">Triplet</button>
 		<button type="button" class="btn btn-default btn-special-ryth">Dotted</button>
+		<button type="button" class="btn btn-default btn-special-ryth">None</button>
 	</div>
+	<div class="col-xs-2">
+		<p></p>
+		<p>Octave: </p>
+	    <select id="select-octave" class="form-control">
+		  <option>1</option>
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		  <option>5</option>
+		</select>
+	</div>
+</div>
+<div class="row">
 	<div class="col-xs-6">
 		<p></p>
 		<p>Controlls: </p>
-		<button id="btn-add-note" type="button" class="btn btn-default">Add</button>
-		<button id="btn-remove-note" type="button" class="btn btn-default">Delete</button>
+		<button id="btn-add-note" type="button" class="btn btn-default btn-success">Add</button>
+		<button id="btn-remove-note" type="button" class="btn btn-default btn-danger">Delete</button>
 	</div>
 </div>
 <!-- oktave missing -->

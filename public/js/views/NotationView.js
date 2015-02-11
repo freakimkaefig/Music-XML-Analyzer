@@ -13,9 +13,12 @@ MusicXMLAnalyzer.NotationView = function(){
 		initCanvas();
 		addStaveElements();
 		renderStaveElements();
-		addOnStaveClickListener();
+		//addOnStaveClickListener();
+
+		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
 	},
 
+	/* This method inits canvas and context and sets canvas top and left to variable*/
 	initCanvas = function() {
 		canvas = document.getElementById('myCanvas');
 	    canvasLeft = canvas.offsetLeft;
@@ -24,23 +27,56 @@ MusicXMLAnalyzer.NotationView = function(){
 	    context = canvas.getContext('2d');
 	},
 
+	/* This method adds the 5 note lines to canvas */
 	addStaveElements = function() {
 
-		for(var i = 1; i <= 5; i++) {
-			
+		var spaceBetweenLines = (canvas.height/14) * 5;
+		console.log("c h: " + spaceBetweenLines);
+
+		for(var i = 0; i < 5; i++) {
 			staveElements.push({
 			    staveId: i,
 			    colour: '#000000',
 			    width: canvas.width,
-			    height: 3,
-			    top: 20 * i,
+			    height: 1.5,
+			    top: spaceBetweenLines + (12 * i),
 			    left: 0
 			});	
 		}
 		
 	},
 
-	// display the 5 staves on the canvas
+	onMouseMoveCanvas = function(event) {
+		console.log("mouse over canvas");
+		var x = event.pageX - canvasLeft,
+		        y = event.pageY - canvasTop;
+		    	console.log(x, y);
+		//TODO
+		//hier die erkennung für notenlinien abfragen
+	},
+
+	addOnStaveClickListener = function() {
+		
+		canvas.addEventListener('click', function(event) {
+		    var x = event.pageX - canvasLeft,
+		        y = event.pageY - canvasTop;
+		    	console.log(x, y);
+		    staveElements.forEach(function(element) {
+		        console.log("top" )
+		        if (y > element.top && y < element.top + element.height && x > element.left && x < element.left + element.width) {
+		            //alert('clicked an staveElement');
+		            console.log("got it " + element.staveId);
+
+		            addNote(element.top, calcNotePositionHorizontal(x));
+		            
+		            renderNoteElements();		            
+		        }
+		    });
+
+		}, false);
+	},
+
+	/* this method renders the 5 staves on the canvas by getting them from the staveElements Array */
 	renderStaveElements = function() {
 		staveElements.forEach(function(element) {
 		    context.fillStyle = element.colour;
@@ -67,25 +103,6 @@ MusicXMLAnalyzer.NotationView = function(){
 		});	
 	},
 	
-	addOnStaveClickListener = function() {
-		canvas.addEventListener('click', function(event) {
-		    var x = event.pageX - canvasLeft,
-		        y = event.pageY - canvasTop;
-		    	console.log(x, y);
-		    staveElements.forEach(function(element) {
-		        console.log("top" )
-		        if (y > element.top && y < element.top + element.height && x > element.left && x < element.left + element.width) {
-		            //alert('clicked an staveElement');
-		            console.log("got it " + element.staveId);
-
-		            addNote(element.top, calcNotePositionHorizontal(x));
-		            
-		            renderNoteElements();		            
-		        }
-		    });
-
-		}, false);
-	},
 
 	calcNotePositionHorizontal = function(mouseX) {
 		var staveParts = canvas.width / 4;

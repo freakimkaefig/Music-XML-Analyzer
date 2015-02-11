@@ -4,15 +4,22 @@ MusicXMLAnalyzer.PatternModel = function(){
 	noteElements = [],
 	//noteElement = null,
 
+	curMode = null,
 	curName = null,
 	curAccidential = null,
 	curDuration = null,
 	curClef = null,
 	curRythSpec = null,
+	curOctave = null,
 
 
 	init = function(){
 		console.log("pattern model");
+	},
+
+	setCurrentMode = function(mode) {
+		curMode = mode;
+		console.log("mode set to: " + curMode + " fkt missing");
 	},
 
 	setCurrentNoteName = function(noteName) {
@@ -40,6 +47,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curRythSpec = rythSpec;
 	},
 
+	setCurrentOctave = function(octave) {
+		console.log("model " + octave);
+		curOctave = octave;
+	},
+
 	addNoteElement = function() {
 		if (!curName) {
 			alert("name missing");
@@ -51,6 +63,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 			alert("clef missing");
 		} else if (!curRythSpec) {
 			alert("ryth spec missing");
+		} else if (!curOctave) {
+			alert("octave missing");
 		}
 		else {
 			console.log("note added");
@@ -59,14 +73,19 @@ MusicXMLAnalyzer.PatternModel = function(){
 				name: curName,
 				accidential: curAccidential,
 				duration: curDuration,
-				rythSpecial: curRythSpec
+				rythSpecial: curRythSpec,
+				octave: curOctave
 			});
 		}
 		console.log(noteElements)
 	},
 
 	removeLastNoteElement = function() {
-	    console.log("remove last note button");
+	    console.log("model: remove last note button; function missing");
+	},
+
+	getCurrentMode = function() {
+		return curMode;
 	},
 
 	getAllNoteElements = function() {
@@ -76,13 +95,16 @@ MusicXMLAnalyzer.PatternModel = function(){
 	
 	
 	that.init = init;
+	that.setCurrentMode = setCurrentMode;
 	that.setCurrentNoteName = setCurrentNoteName;
 	that.setCurrentAccidential = setCurrentAccidential;
 	that.setCurrentNoteDuration = setCurrentNoteDuration;
 	that.setCurrentClef = setCurrentClef;
 	that.setCurrentNoteRythSpecial = setCurrentNoteRythSpecial;
+	that.setCurrentOctave = setCurrentOctave;
 	that.addNoteElement = addNoteElement;
 	that.removeLastNoteElement = removeLastNoteElement;
+	that.getCurrentMode = getCurrentMode;
 	that.getAllNoteElements = getAllNoteElements;
 
 	return that;
