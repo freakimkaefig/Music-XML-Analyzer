@@ -25,10 +25,10 @@ Route::get('/imprint', array(
 Route::group(array('before' => 'user'), function() 
 {
 	/* === SEARCH ROUTES === */
-	Route::get('/search', array(
-		'as' => 'search',
-		'uses' => 'SearchController@search'
-	));
+	// Route::get('/search', array(
+	// 	'as' => 'search',
+	// 	'uses' => 'SearchController@search'
+	// ));
 
 	/* === DASHBOARD ROUTES === */
 	Route::get('/dashboard', array(
@@ -49,14 +49,14 @@ Route::group(array('before' => 'user'), function()
 	));
 
 
+
+
+});
 	/* === PATTERN ROUTES === */
 	Route::get('/pattern', array(
 		'as' => 'pattern',
 		'uses' => 'PatternController@getCreatePattern'
 	));
-
-
-});
 
 /* === UPLOAD ROUTES === */
 Route::post('/upload', array(

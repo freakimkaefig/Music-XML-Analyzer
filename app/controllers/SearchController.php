@@ -33,7 +33,6 @@ class SearchController extends BaseController {
 				$result->save();
 			}
 		});
-		//Remove me:
 
 		return Redirect::route('dashboard');
 	}
