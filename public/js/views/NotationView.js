@@ -27,7 +27,6 @@ MusicXMLAnalyzer.NotationView = function(){
 	addStaveElements = function() {
 
 		for(var i = 1; i <= 5; i++) {
-			
 			staveElements.push({
 			    staveId: i,
 			    colour: '#000000',

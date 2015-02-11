@@ -57,11 +57,24 @@
 		<button type="button" class="btn btn-default btn-special-ryth">Triplet</button>
 		<button type="button" class="btn btn-default btn-special-ryth">Dotted</button>
 	</div>
+	<div class="col-xs-2">
+		<p></p>
+		<p>Octave: </p>
+	    <select class="form-control">
+		  <option>Octave 1</option>
+		  <option>Octave 2</option>
+		  <option>Octave 3</option>
+		  <option>Octave 4</option>
+		  <option>Octave 5</option>
+		</select>
+	</div>
+</div>
+<div class="row">
 	<div class="col-xs-6">
 		<p></p>
 		<p>Controlls: </p>
-		<button id="btn-add-note" type="button" class="btn btn-default">Add</button>
-		<button id="btn-remove-note" type="button" class="btn btn-default">Delete</button>
+		<button id="btn-add-note" type="button" class="btn btn-default btn-success">Add</button>
+		<button id="btn-remove-note" type="button" class="btn btn-default btn-danger">Delete</button>
 	</div>
 </div>
 <!-- oktave missing -->
