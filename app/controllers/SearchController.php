@@ -13,11 +13,11 @@ class SearchController extends BaseController {
 				$xml = simplexml_load_file($upload->url);
 
 				$resultObject = new stdClass();
-				$resultObject->artist = (string) $this->_determineArtist($xml);
-				$resultObject->title = (string) $this->_determineTitle($xml);
+				$resultObject->artist = array((string) $this->_determineArtist($xml));
+				$resultObject->title = array((string) $this->_determineTitle($xml));
 				$resultObject->clef = $this->_determineClef($xml);
-				$resultObject->key = $this->_determineKey($xml);
-				$resultObject->meter = $this->_determineMeter($xml);
+				$resultObject->key = array($this->_determineKey($xml));
+				$resultObject->meter = array($this->_determineMeter($xml));
 				$resultObject->instruments = $this->_determineInstruments($xml);
 				$resultObject->count_measures = $this->_countMeasures($xml);
 				$resultObject->count_notes = $this->_countNotes($xml);

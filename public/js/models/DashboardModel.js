@@ -19,8 +19,16 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		loadResultIds();
 	},
 
-	getResults = function() {
-		return results;
+	getResults = function(id) {
+		if (id === undefined) {
+			return results;
+		} else if (id === 'all') {
+			return results['all'];
+		} else {
+			var result = $.grep(results, function(e){ return e.id == id; });
+			console.log(result);
+			return result[0];
+		}
 	},
 
 	loadUploadIds = function() {
@@ -85,7 +93,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 
 	_mergeResults = function(resultsArr) {
 		mergedArr = {
-			artist: '', 
+			artist: [], 
 			clef: null,
 			count_measures: 0,
 			count_notes: 0,
@@ -114,7 +122,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				'Perfect unison': 0,
 				'Tritone': 0
 			},
-			key: {},
+			key: [],
 			meter: '',
 			most_frequent_note: '',
 			note_distribution: {
@@ -146,10 +154,11 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				'quarter': 0,
 				'whole': 0
 			},
-			title: ''
+			title: []
 		}
 		for (var i = 0; i < resultsArr.length; i++) {
-			// mergedArr.artist += // TODO artist as array
+			// console.warn(i, resultsArr[i]);
+			mergedArr.artist.push(resultsArr[i].value.artist[0]);
 			// mergedArr.clef = ???
 			mergedArr.count_measures += parseInt(resultsArr[i].value.count_measures);
 			mergedArr.count_notes += parseInt(resultsArr[i].value.count_notes);
@@ -176,8 +185,22 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			mergedArr.intervals['Perfect twelfth'] += parseInt(resultsArr[i].value.intervals['Perfect twelfth']);
 			mergedArr.intervals['Perfect unison'] += parseInt(resultsArr[i].value.intervals['Perfect unison']);
 			mergedArr.intervals['Tritone'] += parseInt(resultsArr[i].value.intervals['Tritone']);
-			// mergedArr.key += // TODO key as array
-			// mergedArr.meter += // TODO meter as array
+			mergedArr.key = mergedArr.key.concat(resultsArr[i].value.key[0]);
+			// console.log(mergedArr);
+			// var seenKey = false;
+			// for (var j = 0; j < mergedArr.key.length; j++) {
+			// 	if (mergedArr.key[j].key == resultsArr[i].value.key.key) {
+			// 		seenKey = j;
+			// 	}
+			// }
+			// if (seenKey) {
+			// 	mergedArr.key[seenKey]++;
+			// 	console.log("duplicate", seenKey, resultsArr[i].value.key[0]);
+			// } else {
+			// 	console.log("no duplicate", resultsArr[i].value.key[0]);
+			// 	mergedArr.key.push(resultsArr[i].value.key[0]);
+			// }
+			mergedArr.meter[i] = resultsArr[i].value.meter[0];
 			// mergedArr.most_frequent_note += // retrieve from note_distribution
 			mergedArr.note_distribution['A'] += parseInt(resultsArr[i].value.note_distribution['A']);
 			mergedArr.note_distribution['A#'] += parseInt(resultsArr[i].value.note_distribution['A#']);
@@ -204,12 +227,11 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			mergedArr.note_types['half'] += parseInt(resultsArr[i].value.note_types['half']);
 			mergedArr.note_types['quarter'] += parseInt(resultsArr[i].value.note_types['quarter']);
 			mergedArr.note_types['whole'] += parseInt(resultsArr[i].value.note_types['whole']);
-			// mergedArr.title += // TODO title as array
+			mergedArr.title.push(resultsArr[i].value.title[0]);
 		}
 
 		return mergedArr;
-	}
-
+	};
 
 
 	that.init = init;
