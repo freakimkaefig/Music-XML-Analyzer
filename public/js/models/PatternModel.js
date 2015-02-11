@@ -66,7 +66,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	removeLastNoteElement = function() {
-	    console.log("remove last note button");
+	    console.log("model: remove last note button; function missing");
 	},
 
 	getAllNoteElements = function() {

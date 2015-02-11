@@ -29,37 +29,37 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onNoteButtonClick = function(event) {
-		console.log($(event.target).text());
+		//console.log($(event.target).text());
 		patternController.changeNote($(event.target).text());
 	},
 
 	onAccidentialButtonClick = function(event) {
-		console.log($(event.target).text());
+		// console.log($(event.target).text());
 		patternController.changeAccidential($(event.target).text());
 	},
 
 	onDurationButtonClick = function(event) {
-		console.log($(event.target).text());
+		// console.log($(event.target).text());
 		patternController.changeDuration($(event.target).text());
 	},
 
 	onClefButtonClick = function(event) {
-		console.log($(event.target).text());
+		// console.log($(event.target).text());
 		patternController.changeClef($(event.target).text());
 	},
 
 	onSpecialRythButtonClick = function(event) {
-		console.log($(event.target).text());
+		// console.log($(event.target).text());
 		patternController.changeSpecialRyth($(event.target).text());
 	},
 
 	onAddButtonClick = function(event) {
-		console.log("add btn");
+		// console.log("add btn");
 		patternController.addNote();
 	},
 
 	onRemoveButtonClick = function(event) {
-		console.log("remove btn");
+		// console.log("remove btn");
 		patternController.removeLastNote();
 	};
 
