@@ -19,6 +19,10 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		loadResultIds();
 	},
 
+	addLogMessage = function(msg) {
+		$(that).trigger('logMessage', [msg]);
+	},
+
 	getResults = function(id) {
 		if (id === undefined) {
 			return results;
@@ -39,7 +43,11 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	},
 
 	_onLoadResults = function(data, textStatus, jqXHR) {
-		uploadIds = JSON.parse(data);
+		if (data !== "empty") {
+			uploadIds = JSON.parse(data);
+		} else {
+			addLogMessage('No files uploaded! Click on upload to upload files.');
+		}
 	},
 
 	loadResultIds = function() {
@@ -50,16 +58,21 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	},
 
 	_onLoadResultIds = function(data, textStatus, jqXHR) {
-		resultIds = JSON.parse(data);
+		if (data !== "empty") {
+			resultIds = JSON.parse(data);
 
-		for (var i = 0; i < resultIds.length; i++) {
-			loadResultById(resultIds[i]);
+			for (var i = 0; i < resultIds.length; i++) {
+				loadResultById(resultIds[i]);
+			}
+		} else {
+			addLogMessage('Files not analyzed yet. Hang out ...');
+			window.location.href = '/upload-complete';
 		}
 	},
 
 	loadResultById = function(id) {
 		$.ajax({
-		url: URL_GET_RESULT_VALUE_BY_ID + id,
+			url: URL_GET_RESULT_VALUE_BY_ID + id,
 			success: function (data, textStatus, jqXHR) {
 				_onLoadResultById(id, data, textStatus, jqXHR);
 			}
@@ -201,6 +214,9 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			],
 			title: []
 		}
+
+		addLogMessage('Calculating overall statistics ...');
+
 		for (var i = 0; i < resultsArr.length; i++) {
 
 			// merge artists

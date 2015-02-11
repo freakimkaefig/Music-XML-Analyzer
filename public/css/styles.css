@@ -1,6 +1,31 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
 /* === HELPER CLASSES === */
 .img-center {
 	margin: 0 auto;
+}
+
+.btn-xxl {
+	padding: 15px 22px;
+	font-size: 22px;
+	text-transform: uppercase;
+}
+
+/* === LOGS === */
+.logBox {
+	display: none;
+	font-family: 'Droid Sans Mono';
+	color:#5fba3d;
+	-webkit-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.65);
+	-moz-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.65);
+	box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.65);
+	background-color:#080808;
+	height: 0px;
+	overflow: hidden;
+	padding: 5px 15px;
+}
+.typed-cursor {
+	display: none;
 }
 
 /* === NAVBAR === */
@@ -17,6 +42,16 @@
 h1 {
 	text-transform: uppercase;
 	margin-bottom: 60px;
+	letter-spacing: 2.5px;
+}
+
+/* === HOME ==== */
+#start_row .icon {
+	font-size: 60px;
+	margin: 60px 0;
+}
+#buttons_row {
+	margin-top: 120px;
 }
 
 /* === UPLOAD === */
@@ -40,7 +75,7 @@ h1 {
 	font-size: 26px;
 	font-weight: bold;
 }
-#uploadModal .modal-dialog #progressWrapper {
+#uploadModal .modal-dialog #buttonContainer {
 	color: #fff;
 	bottom: 60px;
 	position: absolute;
@@ -61,8 +96,17 @@ h1 {
 	background: rgba(81, 81, 81, 0.5);
 	text-align: center;
 }
+#uploadMessages {
+	position: absolute;
+	bottom: 60px;
+	left: 340px;
+	right: 340px;
+}
 
 /* === DASHBOARD == */
+#dashboardMessages {
+	margin-bottom: 45px;
+}
 
 /*PIE-CHART*/
 

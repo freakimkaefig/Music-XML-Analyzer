@@ -17,7 +17,7 @@
 			     		@include('upload.dropzone')
 			     	</li>
 			      	<li><a href="{{ URL::route('dashboard') }}">Dashboard</a></li>
-      		        <li><a href="{{ URL::route('search') }}">Search</a></li>
+      		        <li><a href="{{ URL::route('pattern') }}">Search</a></li>
                 <?php endif; ?>
 			  	</ul>
      		<?php endif; ?>

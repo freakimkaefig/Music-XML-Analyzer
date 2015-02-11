@@ -2,6 +2,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	var that = {},
 
+	$logMessages = null,
+	dashboardMessageCounter = null,
 	$fileSelector = null,
 
 	noteDistribution = null,
@@ -15,7 +17,47 @@ MusicXMLAnalyzer.DashboardView = function(){
 	init = function(){
 		console.info('MusicXMLAnalyzer.DashboardView.init');
 
+		$logMessages = $('#dashboardMessages');
+		initLogMessages();
+
 		$fileSelector = $('#fileSelector');
+	},
+
+	initLogMessages = function() {
+		dashboardMessageCounter = 0;
+		$logMessages.show();
+		$logMessages.animate({
+			height: 100
+		}, 500);
+		addLogMessage('Fetching results from database ...');
+	},
+
+	disposeLogMessages = function() {
+		window.setTimeout(function() {
+			$logMessages.animate({
+				height: 0
+			},
+			700,
+			function() {
+				$logMessages.hide();
+				$logMessages.empty();
+			});
+		}, 100);
+	},
+
+	addLogMessage = function(msg) {
+		$('#log' + (dashboardMessageCounter - 3)).animate({
+			"marginTop": "-30px"
+		}, 200);
+		$logMessages.append('<div id="log' + dashboardMessageCounter + '"></div>');
+		$('#log' + dashboardMessageCounter).typed({
+			strings: ['<p>' + msg + '</p>'],
+			backDelay: 100000000000000,
+			typeSpeed: 0,
+			backSpeed: 0,
+			loop: true,
+		});
+		dashboardMessageCounter++;
 	},
 
 	initFileSelector = function(data) {
@@ -364,6 +406,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 	};
 
 	that.init = init;
+	that.disposeLogMessages = disposeLogMessages;
+	that.addLogMessage = addLogMessage;
 	that.initFileSelector = initFileSelector;
 	that.initNoteDistribution = initNoteDistribution;
 	that.initIntervalDistribution = initIntervalDistribution;

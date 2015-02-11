@@ -11,9 +11,14 @@ MusicXMLAnalyzer.DashboardController = function() {
 		model = dashboardModel;
 		view = dashboardView;
 
+		$(model).on('logMessage', onLogMessage);
 		$(model).on('model_ready', onModelReady);
 
 		$(view).on('onFileSelectorChange', onFileSelectorChange);
+	},
+
+	onLogMessage = function(event, msg) {
+		view.addLogMessage(msg);
 	},
 
 	onModelReady = function(event, results) {
@@ -28,6 +33,7 @@ MusicXMLAnalyzer.DashboardController = function() {
 		view.initMeterDistribution(results.all.value.meter);
 		view.initNoteTypeDistribution(results.all.value.note_types);
 		
+		view.disposeLogMessages();
 	},
 
 	onFileSelectorChange = function(event, id) {
