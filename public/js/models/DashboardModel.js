@@ -170,36 +170,25 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			meter: [],
 			most_frequent_note: '',
 			note_distribution: [
-				{ label: "C major", value: 0 },
-				{ label: "G major", value: 0 },
-				{ label: "D major", value: 0 },
-				{ label: "A major", value: 0 },
-				{ label: "E major", value: 0 },
-				{ label: "H major", value: 0 },
-				{ label: "F sharp major", value: 0 },
-				{ label: "C sharp major", value: 0 },
-				{ label: "F major", value: 0 },
-				{ label: "B major", value: 0 },
-				{ label: "Es major", value: 0 },
-				{ label: "As major", value: 0 },
-				{ label: "D flat major", value: 0 },
-				{ label: "G flat major", value: 0 },
-				{ label: "C flat major", value: 0 },
-				{ label: "A minor", value: 0 },
-				{ label: "E minor", value: 0 },
-				{ label: "H minor", value: 0 },
-				{ label: "F sharp minor", value: 0 },
-				{ label: "C sharp minor", value: 0 },
-				{ label: "G sharp minor", value: 0 },
-				{ label: "D sharp minor", value: 0 },
-				{ label: "A sharp minor", value: 0 },
-				{ label: "D minor", value: 0 },
-				{ label: "G minor", value: 0 },
-				{ label: "C minor", value: 0 },
-				{ label: "F minor", value: 0 },
-				{ label: "B minor", value: 0 },
-				{ label: "E flat minor", value: 0 },
-				{ label: "A flat minor", value: 0 }
+				{ label: "B", value: 0 },
+				{ label: "C", value: 0 },
+				{ label: "D", value: 0 },
+				{ label: "Eb", value: 0 },
+				{ label: "F", value: 0 },
+				{ label: "D#", value: 0 },
+				{ label: "E", value: 0 },
+				{ label: "F#", value: 0 },
+				{ label: "G", value: 0 },
+				{ label: "A", value: 0 },
+				{ label: "Bb", value: 0 },
+				{ label: "C#", value: 0 },
+				{ label: "A#", value: 0 },
+				{ label: "E#", value: 0 },
+				{ label: "Db", value: 0 },
+				{ label: "Gb", value: 0 },
+				{ label: "G#", value: 0 },
+				{ label: "Cb", value: 0 },
+				{ label: "Ab", value: 0 }
 			],
 			note_types: [
 				{ label: "whole", value: 0 },
@@ -213,28 +202,84 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			title: []
 		}
 		for (var i = 0; i < resultsArr.length; i++) {
+
+			// merge artists
 			mergedArr.artist.push(resultsArr[i].value.artist[0]);
+
+			// merge clefs
 			// ToDo: merge clefs
+
+			// merge counted measures
 			mergedArr.count_measures += parseFloat(resultsArr[i].value.count_measures);
+
+			// merge counted notes
 			mergedArr.count_notes += parseFloat(resultsArr[i].value.count_notes);
+
+			// merge counted rests
 			mergedArr.count_rests += parseFloat(resultsArr[i].value.count_rests);
-			// ToDo: merge instruments
-			for (var j = 0; j < resultsArr[i].value.intervals.length; j++) {
-				mergedArr.intervals[j].value += resultsArr[i].value.intervals[j].value;
+
+			// merge instruments
+			// if (mergedArr.instruments.length > 0) {
+			// 	for (var instrumentCounter = 0; instrumentCounter < mergedArr.instruments.length; instrumentCounter++) {
+			// 		// check if instrument is already in array
+			// 		// if yes: count position up
+			// 		// else: add new position to array
+			// 		if (mergedArr.instruments[instrumentCounter] == '')
+			// 	}
+			// } else {
+			// 	// add all instruments in array to merged array
+			// 	mergedArr.instruments = resultsArr[i].value.instruments;
+			// }
+
+			// merge counted intervals
+			for (var intervalCounter = 0; intervalCounter < resultsArr[i].value.intervals.length; intervalCounter++) {
+				mergedArr.intervals[intervalCounter].value += resultsArr[i].value.intervals[intervalCounter].value;
 			}
-			for (var j = 0; j < resultsArr[i].value.key.length; j++) {
-				mergedArr.key[j].value += resultsArr[i].value.key[j].value;
+
+			// merge keys
+			for (var keyCounter = 0; keyCounter < resultsArr[i].value.key.length; keyCounter++) {
+				mergedArr.key[keyCounter].value += resultsArr[i].value.key[keyCounter].value;
 			}
-			$.merge(mergedArr.meter, resultsArr[i].value.meter);	// ToDo: merge same values and count occurences
-			// ToDo: calculate most_frequent_note
-			for (var j = 0; j < resultsArr[i].value.note_distribution.length; j++) {
-				mergedArr.note_distribution[j].value += resultsArr[i].value.note_distribution[j].value;
+
+			// merge meter
+			if (!mergedArr.meter.length) {
+				mergedArr.meter.push({ label: resultsArr[i].value.meter, value: 1 });
+			} else {
+				for (var meterCounter = 0; meterCounter < mergedArr.meter.length; meterCounter++) {
+					if (mergedArr.meter[meterCounter].label === resultsArr[i].value.meter) {
+						mergedArr.meter[meterCounter].value += 1;
+						break;
+					} else {
+						mergedArr.meter.push({ label: resultsArr[i].value.meter, value: 1 });
+						break;
+					}
+				}
 			}
-			for (var j = 0; j < resultsArr[i].value.note_types.length; j++) {
-				mergedArr.note_types[j].value += resultsArr[i].value.note_types[j].value;
+
+			// merge note distributions
+			for (var noteCounter = 0; noteCounter < resultsArr[i].value.note_distribution.length; noteCounter++) {
+				mergedArr.note_distribution[noteCounter].value += resultsArr[i].value.note_distribution[noteCounter].value;
 			}
+
+			// merge note types
+			for (var typeCounter = 0; typeCounter < resultsArr[i].value.note_types.length; typeCounter++) {
+				mergedArr.note_types[typeCounter].value += resultsArr[i].value.note_types[typeCounter].value;
+			}
+
+			// merge titles
 			mergedArr.title.push(resultsArr[i].value.title[0]);
 		}
+
+		// calculate most frequent note
+		mostFrequentNoteIndex = -1;
+		mostFrequentNoteValue = -1;
+		for (var mostFrequentNoteCounter = 0; mostFrequentNoteCounter < mergedArr.note_distribution.length; mostFrequentNoteCounter++) {
+			if (mergedArr.note_distribution[mostFrequentNoteCounter].value > mostFrequentNoteValue) {
+				mostFrequentNoteIndex = mostFrequentNoteCounter;
+				mostFrequentNoteValue = mergedArr.note_distribution[mostFrequentNoteCounter].value;
+			}
+		}
+		mergedArr.most_frequent_note = mergedArr.note_distribution[mostFrequentNoteIndex].label;
 
 		return mergedArr;
 	};
