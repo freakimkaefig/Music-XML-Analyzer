@@ -22,7 +22,7 @@
 
 <div class="row">
 	<div class="col-xs-12">
-		<canvas id="myCanvas" width="970px" height="210px" style="border:1px solid #000000;">
+		<canvas id="myCanvas" width="970px" height="168px" style="border:1px solid #000000;">
 		</canvas>
 	</div>
 </div>

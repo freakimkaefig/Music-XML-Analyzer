@@ -28,20 +28,43 @@ MusicXMLAnalyzer.NotationView = function(){
 	/* This method adds the 5 note lines to canvas */
 	addStaveElements = function() {
 
-		for(var i = 1; i <= 5; i++) {
+		var spaceBetweenLines = (canvas.height/14) * 5;
+		console.log("c h: " + spaceBetweenLines);
+
+		for(var i = 0; i < 5; i++) {
 			staveElements.push({
 			    staveId: i,
 			    colour: '#000000',
 			    width: canvas.width,
 			    height: 1.5,
-			    top: 15 * i,
+			    top: spaceBetweenLines + (12 * i),
 			    left: 0
 			});	
 		}
 		
 	},
 
-	// display the 5 staves on the canvas
+	addOnStaveClickListener = function() {
+		canvas.addEventListener('click', function(event) {
+		    var x = event.pageX - canvasLeft,
+		        y = event.pageY - canvasTop;
+		    	console.log(x, y);
+		    staveElements.forEach(function(element) {
+		        console.log("top" )
+		        if (y > element.top && y < element.top + element.height && x > element.left && x < element.left + element.width) {
+		            //alert('clicked an staveElement');
+		            console.log("got it " + element.staveId);
+
+		            addNote(element.top, calcNotePositionHorizontal(x));
+		            
+		            renderNoteElements();		            
+		        }
+		    });
+
+		}, false);
+	},
+
+	/* this method renders the 5 staves on the canvas by getting them from the staveElements Array */
 	renderStaveElements = function() {
 		staveElements.forEach(function(element) {
 		    context.fillStyle = element.colour;
@@ -68,25 +91,6 @@ MusicXMLAnalyzer.NotationView = function(){
 		});	
 	},
 	
-	addOnStaveClickListener = function() {
-		canvas.addEventListener('click', function(event) {
-		    var x = event.pageX - canvasLeft,
-		        y = event.pageY - canvasTop;
-		    	console.log(x, y);
-		    staveElements.forEach(function(element) {
-		        console.log("top" )
-		        if (y > element.top && y < element.top + element.height && x > element.left && x < element.left + element.width) {
-		            //alert('clicked an staveElement');
-		            console.log("got it " + element.staveId);
-
-		            addNote(element.top, calcNotePositionHorizontal(x));
-		            
-		            renderNoteElements();		            
-		        }
-		    });
-
-		}, false);
-	},
 
 	calcNotePositionHorizontal = function(mouseX) {
 		var staveParts = canvas.width / 4;
