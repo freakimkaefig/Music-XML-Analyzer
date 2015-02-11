@@ -9,6 +9,7 @@ class UploadController extends BaseController {
 			if($file) {
 			    $destinationPath = public_path() . '/uploads/' . $user->id . '/';
 			    $filename = $file->getClientOriginalName();
+			    $filename = 'user' . $user->id . '_' . preg_replace("/[^a-z0-9.]+/i", "_", $filename);
 			    $upload_success = Input::file('file')->move($destinationPath, $filename);
 			    
 			    if ($upload_success) {
