@@ -24,6 +24,8 @@ MusicXMLAnalyzer.DashboardController = function() {
 		view.initFileSelector(results);
 		view.initNoteDistribution(results.all.value.note_distribution);
 		view.initIntervalDistribution(results.all.value.intervals);
+		view.initKeyDistribution(results.all.value.key);
+		view.initMeterDistribution(results.all.value.meter);
 		
 	},
 
@@ -31,6 +33,8 @@ MusicXMLAnalyzer.DashboardController = function() {
 		var result = model.getResults(id);
 		view.initNoteDistribution(result.value.note_distribution);
 		view.initIntervalDistribution(result.value.intervals);
+		view.initKeyDistribution(result.value.key);
+		view.initMeterDistribution(result.value.meter);
 	};
 
 	that.init = init;

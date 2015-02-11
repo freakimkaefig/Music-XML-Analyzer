@@ -16,7 +16,7 @@ class SearchController extends BaseController {
 				$resultObject->artist = array((string) $this->_determineArtist($xml));
 				$resultObject->title = array((string) $this->_determineTitle($xml));
 				$resultObject->clef = $this->_determineClef($xml);
-				$resultObject->key = array($this->_determineKey($xml));
+				$resultObject->key = $this->_determineKey($xml);
 				$resultObject->meter = array($this->_determineMeter($xml));
 				$resultObject->instruments = $this->_determineInstruments($xml);
 				$resultObject->count_measures = $this->_countMeasures($xml);
