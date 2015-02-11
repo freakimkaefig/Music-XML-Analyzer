@@ -26,6 +26,7 @@ MusicXMLAnalyzer.DashboardController = function() {
 		view.initIntervalDistribution(results.all.value.intervals);
 		view.initKeyDistribution(results.all.value.key);
 		view.initMeterDistribution(results.all.value.meter);
+		view.initNoteTypeDistribution(results.all.value.note_types);
 		
 	},
 
@@ -35,6 +36,7 @@ MusicXMLAnalyzer.DashboardController = function() {
 		view.initIntervalDistribution(result.value.intervals);
 		view.initKeyDistribution(result.value.key);
 		view.initMeterDistribution(result.value.meter);
+		view.initNoteTypeDistribution(result.value.note_types);
 	};
 
 	that.init = init;

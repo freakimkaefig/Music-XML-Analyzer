@@ -7,6 +7,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	noteDistribution = null,
 	intervalDistribution = null,
 	keyDistribution = null,
+	noteTypeDistribution = null,
 	meterDistribution = null,
 	instruments = null,
 
@@ -118,11 +119,37 @@ MusicXMLAnalyzer.DashboardView = function(){
 		}); 
 	},
 
+	initNoteTypeDistribution = function(data) {
+		if (noteTypeDistribution) {
+			noteTypeDistribution.destroy();
+		}
+		noteTypeDistribution = new d3pie("pie_noteTypeDistribution", {
+			header: {
+				title: {
+					text: "Notenlängen"
+				}
+			},
+			data: {
+				content: data
+			},
+			tooltips: {
+			    enabled: true,
+			    type: "placeholder",
+			    string: "{label}: ({value})  {percentage}%",
+			    placeholderParser: function(index, data) {
+			      data.label = data.label + "  ";
+			      data.percentage = data.percentage;
+			      data.value = data.value;
+			    }
+			}
+		});
+	},
+
 	initMeterDistribution = function(data) {
 		if (meterDistribution) {
 			meterDistribution.destroy();
 		}
-		meterDistribution = new d3pie("pie_meterDistribution", {
+		meterDistribution = new d3pie("pie2", {
 			header: {
 				title: {
 					text: "Taktarten"
@@ -341,6 +368,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.initNoteDistribution = initNoteDistribution;
 	that.initIntervalDistribution = initIntervalDistribution;
 	that.initKeyDistribution = initKeyDistribution;
+	that.initNoteTypeDistribution = initNoteTypeDistribution;
 	that.initMeterDistribution = initMeterDistribution;
 
 	that.changeFile = changeFile;

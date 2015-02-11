@@ -201,14 +201,15 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				{ label: "E flat minor", value: 0 },
 				{ label: "A flat minor", value: 0 }
 			],
-			note_types: {
-				'': 0.0,
-				'16th': 0.0,
-				'eighth': 0.0,
-				'half': 0.0,
-				'quarter': 0.0,
-				'whole': 0.0
-			},
+			note_types: [
+				{ label: "whole", value: 0 },
+				{ label: "half", value: 0 },
+				{ label: "quarter", value: 0 },
+				{ label: "eighth", value: 0 },
+				{ label: "16th", value: 0 },
+				{ label: "32nd", value: 0 },
+				{ label: "64th", value: 0 }
+			],
 			title: []
 		}
 		for (var i = 0; i < resultsArr.length; i++) {
@@ -229,12 +230,9 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			for (var j = 0; j < resultsArr[i].value.note_distribution.length; j++) {
 				mergedArr.note_distribution[j].value += resultsArr[i].value.note_distribution[j].value;
 			}
-			mergedArr.note_types[''] += parseFloat(resultsArr[i].value.note_types['']);
-			mergedArr.note_types['16th'] += parseFloat(resultsArr[i].value.note_types['16th']);
-			mergedArr.note_types['eighth'] += parseFloat(resultsArr[i].value.note_types['eighth']);
-			mergedArr.note_types['half'] += parseFloat(resultsArr[i].value.note_types['half']);
-			mergedArr.note_types['quarter'] += parseFloat(resultsArr[i].value.note_types['quarter']);
-			mergedArr.note_types['whole'] += parseFloat(resultsArr[i].value.note_types['whole']);
+			for (var j = 0; j < resultsArr[i].value.note_types.length; j++) {
+				mergedArr.note_types[j].value += resultsArr[i].value.note_types[j].value;
+			}
 			mergedArr.title.push(resultsArr[i].value.title[0]);
 		}
 
