@@ -6,6 +6,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	noteDistribution = null,
 	intervalDistribution = null,
+	keyDistribution = null,
 	meterDistribution = null,
 	instruments = null,
 
@@ -50,27 +51,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 				}
 			},
 			data: {
-				content: [
-					{ label: "A", value: data['A'] },
-					{ label: "A#", value: data['A#'] },
-					{ label: "Ab", value: data['Ab'] },
-					{ label: "B", value: data['B'] },
-					{ label: "Bb", value: data['Bb'] },
-					{ label: "C", value: data['C'] },
-					{ label: "C#", value: data['C#'] },
-					{ label: "Cb", value: data['Cb'] },
-					{ label: "D", value: data['D'] },
-					{ label: "D#", value: data['D#'] },
-					{ label: "Db", value: data['Db'] },
-					{ label: "E", value: data['E'] },
-					{ label: "E#", value: data['E#'] },
-					{ label: "Eb", value: data['Eb'] },
-					{ label: "F", value: data['F'] },
-					{ label: "F#", value: data['F#'] },
-					{ label: "G", value: data['G'] },
-					{ label: "G#", value: data['G#'] },
-					{ label: "Gb", value: data['Gb'] }
-				]
+				content: data
 			},
 			tooltips: {
 			    enabled: true,
@@ -81,7 +62,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 			      data.percentage = data.percentage;
 			      data.value = data.value;
 			    }
-			  }
+			}
 		}); 
 	},
 
@@ -96,29 +77,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 				}
 			},
 			data: {
-				content: [
-					{ label: "Double octave", value: data['Double octave'] },
-					{ label: "Double octave + Major second", value: data['Double octave + Major second'] },
-					{ label: "Double octave + Tritone", value: data['Double octave + Tritone'] },
-					{ label: "Major ninth", value: data['Major ninth'] },
-					{ label: "Major second", value: data['Major second'] },
-					{ label: "Major seventh", value: data['Major seventh'] },
-					{ label: "Major sixth", value: data['Major sixth'] },
-					{ label: "Major tenth", value: data['Major tenth'] },
-					{ label: "Major third", value: data['Major third'] },
-					{ label: "Minor ninth", value: data['Minor ninth'] },
-					{ label: "Minor second", value: data['Minor second'] },
-					{ label: "Minor seventh", value: data['Minor seventh'] },
-					{ label: "Minor sixth", value: data['Minor sixth'] },
-					{ label: "Minor tenth", value: data['Minor tenth'] },
-					{ label: "Minor third", value: data['Minor third'] },
-					{ label: "Perfect fifth", value: data['Perfect fifth'] },
-					{ label: "Perfect fourth", value: data['Perfect fourth'] },
-					{ label: "Perfect octave", value: data['Perfect octave'] },
-					{ label: "Perfect twelfth", value: data['Perfect twelfth'] },
-					{ label: "Perfect unison", value: data['Perfect unison'] },
-					{ label: "Tritone", value: data['Tritone'] }
-				]
+				content: data
 			},
 			tooltips: {
 			    enabled: true,
@@ -129,29 +88,59 @@ MusicXMLAnalyzer.DashboardView = function(){
 			      data.percentage = data.percentage;
 			      data.value = data.value;
 			    }
-			  }
+			}
 		}); 
 	},
 
-	initMeterDistribution = function() {
+	initKeyDistribution = function(data) {
+		if (keyDistribution) {
+			keyDistribution.destroy();
+		}
+		keyDistribution = new d3pie("pie_keyDistribution", {
+			header: {
+				title: {
+					text: "Key Distribution"
+				}
+			},
+			data: {
+				content: data
+			},
+			tooltips: {
+			    enabled: true,
+			    type: "placeholder",
+			    string: "{label}: ({value})  {percentage}%",
+			    placeholderParser: function(index, data) {
+			      data.label = data.label + "  ";
+			      data.percentage = data.percentage;
+			      data.value = data.value;
+			    }
+			}
+		}); 
+	},
+
+	initMeterDistribution = function(data) {
 		if (meterDistribution) {
 			meterDistribution.destroy();
 		}
-		meterDistribution = new d3pie("pie2", {
+		meterDistribution = new d3pie("pie_meterDistribution", {
 			header: {
 				title: {
 					text: "Taktarten"
 				}
 			},
 			data: {
-				content: [
-					{ label: "1", value: 26 },
-					{ label: "1/2", value: 21 },
-					{ label: "1/4", value: 15 },
-					{ label: "3/4", value: 26 },
-					{ label: "5/8", value: 51 }
-				]
+				content: data
 			},
+			tooltips: {
+			    enabled: true,
+			    type: "placeholder",
+			    string: "{label}: ({value})  {percentage}%",
+			    placeholderParser: function(index, data) {
+			      data.label = data.label + "  ";
+			      data.percentage = data.percentage;
+			      data.value = data.value;
+			    }
+			}
 		});
 	},
 
@@ -351,6 +340,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.initFileSelector = initFileSelector;
 	that.initNoteDistribution = initNoteDistribution;
 	that.initIntervalDistribution = initIntervalDistribution;
+	that.initKeyDistribution = initKeyDistribution;
+	that.initMeterDistribution = initMeterDistribution;
 
 	that.changeFile = changeFile;
 
