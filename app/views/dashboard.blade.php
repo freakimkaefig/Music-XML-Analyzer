@@ -17,7 +17,7 @@
 	</div>
 	<div class="row">
 		<div id="pie_keyDistribution" class="pie col-sm-6"></div>
-		<div id="pie_meterDistribution" class="pie col-sm-6"></div>
+		<div id="pie_noteTypeDistribution" class="pie col-sm-6"></div>
 	</div>
 	<div class="row"></div>
 		<div id="pie2" class="pie col-xs-6"></div>
