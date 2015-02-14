@@ -9,7 +9,7 @@
      		<?php $user = User::find(Cookie::get('user_id')); ?>
      		<?php if ($user): ?>
 		     	<ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">User ID: {{ $user->id }}</a></li>
+                    <li><a href="#">User ID: {{ $user->id }}</a></li> <!-- For debugging only delete on production -->
                 <?php $uploads = $user->uploads; ?>
                 <?php if (!$uploads->isEmpty()): ?>
 			     	<li>
