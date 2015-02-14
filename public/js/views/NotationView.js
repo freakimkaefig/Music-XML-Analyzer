@@ -8,8 +8,12 @@ MusicXMLAnalyzer.NotationView = function(){
 	canvasLeft = null,
 	canvasTop = null,
 
-	paddingTopStaves = 0;
-	spaceBetweenLines = 0;
+	paddingTopStaves = 0,
+	spaceBetweenLines = 0,
+
+	topValsNoteElements = null,
+
+	
 
 	init = function() {
 		console.log("notation view");
@@ -17,7 +21,8 @@ MusicXMLAnalyzer.NotationView = function(){
 		addStaveElements();
 		renderStaveElements();
 		//addOnStaveClickListener();
-
+		setTopNoteValues();
+		
 		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
 	},
 
@@ -59,6 +64,37 @@ MusicXMLAnalyzer.NotationView = function(){
 		});
 	},
 
+	/* this methods calcs the position of the notes */
+	setTopNoteValues = function() {
+		spaceBetweenLines = (canvas.height/14);
+
+		topValsNoteElements = {
+	    	f3: spaceBetweenLines * 1.5,
+	    	e3: spaceBetweenLines * 2,
+	    	d3: spaceBetweenLines * 2.5,
+	    	c3: spaceBetweenLines * 3,
+	    	h2: spaceBetweenLines * 3.5,
+	    	a2: spaceBetweenLines * 4,
+	    	g2: spaceBetweenLines * 4.5,
+	    	f2: spaceBetweenLines * 5,
+	    	e2: spaceBetweenLines * 5.5,
+	    	d2: spaceBetweenLines * 6,
+	    	c2: spaceBetweenLines * 6.5,
+	    	h1: spaceBetweenLines * 7,
+	    	a1: spaceBetweenLines * 7.5,
+	    	g1: spaceBetweenLines * 8,
+	    	f1: spaceBetweenLines * 8.5,
+	    	e1: spaceBetweenLines * 9,
+	    	d1: spaceBetweenLines * 9.5,
+	    	c1: spaceBetweenLines * 10,
+	    	h: spaceBetweenLines * 10.5,
+	    	a: spaceBetweenLines * 11,
+	    	g: spaceBetweenLines * 11.5,
+	    	f: spaceBetweenLines * 12,
+	    	e: spaceBetweenLines * 12.5
+		};
+	},
+
 	/* This method handels the mouseover event of canvas */
 	onMouseMoveCanvas = function(event) {
 
@@ -66,65 +102,67 @@ MusicXMLAnalyzer.NotationView = function(){
 	        y = event.pageY - canvasTop;
 
     	// console.log("y: " + y);
+    	if (checkHorizontalArea(y)) {		
+    		console.log("current note preview = " + checkHorizontalArea(y));
+    		context.clearRect(0, 0, canvas.width, canvas.height);
+			renderStaveElements();
+			renderNotePreview(topValsNoteElements[checkHorizontalArea(y)]);
+    	}
 
-    	checkHorizontalArea(y);
-
-	//TODO
-	//einzelne noten rendern
 	},
 
 	checkHorizontalArea = function(y) {
 
-		var horizontalArea = -1;
+		var horizontalVal = null;
 
 		if (y > spaceBetweenLines * 1.25 && y <= spaceBetweenLines * 1.75) {
-			console.log("f3");
+			horizontalVal = "f3";
 		} else if (y > spaceBetweenLines * 1.75 && y <= spaceBetweenLines * 2.25) {
-			console.log("e3");
+			horizontalVal = "e3";
 		} else if (y > spaceBetweenLines * 2.25 && y <= spaceBetweenLines * 2.75) {
-			console.log("d3");
+			horizontalVal = "d3";
 		} else if (y > spaceBetweenLines * 2.75 && y <= spaceBetweenLines * 3.25) {
-			console.log("c3");
+			horizontalVal = "c3";
 		} else if (y > spaceBetweenLines * 3.25 && y <= spaceBetweenLines * 3.75) {
-			console.log("h2");
+			horizontalVal = "h2";
 		} else if (y > spaceBetweenLines * 3.75 && y <= spaceBetweenLines * 4.25) {
-			console.log("a2");
+			horizontalVal = "a2";
 		} else if (y > spaceBetweenLines * 4.25 && y <= spaceBetweenLines * 4.75) {
-			console.log("g2");
+			horizontalVal = "g2";
 		} else if (y > spaceBetweenLines * 4.75 && y <= spaceBetweenLines * 5.25) {
-			console.log("f2");
+			horizontalVal = "f2";
 		} else if (y > spaceBetweenLines * 5.25 && y <= spaceBetweenLines * 5.75) {
-			console.log("e2");
+			horizontalVal = "e2";
 		} else if (y > spaceBetweenLines * 5.75 && y <= spaceBetweenLines * 6.25) {
-			console.log("d2");
+			horizontalVal = "d2";
 		} else if (y > spaceBetweenLines * 6.25 && y <= spaceBetweenLines * 6.75) {
-			console.log("c2");
+			horizontalVal = "c2";
 		} else if (y > spaceBetweenLines * 6.75 && y <= spaceBetweenLines * 7.25) {
-			console.log("h1");
+			horizontalVal = "h1";
 		} else if (y > spaceBetweenLines * 7.25 && y <= spaceBetweenLines * 7.75) {
-			console.log("a1");
+			horizontalVal = "a1";
 		} else if (y > spaceBetweenLines * 7.75 && y <= spaceBetweenLines * 8.25) {
-			console.log("g1");
+			horizontalVal = "g1";
 		} else if (y > spaceBetweenLines * 8.25 && y <= spaceBetweenLines * 8.75) {
-			console.log("f1");
+			horizontalVal = "f1";
 		} else if (y > spaceBetweenLines * 8.75 && y <= spaceBetweenLines * 9.25) {
-			console.log("e1");
+			horizontalVal = "e1";
 		} else if (y > spaceBetweenLines * 9.25 && y <= spaceBetweenLines * 9.75) {
-			console.log("d1");
+			horizontalVal = "d1";
 		} else if (y > spaceBetweenLines * 9.75 && y <= spaceBetweenLines * 10.25) {
-			console.log("c1");
+			horizontalVal = "c1";
 		} else if (y > spaceBetweenLines * 10.25 && y <= spaceBetweenLines * 10.75) {
-			console.log("h");
+			horizontalVal = "h";
 		} else if (y > spaceBetweenLines * 10.75 && y <= spaceBetweenLines * 11.25) {
-			console.log("a");
+			horizontalVal = "a";
 		} else if (y > spaceBetweenLines * 11.25 && y <= spaceBetweenLines * 11.75) {
-			console.log("g");
+			horizontalVal = "g";
 		} else if (y > spaceBetweenLines * 11.75 && y <= spaceBetweenLines * 12.25) {
-			console.log("f");
+			horizontalVal = "f";
 		} else if (y > spaceBetweenLines * 12.25 && y <= spaceBetweenLines * 12.75) {
-			console.log("e");
+			horizontalVal = "e";
 		}
-		// return horizontalArea;
+		return horizontalVal;
 
 	},
 
@@ -155,6 +193,12 @@ MusicXMLAnalyzer.NotationView = function(){
 		    context.fillStyle = element.colour;
 		    context.fillRect(element.left, element.top, element.width, element.height);
 		});
+	},
+
+	// display note elements on the canvas and get them from model
+	renderNotePreview = function(top) {
+	    context.fillStyle = "#d3d3d3";
+	    context.fillRect(100, top - 7.5, 15, 15);
 	},
 	
 
