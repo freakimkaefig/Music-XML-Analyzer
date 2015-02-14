@@ -2,6 +2,9 @@ MusicXMLAnalyzer.ApplicationController = function() {
 
 	var that = {},
 
+	headerView = null,
+	headerController = null,
+
 	uploadView = null,
 	uploadController = null,
 
@@ -16,6 +19,11 @@ MusicXMLAnalyzer.ApplicationController = function() {
 
 	init = function() {
 		console.info('MusicXMLAnalyzer.ApplicationController.init');
+
+		headerView = MusicXMLAnalyzer.HeaderView();
+		headerView.init();
+		headerController = MusicXMLAnalyzer.HeaderController();
+		headerController.init(headerView);
 
 		uploadView = MusicXMLAnalyzer.UploadView();
 		uploadView.init();

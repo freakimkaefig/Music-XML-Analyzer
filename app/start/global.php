@@ -88,6 +88,9 @@ require app_path().'/filters.php';
 |
 | Next we will register the cronjobs used for garbage collector
 |
+| Manually called via
+| http://music-xml-analyzer.local/cron.php?key=VIs1AGmBKoMhBmY7RWpWMtAXdD3FTLPF
+|
 */
 Event::listen('cron.collectJobs', function() {
 	foreach (User::where('last_activity', '<', date('Y-m-d H:m:s', time() - 24*60*60*7))->get() as $user)

@@ -11,6 +11,14 @@
 	text-transform: uppercase;
 }
 
+.dropdown.no-padding .dropdown-menu,
+.dropdown.no-padding li a.dropdown-toggle {
+	padding: 0;
+}
+.dropdown.no-padding li a {
+	margin: 0;
+}
+
 /* === LOGS === */
 .logBox {
 	display: none;

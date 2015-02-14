@@ -64,6 +64,12 @@ Route::group(array('before' => 'uploads'), function()
 		'as' => 'pattern',
 		'uses' => 'PatternController@getCreatePattern'
 	));
+
+	/* === DELETE USER === */
+	Route::get('/delete/me', array(
+		'as' => 'delete-me',
+		'uses' => 'HomeController@getDeleteMe'
+	));
 });
 
 

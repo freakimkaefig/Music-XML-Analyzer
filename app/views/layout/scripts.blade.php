@@ -18,16 +18,18 @@
 {{ HTML::script('js/models/DashboardModel.js') }}
 
 <!-- === Views === -->
+{{ HTML::script('js/views/HeaderView.js') }}
 {{ HTML::script('js/views/UploadView.js') }}
 {{ HTML::script('js/views/DashboardView.js') }}
 {{ HTML::script('js/views/PatternView.js') }}
 {{ HTML::script('js/views/NotationView.js') }}
 
 <!-- === Controller === -->
-{{ HTML::script('js/controllers/ApplicationController.js') }}
+{{ HTML::script('js/controllers/HeaderController.js') }}
 {{ HTML::script('js/controllers/UploadController.js') }}
 {{ HTML::script('js/controllers/DashboardController.js') }}
 {{ HTML::script('js/controllers/PatternController.js') }}
+{{ HTML::script('js/controllers/ApplicationController.js') }}
 
 
 
