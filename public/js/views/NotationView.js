@@ -101,7 +101,6 @@ MusicXMLAnalyzer.NotationView = function(){
 		var x = event.pageX - canvasLeft,
 	        y = event.pageY - canvasTop;
 
-    	// console.log("y: " + y);
     	if (checkHorizontalArea(y)) {		
     		console.log("current note preview = " + checkHorizontalArea(y));
     		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -111,6 +110,7 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	},
 
+	/* This method checks on which horizontal position the cursor is and saves the corresponding note to the variable */
 	checkHorizontalArea = function(y) {
 
 		var horizontalVal = null;
@@ -195,7 +195,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		});
 	},
 
-	// display note elements on the canvas and get them from model
+	/* this method display note elements on the canvas in grey, just as preview */
 	renderNotePreview = function(top) {
 	    context.fillStyle = "#d3d3d3";
 	    context.fillRect(100, top - 7.5, 15, 15);
