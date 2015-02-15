@@ -197,8 +197,14 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/* this method display note elements on the canvas in grey, just as preview */
 	renderNotePreview = function(top) {
-	    context.fillStyle = "#d3d3d3";
-	    context.fillRect(100, top - 7.5, 15, 15);
+	    // context.fillStyle = "#d3d3d3";
+	    // context.fillRect(100, top - 7.5, 15, 15);
+	    var imageObj = new Image();
+	    imageObj.onload = function() {
+        	//TODO values in relation to canvas size
+        	context.drawImage(imageObj, 10, top - 25, 20, 30);
+	    };
+	    imageObj.src = 'img/pattern/test_pic_quarter_note_lower.png';
 	},
 	
 
