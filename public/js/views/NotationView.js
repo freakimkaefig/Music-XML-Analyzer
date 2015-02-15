@@ -101,11 +101,17 @@ MusicXMLAnalyzer.NotationView = function(){
 		var x = event.pageX - canvasLeft,
 	        y = event.pageY - canvasTop;
 
+    	//check if cursor is hover a existing note position
     	if (checkHorizontalArea(y)) {		
     		console.log("current note preview = " + checkHorizontalArea(y));
+    		//delete canvas
     		context.clearRect(0, 0, canvas.width, canvas.height);
+    		//redraw the 5 staves
+    		//TODO add clef
 			renderStaveElements();
-			renderNotePreview(topValsNoteElements[checkHorizontalArea(y)]);
+			//render a preview of a note element
+			//get top val with the key from checkHorizontalArea
+			renderNotePreview(checkHorizontalArea(y), topValsNoteElements[checkHorizontalArea(y)]);
     	}
 
 	},
@@ -196,15 +202,26 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 
 	/* this method display note elements on the canvas in grey, just as preview */
-	renderNotePreview = function(top) {
+	renderNotePreview = function(note, top) {
 	    // context.fillStyle = "#d3d3d3";
 	    // context.fillRect(100, top - 7.5, 15, 15);
 	    var imageObj = new Image();
-	    imageObj.onload = function() {
+	    
+	    if (note == "a1" || note == "g1" || note == "f1" || note == "e1"
+	    	|| note == "d1" || note == "c1" || note == "h" || note == "a" || note == "g"
+	    	|| note == "f" || note == "e") {
+	    	imageObj.onload = function() {
         	//TODO values in relation to canvas size
-        	context.drawImage(imageObj, 10, top - 25, 20, 30);
-	    };
-	    imageObj.src = 'img/pattern/test_pic_quarter_note_lower.png';
+        		context.drawImage(imageObj, 10, top - 25, 20, 30);
+	    	};
+	    	imageObj.src = 'img/pattern/test_pic_quarter_note_notestem_downward.png';
+	    } else {
+	    	imageObj.onload = function() {
+        	//TODO values in relation to canvas size
+        		context.drawImage(imageObj, 10, top - 4, 20, 30);
+	    	};
+	    	imageObj.src = 'img/pattern/test_pic_quarter_note_notestem_upward.png';
+	    }
 	},
 	
 
