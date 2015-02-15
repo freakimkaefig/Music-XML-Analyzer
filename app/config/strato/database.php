@@ -22,7 +22,7 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
+			'host'      => 'rdbms.strato.de',
 			'database'  => 'DB2025125',
 			'username'  => 'U2025125',
 			'password'  => 'GBv5mHq8ZgSV',
