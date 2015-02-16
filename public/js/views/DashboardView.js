@@ -66,7 +66,16 @@ MusicXMLAnalyzer.DashboardView = function(){
 		selectorElement += '<option value="all"> - All - </option>';
 
 		for (var i = 0; i < data.length; i++) {
-			selectorElement += '<option value="' + data[i].id + '">' + data[i].value.artist + ' - ' + data[i].value.title + '</option>';
+			selectorElement += '<option value="';
+			selectorElement += data[i].id
+			selectorElement += '">';
+			selectorElement += data[i].value.artist;
+			selectorElement += ' - ';
+			selectorElement += data[i].value.title;
+			selectorElement += ' (';
+			selectorElement += /[^/]*$/.exec(data[i].value.file_url)[0];
+			selectorElement += ')';
+			selectorElement += '</option>';
 		}
 
 		selectorElement += '</select>';

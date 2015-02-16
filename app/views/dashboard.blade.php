@@ -9,7 +9,7 @@
 		<div class=" col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
 			<div id="dashboardMessages" class="logBox"></div>
 		</div>
-		<div id="fileSelector" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-4 col-lg-offset-4"></div>
+		<div id="fileSelector" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3"></div>
 	</div>
 
 	<div class="row">
