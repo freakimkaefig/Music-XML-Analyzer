@@ -83,56 +83,214 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	},
 
+	initBarChart = function(data) {
+		var containerWidth = $('#bar_intervalDistribution').width() - 30;
+		var margin ={ top:20, right:30, bottom:50, left: 40 },
+		    width = containerWidth - margin.left - margin.right, 
+		    height= 300 - margin.top - margin.bottom;
+
+		// scale to ordinal because x axis is not numerical
+		var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+
+		//scale to numerical value by height
+		var y = d3.scale.linear().range([height, 0]);
+
+		// key on x axis
+		var xAxis = d3.svg.axis()
+		              .scale(x)
+		              .orient("bottom");  //orient bottom because x-axis will appear below the bars
+
+		// key on y axis
+		var yAxis = d3.svg.axis()
+		              .scale(y)
+		              .orient("left");
+
+		var tip = d3.tip()
+					.attr('class', 'd3-tip')
+					.offset([-10, 0])
+					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });
+		  
+		var svg = d3.select("#bar_intervalDistribution")  
+		              .append("svg")  //append svg element inside #bar_intervalDistribution
+		              .attr("width", width+(2*margin.left)+margin.right)    //set width
+		              .attr("height", height+margin.top+margin.bottom)  //set height
+		              .append("g")
+		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		svg.call(tip);
+
+		// transform data object
+	  	x.domain(data.map(function(d){ return d.label}));
+	  	y.domain([0, d3.max(data, function(d){return d.value})]);
+
+		svg.append("g")
+		     .attr("class", "x axis")
+		     .attr("transform", "translate(0,"+ height+")")
+		     .call(xAxis);
+		  
+		svg.append("g")
+		     .attr("class", "y axis")
+		     .attr("transform", "translate(0,0)")
+		     .call(yAxis)
+		     .append("text")
+		     .attr("transform", "rotate(-90)")
+		     .attr("y", 6)
+		     .attr("dy", ".71em")
+		     .style("text-anchor", "end")
+		     .text("Count");
+
+		svg.selectAll(".bar")
+		   .data(data)
+		   .enter()
+		   .append("rect")
+		   .attr("class", "bar")
+		   .attr("x", function(d) { return x(d.label); })
+		   .attr("width", x.rangeBand())
+		   .attr("y", function(d) { return y(d.value); })
+		   .attr("height", function(d) { return height - y(d.value); })
+		   .on("click", tip.show);
+	},
+
 	initNoteDistribution = function(data) {
-		if (noteDistribution) {
-			noteDistribution.destroy();
-		}
-		noteDistribution = new d3pie("pie_noteDistribution", {
-			header: {
-				title: {
-					text: "Note Distribution"
-				}
-			},
-			data: {
-				content: data
-			},
-			tooltips: {
-			    enabled: true,
-			    type: "placeholder",
-			    string: "{label}: ({value})  {percentage}%",
-			    placeholderParser: function(index, data) {
-			      data.label = data.label + "  ";
-			      data.percentage = data.percentage;
-			      data.value = data.value;
-			    }
-			}
-		}); 
+		$('#bar_noteDistribution').empty();
+		var containerWidth = $('#bar_noteDistribution').width() - 30;
+		var margin ={ top:20, right:30, bottom:50, left: 40 },
+		    width = containerWidth - margin.left - margin.right, 
+		    height= 300 - margin.top - margin.bottom;
+
+		// scale to ordinal because x axis is not numerical
+		var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+
+		//scale to numerical value by height
+		var y = d3.scale.linear().range([height, 0]);
+
+		// key on x axis
+		var xAxis = d3.svg.axis()
+		              .scale(x)
+		              .orient("bottom");  //orient bottom because x-axis will appear below the bars
+
+		// key on y axis
+		var yAxis = d3.svg.axis()
+		              .scale(y)
+		              .orient("left");
+
+		var tip = d3.tip()
+					.attr('class', 'd3-tip')
+					.offset([-10, 0])
+					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });
+		  
+		var svg = d3.select("#bar_noteDistribution")  
+		              .append("svg")  //append svg element inside #bar_noteDistribution
+		              .attr("width", width+(2*margin.left)+margin.right)    //set width
+		              .attr("height", height+margin.top+margin.bottom)  //set height
+		              .append("g")
+		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		svg.call(tip);
+
+		// transform data object
+	  	x.domain(data.map(function(d){ return d.label}));
+	  	y.domain([0, d3.max(data, function(d){return d.value})]);
+
+		svg.append("g")
+		     .attr("class", "x axis")
+		     .attr("transform", "translate(0,"+ height+")")
+		     .call(xAxis);
+		  
+		svg.append("g")
+		     .attr("class", "y axis")
+		     .attr("transform", "translate(0,0)")
+		     .call(yAxis)
+		     .append("text")
+		     .attr("transform", "rotate(-90)")
+		     .attr("y", 6)
+		     .attr("dy", ".71em")
+		     .style("text-anchor", "end")
+		     .text("Count");
+
+		svg.selectAll(".bar")
+		   .data(data)
+		   .enter()
+		   .append("rect")
+		   .attr("class", "bar")
+		   .attr("x", function(d) { return x(d.label); })
+		   .attr("width", x.rangeBand())
+		   .attr("y", function(d) { return y(d.value); })
+		   .attr("height", function(d) { return height - y(d.value); })
+		   .on("click", tip.show); 
 	},
 
 	initIntervalDistribution = function(data) {
-		if (intervalDistribution) {
-			intervalDistribution.destroy();
-		}
-		intervalDistribution = new d3pie("pie_intervalDistribution", {
-			header: {
-				title: {
-					text: "Interval Distribution"
-				}
-			},
-			data: {
-				content: data
-			},
-			tooltips: {
-			    enabled: true,
-			    type: "placeholder",
-			    string: "{label}: ({value})  {percentage}%",
-			    placeholderParser: function(index, data) {
-			      data.label = data.label + "  ";
-			      data.percentage = data.percentage;
-			      data.value = data.value;
-			    }
-			}
-		}); 
+		$('#bar_intervalDistribution').empty();
+		var containerWidth = $('#bar_intervalDistribution').width() - 30;
+		var margin ={ top:20, right:30, bottom:50, left: 40 },
+		    width = containerWidth - margin.left - margin.right, 
+		    height= 300 - margin.top - margin.bottom;
+
+		// scale to ordinal because x axis is not numerical
+		var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+
+		//scale to numerical value by height
+		var y = d3.scale.linear().range([height, 0]);
+
+		// key on x axis
+		var xAxis = d3.svg.axis()
+		              .scale(x)
+		              .orient("bottom");  //orient bottom because x-axis will appear below the bars
+
+		// key on y axis
+		var yAxis = d3.svg.axis()
+		              .scale(y)
+		              .orient("left");
+
+		var tip = d3.tip()
+					.attr('class', 'd3-tip')
+					.offset([-10, 0])
+					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });
+		  
+		var svg = d3.select("#bar_intervalDistribution")  
+		              .append("svg")  //append svg element inside #bar_intervalDistribution
+		              .attr("width", width+(2*margin.left)+margin.right)    //set width
+		              .attr("height", height+margin.top+margin.bottom)  //set height
+		              .append("g")
+		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		svg.call(tip);
+
+		// transform data object
+	  	x.domain(data.map(function(d){ return d.label}));
+	  	y.domain([0, d3.max(data, function(d){return d.value})]);
+
+		// svg.append("g")
+		//      .attr("class", "x axis")
+		//      .attr("transform", "translate(0,"+ height+")")
+		//      .call(xAxis);
+		  
+		svg.append("g")
+		     .attr("class", "y axis")
+		     .attr("transform", "translate(0,0)")
+		     .call(yAxis)
+		     .append("text")
+		     .attr("transform", "rotate(-90)")
+		     .attr("y", 6)
+		     .attr("dy", ".71em")
+		     .style("text-anchor", "end")
+		     .text("Count");
+
+		// svg.select(".x.axis")
+		//    .selectAll(".tick")
+		//    .attr("transform", "rotate(-90) translate(0,"+height+")");
+
+		svg.selectAll(".bar")
+		   .data(data)
+		   .enter()
+		   .append("rect")
+		   .attr("class", "bar")
+		   .attr("x", function(d) { return x(d.label); })
+		   .attr("width", x.rangeBand())
+		   .attr("y", function(d) { return y(d.value); })
+		   .attr("height", function(d) { return height - y(d.value); })
+		   .on("click", tip.show);
 	},
 
 	initKeyDistribution = function(data) {
@@ -409,6 +567,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.disposeLogMessages = disposeLogMessages;
 	that.addLogMessage = addLogMessage;
 	that.initFileSelector = initFileSelector;
+	that.initBarChart = initBarChart;
 	that.initNoteDistribution = initNoteDistribution;
 	that.initIntervalDistribution = initIntervalDistribution;
 	that.initKeyDistribution = initKeyDistribution;

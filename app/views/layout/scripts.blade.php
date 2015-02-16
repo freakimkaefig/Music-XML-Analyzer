@@ -1,14 +1,21 @@
 {{ HTML::script('libs/jquery-1.11.2/jquery-1.11.2.min.js') }}
 {{ HTML::script('libs/bootstrap-3.3.2/dist/js/bootstrap.min.js') }}
+
+<!-- D3.js -->
 {{ HTML::script('libs/d3-v3/d3.min.js') }}
 {{ HTML::script('libs/d3-v3/d3pie.min.js') }}
-{{ HTML::script('libs/vexflow/vexflow-min.js') }}
+{{ HTML::script('libs/d3-v3/d3tip.js') }}
+
+<!-- Typed.js for log box -->
 {{ HTML::script('libs/typed.js/js/typed.js') }}
 
+<!-- Vexflow -->
+{{ HTML::script('libs/vexflow/vexflow-min.js') }}
+
+<!-- Dropzone -->
 {{ HTML::script('libs/dropzone-4.0.0/dist/min/dropzone.min.js') }}
 
 {{ HTML::script('js/helpers/Route.js') }}
-
 {{ HTML::script('js/App.js') }}
 
 <!-- ===Models=== -->
