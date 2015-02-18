@@ -15,10 +15,14 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	topValsNoteElements = null,
 
+	patternController = null,
+
 	
 
 	init = function() {
 		console.log("notation view");
+		patternController = MusicXMLAnalyzer.PatternController();
+
 		initCanvas();
 		// addStaveElements();
 		// renderStaveElements();
@@ -128,6 +132,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	onMouseClickCanvas = function(event) {
 
 		console.log("on canvas click");
+		patternController.addNoteByCanvasClick("dummyNote");
 
 	},
 

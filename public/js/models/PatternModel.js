@@ -81,6 +81,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 		console.log(noteElements)
 	},
 
+	addNoteElementByCanvasClick = function(noteName) {
+		console.log("model add note by canavs click : " + noteName);
+	},
+
 	removeLastNoteElement = function() {
 	    console.log("model: remove last note button; function missing");
 	},
@@ -104,6 +108,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.setCurrentNoteRythSpecial = setCurrentNoteRythSpecial;
 	that.setCurrentOctave = setCurrentOctave;
 	that.addNoteElement = addNoteElement;
+	that.addNoteElementByCanvasClick = addNoteElementByCanvasClick;
 	that.removeLastNoteElement = removeLastNoteElement;
 	that.getCurrentMode = getCurrentMode;
 	that.getAllNoteElements = getAllNoteElements;
