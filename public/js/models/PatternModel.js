@@ -81,8 +81,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 		console.log(noteElements)
 	},
 
-	addNoteElementByCanvasClick = function(noteName) {
-		console.log("model add note by canavs click : " + noteName);
+	addNoteElementByCanvasClick = function(note) {
+		console.log("model add note by canavs click : " + note);
+		//split string at "/" to get noteName and ovtave
+		var noteContainer = note.split("/");
+		console.log("part1: " + noteContainer[0]);
+		console.log("part2: " + noteContainer[1]);
 	},
 
 	removeLastNoteElement = function() {

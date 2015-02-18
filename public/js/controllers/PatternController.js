@@ -48,8 +48,8 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternModel.addNoteElement();
 	},
 
-	addNoteByCanvasClick = function(noteName) {
-		patternModel.addNoteElementByCanvasClick(noteName);
+	addNoteByCanvasClick = function(note) {
+		patternModel.addNoteElementByCanvasClick(note);
 	},
 
 	removeLastNote = function() {

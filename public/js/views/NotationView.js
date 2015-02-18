@@ -14,9 +14,6 @@ MusicXMLAnalyzer.NotationView = function(){
 	spaceBetweenLines = 0,
 
 	topValsNoteElements = null,
-
-	patternController = null,
-
 	
 
 	init = function() {
@@ -24,14 +21,11 @@ MusicXMLAnalyzer.NotationView = function(){
 		patternController = MusicXMLAnalyzer.PatternController();
 
 		initCanvas();
-		// addStaveElements();
-		// renderStaveElements();
-		// addOnStaveClickListener();
 		setTopNoteValues();
-		
-		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
-		$("#myCanvas").on("click", onMouseClickCanvas);
+		registerListener();
+
 	},
+
 
 	/* This method inits canvas and context and sets canvas top and left to variable*/
 	initCanvas = function() {
@@ -47,6 +41,11 @@ MusicXMLAnalyzer.NotationView = function(){
   		stave = new Vex.Flow.Stave(10, 0, 500);
   		stave.addClef("treble").setContext(context).draw();
 
+	},
+
+	registerListener = function() {
+		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
+		$("#myCanvas").on("click", onMouseClickCanvas);
 	},
 
 	renderVexFlowNotePreview = function(noteName) {
@@ -132,7 +131,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	onMouseClickCanvas = function(event) {
 
 		console.log("on canvas click");
-		patternController.addNoteByCanvasClick("dummyNote");
+		patternController.addNoteByCanvasClick("dummy/Note");
 
 	},
 
