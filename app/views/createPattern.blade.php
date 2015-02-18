@@ -3,13 +3,13 @@
 @section('content')
 
 <div class="row">
-	<div class="col-xs-offset-4 col-xs-4">
+	<div class="col-xs-4">
 		<h2>Create Your Pattern</h2>
 	</div>	
 </div>
 
 <div class="row">
-	<div class="col-xs-offset-4 col-xs-4">
+	<div class="col-xs-4">
 		<p>Choose Mode: </p>
 		<button type="button" class="btn btn-default btn-mode">melody</button>
 		<button type="button" class="btn btn-default btn-mode">sound sequence</button>
