@@ -3,7 +3,13 @@ require 'SoundSequenzController.php';
 
 class PatternController extends BaseController {
 
-	
+	$tonika = array("C" => 0,
+						"D" => 2,
+						"E" => 4,
+						"F" => 5,
+						"G" => 7,
+						"A" => 9,
+						"B" => 11);
 
 	public function getCreatePattern() {
 		return View::make('createPattern');
@@ -14,18 +20,40 @@ class PatternController extends BaseController {
 	}
 
 	public function postPatternSearch() {
-		// pattern = pattern
-		// type = tonfolge ? thythmus ? melodie?
+		// if (Input::has('pattern')) {
+		// 	
+		// 	$pattern = Input::get('pattern');
+		// } elseif (Chache::has('pattern')) {
+		// 	
+		// } else {
+		// 	return Redirect::route('pattern');
+		// }
+		
+		$pattern = Input::get('pattern');
+		$type = Input::get('type');
 
-		//if type = tonfolge
-		$ssConntroller = new SoundSequenzController();
-		return ($ssConntroller->search(Input::get('pattern')));
+		switch ($type) {
+			case 0:
+				// Type == Tonfolge
+				$ssConntroller = new SoundSequenzController();
+				$results = $ssConntroller->search($pattern);
+				break;
+			case 1:
+				$rConntroller = new RhythmController();
+				$results = array();
+				break;
+			case 2:
+				$rConntroller = new MelodyController();
+				$results = array();
+				break;
+		}
 
-		// elseif type = rhythmus
-		// $rConntroller = new RhythmController();
+		Cache::put('pattern', $pattern, 60*24);
+		Cache::put('results', $results, 60*24);
 
-		// elseif type = melodie
-		// $mConntroller = new MelodyController();
+		return Redirect::route('searchResults')
+			->with('pattern', $pattern)
+			->with('results', $results);
 	}
 
 	public static function getInterval($n){

@@ -8,7 +8,6 @@ class SoundSequenzController {
 	}
 
 	public function search($pattern) {
-		// var_dump($pattern);
 		$p = json_decode($pattern);
 		// $patternLength = count($p);
 		$patternIntervalArray = array();
@@ -84,9 +83,15 @@ class SoundSequenzController {
 
 		});
 
-		// return Redirect::route('searchResults')
-		// 	->with('pattern', $pattern)
-		// 	->with('results', $results);
+		//Dummy result
+		$results = array(
+			(object)array(
+				"file_id" => 4,
+				"file_url" => "http://music-xml-analyzer.local/uploads/90/ActorPreludeSample.xml",
+				"occurences" => array(2, 7)
+			)
+		);
+		return $results;
 	}
 
 }
