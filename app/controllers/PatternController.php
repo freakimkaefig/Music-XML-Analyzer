@@ -3,14 +3,6 @@ require 'SoundSequenzController.php';
 
 class PatternController extends BaseController {
 
-	$tonika = array("C" => 0,
-						"D" => 2,
-						"E" => 4,
-						"F" => 5,
-						"G" => 7,
-						"A" => 9,
-						"B" => 11);
-
 	public function getCreatePattern() {
 		return View::make('createPattern');
 
@@ -19,16 +11,7 @@ class PatternController extends BaseController {
 		// return Redirect::route('patternSearch', array('pattern' => $pattern));
 	}
 
-	public function postPatternSearch() {
-		// if (Input::has('pattern')) {
-		// 	
-		// 	$pattern = Input::get('pattern');
-		// } elseif (Chache::has('pattern')) {
-		// 	
-		// } else {
-		// 	return Redirect::route('pattern');
-		// }
-		
+	public function postPatternSearch() {		
 		$pattern = Input::get('pattern');
 		$type = Input::get('type');
 
