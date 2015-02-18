@@ -14,7 +14,6 @@
 	<div id="pieChart" class="col-xs-6">
 		
 	</div>
-
 </div>
 
 @stop
