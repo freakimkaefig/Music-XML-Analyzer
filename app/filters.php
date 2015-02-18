@@ -85,3 +85,31 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+|--------------------------------------------------------------------------
+| User Filter
+|--------------------------------------------------------------------------
+|
+| The User Filter checks wether the user has results
+|
+*/
+Route::filter('uploads', function() {
+	if (!Cookie::get('user_id')) {
+		return Redirect::to('/');
+	} else {
+		$user = User::find(Cookie::get('user_id'));
+		if (!count($user->uploads)) {
+			return Redirect::to('/');
+		}
+	}
+});
+Route::filter('user', function() {
+	if (!Cookie::get('user_id')) {
+		return Redirect::to('/');
+	} else {
+		if (!User::find(Cookie::get('user_id'))) {
+			return Redirect::to('/');
+		}
+	}
+});

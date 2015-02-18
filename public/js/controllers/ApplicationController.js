@@ -2,10 +2,17 @@ MusicXMLAnalyzer.ApplicationController = function() {
 
 	var that = {},
 
+	headerView = null,
+	headerController = null,
+
+	uploadView = null,
 	uploadController = null,
+
 	patternController = null,
 	
+	dashboardModel = null,
 	dashboardView = null,
+	dashboardController = null,
 	
 	patternModel = null,
 
@@ -13,9 +20,22 @@ MusicXMLAnalyzer.ApplicationController = function() {
 	init = function() {
 		console.info('MusicXMLAnalyzer.ApplicationController.init');
 
+		headerView = MusicXMLAnalyzer.HeaderView();
+		headerView.init();
+		headerController = MusicXMLAnalyzer.HeaderController();
+		headerController.init(headerView);
+
+		uploadView = MusicXMLAnalyzer.UploadView();
+		uploadView.init();
+		uploadController = MusicXMLAnalyzer.UploadController();
+		uploadController.init(uploadView);
+
 		if (Route.check('/')) {
-			uploadController = MusicXMLAnalyzer.UploadController();
-			uploadController.init();
+
+		}
+
+		if (Route.check('/search')) {
+
 		}
 
 		if (Route.check('/imprint')) {
@@ -23,8 +43,12 @@ MusicXMLAnalyzer.ApplicationController = function() {
 		}
 
 		if (Route.check('/dashboard')) {
+			dashboardModel = MusicXMLAnalyzer.DashboardModel();
+			dashboardModel.init();
 			dashboardView = MusicXMLAnalyzer.DashboardView();
 			dashboardView.init();
+			dashboardController = MusicXMLAnalyzer.DashboardController();
+			dashboardController.init(dashboardModel, dashboardView);
 		}
 
 		if (Route.check('/pattern')) {

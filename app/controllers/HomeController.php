@@ -20,15 +20,44 @@ class HomeController extends BaseController {
 		if (Cookie::get('user_id')) {
 			$user = User::find(Cookie::get('user_id'));
 			if ($user) {
+				$name = 'user_id';
+				$value = $user->id;
+				$minutes = 60*24*7;
+				Cookie::queue($name, $value, $minutes);
+				$user->resetLastActivity();
 				$uploads = $user->uploads;
 				if (!$uploads->isEmpty()) {
-					return View::make('dashboard');
+					return Redirect::route('dashboard');
+				} else {
+					return View::make('home');
 				}
 			}
 		}
 		
 		$this->_createNewUser();
-		return View::make('Home');
+		
+		return View::make('home');
+	}
+
+	public function getDeleteMe()
+	{
+		$user = User::find(Cookie::get('user_id'));
+
+		$user->uploads->each(function($upload) {
+
+			if (count($upload->result)) {
+				$upload->result->delete();
+			}
+			$upload->delete();
+	    });
+
+		$directory = public_path() . '/uploads/' . $user->id;
+		$success = Upload::delTree($directory);
+	    $user->delete();
+
+	    $this->_createNewUser();
+
+	    return Redirect::route('home');
 	}
 
 	private function _createNewUser() {
@@ -38,7 +67,7 @@ class HomeController extends BaseController {
 
 		$name = 'user_id';
 		$value = $user->id;
-		$minutes = 60;
+		$minutes = 60*24*7;
 		Cookie::queue($name, $value, $minutes);
 	}
 

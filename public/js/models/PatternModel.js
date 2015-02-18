@@ -77,6 +77,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 				octave: curOctave
 			});
 		}
+		$(that).trigger('patternChange', [noteElements]);
 		console.log(noteElements)
 	},
 

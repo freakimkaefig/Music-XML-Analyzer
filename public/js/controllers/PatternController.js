@@ -12,6 +12,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 		patternModel = MusicXMLAnalyzer.PatternModel();
 		patternModel.init();
+		$(patternModel).on('patternChange', onPatternChange);
 
 	},
 
@@ -49,6 +50,10 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	removeLastNote = function() {
 		patternModel.removeLastNoteElement();
+	},
+
+	onPatternChange = function(event, pattern) {
+		patternView.setPatternValue(JSON.stringify(pattern));
 	},
 
 	dispose = function() {
