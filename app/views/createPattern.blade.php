@@ -20,7 +20,7 @@
 </div>
 
 <!-- HINT: if theres a column arround you get problems with mouse x and y-->
-<canvas id="myCanvas" width="970px" height="168px" style="border:1px solid #000000;">
+<canvas id="myCanvas" width="700" height="120" style="border:1px solid #000000;">
 </canvas>
 
 <div class="row">
