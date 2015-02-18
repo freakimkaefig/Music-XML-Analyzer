@@ -38,7 +38,10 @@ class PatternController extends BaseController {
 			(object)array(
 				"file_id" => 4,
 				"file_url" => "http://music-xml-analyzer.local/uploads/90/ActorPreludeSample.xml",
-				"occurences" => array(2, 7)
+				"occurences" => array(
+					(object)array('note' => 2, 'voice' => 1),
+					(object)array('note' => 7, 'voice' => 2)
+				)
 			)
 		);
 
