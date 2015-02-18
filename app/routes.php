@@ -72,9 +72,9 @@ Route::group(array('before' => 'uploads'), function()
 		'as' => 'pattern',
 		'uses' => 'PatternController@getCreatePattern'
 	));
-	Route::get('/pattern/search', array(
+	Route::post('/pattern/search', array(
 		'as' => 'patternSearch',
-		'uses' => 'PatternController@getPatternSearch'
+		'uses' => 'PatternController@postPatternSearch'
 	));
 	Route::get('/search/results', array(
 		'as' => 'search_results',
