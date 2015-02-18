@@ -3,13 +3,7 @@ require 'SoundSequenzController.php';
 
 class PatternController extends BaseController {
 
-	$tonika = array("C" => 0,
-						"D" => 2,
-						"E" => 4,
-						"F" => 5,
-						"G" => 7,
-						"A" => 9,
-						"B" => 11);
+	
 
 	public function getCreatePattern() {
 		return View::make('createPattern');
@@ -34,30 +28,35 @@ class PatternController extends BaseController {
 		// $mConntroller = new MelodyController();
 	}
 
-	public function getIntervall($n){
+	public static function getInterval($n){
+		$tonika = array("C" => 0,"D" => 2,"E" => 4,"F" => 5,"G" => 7,"A" => 9,"B" => 11);
 		$note = $n;
-		$rest = $note->rest;
-			if(!$rest){
-				// echo "rest is null<br/>";
-				$noteStep = $note->pitch->step;
-				$noteAlter = $note->pitch->alter;
-				$noteOctave = $note->pitch->octave;
+		// $note = str_replace("[", "", $n);
+		// $note = str_replace("]", "", $note);
+		// $note = str_replace("\\", "", $note);
+		// var_dump($note);
+		$obj_arr = (array)$note;
+		if(!isset($obj_arr["rest"])){
 
-				if($noteStep && $noteOctave){
-					$noteValue = $tonika[(string)$noteStep];
-					if($noteAlter){
-						$noteValue = (int)$noteValue + (int)$noteAlter;
-					}
-					$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
-					// array befüllen
-					// array_push($notesArray, $noteValue);
+
+			$noteStep = $note->pitch->step;
+			$noteAlter = $note->pitch->alter;
+			$noteOctave = $note->pitch->octave;
+
+			if($noteStep && $noteOctave){
+				$noteValue = $tonika[(string)$noteStep];
+				if($noteAlter == 1 || $noteAlter == -1){
+					$noteValue = (int)$noteValue + (int)$noteAlter;
 				}
+				$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
 			}
 			if($noteValue){
 				return $noteValue;
 			}else{
 				return 0;
 			}
+		}
+
 	}
 
 }
