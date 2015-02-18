@@ -9,7 +9,7 @@
 </div>
 
 {{ Form::open(array('route' => 'patternSearch')) }}
-{{ Form::hidden('pattern', '[{"step":"C","accidential":"sharp","octave":"2"}]', array('id' => 'patternValue')) }}
+{{ Form::hidden('pattern', '', array('id' => 'patternValue')) }}
 <div class="row">
 	<div class="col-xs-4">
 		<p>Choose Mode: </p>
