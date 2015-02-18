@@ -19,6 +19,10 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		loadResultIds();
 	},
 
+	addLogMessage = function(msg) {
+		$(that).trigger('logMessage', [msg]);
+	},
+
 	getResults = function(id) {
 		if (id === undefined) {
 			return results;
@@ -39,7 +43,11 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	},
 
 	_onLoadResults = function(data, textStatus, jqXHR) {
-		uploadIds = JSON.parse(data);
+		if (data !== "empty") {
+			uploadIds = JSON.parse(data);
+		} else {
+			addLogMessage('No files uploaded! Click on upload to upload files.');
+		}
 	},
 
 	loadResultIds = function() {
@@ -50,16 +58,21 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	},
 
 	_onLoadResultIds = function(data, textStatus, jqXHR) {
-		resultIds = JSON.parse(data);
+		if (data !== "empty") {
+			resultIds = JSON.parse(data);
 
-		for (var i = 0; i < resultIds.length; i++) {
-			loadResultById(resultIds[i]);
+			for (var i = 0; i < resultIds.length; i++) {
+				loadResultById(resultIds[i]);
+			}
+		} else {
+			addLogMessage('Files not analyzed yet. Hang out ...');
+			window.location.href = '/upload-complete';
 		}
 	},
 
 	loadResultById = function(id) {
 		$.ajax({
-		url: URL_GET_RESULT_VALUE_BY_ID + id,
+			url: URL_GET_RESULT_VALUE_BY_ID + id,
 			success: function (data, textStatus, jqXHR) {
 				_onLoadResultById(id, data, textStatus, jqXHR);
 			}
@@ -95,140 +108,194 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		mergedArr = {
 			artist: [], 
 			clef: null,
-			count_measures: 0,
-			count_notes: 0,
-			count_rests: 0,
+			count_measures: 0.0,
+			count_notes: 0.0,
+			count_rests: 0.0,
 			instruments: [],
-			intervals: {
-				'Double octave': 0,
-				'Double octave + Major second': 0,
-				'Double octave + Tritone': 0,
-				'Major ninth': 0,
-				'Major second': 0,
-				'Major seventh': 0,
-				'Major sixth': 0,
-				'Major tenth': 0,
-				'Major third': 0,
-				'Minor ninth': 0,
-				'Minor second': 0,
-				'Minor seventh': 0,
-				'Minor sixth': 0,
-				'Minor tenth': 0,
-				'Minor third': 0,
-				'Perfect fifth': 0,
-				'Perfect fourth': 0,
-				'Perfect octave': 0,
-				'Perfect twelfth': 0,
-				'Perfect unison': 0,
-				'Tritone': 0
-			},
-			key: [],
-			meter: '',
+			intervals: [
+				{ label: "Perfect unison", value: 0 },
+				{ label: "Minor second", value: 0 },
+				{ label: "Major second", value: 0 },
+				{ label: "Minor third", value: 0 },
+				{ label: "Major third", value: 0 },
+				{ label: "Perfect fourth", value: 0 },
+				{ label: "Tritone", value: 0 },
+				{ label: "Perfect fifth", value: 0 },
+				{ label: "Minor sixth", value: 0 },
+				{ label: "Major sixth", value: 0 },
+				{ label: "Minor seventh", value: 0 },
+				{ label: "Major seventh", value: 0 },
+				{ label: "Perfect octave", value: 0 },
+				{ label: "Minor ninth", value: 0 },
+				{ label: "Major ninth", value: 0 },
+				{ label: "Minor tenth", value: 0 },
+				{ label: "Major tenth", value: 0 },
+				{ label: "Perfect eleventh", value: 0 },
+				{ label: "Augmented eleventh", value: 0 },
+				{ label: "Perfect twelfth", value: 0 },
+				{ label: "Minor thirteenth", value: 0 },
+				{ label: "Major thirteenth", value: 0 },
+				{ label: "Minor fourteenth", value: 0 },
+				{ label: "Major fourteenth", value: 0 },
+				{ label: "Double octave", value: 0 },
+				{ label: "Double octaven + Minor second", value: 0 },
+				{ label: "Double octave + Major second", value: 0 },
+				{ label: "Double octave + Minor third", value: 0 },
+				{ label: "Double octave + Major third", value: 0 },
+				{ label: "Double octave + Perfect fourth", value: 0 },
+				{ label: "Double octave + Tritone", value: 0 },
+				{ label: "Double octave + Perfect fifth", value: 0 },
+				{ label: "Double octave + Minor sixth", value: 0 },
+				{ label: "Double octave + Major sixth", value: 0 }
+			],
+			key: [
+				{ label: "C major", value: 0 },
+				{ label: "G major", value: 0 },
+				{ label: "D major", value: 0 },
+				{ label: "A major", value: 0 },
+				{ label: "E major", value: 1 },
+				{ label: "H major", value: 0 },
+				{ label: "F sharp major", value: 0 },
+				{ label: "C sharp major", value: 0 },
+				{ label: "F major", value: 0 },
+				{ label: "B major", value: 0 },
+				{ label: "Es major", value: 0 },
+				{ label: "As major", value: 0 },
+				{ label: "D flat major", value: 0 },
+				{ label: "G flat major", value: 0 },
+				{ label: "C flat major", value: 0 },
+				{ label: "A minor", value: 0 },
+				{ label: "E minor", value: 0 },
+				{ label: "H minor", value: 0 },
+				{ label: "F sharp minor", value: 0 },
+				{ label: "C sharp minor", value: 0 },
+				{ label: "G sharp minor", value: 0 },
+				{ label: "D sharp minor", value: 0 },
+				{ label: "A sharp minor", value: 0 },
+				{ label: "D minor", value: 0 },
+				{ label: "G minor", value: 0 },
+				{ label: "C minor", value: 0 },
+				{ label: "F minor", value: 0 },
+				{ label: "B minor", value: 0 },
+				{ label: "E flat minor", value: 0 },
+				{ label: "A flat minor", value: 0 }
+			],
+			meter: [],
 			most_frequent_note: '',
-			note_distribution: {
-				'A': 0,
-				'A#': 0,
-				'Ab': 0,
-				'B': 0,
-				'Bb': 0,
-				'C': 0,
-				'C#': 0,
-				'Cb': 0,
-				'D': 0,
-				'D#': 0,
-				'Db': 0,
-				'E': 0,
-				'E#': 0,
-				'Eb': 0,
-				'F': 0,
-				'F#': 0,
-				'G': 0,
-				'G#': 0,
-				'Gb': 0
-			},
-			note_types: {
-				'': 0,
-				'16th': 0,
-				'eighth': 0,
-				'half': 0,
-				'quarter': 0,
-				'whole': 0
-			},
+			note_distribution: [
+				{ label: "B", value: 0 },
+				{ label: "C", value: 0 },
+				{ label: "D", value: 0 },
+				{ label: "Eb", value: 0 },
+				{ label: "F", value: 0 },
+				{ label: "D#", value: 0 },
+				{ label: "E", value: 0 },
+				{ label: "F#", value: 0 },
+				{ label: "G", value: 0 },
+				{ label: "A", value: 0 },
+				{ label: "Bb", value: 0 },
+				{ label: "C#", value: 0 },
+				{ label: "A#", value: 0 },
+				{ label: "E#", value: 0 },
+				{ label: "Db", value: 0 },
+				{ label: "Gb", value: 0 },
+				{ label: "G#", value: 0 },
+				{ label: "Cb", value: 0 },
+				{ label: "Ab", value: 0 }
+			],
+			note_types: [
+				{ label: "whole", value: 0 },
+				{ label: "half", value: 0 },
+				{ label: "quarter", value: 0 },
+				{ label: "eighth", value: 0 },
+				{ label: "16th", value: 0 },
+				{ label: "32nd", value: 0 },
+				{ label: "64th", value: 0 }
+			],
 			title: []
 		}
+
+		addLogMessage('Calculating overall statistics ...');
+
 		for (var i = 0; i < resultsArr.length; i++) {
-			// console.warn(i, resultsArr[i]);
+
+			// merge artists
 			mergedArr.artist.push(resultsArr[i].value.artist[0]);
-			// mergedArr.clef = ???
-			mergedArr.count_measures += parseInt(resultsArr[i].value.count_measures);
-			mergedArr.count_notes += parseInt(resultsArr[i].value.count_notes);
-			mergedArr.count_rests += parseInt(resultsArr[i].value.count_rests);
-			// mergedArr.instruments = ???
-			mergedArr.intervals['Double octave'] += parseInt(resultsArr[i].value.intervals['Double octave']);
-			mergedArr.intervals['Double octave + Major second'] += parseInt(resultsArr[i].value.intervals['Double octave + Major second']);
-			mergedArr.intervals['Double octave + Tritone'] += parseInt(resultsArr[i].value.intervals['Double octave + Tritone']);
-			mergedArr.intervals['Major ninth'] += parseInt(resultsArr[i].value.intervals['Major ninth']);
-			mergedArr.intervals['Major second'] += parseInt(resultsArr[i].value.intervals['Major second']);
-			mergedArr.intervals['Major seventh'] += parseInt(resultsArr[i].value.intervals['Major seventh']);
-			mergedArr.intervals['Major sixth'] += parseInt(resultsArr[i].value.intervals['Major sixth']);
-			mergedArr.intervals['Major tenth'] += parseInt(resultsArr[i].value.intervals['Major tenth']);
-			mergedArr.intervals['Major third'] += parseInt(resultsArr[i].value.intervals['Major third']);
-			mergedArr.intervals['Minor ninth'] += parseInt(resultsArr[i].value.intervals['Minor ninth']);
-			mergedArr.intervals['Minor second'] += parseInt(resultsArr[i].value.intervals['Minor second']);
-			mergedArr.intervals['Minor seventh'] += parseInt(resultsArr[i].value.intervals['Minor seventh']);
-			mergedArr.intervals['Minor sixth'] += parseInt(resultsArr[i].value.intervals['Minor sixth']);
-			mergedArr.intervals['Minor tenth'] += parseInt(resultsArr[i].value.intervals['Minor tenth']);
-			mergedArr.intervals['Minor third'] += parseInt(resultsArr[i].value.intervals['Minor third']);
-			mergedArr.intervals['Perfect fifth'] += parseInt(resultsArr[i].value.intervals['Perfect fifth']);
-			mergedArr.intervals['Perfect fourth'] += parseInt(resultsArr[i].value.intervals['Perfect fourth']);
-			mergedArr.intervals['Perfect octave'] += parseInt(resultsArr[i].value.intervals['Perfect octave']);
-			mergedArr.intervals['Perfect twelfth'] += parseInt(resultsArr[i].value.intervals['Perfect twelfth']);
-			mergedArr.intervals['Perfect unison'] += parseInt(resultsArr[i].value.intervals['Perfect unison']);
-			mergedArr.intervals['Tritone'] += parseInt(resultsArr[i].value.intervals['Tritone']);
-			mergedArr.key = mergedArr.key.concat(resultsArr[i].value.key[0]);
-			// console.log(mergedArr);
-			// var seenKey = false;
-			// for (var j = 0; j < mergedArr.key.length; j++) {
-			// 	if (mergedArr.key[j].key == resultsArr[i].value.key.key) {
-			// 		seenKey = j;
+
+			// merge clefs
+			// ToDo: merge clefs
+
+			// merge counted measures
+			mergedArr.count_measures += parseFloat(resultsArr[i].value.count_measures);
+
+			// merge counted notes
+			mergedArr.count_notes += parseFloat(resultsArr[i].value.count_notes);
+
+			// merge counted rests
+			mergedArr.count_rests += parseFloat(resultsArr[i].value.count_rests);
+
+			// merge instruments
+			// if (mergedArr.instruments.length > 0) {
+			// 	for (var instrumentCounter = 0; instrumentCounter < mergedArr.instruments.length; instrumentCounter++) {
+			// 		// check if instrument is already in array
+			// 		// if yes: count position up
+			// 		// else: add new position to array
+			// 		if (mergedArr.instruments[instrumentCounter] == '')
 			// 	}
-			// }
-			// if (seenKey) {
-			// 	mergedArr.key[seenKey]++;
-			// 	console.log("duplicate", seenKey, resultsArr[i].value.key[0]);
 			// } else {
-			// 	console.log("no duplicate", resultsArr[i].value.key[0]);
-			// 	mergedArr.key.push(resultsArr[i].value.key[0]);
+			// 	// add all instruments in array to merged array
+			// 	mergedArr.instruments = resultsArr[i].value.instruments;
 			// }
-			mergedArr.meter[i] = resultsArr[i].value.meter[0];
-			// mergedArr.most_frequent_note += // retrieve from note_distribution
-			mergedArr.note_distribution['A'] += parseInt(resultsArr[i].value.note_distribution['A']);
-			mergedArr.note_distribution['A#'] += parseInt(resultsArr[i].value.note_distribution['A#']);
-			mergedArr.note_distribution['Ab'] += parseInt(resultsArr[i].value.note_distribution['Ab']);
-			mergedArr.note_distribution['B'] += parseInt(resultsArr[i].value.note_distribution['B']);
-			mergedArr.note_distribution['Bb'] += parseInt(resultsArr[i].value.note_distribution['Bb']);
-			mergedArr.note_distribution['C'] += parseInt(resultsArr[i].value.note_distribution['C']);
-			mergedArr.note_distribution['C#'] += parseInt(resultsArr[i].value.note_distribution['C#']);
-			mergedArr.note_distribution['Cb'] += parseInt(resultsArr[i].value.note_distribution['Cb']);
-			mergedArr.note_distribution['D'] += parseInt(resultsArr[i].value.note_distribution['D']);
-			mergedArr.note_distribution['D#'] += parseInt(resultsArr[i].value.note_distribution['D#']);
-			mergedArr.note_distribution['Db'] += parseInt(resultsArr[i].value.note_distribution['Db']);
-			mergedArr.note_distribution['E'] += parseInt(resultsArr[i].value.note_distribution['E']);
-			mergedArr.note_distribution['E#'] += parseInt(resultsArr[i].value.note_distribution['E#']);
-			mergedArr.note_distribution['Eb'] += parseInt(resultsArr[i].value.note_distribution['Eb']);
-			mergedArr.note_distribution['F'] += parseInt(resultsArr[i].value.note_distribution['F']);
-			mergedArr.note_distribution['F#'] += parseInt(resultsArr[i].value.note_distribution['F#']);
-			mergedArr.note_distribution['G'] += parseInt(resultsArr[i].value.note_distribution['G']);
-			mergedArr.note_distribution['G#'] += parseInt(resultsArr[i].value.note_distribution['G#']);
-			mergedArr.note_distribution['Gb'] += parseInt(resultsArr[i].value.note_distribution['Gb']);
-			mergedArr.note_types[''] += parseInt(resultsArr[i].value.note_types['']);
-			mergedArr.note_types['16th'] += parseInt(resultsArr[i].value.note_types['16th']);
-			mergedArr.note_types['eighth'] += parseInt(resultsArr[i].value.note_types['eighth']);
-			mergedArr.note_types['half'] += parseInt(resultsArr[i].value.note_types['half']);
-			mergedArr.note_types['quarter'] += parseInt(resultsArr[i].value.note_types['quarter']);
-			mergedArr.note_types['whole'] += parseInt(resultsArr[i].value.note_types['whole']);
+
+			// merge counted intervals
+			for (var intervalCounter = 0; intervalCounter < resultsArr[i].value.intervals.length; intervalCounter++) {
+				mergedArr.intervals[intervalCounter].value += resultsArr[i].value.intervals[intervalCounter].value;
+			}
+
+			// merge keys
+			for (var keyCounter = 0; keyCounter < resultsArr[i].value.key.length; keyCounter++) {
+				mergedArr.key[keyCounter].value += resultsArr[i].value.key[keyCounter].value;
+			}
+
+			// merge meter
+			if (!mergedArr.meter.length) {
+				mergedArr.meter.push({ label: resultsArr[i].value.meter, value: 1 });
+			} else {
+				for (var meterCounter = 0; meterCounter < mergedArr.meter.length; meterCounter++) {
+					if (mergedArr.meter[meterCounter].label === resultsArr[i].value.meter) {
+						mergedArr.meter[meterCounter].value += 1;
+						break;
+					} else {
+						mergedArr.meter.push({ label: resultsArr[i].value.meter, value: 1 });
+						break;
+					}
+				}
+			}
+
+			// merge note distributions
+			for (var noteCounter = 0; noteCounter < resultsArr[i].value.note_distribution.length; noteCounter++) {
+				mergedArr.note_distribution[noteCounter].value += resultsArr[i].value.note_distribution[noteCounter].value;
+			}
+
+			// merge note types
+			for (var typeCounter = 0; typeCounter < resultsArr[i].value.note_types.length; typeCounter++) {
+				mergedArr.note_types[typeCounter].value += resultsArr[i].value.note_types[typeCounter].value;
+			}
+
+			// merge titles
 			mergedArr.title.push(resultsArr[i].value.title[0]);
 		}
+
+		// calculate most frequent note
+		mostFrequentNoteIndex = -1;
+		mostFrequentNoteValue = -1;
+		for (var mostFrequentNoteCounter = 0; mostFrequentNoteCounter < mergedArr.note_distribution.length; mostFrequentNoteCounter++) {
+			if (mergedArr.note_distribution[mostFrequentNoteCounter].value > mostFrequentNoteValue) {
+				mostFrequentNoteIndex = mostFrequentNoteCounter;
+				mostFrequentNoteValue = mergedArr.note_distribution[mostFrequentNoteCounter].value;
+			}
+		}
+		mergedArr.most_frequent_note = mergedArr.note_distribution[mostFrequentNoteIndex].label;
 
 		return mergedArr;
 	};

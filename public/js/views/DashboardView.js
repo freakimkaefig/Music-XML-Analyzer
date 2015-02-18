@@ -2,10 +2,14 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	var that = {},
 
+	$logMessages = null,
+	dashboardMessageCounter = null,
 	$fileSelector = null,
 
 	noteDistribution = null,
 	intervalDistribution = null,
+	keyDistribution = null,
+	noteTypeDistribution = null,
 	meterDistribution = null,
 	instruments = null,
 
@@ -13,7 +17,47 @@ MusicXMLAnalyzer.DashboardView = function(){
 	init = function(){
 		console.info('MusicXMLAnalyzer.DashboardView.init');
 
+		$logMessages = $('#dashboardMessages');
+		initLogMessages();
+
 		$fileSelector = $('#fileSelector');
+	},
+
+	initLogMessages = function() {
+		dashboardMessageCounter = 0;
+		$logMessages.show();
+		$logMessages.animate({
+			height: 100
+		}, 500);
+		addLogMessage('Fetching results from database ...');
+	},
+
+	disposeLogMessages = function() {
+		window.setTimeout(function() {
+			$logMessages.animate({
+				height: 0
+			},
+			700,
+			function() {
+				$logMessages.hide();
+				$logMessages.empty();
+			});
+		}, 100);
+	},
+
+	addLogMessage = function(msg) {
+		$('#log' + (dashboardMessageCounter - 3)).animate({
+			"marginTop": "-30px"
+		}, 200);
+		$logMessages.append('<div id="log' + dashboardMessageCounter + '"></div>');
+		$('#log' + dashboardMessageCounter).typed({
+			strings: ['<p>' + msg + '</p>'],
+			backDelay: 100000000000000,
+			typeSpeed: 0,
+			backSpeed: 0,
+			loop: true,
+		});
+		dashboardMessageCounter++;
 	},
 
 	initFileSelector = function(data) {
@@ -22,7 +66,16 @@ MusicXMLAnalyzer.DashboardView = function(){
 		selectorElement += '<option value="all"> - All - </option>';
 
 		for (var i = 0; i < data.length; i++) {
-			selectorElement += '<option value="' + data[i].id + '">' + data[i].value.artist + ' - ' + data[i].value.title + '</option>';
+			selectorElement += '<option value="';
+			selectorElement += data[i].id
+			selectorElement += '">';
+			selectorElement += data[i].value.artist;
+			selectorElement += ' - ';
+			selectorElement += data[i].value.title;
+			selectorElement += ' (';
+			selectorElement += /[^/]*$/.exec(data[i].value.file_url)[0];
+			selectorElement += ')';
+			selectorElement += '</option>';
 		}
 
 		selectorElement += '</select>';
@@ -50,27 +103,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 				}
 			},
 			data: {
-				content: [
-					{ label: "A", value: data['A'] },
-					{ label: "A#", value: data['A#'] },
-					{ label: "Ab", value: data['Ab'] },
-					{ label: "B", value: data['B'] },
-					{ label: "Bb", value: data['Bb'] },
-					{ label: "C", value: data['C'] },
-					{ label: "C#", value: data['C#'] },
-					{ label: "Cb", value: data['Cb'] },
-					{ label: "D", value: data['D'] },
-					{ label: "D#", value: data['D#'] },
-					{ label: "Db", value: data['Db'] },
-					{ label: "E", value: data['E'] },
-					{ label: "E#", value: data['E#'] },
-					{ label: "Eb", value: data['Eb'] },
-					{ label: "F", value: data['F'] },
-					{ label: "F#", value: data['F#'] },
-					{ label: "G", value: data['G'] },
-					{ label: "G#", value: data['G#'] },
-					{ label: "Gb", value: data['Gb'] }
-				]
+				content: data
 			},
 			tooltips: {
 			    enabled: true,
@@ -81,7 +114,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 			      data.percentage = data.percentage;
 			      data.value = data.value;
 			    }
-			  }
+			}
 		}); 
 	},
 
@@ -96,29 +129,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 				}
 			},
 			data: {
-				content: [
-					{ label: "Double octave", value: data['Double octave'] },
-					{ label: "Double octave + Major second", value: data['Double octave + Major second'] },
-					{ label: "Double octave + Tritone", value: data['Double octave + Tritone'] },
-					{ label: "Major ninth", value: data['Major ninth'] },
-					{ label: "Major second", value: data['Major second'] },
-					{ label: "Major seventh", value: data['Major seventh'] },
-					{ label: "Major sixth", value: data['Major sixth'] },
-					{ label: "Major tenth", value: data['Major tenth'] },
-					{ label: "Major third", value: data['Major third'] },
-					{ label: "Minor ninth", value: data['Minor ninth'] },
-					{ label: "Minor second", value: data['Minor second'] },
-					{ label: "Minor seventh", value: data['Minor seventh'] },
-					{ label: "Minor sixth", value: data['Minor sixth'] },
-					{ label: "Minor tenth", value: data['Minor tenth'] },
-					{ label: "Minor third", value: data['Minor third'] },
-					{ label: "Perfect fifth", value: data['Perfect fifth'] },
-					{ label: "Perfect fourth", value: data['Perfect fourth'] },
-					{ label: "Perfect octave", value: data['Perfect octave'] },
-					{ label: "Perfect twelfth", value: data['Perfect twelfth'] },
-					{ label: "Perfect unison", value: data['Perfect unison'] },
-					{ label: "Tritone", value: data['Tritone'] }
-				]
+				content: data
 			},
 			tooltips: {
 			    enabled: true,
@@ -129,11 +140,63 @@ MusicXMLAnalyzer.DashboardView = function(){
 			      data.percentage = data.percentage;
 			      data.value = data.value;
 			    }
-			  }
+			}
 		}); 
 	},
 
-	initMeterDistribution = function() {
+	initKeyDistribution = function(data) {
+		if (keyDistribution) {
+			keyDistribution.destroy();
+		}
+		keyDistribution = new d3pie("pie_keyDistribution", {
+			header: {
+				title: {
+					text: "Key Distribution"
+				}
+			},
+			data: {
+				content: data
+			},
+			tooltips: {
+			    enabled: true,
+			    type: "placeholder",
+			    string: "{label}: ({value})  {percentage}%",
+			    placeholderParser: function(index, data) {
+			      data.label = data.label + "  ";
+			      data.percentage = data.percentage;
+			      data.value = data.value;
+			    }
+			}
+		}); 
+	},
+
+	initNoteTypeDistribution = function(data) {
+		if (noteTypeDistribution) {
+			noteTypeDistribution.destroy();
+		}
+		noteTypeDistribution = new d3pie("pie_noteTypeDistribution", {
+			header: {
+				title: {
+					text: "Notenlängen"
+				}
+			},
+			data: {
+				content: data
+			},
+			tooltips: {
+			    enabled: true,
+			    type: "placeholder",
+			    string: "{label}: ({value})  {percentage}%",
+			    placeholderParser: function(index, data) {
+			      data.label = data.label + "  ";
+			      data.percentage = data.percentage;
+			      data.value = data.value;
+			    }
+			}
+		});
+	},
+
+	initMeterDistribution = function(data) {
 		if (meterDistribution) {
 			meterDistribution.destroy();
 		}
@@ -144,14 +207,18 @@ MusicXMLAnalyzer.DashboardView = function(){
 				}
 			},
 			data: {
-				content: [
-					{ label: "1", value: 26 },
-					{ label: "1/2", value: 21 },
-					{ label: "1/4", value: 15 },
-					{ label: "3/4", value: 26 },
-					{ label: "5/8", value: 51 }
-				]
+				content: data
 			},
+			tooltips: {
+			    enabled: true,
+			    type: "placeholder",
+			    string: "{label}: ({value})  {percentage}%",
+			    placeholderParser: function(index, data) {
+			      data.label = data.label + "  ";
+			      data.percentage = data.percentage;
+			      data.value = data.value;
+			    }
+			}
 		});
 	},
 
@@ -348,9 +415,14 @@ MusicXMLAnalyzer.DashboardView = function(){
 	};
 
 	that.init = init;
+	that.disposeLogMessages = disposeLogMessages;
+	that.addLogMessage = addLogMessage;
 	that.initFileSelector = initFileSelector;
 	that.initNoteDistribution = initNoteDistribution;
 	that.initIntervalDistribution = initIntervalDistribution;
+	that.initKeyDistribution = initKeyDistribution;
+	that.initNoteTypeDistribution = initNoteTypeDistribution;
+	that.initMeterDistribution = initMeterDistribution;
 
 	that.changeFile = changeFile;
 

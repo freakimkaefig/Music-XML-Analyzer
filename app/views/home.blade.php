@@ -27,9 +27,7 @@
 			</div>
 		</div>
 		<div id="buttons_row" class="row">
-			<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#uploadModal">
-			Start something beautiful
-			</button>
+			<button type="button" class="btn btn-danger btn-xxl" data-toggle="modal" data-target="#uploadModal">Get your ass in gear</button>
 			@include('upload.dropzone')
 		</div>
 	</div>

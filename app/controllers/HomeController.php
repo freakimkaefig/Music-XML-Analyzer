@@ -35,7 +35,29 @@ class HomeController extends BaseController {
 		}
 		
 		$this->_createNewUser();
+		
 		return View::make('home');
+	}
+
+	public function getDeleteMe()
+	{
+		$user = User::find(Cookie::get('user_id'));
+
+		$user->uploads->each(function($upload) {
+
+			if (count($upload->result)) {
+				$upload->result->delete();
+			}
+			$upload->delete();
+	    });
+
+		$directory = public_path() . '/uploads/' . $user->id;
+		$success = Upload::delTree($directory);
+	    $user->delete();
+
+	    $this->_createNewUser();
+
+	    return Redirect::route('home');
 	}
 
 	private function _createNewUser() {

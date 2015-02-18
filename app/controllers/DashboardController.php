@@ -14,7 +14,11 @@ class DashboardController extends BaseController {
 			$uploads[] = $upload->id;
 		}
 
-		return json_encode($uploads);
+		if (count($uploads)) {
+			return json_encode($uploads);
+		} else {
+			return "empty";
+		}
 	}
 
 	public function getResultIds() {
@@ -27,7 +31,11 @@ class DashboardController extends BaseController {
 			}
 		}
 
-		return json_encode($results);
+		if (count($results)) {
+			return json_encode($results);
+		} else {
+			return "empty";
+		}
 	}
 
 	public function getResultValueById($id) {

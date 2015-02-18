@@ -59,14 +59,17 @@ Route::group(array('before' => 'uploads'), function()
 		'uses' => 'DashboardController@getResultValueById'
 	));
 
-
 	/* === PATTERN ROUTES === */
 	Route::get('/pattern', array(
 		'as' => 'pattern',
 		'uses' => 'PatternController@getCreatePattern'
 	));
 
-
+	/* === DELETE USER === */
+	Route::get('/delete/me', array(
+		'as' => 'delete-me',
+		'uses' => 'HomeController@getDeleteMe'
+	));
 });
 
 
