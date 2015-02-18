@@ -16,13 +16,13 @@ class PatternController extends BaseController {
 
 		//if type = tonfolge
 		$ssConntroller = new SoundSequenzController();
-		$ssConntroller->search(Input::get('pattern'));
+		return ($ssConntroller->search(Input::get('pattern')));
 
 		// elseif type = rhythmus
-		$rConntroller = new RhythmController();
+		// $rConntroller = new RhythmController();
 
 		// elseif type = melodie
-		$mConntroller = new MelodyController();
+		// $mConntroller = new MelodyController();
 	}
 
 }

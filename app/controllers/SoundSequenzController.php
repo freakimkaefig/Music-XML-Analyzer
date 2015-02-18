@@ -8,11 +8,13 @@ class SoundSequenzController {
 	}
 
 	public function search($pattern) {
-		var_dump($pattern);
+		// var_dump($pattern);
 
-		$results = array(
-			0 => (object)array("Test" => true)
-		);
+		$results = "Test";
+
+		return Redirect::route('searchResults')
+			->with('pattern', $pattern)
+			->with('results', "Test");
 	}
 
 }
