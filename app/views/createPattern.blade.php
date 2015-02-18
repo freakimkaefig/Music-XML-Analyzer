@@ -8,6 +8,8 @@
 	</div>	
 </div>
 
+{{ Form::open(array('route' => 'patternSearch')) }}
+{{ Form::hidden('pattern', '[{"name":"c","accidential":"none","duration":"1/1","rythSpecial":"None","octave":"2"}]', array('id' => 'patternValue')) }}
 <div class="row">
 	<div class="col-xs-4">
 		<p>Choose Mode: </p>
@@ -93,5 +95,8 @@
 	</div>
 </div>
 <!-- oktave missing -->
+
+{{ Form::submit('Search') }}
+{{ Form::close() }}
 
 @stop

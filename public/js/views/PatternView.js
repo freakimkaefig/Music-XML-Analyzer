@@ -1,17 +1,19 @@
 MusicXMLAnalyzer.PatternView = function(){
 
 	var that = {},
-	$modeButtonClass = $(".btn-mode");
+	$modeButtonClass = $(".btn-mode"),
 
-	$noteButtonClass = $(".btn-note");
-	$accidentialButtonClass = $(".btn-accidential");
-	$durationButtonClass = $(".btn-duration");
-	$clefButtonClass = $(".btn-clef");
-	$specialRythButtonClass = $(".btn-special-ryth");
-	$selectOctave = $("#select-octave");
+	$noteButtonClass = $(".btn-note"),
+	$accidentialButtonClass = $(".btn-accidential"),
+	$durationButtonClass = $(".btn-duration"),
+	$clefButtonClass = $(".btn-clef"),
+	$specialRythButtonClass = $(".btn-special-ryth"),
+	$selectOctave = $("#select-octave"),
 
-	$addNoteButton = $("#btn-add-note");
-	$removeNoteButton = $("#btn-remove-note");
+	$addNoteButton = $("#btn-add-note"),
+	$removeNoteButton = $("#btn-remove-note"),
+
+	$patternValue = $('#patternValue'),
 
 
 	init = function() {
@@ -75,12 +77,17 @@ MusicXMLAnalyzer.PatternView = function(){
 		patternController.addNote();
 	},
 
+	setPatternValue = function(pattern) {
+		$patternValue.val(pattern);
+	},
+
 	onRemoveButtonClick = function(event) {
 		// console.log("remove btn");
 		patternController.removeLastNote();
 	};
 
 	that.init = init;
+	that.setPatternValue = setPatternValue;
 
 	return that;
 }
