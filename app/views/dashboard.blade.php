@@ -34,7 +34,6 @@
 <div class="col-xs-6 "id="chart"></div> 
 
 <div class="col-xs-6 "id="resultlist">
-
 </div>
 
 @stop

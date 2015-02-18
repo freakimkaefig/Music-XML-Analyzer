@@ -1,0 +1,24 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
+@font-face {
+  font-family: 'Bravura';
+  src: url('../fonts/Bravura.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/Bravura.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/Bravura.woff') format('woff'),
+       url('../fonts/Bravura.ttf')  format('truetype'),
+       url('../fonts/Bravura.svg#svgFontName') format('svg');
+}
+
+@font-face {
+  font-family: 'BravuraText';
+  src: url('../fonts/BravuraText.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/BravuraText.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/BravuraText.woff') format('woff'),
+       url('../fonts/BravuraText.ttf')  format('truetype'),
+       url('../fonts/BravuraText.svg#svgFontName') format('svg');
+}
+
+.note {
+	font-family: "Bravura";
+	font-size: 100px;
+}

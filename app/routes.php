@@ -60,10 +60,6 @@ Route::group(array('before' => 'uploads'), function()
 	));
 
 	/* === PATTERN ROUTES === */
-	Route::get('/pattern', array(
-		'as' => 'pattern',
-		'uses' => 'PatternController@getCreatePattern'
-	));
 
 	/* === DELETE USER === */
 	Route::get('/delete/me', array(
@@ -71,6 +67,19 @@ Route::group(array('before' => 'uploads'), function()
 		'uses' => 'HomeController@getDeleteMe'
 	));
 });
+
+	Route::get('/pattern', array(
+		'as' => 'pattern',
+		'uses' => 'PatternController@getCreatePattern'
+	));
+	Route::post('/pattern/search', array(
+		'as' => 'patternSearch',
+		'uses' => 'PatternController@postPatternSearch'
+	));
+	Route::get('/search/results', array(
+		'as' => 'search_results',
+		'uses' => 'ResultController@getSearchResults'
+	));
 
 
 /*
