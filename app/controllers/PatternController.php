@@ -2,6 +2,15 @@
 require 'SoundSequenzController.php';
 
 class PatternController extends BaseController {
+
+	$tonika = array("C" => 0,
+						"D" => 2,
+						"E" => 4,
+						"F" => 5,
+						"G" => 7,
+						"A" => 9,
+						"B" => 11);
+
 	public function getCreatePattern() {
 		return View::make('createPattern');
 
@@ -23,6 +32,32 @@ class PatternController extends BaseController {
 
 		// elseif type = melodie
 		// $mConntroller = new MelodyController();
+	}
+
+	public function getIntervall($n){
+		$note = $n;
+		$rest = $note->rest;
+			if(!$rest){
+				// echo "rest is null<br/>";
+				$noteStep = $note->pitch->step;
+				$noteAlter = $note->pitch->alter;
+				$noteOctave = $note->pitch->octave;
+
+				if($noteStep && $noteOctave){
+					$noteValue = $tonika[(string)$noteStep];
+					if($noteAlter){
+						$noteValue = (int)$noteValue + (int)$noteAlter;
+					}
+					$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
+					// array befüllen
+					// array_push($notesArray, $noteValue);
+				}
+			}
+			if($noteValue){
+				return $noteValue;
+			}else{
+				return 0;
+			}
 	}
 
 }
