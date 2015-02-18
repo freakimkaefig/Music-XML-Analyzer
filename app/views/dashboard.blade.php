@@ -13,6 +13,13 @@
 	</div>
 
 	<div class="row">
+		<div id="bar_noteDistribution" class="bar-chart col-xs-12"></div>
+	</div>
+	<div class="row">
+		<div id="bar_intervalDistribution" class="bar-chart col-xs-12"></div>
+	</div>
+
+	<div class="row">
 		<div id="pie_noteDistribution" class="pie col-sm-6"></div>
 		<div id="pie_intervalDistribution" class="pie col-sm-6"></div>
 	</div>

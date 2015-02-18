@@ -27,6 +27,7 @@ MusicXMLAnalyzer.DashboardController = function() {
 		console.log(results);
 
 		view.initFileSelector(results);
+		// view.initBarChart(results.all.value.note_distribution)
 		view.initNoteDistribution(results.all.value.note_distribution);
 		view.initIntervalDistribution(results.all.value.intervals);
 		view.initKeyDistribution(results.all.value.key);
