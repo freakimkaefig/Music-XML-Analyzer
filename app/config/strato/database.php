@@ -22,10 +22,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'music_xml_analyzer',
-			'username'  => 'root',
-			'password'  => '',
+			'host'      => 'rdbms.strato.de',
+			'database'  => 'DB2025125',
+			'username'  => 'U2025125',
+			'password'  => 'GBv5mHq8ZgSV',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

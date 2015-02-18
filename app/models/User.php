@@ -12,4 +12,8 @@ class User extends Eloquent {
 		return $this->hasMany('Upload');
 	}
 
+	public function resetLastActivity() {
+		$this->last_activity = date('Y-m-d H:m:s');
+		$this->save();
+	}
 }

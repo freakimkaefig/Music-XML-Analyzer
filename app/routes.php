@@ -11,6 +11,12 @@
 |
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| Public routes
+|--------------------------------------------------------------------------
+*/
 /* === STATIC PAGE ROUTES === */
 Route::get('/', array(
 	'as' => 'home',
@@ -22,30 +28,74 @@ Route::get('/imprint', array(
 ));
 
 
-/* === SEARCH ROUTES === */
-Route::get('/search', array(
-	'as' => 'search',
-	'uses' => 'SearchController@search'
-));
+/*
+|--------------------------------------------------------------------------
+| Routes only available, when user has uploaded files
+|--------------------------------------------------------------------------
+*/
+Route::group(array('before' => 'uploads'), function() 
+{
+	/* === SEARCH ROUTES === */
+	Route::get('/search', array(
+		'as' => 'search',
+		'uses' => 'SearchController@search'
+	));
+
+	/* === DASHBOARD ROUTES === */
+	Route::get('/dashboard', array(
+		'as' => 'dashboard',
+		'uses' => 'DashboardController@getToDashboard'
+	));
+	Route::get('/dashboard/getUploadIds', array(
+		'as' => 'dashboard.getUploadIds',
+		'uses' => 'DashboardController@getUploadIds'
+	));
+	Route::get('/dashboard/getResultIds', array(
+		'as' => 'dashboard.getResultIds',
+		'uses' => 'DashboardController@getResultIds'
+	));
+	Route::get('/dashboard/getResultValueById/{id}', array(
+		'as' => 'dashboard.getResultValueById',
+		'uses' => 'DashboardController@getResultValueById'
+	));
+
+	/* === PATTERN ROUTES === */
+
+	/* === DELETE USER === */
+	Route::get('/delete/me', array(
+		'as' => 'delete-me',
+		'uses' => 'HomeController@getDeleteMe'
+	));
+});
+
+	Route::get('/pattern', array(
+		'as' => 'pattern',
+		'uses' => 'PatternController@getCreatePattern'
+	));
+	Route::get('/pattern/search', array(
+		'as' => 'patternSearch',
+		'uses' => 'PatternController@getPatternSearch'
+	));
+	Route::get('/search/results', array(
+		'as' => 'search_results',
+		'uses' => 'ResultController@getSearchResults'
+	));
 
 
-Route::get('/dashboard', array(
-	'as' => 'dashboard',
-	'uses' => 'DashboardController@getToDashboard'
-));
-
-Route::get('/pattern', array(
-	'as' => 'pattern',
-	'uses' => 'PatternController@getCreatePattern'
-));
-
-/* === UPLOAD === */
-Route::post('/upload', array(
-	'as' => 'postUpload',
-	'uses' => 'UploadController@postUpload'
-));
-
-Route::get('/upload-complete', array(
-	'as' => 'uploadComplete',
-	'uses' => 'UploadController@getUploadComplete'
-));
+/*
+|--------------------------------------------------------------------------
+| Routes only available, when user is recognized
+|--------------------------------------------------------------------------
+*/
+Route::group(array('before' => 'user'), function() 
+{
+	/* === UPLOAD ROUTES === */
+	Route::post('/upload', array(
+		'as' => 'postUpload',
+		'uses' => 'UploadController@postUpload'
+	));
+	Route::get('/upload-complete', array(
+		'as' => 'uploadComplete',
+		'uses' => 'UploadController@getUploadComplete'
+	));
+});

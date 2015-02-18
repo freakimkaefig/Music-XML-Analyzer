@@ -36,7 +36,7 @@ $env = $app->detectEnvironment(function() {
 	} elseif (in_array(gethostname(), $_localhosts)) {
 		return 'local';
 	} else {
-		return 'production';
+		return 'strato';
 	}
 });
 

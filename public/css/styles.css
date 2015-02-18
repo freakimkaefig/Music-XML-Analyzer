@@ -1,7 +1,39 @@
-@import url('fonts.css');
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+
 /* === HELPER CLASSES === */
 .img-center {
 	margin: 0 auto;
+}
+
+.btn-xxl {
+	padding: 15px 22px;
+	font-size: 22px;
+	text-transform: uppercase;
+}
+
+.dropdown.no-padding .dropdown-menu,
+.dropdown.no-padding li a.dropdown-toggle {
+	padding: 0;
+}
+.dropdown.no-padding li a {
+	margin: 0;
+}
+
+/* === LOGS === */
+.logBox {
+	display: none;
+	font-family: 'Droid Sans Mono';
+	color:#5fba3d;
+	-webkit-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.65);
+	-moz-box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.65);
+	box-shadow: 4px 4px 10px 0px rgba(0,0,0,0.65);
+	background-color:#080808;
+	height: 0px;
+	overflow: hidden;
+	padding: 5px 15px;
+}
+.typed-cursor {
+	display: none;
 }
 
 /* === NAVBAR === */
@@ -12,11 +44,22 @@
 /* === CONTENT === */
 #content {
 	margin-top: 120px;
+	margin-bottom: 120px;
 }
 
 h1 {
 	text-transform: uppercase;
 	margin-bottom: 60px;
+	letter-spacing: 2.5px;
+}
+
+/* === HOME ==== */
+#start_row .icon {
+	font-size: 60px;
+	margin: 60px 0;
+}
+#buttons_row {
+	margin-top: 120px;
 }
 
 /* === UPLOAD === */
@@ -34,17 +77,19 @@ h1 {
 	margin-top: 60px;
 	color: #000;
 	font-size: 18px;
+	text-align: center;
 }
 #uploadModal .modal-dialog .dz-message h4 {
 	font-size: 26px;
 	font-weight: bold;
 }
-#uploadModal .modal-dialog #progressWrapper {
+#uploadModal .modal-dialog #buttonContainer {
 	color: #fff;
 	bottom: 60px;
 	position: absolute;
 	left: 60px;
 	right: 60px;
+	text-align: center;
 }
 #uploadDropzone {
 	border:none;
@@ -57,18 +102,80 @@ h1 {
 	padding: 0;
 	border-radius: 12px;
 	background: rgba(81, 81, 81, 0.5);
+	text-align: center;
+}
+#uploadMessages {
+	position: absolute;
+	bottom: 60px;
+	left: 340px;
+	right: 340px;
 }
 
 /* === DASHBOARD == */
-.chart div {
-  font: 10px sans-serif;
-  background-color: red;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
+#dashboardMessages {
+	margin-bottom: 45px;
 }
 
-#pieChart div {
-	font: 40px sans-serif;		
+/*PIE-CHART*/
+
+.pie {
+	font-weight: bold;
 }
+.pie svg {
+	margin: 0 auto;
+}
+
+/*BAR-CHART1*/
+
+.chart rect {
+  stroke: white;
+  fill: steelblue;
+}
+
+.chart text {
+  fill: #fff;
+}
+
+.chart text.name {
+  fill: #000;
+}
+
+.chart line {
+  stroke: #c1c1c1;
+}
+
+.chart .rule {
+  fill: #000;
+}
+
+.chart rect:hover {
+  fill: #64707D;
+}
+
+/*BAR-CHART1*/
+
+#chart rect{
+  fill: #4aaeea;
+}
+
+#chart rect:hover{
+	fill: #64707D;
+}
+
+#chart text{
+  fill: black;
+  font: 10px sans-serif;
+  text-anchor: end; 
+}
+
+.axis text{
+  font: 10px sans-serif;
+}
+
+.axis path, .axis line{
+  fill: none;
+  stroke : #fff;
+  shape-rendering: crispEdges;
+}
+
+/*RESULTLIST*/
