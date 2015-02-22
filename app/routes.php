@@ -80,7 +80,7 @@ Route::group(array('before' => 'uploads'), function()
 		'as' => 'searchResults',
 		'uses' => 'ResultController@getSearchResults'
 	));
-	Route::get('/pattern/results/file/{file}/occurences/{occurences}', array(
+	Route::get('/pattern/results/detail/{file}', array(
 		'as' =>'resultDetail',
 		'uses' => 'ResultController@getResultDetail'
 	));

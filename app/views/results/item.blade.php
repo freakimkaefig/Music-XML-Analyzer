@@ -1,13 +1,10 @@
-<a href="{{ URL::route('resultDetail', array('file' => $result->file_id, 'occurences' => implode(',', $result->occurences))) }}">
+<a href="{{ URL::route('resultDetail', array('id' => $result->file_id)) }}">
 	<div class="row">
-		<div class="col-xs-2">
-			{{ $result->file_id }}
+		<div class="col-xs-9 col-sm-10 text-left">
+			{{ ResultController::_getArtist($result->file_id) . ' - ' . ResultController::_getTitle($result->file_id) . ' (' . $result->file_url . ')' . ' [ID:' . $result->file_id . ']' }}
 		</div>
-		<div class="col-xs-6">
-			{{ $result->file_url }}
-		</div>
-		<div class="col-xs-4">
-			{{ implode(', ', $result->occurences) }}
+		<div class="col-xs-3 col-sm-2 text-right">
+			{{ count($result->occurences) }}
 		</div>
 	</div>
 </a>

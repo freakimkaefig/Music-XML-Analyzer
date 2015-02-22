@@ -22,14 +22,28 @@ class PatternController extends BaseController {
 				$results = $ssConntroller->search($pattern);
 				break;
 			case 1:
+				// Type == Rhythmus
 				$rConntroller = new RhythmController();
-				$results = array();
+				// $results = $ssConntroller->search($pattern);
 				break;
 			case 2:
+				// Type == Melodie
 				$rConntroller = new MelodyController();
-				$results = array();
+				// $results = $ssConntroller->search($pattern);
 				break;
 		}
+
+		// Dummy results
+		// $results = array(
+		// 	(object)array(
+		// 		"file_id" => 4,
+		// 		"file_url" => "http://music-xml-analyzer.local/uploads/90/ActorPreludeSample.xml",
+		// 		"occurences" => array(
+		// 			(object)array('note' => 2, 'voice' => 1),
+		// 			(object)array('note' => 7, 'voice' => 2)
+		// 		)
+		// 	)
+		// );
 
 		Cache::put('pattern', $pattern, 60*24);
 		Cache::put('results', $results, 60*24);
