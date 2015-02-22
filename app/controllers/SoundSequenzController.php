@@ -2,6 +2,11 @@
 
 class SoundSequenzController {
 
+	// private $patternIntervalArray;
+	// private $xmlIntervalArray; 
+	// private $xmlPositionArray;
+	// private $results;
+
 	function __construct() {
 	
 		// echo "<br><br><br>CREATED NEW SoundSequenzController!";
@@ -11,8 +16,6 @@ class SoundSequenzController {
 		$p = json_decode($pattern);
 		// $patternLength = count($p);
 		$patternIntervalArray = array();
-		$xmlIntervalArray = array(); 
-		$xmlPositionArray = array();
 		$results = array();
 		// var_dump($patternLength);
 		foreach ($p as $note) {
@@ -29,6 +32,8 @@ class SoundSequenzController {
 			$file_id = $upload->id;
 			$file_url = $upload->url;
 
+			$xmlIntervalArray = array(); 
+			$xmlPositionArray = array();
 			//get notes of xml file
 			$notes = $xml->xpath("//note");
 
@@ -49,16 +54,15 @@ class SoundSequenzController {
 					$note->position = $i;
 
 					// if voice stays the same
-					if($notes[$i]->voice == $notes[$i+1]->voice){
-						/* ===========================================================================
-						 * ==================== HIER SPRINGT ER NIE REIN =============================
-						 * ===========================================================================
-						 */
+					if((int)$notes[$i]->voice == (int)$notes[$i+1]->voice){
 						// push current interval to xmlIntervalArray
 						array_push($xmlIntervalArray, PatternController::getInterval($note));
-						array_push($xmlPositionArray, $note->position);
+						array_push($xmlPositionArray, $note->position + 1);
 						//check if Array-length equals Pattern-length already
 						if(count($xmlIntervalArray) == count($patternIntervalArray)){
+							// 
+							// SCOPE PROBLEM MIT $patternIntervalArray
+							// 
 
 							// compare arrays
 							if(array_values($xmlIntervalArray) == array_values($patternIntervalArray)){
@@ -92,7 +96,7 @@ class SoundSequenzController {
 			}
 
 		});
-		// return $results;
+		return $results;
 	}
 
 }
