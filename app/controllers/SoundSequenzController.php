@@ -36,7 +36,7 @@ class SoundSequenzController {
 			for ($i = 0; $i < count($notes); $i++) {
 				$rest = $notes[$i]->rest;
 				if(!$rest){
-					// 
+					// dirty example of a pattern:
 					// {pitch : {step : "A", alter : 1, octave : 2}}
 					$pitch = new stdClass();
 					$pitch->step = $notes[$i]->pitch->step;
@@ -46,27 +46,25 @@ class SoundSequenzController {
 					$note = new stdClass();
 					$note->pitch = $pitch;
 					$note->voice = $notes[$i]->voice;
-					$note->number = $i;
+					$note->position = $i;
 					
 					// if voice stays the same
 					if($notes[$i]->voice == $notes[$i+1]->voice){
 						// push current interval to xmlIntervalArray
 						array_push($xmlIntervalArray, PatternController::getInterval($note));
-						array_push($xmlPositionArray, $note->number);
+						array_push($xmlPositionArray, $note->position);
 						//check if Array-length equals Pattern-length already
 						if(count($xmlIntervalArray) == count($patternIntervalArray)){
 
 							// compare arrays
 							if(array_values($xmlIntervalArray) == array_values($patternIntervalArray)){
-								// create result...
-								// var_dump($xmlIntervalArray);
-								// var_dump($patternIntervalArray);
+								// create result
 								$result = new stdClass();
 								$result->file_id = $file_id;
 								$result->file_url = $file_url;
 								$result->occurences = array();
 
-								//fill occurences
+								//fill with occurences
 								for ($j = 0; $j < count($xmlPositionArray); $j++) {
 									array_push($result->occurences, j);
 								}
@@ -82,19 +80,15 @@ class SoundSequenzController {
 
 						} //if array lengths aren't equal yet, continue	
 
-				}else{ //different voice incoming, unset array, begin from scratch
-					unset($xmlIntervalArray);
-					unset($xmlPositionArray);
+					}else{ //different voice incoming next; unset array; begin from scratch
+						unset($xmlIntervalArray);
+						unset($xmlPositionArray);
+					}
 				}
 			}
-		}
 
 		});
-
-		// return Redirect::route('searchResults')
-		// 	->with('pattern', $pattern)
-		// 	->with('results', $results);
-
+		return $results;
 	}
 
 }

@@ -7,6 +7,8 @@
 		<h1>Search results</h1>
 		<p>Pattern:</p>
 		<?php var_dump($pattern); ?>
+		<br><br>
+		<p>Results:</p>
 		<?php var_dump($results); ?>
 	</div>
 </div>
