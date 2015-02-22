@@ -12,7 +12,9 @@ class SoundSequenzController {
 		$p = json_decode($pattern);
 		// $patternLength = count($p);
 		$patternIntervalArray = array();
-		$xmlIntervalArray = array();
+		$xmlIntervalArray = array(); 
+		$xmlPositionArray = array();
+		$results = array();
 		// var_dump($patternLength);
 		foreach ($p as $note) {
 			
@@ -32,7 +34,7 @@ class SoundSequenzController {
 			$notes = $xml->xpath("//note");
 
 			//traverse §notes[]
-			for ($i = 0; $i <= count($notes); $i++) {
+			for ($i = 0; $i < count($notes); $i++) {
 				$rest = $notes[$i]->rest;
 				if(!$rest){
 					// 
@@ -42,51 +44,57 @@ class SoundSequenzController {
 					$pitch->alter = $notes[$i]->pitch->alter;
 					$pitch->octave = $notes[$i]->pitch->octave;
 
-					// 
-					// $pitch->voice = $notes[$i]-->voice;
-					// STIMME ABGLEICHEN? (siehe unten)
-					// 
+					$note = new stdClass();
+					$note->pitch = $pitch;
+					$note->voice = $notes[$i]->voice;
+					$note->number = $i;
+					
+					// if voice stays the same
+					if($notes[$i]->voice == $notes[$i+1]->voice){
+						// push current interval to xmlIntervalArray
+						array_push($xmlIntervalArray, PatternController::getInterval($note));
+						array_push($xmlPositionArray, $note->number);
+						//check if Array-length equals Pattern-length already
+						if(count($xmlIntervalArray) == count($patternIntervalArray)){
 
-					// var_dump($pitch);
-					array_push($xmlIntervalArray, PatternController::getInterval($note));
+							// compare arrays
+							if(array_values($xmlIntervalArray) == array_values($patternIntervalArray)){
+								// create result...
+								// var_dump($xmlIntervalArray);
+								// var_dump($patternIntervalArray);
+								$result = new stdClass();
+								$result->file_id = $file_id;
+								$result->file_url = $file_url;
+								$result->occurences = array();
 
-					// check if first XMLinterval equals first patternInterval
-					if($xmlIntervalArray[0] == $patternIntervalArray[0]){
-						// cool? SINN?
-						// STIMME ABGLEICHEN?
-						// 
-					}
-					else{ 
-						// delete this interval from xmlIntervalArray
-						// DA NICHT BENÖTIGT!
-						unset($xmlIntervalArray[0]);
-					}
+								//fill occurences
+								for ($j = 0; $j < count($xmlPositionArray); $j++) {
+									array_push($result->occurences, j);
+								}
+								//push result
+								array_push($results, $result);
+							}else{
+								unset($xmlIntervalArray[0]);
+								unset($xmlPositionArray[0]);
+								// reindex xmlIntervalArray
+								$xmlIntervalArray = array_values(array_filter($xmlIntervalArray));
+								$xmlPositionArray = array_values(array_filter($xmlPositionArray));
+							}
 
-					// 
-					// HIER WIEDER ANSETZEN?
-					// 
-					// //check if Array-length equals Pattern-length
-					// if(count($xmlIntervalArray) == count($patternIntervalArray)){
-					// 	//if so, compare intervals
-					// 	for ($i = 0; $i <= count($xmlIntervalArray); $i++) {
-					// 		if($xmlIntervalArray[$i] == $patternIntervalArray[$i]){
+						} //if array lengths aren't equal yet, continue	
 
-					// 		}
-					// 	}
-					// }
-
-
-
+				}else{ //different voice incoming, unset array, begin from scratch
+					unset($xmlIntervalArray);
+					unset($xmlPositionArray);
 				}
 			}
-
-
+		}
 
 		});
 
-		// return Redirect::route('searchResults')
-		// 	->with('pattern', $pattern)
-		// 	->with('results', $results);
+		return Redirect::route('searchResults')
+			->with('pattern', $pattern)
+			->with('results', $results);
 	}
 
 }
