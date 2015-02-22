@@ -47,9 +47,13 @@ class SoundSequenzController {
 					$note->pitch = $pitch;
 					$note->voice = $notes[$i]->voice;
 					$note->position = $i;
-					
+
 					// if voice stays the same
 					if($notes[$i]->voice == $notes[$i+1]->voice){
+						/* ===========================================================================
+						 * ==================== HIER SPRINGT ER NIE REIN =============================
+						 * ===========================================================================
+						 */
 						// push current interval to xmlIntervalArray
 						array_push($xmlIntervalArray, PatternController::getInterval($note));
 						array_push($xmlPositionArray, $note->position);
@@ -88,7 +92,7 @@ class SoundSequenzController {
 			}
 
 		});
-		return $results;
+		// return $results;
 	}
 
 }
