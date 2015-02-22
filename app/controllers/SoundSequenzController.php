@@ -91,9 +91,9 @@ class SoundSequenzController {
 
 		});
 
-		return Redirect::route('searchResults')
-			->with('pattern', $pattern)
-			->with('results', $results);
+		// return Redirect::route('searchResults')
+		// 	->with('pattern', $pattern)
+		// 	->with('results', $results);
 
 	}
 
