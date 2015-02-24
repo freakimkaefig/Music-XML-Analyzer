@@ -42,8 +42,8 @@
 		<p></p>
 		<p>Accidential: </p>
 		<button type="button" class="btn btn-default btn-accidential">none</button>
-		<button type="button" class="btn btn-default btn-accidential">sharp</button>
-		<button type="button" class="btn btn-default btn-accidential">flat</button>
+		<button type="button" class="btn btn-default btn-accidential">#</button>
+		<button type="button" class="btn btn-default btn-accidential">b</button>
 	</div>
 </div>
 

@@ -2,6 +2,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	var that = {},
 	noteElements = [],
+	noteElements4VexFlow = [],
 	//noteElement = null,
 
 	curMode = null,
@@ -76,11 +77,41 @@ MusicXMLAnalyzer.PatternModel = function(){
 				rythSpecial: curRythSpec,
 				octave: curOctave
 			});
+
+			//adapt values for vexflow an put them into an array
+			
+
+			noteElements4VexFlow.push({
+				name: curName,
+				accidential: curAccidential,
+				duration: getDuration4Vexflow(curDuration),
+				rythSpecial: curRythSpec,
+				octave: curOctave
+			});
 		}
 		$(that).trigger('patternChange', [noteElements]);
-		$(that).trigger('updateNotationView', [getAllNoteElements()]);
-		console.log(noteElements);
+		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
 	},
+
+	getDuration4Vexflow = function(duration) {
+		var duration4Vexflow = "q";
+
+			if ( curDuration == "whole") {
+				duration4Vexflow = "w";
+			} else if ( curDuration == "half") {
+				duration4Vexflow = "h";
+			} else if ( curDuration == "eighth") {
+				duration4Vexflow = "8";
+			} else if ( curDuration == "16th") {
+				duration4Vexflow = "16";
+			} else if ( curDuration == "32nd") {
+				duration4Vexflow = "32";
+			} else if ( curDuration == "64th") {
+				duration4Vexflow = "64";
+			}
+
+		return duration4Vexflow;
+	}
 
 	addNoteElementByCanvasClick = function(note) {
 		console.log("model add note by canavs click : " + note);
@@ -99,6 +130,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	getAllNoteElements = function() {
+		return noteElements;
+	},
+
+	getAllVexFlowNoteElements = function() {
 		return noteElements;
 	};
 

@@ -52,8 +52,8 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	// display note elements on the canvas and get them from model
 	// via controller
-	renderNotes = function(notes) {
-		console.log("render notes");
+	renderNotes = function(vexflowNotes) {
+		console.log("render notes ", vexflowNotes);
 	},
 
 	renderVexFlowNotePreview = function(noteName) {
@@ -203,11 +203,10 @@ MusicXMLAnalyzer.NotationView = function(){
 		}
 		return horizontalVal;
 
-	},
+	};
 	
 	
 	that.init = init;
-	that.calcNotePositionHorizontal = calcNotePositionHorizontal;
 	that.renderNotes = renderNotes;
 
 	return that;
