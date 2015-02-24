@@ -70,7 +70,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 			alert("octave missing");
 		}
 		else {
-			console.log("note added");
 
 			noteElements.push({
 				name: curName,
@@ -80,11 +79,14 @@ MusicXMLAnalyzer.PatternModel = function(){
 				octave: curOctave
 			});
 
+			console.log("noteElements: ", noteElements);
 			
+
 			for (var i = 0; i < noteElements.length; i++) {
-				completeDurationIn64th += getDurationIn64thNotes(noteElements[i].curDuration);
+				//console.log("d64 of " + i + " " + getDurationIn64thNotes(noteElements[i].duration));
+				completeDurationIn64th += getDurationIn64thNotes(noteElements[i].duration);
 			}
-			
+
 			console.log("complete dur: " + completeDurationIn64th);
 			//adapt values for vexflow an put them into an array
 			
@@ -99,7 +101,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 			});
 			*/
 
-			noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: ["c/4"],
+			noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "/" + curOctave],
 		    						 duration: getDuration4Vexflow(curDuration),
 		    						 auto_stem: true }));
 
@@ -111,38 +113,38 @@ MusicXMLAnalyzer.PatternModel = function(){
 	getDuration4Vexflow = function(duration) {
 		var duration4Vexflow = "q";
 
-			if ( curDuration == "whole") {
+			if ( duration == "whole") {
 				duration4Vexflow = "w";
-			} else if ( curDuration == "half") {
+			} else if ( duration == "half") {
 				duration4Vexflow = "h";
-			} else if ( curDuration == "eighth") {
+			} else if ( duration == "eighth") {
 				duration4Vexflow = "8";
-			} else if ( curDuration == "16th") {
+			} else if ( duration == "16th") {
 				duration4Vexflow = "16";
-			} else if ( curDuration == "32nd") {
+			} else if ( duration == "32nd") {
 				duration4Vexflow = "32";
-			} else if ( curDuration == "64th") {
+			} else if ( duration == "64th") {
 				duration4Vexflow = "64";
 			}
 
 		return duration4Vexflow;
 	},
 
-	getDurationIn64thNotes = function(noteName) {
+	getDurationIn64thNotes = function(noteDuration) {
 		//when 64th note
 		var durationIn64th = 1;
 
-			if ( curDuration == "whole") {
+			if ( noteDuration == "whole") {
 				durationIn64th = 64;
-			} else if ( curDuration == "half") {
+			} else if ( noteDuration == "half") {
 				durationIn64th = 32;
-			} else if ( curDuration == "quarter") {
+			} else if ( noteDuration == "quarter") {
 				durationIn64th = 16;
-			} else if ( curDuration == "eighth") {
+			} else if ( noteDuration == "eighth") {
 				durationIn64th = 8;
-			} else if ( curDuration == "16th") {
+			} else if ( noteDuration == "16th") {
 				durationIn64th = 4;
-			} else if ( curDuration == "32nd") {
+			} else if ( noteDuration == "32nd") {
 				durationIn64th = 2;
 			}
 
