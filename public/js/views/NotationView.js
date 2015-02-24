@@ -24,6 +24,8 @@ MusicXMLAnalyzer.NotationView = function(){
 		setTopNoteValues();
 		registerListener();
 
+		
+
 	},
 
 
@@ -46,6 +48,12 @@ MusicXMLAnalyzer.NotationView = function(){
 	registerListener = function() {
 		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
 		$("#myCanvas").on("click", onMouseClickCanvas);
+	},
+
+	// display note elements on the canvas and get them from model
+	// via controller
+	renderNotes = function(notes) {
+		console.log("render notes");
 	},
 
 	renderVexFlowNotePreview = function(noteName) {
@@ -73,6 +81,11 @@ MusicXMLAnalyzer.NotationView = function(){
 
 		// Render voice
 		voice.draw(context, stave);
+	},
+
+	onNotationViewUpdate = function(event, notes) {
+		console.log("view triggered");
+		//console.log("notes: " + notes);
 	},
 
 	/* this methods calcs the position of the notes */
@@ -191,27 +204,11 @@ MusicXMLAnalyzer.NotationView = function(){
 		return horizontalVal;
 
 	},
-
-
-	// display note elements on the canvas and get them from model
-	renderNoteElements = function() {
-		
-	},
-	
-
-	addNote = function() {
-		
-	},
-	
-
-	calcNotePositionHorizontal = function(mouseX) {
-		
-	};
-
 	
 	
 	that.init = init;
 	that.calcNotePositionHorizontal = calcNotePositionHorizontal;
+	that.renderNotes = renderNotes;
 
 	return that;
 }

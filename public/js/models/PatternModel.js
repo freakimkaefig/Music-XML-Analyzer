@@ -78,7 +78,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 			});
 		}
 		$(that).trigger('patternChange', [noteElements]);
-		console.log(noteElements)
+		$(that).trigger('updateNotationView', [getAllNoteElements()]);
+		console.log(noteElements);
 	},
 
 	addNoteElementByCanvasClick = function(note) {

@@ -13,7 +13,13 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternModel = MusicXMLAnalyzer.PatternModel();
 		patternModel.init();
 		$(patternModel).on('patternChange', onPatternChange);
+		$(patternModel).on('updateNotationView', onNotationViewUpdate);
 
+	},
+
+	onNotationViewUpdate = function(event, notes) {
+		console.log("controller: " + notes);
+		notationView.renderNotes(notes);
 	},
 
 	changeMode = function(val) {
