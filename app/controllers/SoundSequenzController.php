@@ -55,7 +55,6 @@ class SoundSequenzController {
 				//get notes of xml file
 				// $notes = $xml->xpath("//note");
 
-				self::$result->part_id = (string)$part->id;
 				//traverse §notes[]
 				for ($i = 0; $i < count($part->measure)-1; $i++) {
 					$n = $part->measure[$i]->note;
@@ -105,7 +104,8 @@ class SoundSequenzController {
 									$occ->start = reset(self::$xmlPositionArray);
 									$occ->end = end(self::$xmlPositionArray);
 									$occ->voice = (int)$note->voice;
-
+									$occ->part_id = (string)$part->id;
+									// var_dump($occ);
 									array_push(self::$result->occurences, $occ);
 
 									//reset arrays
