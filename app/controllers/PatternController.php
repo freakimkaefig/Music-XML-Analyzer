@@ -13,9 +13,11 @@ class PatternController extends BaseController {
 
 	public function postPatternSearch() {		
 		$pattern = Input::get('pattern');
-		$type = Input::get('type');
+		$pattern = json_decode($pattern);
 
-		switch ($type) {
+		// var_dump($pattern);
+
+		switch ($pattern->type) {
 			case 0:
 				// Type == Tonfolge
 				$ssConntroller = new SoundSequenzController();
@@ -39,8 +41,8 @@ class PatternController extends BaseController {
 		// 		"file_id" => 4,
 		// 		"file_url" => "http://music-xml-analyzer.local/uploads/90/ActorPreludeSample.xml",
 		// 		"occurences" => array(
-		// 			(object)array('note' => 2, 'voice' => 1),
-		// 			(object)array('note' => 7, 'voice' => 2)
+		// 			(object)array('start' => 2, 'end' => 3, 'voice' => 1),
+		// 			(object)array('start' => 7, 'end' => 12, 'voice' => 2)
 		// 		)
 		// 	)
 		// );

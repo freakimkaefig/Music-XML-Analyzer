@@ -9,11 +9,10 @@ class SoundSequenzController {
 
 	function __construct() {
 	
-		// echo "<br><br><br>CREATED NEW SoundSequenzController!";
 	}
 
 	public function search($pattern) {
-		$p = json_decode($pattern);
+		$p = $pattern->notes;
 		// $patternLength = count($p);
 		self::$patternIntervalArray = array();
 		self::$results = array();

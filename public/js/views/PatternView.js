@@ -35,8 +35,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		$addNoteButton.on("click", onAddButtonClick);
 		$removeNoteButton.on("click", onRemoveButtonClick);
 
-		$patternValue.val(JSON.stringify([{pitch : {step : "A", alter : 1, octave : 2}}, {pitch : {step : "B", alter : -1, octave : 1}}]));
-		$typeValue.val(0);
+		$patternValue.val(JSON.stringify({type: 0, exact: false, notes: [{pitch : {step : "B", alter : 0, octave : 5}}, {pitch : {step : "B", alter : 0, octave : 5}}]}));
 	},
 
 	onModeButtonClick = function(event) {
