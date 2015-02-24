@@ -35,18 +35,16 @@ class PatternController extends BaseController {
 				break;
 		}
 
-		// Dummy results
-		$results = array(
-			(object)array(
-				"file_id" => 4,
-				"file_url" => "http://music-xml-analyzer.local/uploads/90/ActorPreludeSample.xml",
-				"occurences" => array(
-					(object)array('start' => 7, 'end' => 14, 'voice' => 1),
-					(object)array('start' => 9, 'end' => 10, 'voice' => 1)
-				)
-			)
-		);
-
+		// $results = array(
+		// 	(object)array(
+		// 		"file_id" => 4,
+		// 		"file_url" => "http://music-xml-analyzer.local/uploads/90/ActorPreludeSample.xml",
+		// 		"occurences" => array(
+		// 			(object)array('start' => 2, 'end' => 3, 'voice' => 1),
+		// 			(object)array('start' => 7, 'end' => 12, 'voice' => 2)
+		// 		)
+		// 	)
+		// );
 		Cache::put('pattern', $pattern, 60*24);
 		Cache::put('results', $results, 60*24);
 
@@ -64,13 +62,8 @@ class PatternController extends BaseController {
 						"A" => 9,
 						"B" => 11);
 		$note = $n;
-		// $note = str_replace("[", "", $n);
-		// $note = str_replace("]", "", $note);
-		// $note = str_replace("\\", "", $note);
-		// var_dump($note);
 		$obj_arr = (array)$note;
 		if(!isset($obj_arr["rest"])){
-
 
 			$noteStep = $note->pitch->step;
 			$noteAlter = $note->pitch->alter;
@@ -82,12 +75,13 @@ class PatternController extends BaseController {
 					$noteValue = (int)$noteValue + (int)$noteAlter;
 				}
 				$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
+
 				return $noteValue;
 			}
 			// if($noteValue){
 			// }
 			else{
-				return 0;
+				return null;
 			}
 		}
 
