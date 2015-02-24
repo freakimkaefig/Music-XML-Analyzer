@@ -3,7 +3,8 @@
 @section('content')
 
 <?php var_dump(Cache::get('pattern')); ?>
-<?php var_dump(Cache::get('results')); ?>
+<?php echo"<br><br>";
+var_dump(Cache::get('results')); ?>
 
 <div class="container">
 	<div class="row">

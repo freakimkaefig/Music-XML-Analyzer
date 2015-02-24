@@ -74,10 +74,11 @@ class PatternController extends BaseController {
 					$noteValue = (int)$noteValue + (int)$noteAlter;
 				}
 				$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
-			}
-			if($noteValue){
 				return $noteValue;
-			}else{
+			}
+			// if($noteValue){
+			// }
+			else{
 				return 0;
 			}
 		}
