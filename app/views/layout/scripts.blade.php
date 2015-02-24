@@ -18,11 +18,10 @@
 {{ HTML::script('js/helpers/Route.js') }}
 {{ HTML::script('js/App.js') }}
 
-<!-- ===Models=== -->
-{{ HTML::script('js/models/PatternModel.js') }}
-
 <!-- === Models === -->
 {{ HTML::script('js/models/DashboardModel.js') }}
+{{ HTML::script('js/models/PatternModel.js') }}
+{{ HTML::script('js/models/ResultModel.js') }}
 
 <!-- === Views === -->
 {{ HTML::script('js/views/HeaderView.js') }}
@@ -30,12 +29,14 @@
 {{ HTML::script('js/views/DashboardView.js') }}
 {{ HTML::script('js/views/PatternView.js') }}
 {{ HTML::script('js/views/NotationView.js') }}
+{{ HTML::script('js/views/ResultView.js') }}
 
 <!-- === Controller === -->
 {{ HTML::script('js/controllers/HeaderController.js') }}
 {{ HTML::script('js/controllers/UploadController.js') }}
 {{ HTML::script('js/controllers/DashboardController.js') }}
 {{ HTML::script('js/controllers/PatternController.js') }}
+{{ HTML::script('js/controllers/ResultController.js') }}
 {{ HTML::script('js/controllers/ApplicationController.js') }}
 
 

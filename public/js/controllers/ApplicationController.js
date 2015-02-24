@@ -2,19 +2,11 @@ MusicXMLAnalyzer.ApplicationController = function() {
 
 	var that = {},
 
-	headerView = null,
 	headerController = null,
-
-	uploadView = null,
 	uploadController = null,
-
-	patternController = null,
-	
-	dashboardModel = null,
-	dashboardView = null,
 	dashboardController = null,
-	
-	patternModel = null,
+	patternController = null,
+	resultController = null,
 
 
 	init = function() {
@@ -25,14 +17,6 @@ MusicXMLAnalyzer.ApplicationController = function() {
 
 		uploadController = MusicXMLAnalyzer.UploadController();
 		uploadController.init();
-
-		if (Route.check('/')) {
-
-		}
-
-		if (Route.check('/search')) {
-
-		}
 
 		if (Route.check('/imprint')) {
 			console.log("Imprint");
@@ -47,6 +31,11 @@ MusicXMLAnalyzer.ApplicationController = function() {
 			console.log("Pattern");
 			patternController = MusicXMLAnalyzer.PatternController();
 			patternController.init();
+		}
+
+		if (Route.check('/results/detail\/[0-9]*')) {
+			resultController = MusicXMLAnalyzer.ResultController();
+			resultController.init();
 		}
 	},
 	

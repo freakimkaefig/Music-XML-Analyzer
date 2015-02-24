@@ -30,7 +30,7 @@ class ResultController extends BaseController {
 
 	public function getResultDetail($id) {
 
-		echo "<br><br><br><br><br><br>";
+		// echo "<br><br><br><br><br><br>";
 
 		if (Cache::has('results') && Cache::has('pattern')) {
 
@@ -45,60 +45,40 @@ class ResultController extends BaseController {
 
 			$upload = Upload::find($id);
 
+			// var_dump($results);
+
 
 			$xml = simplexml_load_file($upload->url);
 			// getting extracts with start, end and measures between
 			for ($i = 0; $i < count($result->occurences); $i++) {
-				$resultExtract[$i] = array();
+				$resultExtracts[$i] = array();
+
 				$start = $result->occurences[$i]->start;
 				$end = $result->occurences[$i]->end;
 				$voice = $result->occurences[$i]->voice;
-				$startMeasure = $xml->xpath('//note[' . $start . ']/..');
+				$part_id = $result->occurences[$i]->part_id;
+
+				$startMeasure = $xml->xpath('//part[@id="' . $part_id . '"]//note[' . $start . ']/..');
+				// $startMeasure = $xml->xpath('//note[' . $start . ']/..');
 				$startMeasureNumber = (int)$startMeasure[0]['number'];
-				$endMeasure = $xml->xpath('//note[' . $end . ']/..');
+				$endMeasure = $xml->xpath('//part[@id="' . $part_id . '"]//note[' . $end . ']/..');
+				// $endMeasure = $xml->xpath('//note[' . $end . ']/..');
 				$endMeasureNumber = (int)$endMeasure[0]['number'];
 				for ($j = $startMeasureNumber; $j <= $endMeasureNumber; $j++) {
-					echo $i . " | " . $j;
-					echo "<br>";
-					$resultExtract[$i][] = $xml->xpath('//measure[@number="' . $j . '"]');
+					// echo $i . " | " . $j;
+					// echo "<br>";
+					$resultExtracts[$i][] = $xml->xpath('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]');
 				}
-				echo "<pre>";
-				var_dump($resultExtract);
-				echo "</pre>";
-				echo "<hr>";
 			}
 
+			// echo "<pre>";
+			// // var_dump($endMeasure);
+			// var_dump($resultExtracts);
+			// echo "</pre>";
+			// echo "<hr>";
 
-			// Testing
-			// $notes = $xml->xpath('//note');
-
-			// get start & end note
-			// $startNote = $xml->xpath('//note[' . $result->occurences[0]->start . ']');
-			// $endNote = $xml->xpath('//note[' . $result->occurences[0]->end . ']');
-
-			// get the part in which the start note is
-			// $startPart = $xml->xpath('//note[' . $result->occurences[0]->start . ']/../..');
-
-			// get the measure in which the start note is
-
-			// get the measure in which the end note is
-			// $endMeasure = $xml->xpath('//note[' . ($result->occurences[0]->start + count($pattern->notes) - 1) . ']/..');
-
-
-			echo "<pre>";
-
-			// var_dump($resultExtract);
-			echo '<hr>';
-			// var_dump($startPart);
-			// echo '<hr>';
-			// var_dump($startMeasure);
-			// echo '<hr>';
-			// var_dump($endMeasure);
-			// echo '<hr>';
-			// echo '<hr>';
-			echo '</pre>';
-
-			return View::make('results.detail');
+			return View::make('results.detail')
+						->with('resultExtracts', $resultExtracts);
 		} else {
 			Redirect::route('pattern');
 		}
