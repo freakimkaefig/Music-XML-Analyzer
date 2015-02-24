@@ -54,6 +54,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	addNoteElement = function() {
+		var completeDurationIn64th = 0;
+
 		if (!curName) {
 			alert("name missing");
 		} else if (!curAccidential) {
@@ -78,8 +80,15 @@ MusicXMLAnalyzer.PatternModel = function(){
 				octave: curOctave
 			});
 
+			
+			for (var i = 0; i < noteElements.length; i++) {
+				completeDurationIn64th += getDurationIn64thNotes(noteElements[i].curDuration);
+			}
+			
+			console.log("complete dur: " + completeDurationIn64th);
 			//adapt values for vexflow an put them into an array
 			
+			/*
 			noteElements4VexFlow.push({
 				name: curName,
 				accidential: curAccidential,
@@ -88,9 +97,15 @@ MusicXMLAnalyzer.PatternModel = function(){
 				rythSpecial: curRythSpec,
 				octave: curOctave
 			});
+			*/
+
+			noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: ["c/4"],
+		    						 duration: getDuration4Vexflow(curDuration),
+		    						 auto_stem: true }));
+
 		}
 		$(that).trigger('patternChange', [noteElements]);
-		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
+		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements(), completeDurationIn64th]);
 	},
 
 	getDuration4Vexflow = function(duration) {

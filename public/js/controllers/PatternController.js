@@ -17,9 +17,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	},
 
-	onNotationViewUpdate = function(event, vexflowNotes) {
-		console.log("controller: " + vexflowNotes);
-		notationView.renderNotes(vexflowNotes);
+	onNotationViewUpdate = function(event, vexflowNotes, completeDurationIn64th) {
+		notationView.renderNotes(vexflowNotes, completeDurationIn64th);
 	},
 
 	changeMode = function(val) {

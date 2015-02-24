@@ -37,7 +37,7 @@ MusicXMLAnalyzer.NotationView = function(){
   		renderer = new Vex.Flow.Renderer(canvas,Vex.Flow.Renderer.Backends.CANVAS);
 
   		context = renderer.getContext();
-  		stave = new Vex.Flow.Stave(10, 0, 500);
+  		stave = new Vex.Flow.Stave(10, 0, 700);
   		stave.addClef("treble").setContext(context).draw();
 
 	},
@@ -49,11 +49,29 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	// display note elements on the canvas and get them from model
 	// via controller
-	renderNotes = function(vexflowNotes) {
+	renderNotes = function(vexflowNotes, completeDurationIn64th) {
+		//console.log("vex notes: ", vexflowNotes);
 
-		for (var i = 0; i < vexflowNotes.length; i++) {
-			console.log ("dur: " + vexflowNotes[i].durationIn64th);
-		}
+		// delete canvas
+		context.clearRect(0, 0, canvas.width, canvas.height);
+
+		stave.setContext(context).draw();
+
+		var voice = new Vex.Flow.Voice({
+		    num_beats: completeDurationIn64th,
+		    beat_value: 64,
+		    resolution: Vex.Flow.RESOLUTION
+		});
+
+		// Add notes to voice
+		voice.addTickables(vexflowNotes);
+
+		// Format and justify the notes to 700 pixels
+		var formatter = new Vex.Flow.Formatter().
+		    joinVoices([voice]).format([voice], 700);
+
+		// Render voice
+		voice.draw(context, stave);
 		
 	},
 
@@ -76,9 +94,9 @@ MusicXMLAnalyzer.NotationView = function(){
 		// Add notes to voice
 		voice.addTickables(notes);
 
-		// Format and justify the notes to 500 pixels
+		// Format and justify the notes to 700 pixels
 		var formatter = new Vex.Flow.Formatter().
-		    joinVoices([voice]).format([voice], 500);
+		    joinVoices([voice]).format([voice], 700);
 
 		// Render voice
 		voice.draw(context, stave);
