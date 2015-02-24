@@ -60,10 +60,6 @@ class SoundSequenzController {
 						array_push(self::$xmlPositionArray, $note->position + 1);
 						//check if Array-length equals Pattern-length already
 						if(count(self::$xmlIntervalArray) == count(self::$patternIntervalArray)){
-							// 
-							// SCOPE PROBLEM MIT $patternIntervalArray
-							// 
-
 							// compare arrays
 							if(array_values(self::$xmlIntervalArray) == array_values(self::$patternIntervalArray)){
 								// create result
@@ -72,18 +68,48 @@ class SoundSequenzController {
 								$result->file_url = $file_url;
 								$result->occurences = array();
 
+
 								//fill with occurences
 								for ($j = 0; $j < count(self::$xmlPositionArray); $j++) {
-									array_push($result->occurences, j);
+									array_push($result->occurences, self::$xmlPositionArray[$j]);
 								}
 								//push result
 								array_push(self::$results, $result);
+
+								//reset arrays
+								self::$xmlIntervalArray = array();
+								self::$xmlPositionArray = array();
+
 							}else{
-								unset(self::$xmlIntervalArray[0]);
-								unset(self::$xmlPositionArray[0]);
+								// echo "<br><hr>";
+								// echo "######## array values dont match ######### <br>";
+								// unset(self::$xmlIntervalArray[0]);
+								// $z = self::$xmlIntervalArray[0];
+								// self::$xmlIntervalArray = array_merge(array_diff(self::$xmlIntervalArray, array($z)));
+								self::$xmlIntervalArray = array_splice(self::$xmlIntervalArray, 0, 0);
+								// unset(self::$xmlPositionArray[0]);
+								// $zz = self::$xmlPositionArray[0];
+								// self::$xmlPositionArray = array_merge(array_diff(self::$xmlPositionArray, array($zz)));
+								self::$xmlPositionArray = array_splice(self::$xmlPositionArray, 0, 0);
+								
+								// echo "xmlIntervalArray[0] unset: <br>";
+								// var_dump(self::$xmlIntervalArray);
+								// echo "<br><br>length of xmlPositionArray: ".count(self::$xmlPositionArray)."<br>";
+								// echo "xmlPositionArray[0] unset: <br>";
+								// var_dump(self::$xmlPositionArray);
+								
 								// reindex xmlIntervalArray
-								self::$xmlIntervalArray = array_values(array_filter(self::$xmlIntervalArray));
-								self::$xmlPositionArray = array_values(array_filter(self::$xmlPositionArray));
+								// self::$xmlIntervalArray = array_values(array_filter(self::$xmlIntervalArray));
+								self::$xmlIntervalArray = array_values(self::$xmlIntervalArray);
+								// self::$xmlPositionArray = array_values(array_filter(self::$xmlPositionArray));
+								self::$xmlPositionArray = array_values(self::$xmlPositionArray);
+								
+								// echo "<br><br><br>xmlIntervalArray positions sorted:<br>";
+								// var_dump(self::$xmlIntervalArray);
+								// echo "<br";
+								// echo "<br><br><br>xmlPositionArray positions sorted:<br>";
+								// var_dump(self::$xmlPositionArray);
+								// echo "<br><hr>";
 							}
 
 						} //if array lengths aren't equal yet, continue	
@@ -95,10 +121,14 @@ class SoundSequenzController {
 						self::$xmlPositionArray = array();
 					}
 				}
-			}
+			} //end of foreach(notes as note){blabla}
 
 		});
 		return self::$results;
+// echo "<br>";
+// 		var_dump(self::$results);
+// echo "<hr>";
+// 		bla;
 	}
 
 }
