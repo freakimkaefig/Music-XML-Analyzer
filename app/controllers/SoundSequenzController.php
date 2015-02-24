@@ -6,6 +6,8 @@ class SoundSequenzController {
 	static $xmlIntervalArray; 
 	static $xmlPositionArray;
 	static $results;
+	static $exactMatch;
+	static $result;
 
 	function __construct() {
 	
@@ -13,10 +15,17 @@ class SoundSequenzController {
 
 	public function search($pattern) {
 		$p = $pattern->notes;
-		// $patternLength = count($p);
+		// $exactMatch = $pattern->exact;
+		// 
+		// NICE TO HAVE: 
+		// if !exactMatch: 
+		// #intervall differenzen aus pattern berechnen
+		// #differenzen vergleichen mit 
+		// 
+
 		self::$patternIntervalArray = array();
 		self::$results = array();
-		// var_dump($patternLength);
+
 		foreach ($p as $note) {
 			
 			//get note intervals of pattern
@@ -33,6 +42,8 @@ class SoundSequenzController {
 
 			self::$xmlIntervalArray = array(); 
 			self::$xmlPositionArray = array();
+			self::$result = new stdClass();
+			self::$result->occurences = array();
 			//get notes of xml file
 			$notes = $xml->xpath("//note");
 
@@ -40,8 +51,7 @@ class SoundSequenzController {
 			for ($i = 0; $i < count($notes); $i++) {
 				$rest = $notes[$i]->rest;
 				if(!$rest){
-					// dirty example of a pattern:
-					// {pitch : {step : "A", alter : 1, octave : 2}}
+
 					$pitch = new stdClass();
 					$pitch->step = $notes[$i]->pitch->step;
 					$pitch->alter = $notes[$i]->pitch->alter;
@@ -59,68 +69,61 @@ class SoundSequenzController {
 						array_push(self::$xmlPositionArray, $note->position + 1);
 						//check if Array-length equals Pattern-length already
 						if(count(self::$xmlIntervalArray) == count(self::$patternIntervalArray)){
+							
 							// compare arrays
 							if(array_values(self::$xmlIntervalArray) == array_values(self::$patternIntervalArray)){
 								// create result
-								$result = new stdClass();
-								$result->file_id = $file_id;
-								$result->file_url = $file_url;
-								$result->occurences = array();
+								self::$result->file_id = $file_id;
+								self::$result->file_url = $file_url;
 
-
+		// Dummy results
+		// $results = array(
+		// 	(object)array(
+		// 		"file_id" => 4,
+		// 		"file_url" => "http://music-xml-analyzer.local/uploads/90/ActorPreludeSample.xml",
+		// 		"occurences" => array(
+		// 			(object)array('start' => 2, 'end' => 3, 'voice' => 1),
+		// 			(object)array('start' => 7, 'end' => 12, 'voice' => 2)
+		// 		)
+		// 	)
+		// );
 								//fill with occurences
-								for ($j = 0; $j < count(self::$xmlPositionArray); $j++) {
-									array_push($result->occurences, self::$xmlPositionArray[$j]);
-								}
-								//push result
-								array_push(self::$results, $result);
+								$occ = new stdClass();
+								$occ->start = reset(self::$xmlPositionArray);
+								$occ->end = end(self::$xmlPositionArray);
+								$occ->voice = (int)$note->voice;
+
+								array_push(self::$result->occurences, $occ);
 
 								//reset arrays
 								self::$xmlIntervalArray = array();
 								self::$xmlPositionArray = array();
 
 							}else{
-								// echo "<br><hr>";
-								// echo "######## array values dont match ######### <br>";
-								// unset(self::$xmlIntervalArray[0]);
-								// $z = self::$xmlIntervalArray[0];
-								// self::$xmlIntervalArray = array_merge(array_diff(self::$xmlIntervalArray, array($z)));
+
 								self::$xmlIntervalArray = array_splice(self::$xmlIntervalArray, 0, 0);
-								// unset(self::$xmlPositionArray[0]);
-								// $zz = self::$xmlPositionArray[0];
-								// self::$xmlPositionArray = array_merge(array_diff(self::$xmlPositionArray, array($zz)));
+
 								self::$xmlPositionArray = array_splice(self::$xmlPositionArray, 0, 0);
-								
-								// echo "xmlIntervalArray[0] unset: <br>";
-								// var_dump(self::$xmlIntervalArray);
-								// echo "<br><br>length of xmlPositionArray: ".count(self::$xmlPositionArray)."<br>";
-								// echo "xmlPositionArray[0] unset: <br>";
-								// var_dump(self::$xmlPositionArray);
-								
-								// reindex xmlIntervalArray
-								// self::$xmlIntervalArray = array_values(array_filter(self::$xmlIntervalArray));
+
 								self::$xmlIntervalArray = array_values(self::$xmlIntervalArray);
-								// self::$xmlPositionArray = array_values(array_filter(self::$xmlPositionArray));
+
 								self::$xmlPositionArray = array_values(self::$xmlPositionArray);
-								
-								// echo "<br><br><br>xmlIntervalArray positions sorted:<br>";
-								// var_dump(self::$xmlIntervalArray);
-								// echo "<br";
-								// echo "<br><br><br>xmlPositionArray positions sorted:<br>";
-								// var_dump(self::$xmlPositionArray);
-								// echo "<br><hr>";
+
 							}
 
 						} //if array lengths aren't equal yet, continue	
 
-					}else{ //different voice incoming next; unset array; begin from scratch
-						// unset(self::$xmlIntervalArray);
-						// unset(self::$xmlPositionArray);
+					}
+					else{ //different voice incoming next; unset array; begin from scratch
+
 						self::$xmlIntervalArray = array(); 
 						self::$xmlPositionArray = array();
 					}
 				}
 			} //end of foreach(notes as note){blabla}
+			
+			//push result
+			array_push(self::$results, self::$result);
 
 		});
 		return self::$results;
