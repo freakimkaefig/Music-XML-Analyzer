@@ -17,10 +17,10 @@ MusicXMLAnalyzer.ApplicationController = function() {
 	init = function() {
 		console.info('MusicXMLAnalyzer.ApplicationController.init');
 
-		uploadView = MusicXMLAnalyzer.UploadView();
-		uploadView.init();
+		headerController = MusicXMLAnalyzer.HeaderController();
+		headerController.init();
 		uploadController = MusicXMLAnalyzer.UploadController();
-		uploadController.init(uploadView);
+		uploadController.init();
 
 		if (Route.check('/')) {
 
@@ -35,12 +35,8 @@ MusicXMLAnalyzer.ApplicationController = function() {
 		}
 
 		if (Route.check('/dashboard')) {
-			dashboardModel = MusicXMLAnalyzer.DashboardModel();
-			dashboardModel.init();
-			dashboardView = MusicXMLAnalyzer.DashboardView();
-			dashboardView.init();
 			dashboardController = MusicXMLAnalyzer.DashboardController();
-			dashboardController.init(dashboardModel, dashboardView);
+			dashboardController.init();
 		}
 
 		if (Route.check('/pattern')) {

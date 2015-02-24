@@ -5,11 +5,13 @@ MusicXMLAnalyzer.DashboardController = function() {
 	model = null,
 	view = null,
 
-	init = function(dashboardModel, dashboardView) {
+	init = function() {
 		console.info('MusicXMLAnalyzer.DashboardController.init');
 
-		model = dashboardModel;
-		view = dashboardView;
+		model = MusicXMLAnalyzer.DashboardModel();
+		model.init();
+		view = MusicXMLAnalyzer.DashboardView();
+		view.init();
 
 		$(model).on('logMessage', onLogMessage);
 		$(model).on('model_ready', onModelReady);
