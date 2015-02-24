@@ -19,6 +19,11 @@
 	margin: 0;
 }
 
+.thead {
+	font-size: 125%;
+	font-weight: bold;
+}
+
 /* === LOGS === */
 .logBox {
 	display: none;

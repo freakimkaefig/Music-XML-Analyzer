@@ -12,7 +12,12 @@ MusicXMLAnalyzer.PatternController = function() {
 
 		patternModel = MusicXMLAnalyzer.PatternModel();
 		patternModel.init();
+		$(patternModel).on('patternChange', onPatternChange);
 
+	},
+
+	changeMode = function(val) {
+		patternModel.setCurrentMode(val);
 	},
 
 	changeNote = function(val) {
@@ -35,6 +40,10 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternModel.setCurrentNoteRythSpecial(val);
 	},
 
+	changeOctave = function(val) {
+		patternModel.setCurrentOctave(val);
+	},
+
 	addNote = function() {
 		patternModel.addNoteElement();
 	},
@@ -43,17 +52,23 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternModel.removeLastNoteElement();
 	},
 
+	onPatternChange = function(event, pattern) {
+		patternView.setPatternValue(JSON.stringify(pattern));
+	},
+
 	dispose = function() {
 		that = {};
 	};
 
 
 	that.init = init;
+	that.changeMode = changeMode;
 	that.changeNote = changeNote;
 	that.changeAccidential = changeAccidential;
 	that.changeDuration = changeDuration;
 	that.changeClef = changeClef;
 	that.changeSpecialRyth = changeSpecialRyth;
+	that.changeOctave = changeOctave;
 	that.addNote = addNote;
 	that.removeLastNote = removeLastNote;
 	that.dispose = dispose;
