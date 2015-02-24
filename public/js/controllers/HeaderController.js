@@ -2,12 +2,13 @@ MusicXMLAnalyzer.HeaderController = function(){
 
 	var that = {},
 
-	view,
+	view = null,
 
-	init = function(headerView){
+	init = function(){
 		console.info('MusicXMLAnalyzer.HeaderController.init');
 
-		view = headerView;
+		view = MusicXMLAnalyzer.HeaderView();
+		view.init();
 	};
 
 	that.init = init;

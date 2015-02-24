@@ -4,8 +4,6 @@ class ResultController extends BaseController {
 
 	public function getSearchResults() {
 
-		echo "<br><br><br><br>";
-
 		if (Session::has('pattern')) {
 			$pattern = Session::get('pattern');
 			Cache::put('pattern', $pattern, 60*24);
@@ -41,12 +39,15 @@ class ResultController extends BaseController {
 				}
 			}
 
-			$pattern = Cache::get('pattern');
+			$pattern = json_decode(Cache::get('pattern'));
 
 			$upload = Upload::find($id);
 			$xml = simplexml_load_file($upload->url);
 
 			$notes = $xml->xpath('//note');
+
+			// get start note
+			$startNote = $xml->xpath('//note[' . $result->occurences[0]->note . ']');
 
 			// get the part in which the start note is
 			$startPart = $xml->xpath('//note[' . $result->occurences[0]->note . ']/../..');
@@ -57,12 +58,33 @@ class ResultController extends BaseController {
 			// get the measure in which the end note is
 			$endMeasure = $xml->xpath('//note[' . ($result->occurences[0]->note + count($pattern) - 1) . ']/..');
 
+			$resultExtract = array();
+			$max = count($pattern) - 1;
+			$i = 0;
+			while ($i < $max) {
+				$resultExtract[$i] = $xml->xpath('//note[' . ($result->occurences[0]->note + $i) . ']');
+				// echo "ResultExtract " . $i . " | " . $max . " : <br>";
+				// var_dump($resultExtract[$i]);
+				if (isset($resultExtract[$i][0]->rest)) {
+					// echo "REST";
+					$max++;
+				}
+				$i++;
+			}
+			// echo "End while <hr>";
+			// $resultExtract[] = $startNote;
+
+			var_dump($resultExtract);
+			echo '<hr>';
 			var_dump($startPart);
 			echo '<hr>';
 			var_dump($startMeasure);
 			echo '<hr>';
 			var_dump($endMeasure);
 			echo '<hr>';
+			echo '<hr>';
+			echo '<hr>';
+
 
 		} else {
 			Redirect::route('pattern');
