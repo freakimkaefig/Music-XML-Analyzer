@@ -2,9 +2,14 @@
 
 @section('content')
 
-<?php var_dump(Cache::get('pattern')); ?>
-<?php echo"<br><br>";
-var_dump(Cache::get('results')); ?>
+<?php
+echo"<pre>";
+var_dump(Cache::get('pattern'));
+echo"</pre>";
+echo"<pre>";
+var_dump(Cache::get('results'));
+echo"</pre>";
+?>
 
 <div class="container">
 	<div class="row">
