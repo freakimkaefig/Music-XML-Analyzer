@@ -97,9 +97,6 @@ MusicXMLAnalyzer.UploadView = function(){
 
 		if (file.accepted) {
 			gotValidFile = true;
-			if (uploadCounter == 0) {
-				initLogMessages();
-			}
 			uploadCounter++;
 			addLogMessage('Uploaded ' + file.name);
 		}
@@ -136,7 +133,10 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	addLogMessage = function(msg) {
-		console.info("addLogMessage");
+		console.info("addLogMessage", msg);
+		if (uploadCounter == 0) {
+			initLogMessages();
+		}
 		$('#log' + (uploadMessageCounter - 3)).animate({
 			"marginTop": "-30px"
 		}, 200);

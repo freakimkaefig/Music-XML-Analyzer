@@ -40,9 +40,37 @@ class UploadController extends BaseController {
 		}
 	}
 
+	private function xslTransform($url) {
+		// $url = 'http://music-xml-analyzer.local/uploads/130/MahlerLiedVon_timewise_.xml';
+		$simpleXml = simplexml_load_file($url);
+		$timewise = $simpleXml->xpath("//score-timewise");
+		if ($timewise) {
+			$xslDoc = new DOMDocument();
+			$xslDoc->load(URL::to("timewise_to_partwise.xsl"));
+
+			$xmlDoc = new DOMDocument();
+			$xmlDoc->load($url);
+
+			$userId = Cookie::get('user_id');
+			$urlParts = explode('/', $url);
+			$filename = end($urlParts);
+			$path = public_path() . '\\uploads\\' . $userId . '\\' . $filename;
+
+			$proc = new XSLTProcessor();
+			$proc->importStylesheet($xslDoc);
+			$transformation = $proc->transformToURI($xmlDoc, $path);
+			if ($transformation) {
+				return $url;
+			} else {
+				exit;
+			}
+		}
+		return $url;
+	}
+
 	private function _saveFile($user, $url) {
 		$upload = new Upload;
-		$upload->url = $url;
+		$upload->url = $this->xslTransform($url);
 		$upload->user()->associate($user);
 		$upload->save();
 	}
