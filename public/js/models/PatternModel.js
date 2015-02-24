@@ -80,11 +80,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 			//adapt values for vexflow an put them into an array
 			
-
 			noteElements4VexFlow.push({
 				name: curName,
 				accidential: curAccidential,
 				duration: getDuration4Vexflow(curDuration),
+				durationIn64th: getDurationIn64thNotes (curDuration),
 				rythSpecial: curRythSpec,
 				octave: curOctave
 			});
@@ -111,7 +111,28 @@ MusicXMLAnalyzer.PatternModel = function(){
 			}
 
 		return duration4Vexflow;
-	}
+	},
+
+	getDurationIn64thNotes = function(noteName) {
+		//when 64th note
+		var durationIn64th = 1;
+
+			if ( curDuration == "whole") {
+				durationIn64th = 64;
+			} else if ( curDuration == "half") {
+				durationIn64th = 32;
+			} else if ( curDuration == "quarter") {
+				durationIn64th = 16;
+			} else if ( curDuration == "eighth") {
+				durationIn64th = 8;
+			} else if ( curDuration == "16th") {
+				durationIn64th = 4;
+			} else if ( curDuration == "32nd") {
+				durationIn64th = 2;
+			}
+
+		return durationIn64th;
+	},
 
 	addNoteElementByCanvasClick = function(note) {
 		console.log("model add note by canavs click : " + note);
@@ -134,7 +155,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	getAllVexFlowNoteElements = function() {
-		return noteElements;
+		return noteElements4VexFlow;
 	};
 
 	

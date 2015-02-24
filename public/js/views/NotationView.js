@@ -23,9 +23,6 @@ MusicXMLAnalyzer.NotationView = function(){
 		initCanvas();
 		setTopNoteValues();
 		registerListener();
-
-		
-
 	},
 
 
@@ -53,7 +50,11 @@ MusicXMLAnalyzer.NotationView = function(){
 	// display note elements on the canvas and get them from model
 	// via controller
 	renderNotes = function(vexflowNotes) {
-		console.log("render notes ", vexflowNotes);
+
+		for (var i = 0; i < vexflowNotes.length; i++) {
+			console.log ("dur: " + vexflowNotes[i].durationIn64th);
+		}
+		
 	},
 
 	renderVexFlowNotePreview = function(noteName) {
@@ -64,7 +65,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		  	new Vex.Flow.StaveNote({ keys: [noteName],
 		    						 duration: "q",
 		    						 auto_stem: true }),
-		  	];
+		  	]
 
 		var voice = new Vex.Flow.Voice({
 		    num_beats: 1,
