@@ -4,8 +4,11 @@ require 'SoundSequenzController.php';
 class PatternController extends BaseController {
 
 	public function getCreatePattern() {
+		Cache::forget('pattern');
+		Cache::forget('results');
+		Cache::forget('duration');
 		return View::make('createPattern');
-
+		
 		// TESTING
 		// $pattern = '[{"name":"c","accidential":"none","duration":"1/1","rythSpecial":"None","octave":"2"}]';
 		// return Redirect::route('patternSearch', array('pattern' => $pattern));

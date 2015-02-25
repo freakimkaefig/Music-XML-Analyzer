@@ -18,7 +18,7 @@ MusicXMLAnalyzer.ResultView = function(){
 			$patternValue = $('#patternValue');
 			$vexflowNotesValue = $('#vexflowNotesValue');
 			$durationValue = $('#durationValue');
-			initPatternCanvas(generateVexflowNotes(JSON.parse($patternValue.val())), JSON.parse($durationValue.val()));
+			initPatternCanvas(generateVexflowNotes(JSON.parse($patternValue.val())));
 		}
 	},
 
@@ -34,11 +34,11 @@ MusicXMLAnalyzer.ResultView = function(){
 		renderNotes(vexflowNotes, duration);
 	},
 
-	renderNotes = function(vexflowNotes, duration) {
+	renderNotes = function(notes) {
 		// console.info('MusicXMLAnalyzer.ResultView.renderNotes', canvas);
 		// console.info('MusicXMLAnalyzer.ResultView.renderNotes', context);
 		// console.info('MusicXMLAnalyzer.ResultView.renderNotes', stave);
-		console.info('MusicXMLAnalyzer.ResultView.renderNotes', vexflowNotes);
+		// console.info('MusicXMLAnalyzer.ResultView.renderNotes', notes.notes);
 		// console.info('MusicXMLAnalyzer.ResultView.renderNotes', duration);
 
 		// delete canvas
@@ -47,13 +47,13 @@ MusicXMLAnalyzer.ResultView = function(){
 		stave.setContext(context).draw();
 
 		var voice = new Vex.Flow.Voice({
-		    num_beats: duration,
+		    num_beats: notes.duration,
 		    beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
 
 		// Add notes to voice
-		voice.addTickables(vexflowNotes);
+		voice.addTickables(notes.notes);
 
 		// Format and justify the notes to 700 pixels
 		var formatter = new Vex.Flow.Formatter().
@@ -64,65 +64,51 @@ MusicXMLAnalyzer.ResultView = function(){
 		
 	},
 
+	getDurationIn64th = function(duration) {
+		switch (duration) {
+			case "whole":
+				return 64; break;
+			case "half":
+				return 32; break;
+			case "quarter":
+				return 16; break;
+			case "eighth":
+				return 8; break;
+			case "16th":
+				return 4; break;
+			case "32nd":
+				return 2; break;
+			case "64th":
+				return 1; break;
+			default:
+				return 0; break;
+		}
+	},
+
 	getVexflowDuration = function(duration, rest) {
 		switch (duration) {
 			case "whole":
-				if (rest) {
-					return "wr";
-				} else {
-					return "w";
-				}
-				break;
+				if (rest) { return "wr"; } else { return "w"; } break;
 			case "half":
-				if (rest) {
-					return "hr";
-				} else {
-					return "h";
-				}
-				break;
+				if (rest) { return "hr"; } else { return "h"; } break;
 			case "quarter":
-				if (rest) {
-					return "qr";
-				} else {
-					return "q";
-				}
-				break;
+				if (rest) { return "qr"; } else { return "q"; } break;
 			case "eighth":
-				if (rest) {
-					return "8r";
-				} else {
-					return "8";
-				}
-				break;
+				if (rest) { return "8r"; } else { return "8"; } break;
 			case "16th":
-				if (rest) {
-					return "16r";
-				} else {
-					return "16";
-				}
-				break;
+				if (rest) { return "16r"; } else { return "16"; } break;
 			case "32nd":
-				if (rest) {
-					return "32r";
-				} else {
-					return "32";
-				}
-				break;
+				if (rest) { return "32r"; } else { return "32"; } break;
 			case "64th":
-				if (rest) {
-					return "64r";
-				} else {
-					return "64";
-				}
-				break;
+				if (rest) { return "64r"; } else { return "64"; } break;
 			default:
-				return false;
-				break;
+				return false; break;
 		}
 	},
 
 	generateVexflowNotes = function(pattern) {
 		var notes = [];
+		duration = 0;
 
 		switch (pattern.type) {
 			case 0:
@@ -133,6 +119,7 @@ MusicXMLAnalyzer.ResultView = function(){
 						duration: "q",
 						auto_stem: true
 					}));
+					duration += 16;
 				}
 				break;
 
@@ -149,18 +136,20 @@ MusicXMLAnalyzer.ResultView = function(){
 							duration: getVexflowDuration(pattern.notes[i].pitch.type, false),
 							auto_stem: true
 						}));
+						duration += getDurationIn64th(pattern.notes[i].pitch.type);
 					} else if (pattern.notes[i].type == "rest") {
 						notes.push(new Vex.Flow.StaveNote({
 							keys: ["b/4"],
 							duration: getVexflowDuration(pattern.notes[i].duration, true),
 							auto_stem: true
 						}));
+						duration += getDurationIn64th(pattern.notes[i].duration);
 					}
 				}
 				break;
 		}
 		
-		return notes;
+		return { notes: notes, duration: duration };
 	};
 
 	that.init = init;

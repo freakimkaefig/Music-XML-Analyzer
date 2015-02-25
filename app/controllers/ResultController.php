@@ -15,16 +15,6 @@ class ResultController extends BaseController {
 			// return Redirect::route('pattern');
 		}
 
-		if (!Cache::has('vexflowNotes')) {
-			Debugbar::error('No vexflowNotes in cache!');
-			// return Redirect::route('pattern');
-		}
-
-		if (!Cache::has('duration')) {
-			Debugbar::error('No duration in cache!');
-			// return Redirect::route('pattern');
-		}
-
 		return View::make('results.list');
 	}
 
@@ -60,26 +50,26 @@ class ResultController extends BaseController {
 				$part_id = $result->occurences[$i]->part_id;
 
 				$startMeasure = $xml->xpath('//part[@id="' . $part_id . '"]//note[' . $start . ']/..');
-				// $startMeasure = $xml->xpath('//note[' . $start . ']/..');
-				$startMeasureNumber = (int)$startMeasure[0]['number'];
 				$endMeasure = $xml->xpath('//part[@id="' . $part_id . '"]//note[' . $end . ']/..');
-				// $endMeasure = $xml->xpath('//note[' . $end . ']/..');
-				$endMeasureNumber = (int)$endMeasure[0]['number'];
-				for ($j = $startMeasureNumber; $j <= $endMeasureNumber; $j++) {
-					// echo $i . " | " . $j;
-					// echo "<br>";
-					$resultExtracts[$i][] = $xml->xpath('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]');
-				}
+				// $startMeasure = $xml->xpath('//note[' . $start . ']/..');
+				// $startMeasureNumber = (int)$startMeasure['number'];
+				// // $endMeasure = $xml->xpath('//note[' . $end . ']/..');
+				// $endMeasureNumber = (int)$endMeasure['number'];
+				// for ($j = $startMeasureNumber; $j <= $endMeasureNumber; $j++) {
+				// 	// echo $i . " | " . $j;
+				// 	// echo "<br>";
+				// 	$resultExtracts[$i][] = $xml->xpath('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]');
+				// }
 			}
 
-			// echo "<pre>";
-			// // var_dump($endMeasure);
+			echo "<pre>";
+			var_dump($result);
 			// var_dump($resultExtracts);
-			// echo "</pre>";
+			echo "</pre>";
 			// echo "<hr>";
 
-			return View::make('results.detail')
-						->with('resultExtracts', $resultExtracts);
+			// return View::make('results.detail')
+						// ->with('resultExtracts', $resultExtracts);
 		} else {
 			Redirect::route('pattern');
 		}

@@ -106,7 +106,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		    						 auto_stem: true }));
 
 		}
-		$(that).trigger('patternChange', [noteElements, getAllVexFlowNoteElements(), completeDurationIn64th]);
+		$(that).trigger('patternChange', [noteElements]);
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements(), completeDurationIn64th]);
 	},
 
