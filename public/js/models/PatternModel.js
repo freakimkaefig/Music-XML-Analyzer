@@ -13,6 +13,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	curRythSpec = null,
 	curOctave = null,
 	VEXFLOW_REST_SIGN = "r",
+	completeDurationIn64th = 0,
 
 	init = function(){
 		console.log("pattern model");
@@ -54,7 +55,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	addNoteElement = function() {
-		var completeDurationIn64th = 0;
+		completeDurationIn64th = 0;
 
 		if (!curName) {
 			alert("name missing");
@@ -156,10 +157,15 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	removeLastNoteElement = function() {
 	    console.log("model: remove last note button; function missing");
+	    console.log(noteElements4VexFlow);
 	},
 
 	getCurrentMode = function() {
 		return curMode;
+	},
+
+	getCompleteDurationIn64th = function() {
+		return completeDurationIn64th;
 	},
 
 	getAllNoteElements = function() {
@@ -185,6 +191,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.removeLastNoteElement = removeLastNoteElement;
 	that.getCurrentMode = getCurrentMode;
 	that.getAllNoteElements = getAllNoteElements;
+	that.getAllVexFlowNoteElements = getAllVexFlowNoteElements;
+	that.getCompleteDurationIn64th = getCompleteDurationIn64th;
 
 	return that;
 }

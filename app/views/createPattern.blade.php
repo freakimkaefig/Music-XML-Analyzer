@@ -35,7 +35,7 @@
 		<button type="button" class="btn btn-default btn-note">f</button>
 		<button type="button" class="btn btn-default btn-note">g</button>
 		<button type="button" class="btn btn-default btn-note">a</button>
-		<button type="button" class="btn btn-default btn-note">h</button>
+		<button type="button" class="btn btn-default btn-note">b</button>
 		<button type="button" class="btn btn-default btn-note">break</button>
 	</div>
 	<div class="col-xs-6">
