@@ -79,7 +79,11 @@ MusicXMLAnalyzer.NotationView = function(){
 
   		var vexFlowNotes = patternModel.getAllVexFlowNoteElements();
   		var completeDurationIn64th = patternModel.getCompleteDurationIn64th();
-  		// Create one note
+  		
+
+  		//STOP
+  		//TODO duration anpassen auf aktuell ausgewählte
+  		//aufruf der Konvertierungsmethoden vom model
 		vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName],
 		    						 duration: "q",
 		    						 auto_stem: true }));

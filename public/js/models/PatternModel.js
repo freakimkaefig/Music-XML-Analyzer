@@ -200,8 +200,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return noteElements4VexFlow;
 	};
 
-	
-	
 	that.init = init;
 	that.getCurrentNoteName = getCurrentNoteName;
 	that.getCurrentAccidential = getCurrentAccidential;
