@@ -140,13 +140,20 @@ class SoundSequenzController {
 				} //end of foreach(notes as note){blabla}
 				
 			}
-			//push result
-			array_push(self::$results, self::$result);
+			// check if result->occ is empty
+			if(!empty(self::$result->occurences)){
+				//push result
+				array_push(self::$results, self::$result);
+			}
 
 		});
 		return self::$results;
 // echo "<br>";
 // 		var_dump(self::$results);
+// 		if(empty(self::$results)){
+
+// 		echo "result is empty!";
+// 		}
 // echo "<hr>";
 		// bla;
 	}
