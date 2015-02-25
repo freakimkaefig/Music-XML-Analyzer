@@ -2,24 +2,20 @@
 
 @section('content')
 
-<?php
-echo"<pre>";
-var_dump(Cache::get('pattern'));
-echo"</pre>";
-echo"<pre>";
-var_dump(Cache::get('results'));
-echo"</pre>";
-?>
+
+{{ Form::hidden('pattern', json_encode(Cache::get('pattern')), array('id' => 'patternValue')) }}
+{{ Form::hidden('duration', json_encode(Cache::get('duration')), array('id' => 'durationValue')) }}
 
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
+			<canvas id="patternCanvas" width="950" height="186"></canvas>
 			<h1 class="text-center">Search results</h1>
-		<br><br>
-		<p>Results:</p>
 		</div>
 	</div>
 
+	<?php $results = Cache::get('results'); ?>
+	@if (count($results))
 	<div class="thead">
 		<div class="row">
 			<div class="col-xs-7 col-sm-10 text-left">
@@ -32,15 +28,25 @@ echo"</pre>";
 	</div>
 	<hr>
 	<div class="tbody">
-		<?php $results = Cache::get('results'); ?>
-		@foreach($results as $result)
-			@include('results.item', array('result' => $result))
-		@endforeach
+			@foreach($results as $result)
+				@include('results.item', array('result' => $result))
+			@endforeach
 	</div>
+	@else
+		<p class="no-results text-center">No results found for your pattern!</p>
+	@endif
 
 	<div class="row">
 		<div class="col-xs-12">
-			<canvas width="700" height="200"></canvas>
+			<h2>DEBUG</h2>
+			<?php
+			echo"<pre>";
+			var_dump(Cache::get('pattern'));
+			echo"</pre>";
+			echo"<pre>";
+			var_dump(Cache::get('results'));
+			echo"</pre>";
+			?>
 		</div>
 	</div>
 </div>

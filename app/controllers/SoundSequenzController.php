@@ -2,6 +2,7 @@
 
 class SoundSequenzController {
 
+	static $patternIntervalArray;
 	static $result;
 	static $xmlIntervalArray; 
 	static $xmlPositionArray;

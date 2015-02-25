@@ -61,8 +61,11 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternModel.removeLastNoteElement();
 	},
 
-	onPatternChange = function(event, pattern) {
+	onPatternChange = function(event, pattern, vexflowNotes, duration) {
+		console.log(pattern, vexflowNotes, duration);
 		patternView.setPatternValue(JSON.stringify(pattern));
+		patternView.setPatternForVexflow(JSON.stringify(vexflowNotes));
+		patternView.setDurationValue(JSON.stringify(duration));
 	},
 
 	dispose = function() {

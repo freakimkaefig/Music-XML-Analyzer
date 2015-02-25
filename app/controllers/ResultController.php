@@ -3,25 +3,26 @@
 class ResultController extends BaseController {
 
 	public function getSearchResults() {
+		$time = 60*24;
 
-		if (Session::has('pattern')) {
-			$pattern = Session::get('pattern');
-			Cache::put('pattern', $pattern, 60*24);
-		} elseif (Cache::has('pattern')) {
-			echo "Retrieved pattern from cache!\n";
-			$pattern = Cache::get('pattern');
-		} else {
-			return Redirect::route('pattern');
+		if (!Cache::has('pattern')) {
+			Debugbar::error('No pattern in cache!');
+			// return Redirect::route('pattern');
 		}
 
-		if (Session::has('results')) {
-			$results = Session::get('results');
-			Cache::put('results', $results, 60*24);
-		} elseif (Cache::has('results')) {
-			echo "Retrieved results from cache!\n";
-			$results = Cache::get('results');
-		} else {
-			return Redirect::route('pattern');
+		if (!Cache::has('results')) {
+			Debugbar::error('No results in cache!');
+			// return Redirect::route('pattern');
+		}
+
+		if (!Cache::has('vexflowNotes')) {
+			Debugbar::error('No vexflowNotes in cache!');
+			// return Redirect::route('pattern');
+		}
+
+		if (!Cache::has('duration')) {
+			Debugbar::error('No duration in cache!');
+			// return Redirect::route('pattern');
 		}
 
 		return View::make('results.list');

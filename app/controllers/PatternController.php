@@ -11,7 +11,9 @@ class PatternController extends BaseController {
 		// return Redirect::route('patternSearch', array('pattern' => $pattern));
 	}
 
-	public function postPatternSearch() {		
+	public function postPatternSearch() {
+		$time = 60*24;
+
 		$pattern = Input::get('pattern');
 		$pattern = json_decode($pattern);
 
@@ -45,12 +47,15 @@ class PatternController extends BaseController {
 		// 		)
 		// 	)
 		// );
-		Cache::put('pattern', $pattern, 60*24);
-		Cache::put('results', $results, 60*24);
+		Cache::put('pattern', $pattern, $time);
+		Cache::put('results', $results, $time);
 
-		return Redirect::route('searchResults')
-			->with('pattern', $pattern)
-			->with('results', $results);
+		$duration = Input::get('duration');
+		$duration = json_decode($duration);
+		Debugbar::info($duration);
+		Cache::put('duration', $duration, $time);
+
+		return Redirect::route('searchResults');
 	}
 
 	public static function getInterval($n){

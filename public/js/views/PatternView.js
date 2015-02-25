@@ -14,7 +14,8 @@ MusicXMLAnalyzer.PatternView = function(){
 	$removeNoteButton = $("#btn-remove-note"),
 
 	$patternValue = $('#patternValue'),
-	$typeValue = $('#typeValue'),
+	$vexflowNotesValue = $('#vexflowNotesValue'),
+	$durationValue = $('#durationValue'),
 
 
 	init = function() {
@@ -36,27 +37,27 @@ MusicXMLAnalyzer.PatternView = function(){
 		$removeNoteButton.on("click", onRemoveButtonClick);
 
 		// soundSequence pattern:
-		$patternValue.val(JSON.stringify(
-			{
-				type: 0,
-				notes: [
-					{
-						pitch: {
-							step : "C",
-							alter : 0,
-							octave : 3
-						}
-					},
-					{
-						pitch: {
-							step: "C",
-							alter: 0,
-							octave : 4
-						}
-					}
-				]
-			}
-		));
+		// $patternValue.val(JSON.stringify(
+		// 	{
+		// 		type: 0,
+		// 		notes: [
+		// 			{
+		// 				pitch: {
+		// 					step: "B",
+		// 					alter: 0,
+		// 					octave: 5
+		// 				}
+		// 			},
+		// 			{
+		// 				pitch: {
+		// 					step: "B",
+		// 					alter: 0,
+		// 					octave: 5
+		// 				}
+		// 			}
+		// 		]
+		// 	}
+		// ));
 		// melody pattern:
 		$patternValue.val(JSON.stringify(
 			{
@@ -65,19 +66,20 @@ MusicXMLAnalyzer.PatternView = function(){
 					{
 						type: "note",
 						pitch: {
-							step: "B",
-							type: "whole",
+							step: "C",
+							type: "half",
 							alter: 0,
-							octave: 5
+							octave: 3
 						}
 					},
-					{ 
+					{
 						type: "rest",
 						duration: "whole"
 					}
 				]
 			}
 		));
+		$durationValue.val(JSON.stringify(96))
 	},
 
 	onModeButtonClick = function(event) {
@@ -124,6 +126,14 @@ MusicXMLAnalyzer.PatternView = function(){
 		$patternValue.val(pattern);
 	},
 
+	setPatternForVexflow = function(vexflowNotes) {
+		$vexflowNotesValue.val(vexflowNotes);
+	},
+	
+	setDurationValue = function(duration) {
+		$durationValue.val(duration);
+	},
+
 	onRemoveButtonClick = function(event) {
 		// console.log("remove btn");
 		patternController.removeLastNote();
@@ -131,6 +141,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	that.init = init;
 	that.setPatternValue = setPatternValue;
+	that.setPatternForVexflow = setPatternForVexflow;
+	that.setDurationValue = setDurationValue;
 
 	return that;
 }

@@ -33,7 +33,7 @@ MusicXMLAnalyzer.ApplicationController = function() {
 			patternController.init();
 		}
 
-		if (Route.check('/results/detail\/[0-9]*')) {
+		if (Route.check('/results')) {
 			resultController = MusicXMLAnalyzer.ResultController();
 			resultController.init();
 		}

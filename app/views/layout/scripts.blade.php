@@ -10,7 +10,7 @@
 {{ HTML::script('libs/typed.js/js/typed.js') }}
 
 <!-- Vexflow -->
-{{ HTML::script('libs/vexflow/vexflow-min.js') }}
+{{ HTML::script('libs/vexflow/vexflow-debug.js') }}
 
 <!-- Dropzone -->
 {{ HTML::script('libs/dropzone-4.0.0/dist/min/dropzone.min.js') }}

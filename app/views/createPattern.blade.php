@@ -10,6 +10,7 @@
 
 {{ Form::open(array('route' => 'patternSearch')) }}
 {{ Form::hidden('pattern', '', array('id' => 'patternValue')) }}
+{{ Form::hidden('duration', '', array('id' => 'durationValue')) }}
 <div class="row">
 	<div class="col-xs-4">
 		<p>Choose Mode: </p>
