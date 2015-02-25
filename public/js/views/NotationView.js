@@ -7,61 +7,104 @@ MusicXMLAnalyzer.NotationView = function(){
 	canvas = null,
 	canvasLeft = null,
 	canvasTop = null,
+	renderer = null,
+	stave = null,
 
 	paddingTopStaves = 0,
 	spaceBetweenLines = 0,
 
 	topValsNoteElements = null,
-
 	
 
 	init = function() {
 		console.log("notation view");
+		patternController = MusicXMLAnalyzer.PatternController();
+
 		initCanvas();
-		addStaveElements();
-		renderStaveElements();
-		//addOnStaveClickListener();
 		setTopNoteValues();
-		
-		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
+		registerListener();
 	},
+
 
 	/* This method inits canvas and context and sets canvas top and left to variable*/
 	initCanvas = function() {
+		// canvas = document.getElementById('myCanvas');
 		canvas = document.getElementById('myCanvas');
 	    canvasLeft = canvas.offsetLeft;
 	    canvasTop = canvas.offsetTop;
 
-	    context = canvas.getContext('2d');
+	    // context = canvas.getContext('2d');
+  		renderer = new Vex.Flow.Renderer(canvas,Vex.Flow.Renderer.Backends.CANVAS);
+
+  		context = renderer.getContext();
+  		stave = new Vex.Flow.Stave(10, 0, 700);
+  		stave.addClef("treble").setContext(context).draw();
+
 	},
 
-	/* This method adds the 5 note lines to canvas */
-	addStaveElements = function() {
-
-		paddingTopStaves = (canvas.height/14) * 5;
-		spaceBetweenLines = (canvas.height/14);
-		
-		console.log("c h: " + spaceBetweenLines);
-
-		for(var i = 0; i < 5; i++) {
-			staveElements.push({
-			    staveId: i,
-			    colour: '#000000',
-			    width: canvas.width,
-			    height: 1.5,
-			    top: paddingTopStaves + (spaceBetweenLines * i),
-			    left: 0
-			});	
-		}
-		
+	registerListener = function() {
+		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
+		$("#myCanvas").on("click", onMouseClickCanvas);
 	},
 
-	/* this method renders the 5 staves on the canvas by getting them from the staveElements Array */
-	renderStaveElements = function() {
-		staveElements.forEach(function(element) {
-		    context.fillStyle = element.colour;
-		    context.fillRect(element.left, element.top, element.width, element.height);
+	// display note elements on the canvas and get them from model
+	// via controller
+	renderNotes = function(vexflowNotes, completeDurationIn64th) {
+		//console.log("vex notes: ", vexflowNotes);
+
+		// delete canvas
+		context.clearRect(0, 0, canvas.width, canvas.height);
+
+		stave.setContext(context).draw();
+
+		var voice = new Vex.Flow.Voice({
+		    num_beats: completeDurationIn64th,
+		    beat_value: 64,
+		    resolution: Vex.Flow.RESOLUTION
 		});
+
+		// Add notes to voice
+		voice.addTickables(vexflowNotes);
+
+		// Format and justify the notes to 700 pixels
+		var formatter = new Vex.Flow.Formatter().
+		    joinVoices([voice]).format([voice], 700);
+
+		// Render voice
+		voice.draw(context, stave);
+		
+	},
+
+	renderVexFlowNotePreview = function(noteName) {
+		stave.setContext(context).draw();
+
+  		// Create one note
+		var notes = [
+		  	new Vex.Flow.StaveNote({ keys: [noteName],
+		    						 duration: "q",
+		    						 auto_stem: true }),
+		  	]
+
+		var voice = new Vex.Flow.Voice({
+		    num_beats: 1,
+		    beat_value: 4,
+		    resolution: Vex.Flow.RESOLUTION
+		});
+
+		// Add notes to voice
+		voice.addTickables(notes);
+
+		// Format and justify the notes to 700 pixels
+		var formatter = new Vex.Flow.Formatter().
+		    joinVoices([voice]).format([voice], 700);
+
+		// Render voice
+		voice.draw(context, stave);
+	},
+
+	onNotationViewUpdate = function(event, notes) {
+		console.log("view triggered");
+		//console.log("notes: " + notes);
 	},
 
 	/* this methods calcs the position of the notes */
@@ -103,16 +146,24 @@ MusicXMLAnalyzer.NotationView = function(){
 
     	//check if cursor is hover a existing note position
     	if (checkHorizontalArea(y)) {		
+    		// log current hovering note
     		console.log("current note preview = " + checkHorizontalArea(y));
-    		//delete canvas
+
+    		// delete canvas
     		context.clearRect(0, 0, canvas.width, canvas.height);
-    		//redraw the 5 staves
-    		//TODO add clef
-			renderStaveElements();
-			//render a preview of a note element
-			//get top val with the key from checkHorizontalArea
-			renderNotePreview(checkHorizontalArea(y), topValsNoteElements[checkHorizontalArea(y)]);
+
+    		// call method to render note preview with given noteName
+    		renderVexFlowNotePreview(checkHorizontalArea(y));
+
     	}
+
+	},
+
+	/* This method handels the mouseover event of canvas */
+	onMouseClickCanvas = function(event) {
+
+		console.log("on canvas click");
+		patternController.addNoteByCanvasClick("dummy/Note");
 
 	},
 
@@ -122,143 +173,60 @@ MusicXMLAnalyzer.NotationView = function(){
 		var horizontalVal = null;
 
 		if (y > spaceBetweenLines * 1.25 && y <= spaceBetweenLines * 1.75) {
-			horizontalVal = "f3";
+			horizontalVal = "f/6";
 		} else if (y > spaceBetweenLines * 1.75 && y <= spaceBetweenLines * 2.25) {
-			horizontalVal = "e3";
+			horizontalVal = "e/6";
 		} else if (y > spaceBetweenLines * 2.25 && y <= spaceBetweenLines * 2.75) {
-			horizontalVal = "d3";
+			horizontalVal = "d/6";
 		} else if (y > spaceBetweenLines * 2.75 && y <= spaceBetweenLines * 3.25) {
-			horizontalVal = "c3";
+			horizontalVal = "c/6";
 		} else if (y > spaceBetweenLines * 3.25 && y <= spaceBetweenLines * 3.75) {
-			horizontalVal = "h2";
+			horizontalVal = "b/5";
 		} else if (y > spaceBetweenLines * 3.75 && y <= spaceBetweenLines * 4.25) {
-			horizontalVal = "a2";
+			horizontalVal = "a/5";
 		} else if (y > spaceBetweenLines * 4.25 && y <= spaceBetweenLines * 4.75) {
-			horizontalVal = "g2";
+			horizontalVal = "g/5";
 		} else if (y > spaceBetweenLines * 4.75 && y <= spaceBetweenLines * 5.25) {
-			horizontalVal = "f2";
+			horizontalVal = "f/5";
 		} else if (y > spaceBetweenLines * 5.25 && y <= spaceBetweenLines * 5.75) {
-			horizontalVal = "e2";
+			horizontalVal = "e/5";
 		} else if (y > spaceBetweenLines * 5.75 && y <= spaceBetweenLines * 6.25) {
-			horizontalVal = "d2";
+			horizontalVal = "d/5";
 		} else if (y > spaceBetweenLines * 6.25 && y <= spaceBetweenLines * 6.75) {
-			horizontalVal = "c2";
+			horizontalVal = "c/5";
 		} else if (y > spaceBetweenLines * 6.75 && y <= spaceBetweenLines * 7.25) {
-			horizontalVal = "h1";
+			horizontalVal = "b/4";
 		} else if (y > spaceBetweenLines * 7.25 && y <= spaceBetweenLines * 7.75) {
-			horizontalVal = "a1";
+			horizontalVal = "a/4";
 		} else if (y > spaceBetweenLines * 7.75 && y <= spaceBetweenLines * 8.25) {
-			horizontalVal = "g1";
+			horizontalVal = "g/4";
 		} else if (y > spaceBetweenLines * 8.25 && y <= spaceBetweenLines * 8.75) {
-			horizontalVal = "f1";
+			horizontalVal = "f/4";
 		} else if (y > spaceBetweenLines * 8.75 && y <= spaceBetweenLines * 9.25) {
-			horizontalVal = "e1";
+			horizontalVal = "e/4";
 		} else if (y > spaceBetweenLines * 9.25 && y <= spaceBetweenLines * 9.75) {
-			horizontalVal = "d1";
+			horizontalVal = "d/4";
 		} else if (y > spaceBetweenLines * 9.75 && y <= spaceBetweenLines * 10.25) {
-			horizontalVal = "c1";
+			// eigentlich ein c1
+			horizontalVal = "c/4";
 		} else if (y > spaceBetweenLines * 10.25 && y <= spaceBetweenLines * 10.75) {
-			horizontalVal = "h";
+			horizontalVal = "b/3";
 		} else if (y > spaceBetweenLines * 10.75 && y <= spaceBetweenLines * 11.25) {
-			horizontalVal = "a";
+			horizontalVal = "a/3";
 		} else if (y > spaceBetweenLines * 11.25 && y <= spaceBetweenLines * 11.75) {
-			horizontalVal = "g";
+			horizontalVal = "g/3";
 		} else if (y > spaceBetweenLines * 11.75 && y <= spaceBetweenLines * 12.25) {
-			horizontalVal = "f";
+			horizontalVal = "f/3";
 		} else if (y > spaceBetweenLines * 12.25 && y <= spaceBetweenLines * 12.75) {
-			horizontalVal = "e";
+			horizontalVal = "e/3";
 		}
 		return horizontalVal;
 
-	},
-
-	addOnStaveClickListener = function() {
-		
-		canvas.addEventListener('click', function(event) {
-		    var x = event.pageX - canvasLeft,
-		        y = event.pageY - canvasTop;
-		    	console.log(x, y);
-		    staveElements.forEach(function(element) {
-		        console.log("top" )
-		        if (y > element.top && y < element.top + element.height && x > element.left && x < element.left + element.width) {
-		            //alert('clicked an staveElement');
-		            console.log("got it " + element.staveId);
-
-		            addNote(element.top, calcNotePositionHorizontal(x));
-		            
-		            renderNoteElements();		            
-		        }
-		    });
-
-		}, false);
-	},
-
-	// display note elements on the canvas and get them from model
-	renderNoteElements = function() {
-		noteElements.forEach(function(element) {
-		    context.fillStyle = element.colour;
-		    context.fillRect(element.left, element.top, element.width, element.height);
-		});
-	},
-
-	/* this method display note elements on the canvas in grey, just as preview */
-	renderNotePreview = function(note, top) {
-	    // context.fillStyle = "#d3d3d3";
-	    // context.fillRect(100, top - 7.5, 15, 15);
-	    var imageObj = new Image();
-	    
-	    if (note == "a1" || note == "g1" || note == "f1" || note == "e1"
-	    	|| note == "d1" || note == "c1" || note == "h" || note == "a" || note == "g"
-	    	|| note == "f" || note == "e") {
-	    	imageObj.onload = function() {
-        	//TODO values in relation to canvas size
-        		context.drawImage(imageObj, 10, top - 25, 20, 30);
-	    	};
-	    	imageObj.src = 'img/pattern/test_pic_quarter_note_notestem_downward.png';
-	    } else {
-	    	imageObj.onload = function() {
-        	//TODO values in relation to canvas size
-        		context.drawImage(imageObj, 10, top - 4, 20, 30);
-	    	};
-	    	imageObj.src = 'img/pattern/test_pic_quarter_note_notestem_upward.png';
-	    }
-	},
-	
-
-	addNote = function(topVal, leftVal) {
-		noteElements.push({
-		    colour: '#000000',
-		    width: 20,
-		    height: 20,
-		    top: topVal - 6,
-		    left: leftVal
-		});	
-	},
-	
-
-	calcNotePositionHorizontal = function(mouseX) {
-		var staveParts = canvas.width / 4;
-		var notePosHorizontal = 0;
-
-		if (mouseX < staveParts * 1) {
-			notePosHorizontal = staveParts / 2; 	
-		}
-		else if (mouseX < staveParts * 2 && mouseX > staveParts * 1){
-			notePosHorizontal = staveParts * 1.5;
-		}
-		else if (mouseX < staveParts * 3 && mouseX > staveParts * 2){
-			notePosHorizontal = staveParts * 2.5;
-		}
-		else if (mouseX < staveParts * 4 && mouseX > staveParts * 3){
-			notePosHorizontal = staveParts * 3.5;
-		}
-		return notePosHorizontal;
 	};
-
 	
 	
 	that.init = init;
-	that.calcNotePositionHorizontal = calcNotePositionHorizontal;
+	that.renderNotes = renderNotes;
 
 	return that;
 }

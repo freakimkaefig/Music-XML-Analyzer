@@ -22,7 +22,7 @@
 </div>
 
 <!-- HINT: if theres a column arround you get problems with mouse x and y-->
-<canvas id="myCanvas" width="970px" height="168px" style="border:1px solid #000000;">
+<canvas id="myCanvas" width="700" height="120" style="border:1px solid #000000;">
 </canvas>
 
 <div class="row">
@@ -42,8 +42,8 @@
 		<p></p>
 		<p>Accidential: </p>
 		<button type="button" class="btn btn-default btn-accidential">none</button>
-		<button type="button" class="btn btn-default btn-accidential">sharp</button>
-		<button type="button" class="btn btn-default btn-accidential">flat</button>
+		<button type="button" class="btn btn-default btn-accidential">#</button>
+		<button type="button" class="btn btn-default btn-accidential">b</button>
 	</div>
 </div>
 
@@ -51,13 +51,13 @@
 	<div class="col-xs-6">
 		<p></p>
 		<p>Duration: </p>
-		<button type="button" class="btn btn-default btn-duration">1/1</button>
-		<button type="button" class="btn btn-default btn-duration">1/2</button>
-		<button type="button" class="btn btn-default btn-duration">1/4</button>
-		<button type="button" class="btn btn-default btn-duration">1/8</button>
-		<button type="button" class="btn btn-default btn-duration">1/16</button>
-		<button type="button" class="btn btn-default btn-duration">1/32</button>
-		<button type="button" class="btn btn-default btn-duration">1/64</button>
+		<button type="button" class="btn btn-default btn-duration">whole</button>
+		<button type="button" class="btn btn-default btn-duration">half</button>
+		<button type="button" class="btn btn-default btn-duration">quarter</button>
+		<button type="button" class="btn btn-default btn-duration">eighth</button>
+		<button type="button" class="btn btn-default btn-duration">16th</button>
+		<button type="button" class="btn btn-default btn-duration">32nd</button>
+		<button type="button" class="btn btn-default btn-duration">64th</button>
 	</div>
 	<div class="col-xs-6">
 		<p></p>
@@ -78,11 +78,11 @@
 		<p></p>
 		<p>Octave: </p>
 	    <select id="select-octave" class="form-control">
-		  <option>1</option>
 		  <option>2</option>
 		  <option>3</option>
 		  <option>4</option>
 		  <option>5</option>
+		  <option>6</option>
 		</select>
 	</div>
 </div>

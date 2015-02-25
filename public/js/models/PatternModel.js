@@ -2,6 +2,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	var that = {},
 	noteElements = [],
+	noteElements4VexFlow = [],
 	//noteElement = null,
 
 	curMode = null,
@@ -53,6 +54,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	addNoteElement = function() {
+		var completeDurationIn64th = 0;
+
 		if (!curName) {
 			alert("name missing");
 		} else if (!curAccidential) {
@@ -67,7 +70,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 			alert("octave missing");
 		}
 		else {
-			console.log("note added");
 
 			noteElements.push({
 				name: curName,
@@ -76,9 +78,85 @@ MusicXMLAnalyzer.PatternModel = function(){
 				rythSpecial: curRythSpec,
 				octave: curOctave
 			});
+
+			console.log("noteElements: ", noteElements);
+			
+
+			for (var i = 0; i < noteElements.length; i++) {
+				//console.log("d64 of " + i + " " + getDurationIn64thNotes(noteElements[i].duration));
+				completeDurationIn64th += getDurationIn64thNotes(noteElements[i].duration);
+			}
+
+			console.log("complete dur: " + completeDurationIn64th);
+			//adapt values for vexflow an put them into an array
+			
+			/*
+			noteElements4VexFlow.push({
+				name: curName,
+				accidential: curAccidential,
+				duration: getDuration4Vexflow(curDuration),
+				durationIn64th: getDurationIn64thNotes (curDuration),
+				rythSpecial: curRythSpec,
+				octave: curOctave
+			});
+			*/
+
+			noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "/" + curOctave],
+		    						 duration: getDuration4Vexflow(curDuration),
+		    						 auto_stem: true }));
+
 		}
 		$(that).trigger('patternChange', [noteElements]);
-		console.log(noteElements)
+		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements(), completeDurationIn64th]);
+	},
+
+	getDuration4Vexflow = function(duration) {
+		var duration4Vexflow = "q";
+
+			if ( duration == "whole") {
+				duration4Vexflow = "w";
+			} else if ( duration == "half") {
+				duration4Vexflow = "h";
+			} else if ( duration == "eighth") {
+				duration4Vexflow = "8";
+			} else if ( duration == "16th") {
+				duration4Vexflow = "16";
+			} else if ( duration == "32nd") {
+				duration4Vexflow = "32";
+			} else if ( duration == "64th") {
+				duration4Vexflow = "64";
+			}
+
+		return duration4Vexflow;
+	},
+
+	getDurationIn64thNotes = function(noteDuration) {
+		//when 64th note
+		var durationIn64th = 1;
+
+			if ( noteDuration == "whole") {
+				durationIn64th = 64;
+			} else if ( noteDuration == "half") {
+				durationIn64th = 32;
+			} else if ( noteDuration == "quarter") {
+				durationIn64th = 16;
+			} else if ( noteDuration == "eighth") {
+				durationIn64th = 8;
+			} else if ( noteDuration == "16th") {
+				durationIn64th = 4;
+			} else if ( noteDuration == "32nd") {
+				durationIn64th = 2;
+			}
+
+		return durationIn64th;
+	},
+
+	addNoteElementByCanvasClick = function(note) {
+		console.log("model add note by canavs click : " + note);
+		//split string at "/" to get noteName and ovtave
+		var noteContainer = note.split("/");
+		console.log("part1: " + noteContainer[0]);
+		console.log("part2: " + noteContainer[1]);
 	},
 
 	removeLastNoteElement = function() {
@@ -91,6 +169,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	getAllNoteElements = function() {
 		return noteElements;
+	},
+
+	getAllVexFlowNoteElements = function() {
+		return noteElements4VexFlow;
 	};
 
 	
@@ -104,6 +186,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.setCurrentNoteRythSpecial = setCurrentNoteRythSpecial;
 	that.setCurrentOctave = setCurrentOctave;
 	that.addNoteElement = addNoteElement;
+	that.addNoteElementByCanvasClick = addNoteElementByCanvasClick;
 	that.removeLastNoteElement = removeLastNoteElement;
 	that.getCurrentMode = getCurrentMode;
 	that.getAllNoteElements = getAllNoteElements;
