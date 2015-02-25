@@ -3,46 +3,55 @@ MusicXMLAnalyzer.ResultView = function(){
 	var that = {},
 
 	$patternValue = null,
-	$vexflowNotesValue = null,
-	$durationValue = null,
 
 	patternCanvas = null,
-	renderer = null,
-	context = null,
-	stave = null,
+
+	$carousel = null,
 
 	init = function(){
 		console.info('MusicXMLAnalyzer.ResultView.init');
 
 		if ($('#patternCanvas').length) {
 			$patternValue = $('#patternValue');
-			$vexflowNotesValue = $('#vexflowNotesValue');
-			$durationValue = $('#durationValue');
 			initPatternCanvas(generateVexflowNotes(JSON.parse($patternValue.val())));
+		}
+
+		if ($('#extract-carousel').length) {
+			$carousel = $('#extract-carousel');
+			initCanvasResults();
 		}
 	},
 
-	initPatternCanvas = function(vexflowNotes, duration) {
+	initCanvasResults = function() {
+		console.info('MusicXMLAnalyzer.ResultView.initCanvasResults');
+		$carousel.find('.item').each(function(index, element) {
+			var notes = generateVexflowNotes(JSON.parse($(element).find('input.notes').val()));
+			var canvas = document.getElementById('canvas' + index);
+			var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
+			var context = renderer.getContext();
+			var stave = new Vex.Flow.Stave(10, 0, 700);
+			stave.addClef("treble").setContext(context).draw();
+
+			renderNotes(notes, canvas, renderer, context, stave);
+			console.log(index, notes);
+		});
+	},
+
+	initPatternCanvas = function(vexflowNotes) {
 		// console.info('MusicXMLAnalyzer.ResultView.initPatternCanvas');
 		patternCanvas = document.getElementById('patternCanvas');
 		
-		renderer = new Vex.Flow.Renderer(patternCanvas, Vex.Flow.Renderer.Backends.CANVAS);
-		context = renderer.getContext();
-		stave = new Vex.Flow.Stave(10, 0, 700);
+		var renderer = new Vex.Flow.Renderer(patternCanvas, Vex.Flow.Renderer.Backends.CANVAS);
+		var context = renderer.getContext();
+		var stave = new Vex.Flow.Stave(10, 0, 700);
 		stave.addClef("treble").setContext(context).draw();
 		
-		renderNotes(vexflowNotes, duration);
+		renderNotes(vexflowNotes, patternCanvas, renderer, context, stave);
 	},
 
-	renderNotes = function(notes) {
-		// console.info('MusicXMLAnalyzer.ResultView.renderNotes', canvas);
-		// console.info('MusicXMLAnalyzer.ResultView.renderNotes', context);
-		// console.info('MusicXMLAnalyzer.ResultView.renderNotes', stave);
-		// console.info('MusicXMLAnalyzer.ResultView.renderNotes', notes.notes);
-		// console.info('MusicXMLAnalyzer.ResultView.renderNotes', duration);
-
+	renderNotes = function(notes, canvas, renderer, context, stave) {
 		// delete canvas
-		context.clearRect(0, 0, patternCanvas.width, patternCanvas.height);
+		context.clearRect(0, 0, canvas.width, canvas.height);
 		
 		stave.setContext(context).draw();
 

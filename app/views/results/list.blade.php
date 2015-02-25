@@ -4,7 +4,6 @@
 
 
 {{ Form::hidden('pattern', json_encode(Cache::get('pattern')), array('id' => 'patternValue')) }}
-{{ Form::hidden('duration', json_encode(Cache::get('duration')), array('id' => 'durationValue')) }}
 
 <div class="container">
 	<div class="row">

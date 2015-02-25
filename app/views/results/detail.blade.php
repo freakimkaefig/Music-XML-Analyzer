@@ -4,24 +4,23 @@
 
 <div id="extract-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
+<?php
+Debugbar::info($resultNotes);
+?>
+
 	<!-- Indicators -->
 	<ol class="carousel-indicators">
-		<?php for ($i = 0; $i < count($resultExtracts); $i++): ?>
+		<?php for ($i = 0; $i < count($resultNotes); $i++): ?>
 			<li data-target="#extract-carousel" data-slide-to="<?php echo $i; ?>"<?php if ($i==0) echo ' class="active"'; ?>></li>
 		<?php endfor; ?>
 	</ol>
 
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
-		<?php for ($i = 0; $i < count($resultExtracts); $i++): ?>
+		<?php for ($i = 0; $i < count($resultNotes); $i++): ?>
 			<div class="item<?php if ($i==0) echo ' active'; ?>">
-				<canvas id="canvas<?php echo $i; ?>" style="width:100%; height:640px;"></canvas>
-				<script type="text/javascript">
-				var c = document.getElementById("canvas<?php echo $i; ?>");
-				var ctx = c.getContext("2d");
-				ctx.font = "10px Arial";
-				ctx.fillText("Hello World!", 0, 0);
-				</script>
+				<canvas id="canvas<?php echo $i; ?>" class="canvas" height="100" width="700"></canvas>
+				{{ Form::hidden('resultNotes' . $i, json_encode($resultNotes[$i]), array('id' => 'notes' . $i, 'class' => 'notes')) }}
 			</div>
 		<?php endfor; ?>
 	</div>

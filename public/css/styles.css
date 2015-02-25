@@ -216,3 +216,17 @@ h1 {
 }
 
 /*RESULTLIST*/
+.canvas {
+	margin-bottom: 60px;
+}
+.carousel-indicators li {
+	background-color: #000;
+}
+.carousel-indicators .active {
+	background-color: #666;
+}
+.carousel-control.right,
+.carousel-control.left {
+	background: transparent;
+	color: #000;
+}
