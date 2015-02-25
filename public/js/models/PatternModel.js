@@ -12,6 +12,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	curClef = null,
 	curRythSpec = null,
 	curOctave = null,
+	breakSign = "";
 
 
 	init = function(){
@@ -87,26 +88,22 @@ MusicXMLAnalyzer.PatternModel = function(){
 				completeDurationIn64th += getDurationIn64thNotes(noteElements[i].duration);
 			}
 
-			console.log("complete dur: " + completeDurationIn64th);
-			//adapt values for vexflow an put them into an array
-			
-			/*
-			noteElements4VexFlow.push({
-				name: curName,
-				accidential: curAccidential,
-				duration: getDuration4Vexflow(curDuration),
-				durationIn64th: getDurationIn64thNotes (curDuration),
-				rythSpecial: curRythSpec,
-				octave: curOctave
-			});
-			*/
+			if (curName == "break") {
+				console.log("brake here");
+				curName = "b";
+				breakSign = "r";
+			}
 
+			//console.log("complete dur: " + completeDurationIn64th);
+			
+			//adapt values for vexflow an put them into an array
 			noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "/" + curOctave],
-		    						 duration: getDuration4Vexflow(curDuration),
+		    						 duration: getDuration4Vexflow(curDuration) + breakSign,
 		    						 auto_stem: true }));
 
 		}
 		$(that).trigger('patternChange', [noteElements]);
+		// send vexflow note elements and complete duration in 64th to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements(), completeDurationIn64th]);
 	},
 
