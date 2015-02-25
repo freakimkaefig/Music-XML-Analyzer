@@ -13,7 +13,12 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternModel = MusicXMLAnalyzer.PatternModel();
 		patternModel.init();
 		$(patternModel).on('patternChange', onPatternChange);
+		$(patternModel).on('updateNotationView', onNotationViewUpdate);
 
+	},
+
+	onNotationViewUpdate = function(event, vexflowNotes, completeDurationIn64th) {
+		notationView.renderNotes(vexflowNotes, completeDurationIn64th);
 	},
 
 	changeMode = function(val) {
@@ -48,6 +53,10 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternModel.addNoteElement();
 	},
 
+	addNoteByCanvasClick = function(note) {
+		patternModel.addNoteElementByCanvasClick(note);
+	},
+
 	removeLastNote = function() {
 		patternModel.removeLastNoteElement();
 	},
@@ -70,6 +79,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	that.changeSpecialRyth = changeSpecialRyth;
 	that.changeOctave = changeOctave;
 	that.addNote = addNote;
+	that.addNoteByCanvasClick = addNoteByCanvasClick;
 	that.removeLastNote = removeLastNote;
 	that.dispose = dispose;
 
