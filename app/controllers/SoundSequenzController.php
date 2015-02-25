@@ -139,7 +139,8 @@ class SoundSequenzController {
 					}
 				} //end of foreach(notes as note){blabla}
 				
-			}
+			} //end of foreach(parts as part)
+			
 			// check if result->occ is empty
 			if(!empty(self::$result->occurences)){
 				//push result

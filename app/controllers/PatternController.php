@@ -15,7 +15,7 @@ class PatternController extends BaseController {
 		$pattern = Input::get('pattern');
 		$pattern = json_decode($pattern);
 
-		// var_dump($pattern);
+		var_dump($pattern);
 
 		switch ($pattern->type) {
 			case 0:
@@ -26,25 +26,25 @@ class PatternController extends BaseController {
 			case 1:
 				// Type == Rhythmus
 				$rConntroller = new RhythmController();
-				// $results = $ssConntroller->search($pattern);
+				// $results = $rConntroller->search($pattern);
 				break;
 			case 2:
 				// Type == Melodie
-				$rConntroller = new MelodyController();
-				// $results = $ssConntroller->search($pattern);
+				$mConntroller = new MelodyController();
+				$results = $mConntroller->search($pattern);
 				break;
 		}
 
-		$results = array(
-			(object)array(
-				"file_id" => 21,
-				"file_url" => "http://music-xml-analyzer.local/uploads/133/ActorPreludeSample.xml",
-				"occurences" => array(
-					(object)array('start' => 7, 'end' => 8, 'voice' => 1, 'part_id' => "P1"),
-					(object)array('start' => 7, 'end' => 9, 'voice' => 1, 'part_id' => "P2")
-				)
-			)
-		);
+		// $results = array(
+		// 	(object)array(
+		// 		"file_id" => 21,
+		// 		"file_url" => "http://music-xml-analyzer.local/uploads/133/ActorPreludeSample.xml",
+		// 		"occurences" => array(
+		// 			(object)array('start' => 7, 'end' => 8, 'voice' => 1, 'part_id' => "P1"),
+		// 			(object)array('start' => 7, 'end' => 9, 'voice' => 1, 'part_id' => "P2")
+		// 		)
+		// 	)
+		// );
 		Cache::put('pattern', $pattern, 60*24);
 		Cache::put('results', $results, 60*24);
 
