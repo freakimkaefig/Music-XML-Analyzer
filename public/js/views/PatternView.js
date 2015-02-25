@@ -36,16 +36,35 @@ MusicXMLAnalyzer.PatternView = function(){
 		$removeNoteButton.on("click", onRemoveButtonClick);
 
 		// soundSequence pattern:
-		// $patternValue.val(JSON.stringify({type: 0, notes: [{pitch : {step : "C", alter : 0, octave : 3}}, {pitch : {step : "C", alter : 0, octave : 4}}]}));
+		$patternValue.val(JSON.stringify(
+			{
+				type: 0,
+				notes: [
+					{
+						pitch: {
+							step : "C",
+							alter : 0,
+							octave : 3
+						}
+					},
+					{
+						pitch: {
+							step: "C",
+							alter: 0,
+							octave : 4
+						}
+					}
+				]
+			}
+		));
 		// melody pattern:
 		$patternValue.val(JSON.stringify(
 			{
 				type: 2,
-				melody: [
+				notes: [
 					{
 						type: "note",
-						pitch :
-						{
+						pitch: {
 							step: "B",
 							type: "whole",
 							alter: 0,
@@ -57,7 +76,8 @@ MusicXMLAnalyzer.PatternView = function(){
 						duration: "whole"
 					}
 				]
-			}));
+			}
+		));
 	},
 
 	onModeButtonClick = function(event) {
