@@ -111,7 +111,7 @@ class SoundSequenzController {
 									$occ->start = reset(self::$xmlPositionArray);
 									$occ->end = end(self::$xmlPositionArray);
 									$occ->voice = (int)$note->voice;
-									$occ->part_id = (string)$part->id;
+									$occ->part_id = (string)$part['id'];
 									// var_dump($occ);
 									array_push(self::$result->occurences, $occ);
 
