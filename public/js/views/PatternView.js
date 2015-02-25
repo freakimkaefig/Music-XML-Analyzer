@@ -44,14 +44,17 @@ MusicXMLAnalyzer.PatternView = function(){
 				melody: [
 					{
 						type: "note",
-						step: "C",
-						type: "half",
-						alter: 0,
-						octave: 3
+						pitch :
+						{
+							step: "B",
+							type: "whole",
+							alter: 0,
+							octave: 5
+						}
 					},
 					{ 
 						type: "rest",
-						duration: 10
+						duration: "whole"
 					}
 				]
 			}));

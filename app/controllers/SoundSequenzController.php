@@ -2,12 +2,12 @@
 
 class SoundSequenzController {
 
-	static $patternIntervalArray;
+	static $result;
 	static $xmlIntervalArray; 
 	static $xmlPositionArray;
 	static $results;
 	static $exactMatch;
-	static $result;
+	static $once;
 
 	function __construct() {
 	
@@ -40,6 +40,7 @@ class SoundSequenzController {
 			$file_id = $upload->id;
 			$file_url = $upload->url;
 
+			self::$once = true;
 			self::$xmlIntervalArray = array(); 
 			self::$xmlPositionArray = array();
 			self::$result = new stdClass();
@@ -58,7 +59,12 @@ class SoundSequenzController {
 				//traverse §notes[]
 				for ($i = 0; $i < count($part->measure)-1; $i++) {
 					$n = $part->measure[$i]->note;
-					$m = $part->measure[$i+1]->note;
+					
+					//set lastVoice at beginning of xml file
+					if(self::$once){
+						self::$once = false;
+						$lastVoice = $part->measure[$i]->note->voice;
+					}
 					
 					if(!$n->rest){
 
@@ -75,7 +81,7 @@ class SoundSequenzController {
 					// echo "<hr><br>";
 
 						// if voice stays the same
-						if((int)$n->voice == (int)$m->voice){
+						if((int)$n->voice == (int)$lastVoice){
 							// push current interval to xmlIntervalArray
 							array_push(self::$xmlIntervalArray, PatternController::getInterval($note));
 							array_push(self::$xmlPositionArray, $note->position + 1);
@@ -129,6 +135,8 @@ class SoundSequenzController {
 
 							} //if array lengths aren't equal yet, continue	
 
+							// save current voice for comparison with next note
+							$lastVoice = $n->voice;
 						}
 						else{ //different voice incoming next; unset array; begin from scratch
 							// self::$result = new stdClass();
@@ -140,7 +148,7 @@ class SoundSequenzController {
 				} //end of foreach(notes as note){blabla}
 				
 			} //end of foreach(parts as part)
-			
+
 			// check if result->occ is empty
 			if(!empty(self::$result->occurences)){
 				//push result

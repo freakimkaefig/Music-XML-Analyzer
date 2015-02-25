@@ -15,7 +15,7 @@ class PatternController extends BaseController {
 		$pattern = Input::get('pattern');
 		$pattern = json_decode($pattern);
 
-		var_dump($pattern);
+		// var_dump($pattern);
 
 		switch ($pattern->type) {
 			case 0:
