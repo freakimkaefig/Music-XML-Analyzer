@@ -38,7 +38,23 @@ MusicXMLAnalyzer.PatternView = function(){
 		// soundSequence pattern:
 		// $patternValue.val(JSON.stringify({type: 0, notes: [{pitch : {step : "C", alter : 0, octave : 3}}, {pitch : {step : "C", alter : 0, octave : 4}}]}));
 		// melody pattern:
-		$patternValue.val(JSON.stringify({type: 2, melody: [{note : {step : "C", type : "half", alter : 0, octave : 3}}, rest : { rest : { duration : 10}}]}));
+		$patternValue.val(JSON.stringify(
+			{
+				type: 2,
+				melody: [
+					{
+						type: "note",
+						step: "C",
+						type: "half",
+						alter: 0,
+						octave: 3
+					},
+					{ 
+						type: "rest",
+						duration: 10
+					}
+				]
+			}));
 	},
 
 	onModeButtonClick = function(event) {
