@@ -1,8 +1,6 @@
 MusicXMLAnalyzer.NotationView = function(){
 
 	var that = {},
-	staveElements = [],
-	noteElements = [],
 	context = null,
 	canvas = null,
 	canvasLeft = null,
@@ -85,8 +83,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName],
 		    						 duration: "q",
 		    						 auto_stem: true }));
-		  	
-		  	
+		  		  	
 		console.log("com dur: " + completeDurationIn64th);
 		console.log ("vexnotes", vexFlowNotes);
 

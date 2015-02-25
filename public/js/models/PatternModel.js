@@ -24,9 +24,17 @@ MusicXMLAnalyzer.PatternModel = function(){
 		console.log("mode set to: " + curMode + " fkt missing");
 	},
 
+	getCurrentMode = function() {
+		return curMode;
+	},
+
 	setCurrentNoteName = function(noteName) {
 		console.log("model " + noteName);
 		curName = noteName;
+	},
+
+	getCurrentNoteName = function() {
+		return curName;
 	},
 
 	setCurrentAccidential = function(accidential) {
@@ -34,9 +42,17 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curAccidential = accidential;
 	},
 
+	getCurrentAccidential = function() {
+		return curAccidential;
+	},
+
 	setCurrentNoteDuration = function(noteDuration) {
 		console.log("model " + noteDuration);
 		curDuration = noteDuration;
+	},
+
+	getCurrentNoteDuration = function() {
+		return curDuration;
 	},
 
 	setCurrentClef = function(clef) {
@@ -44,14 +60,26 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curClef = clef;
 	},
 
+	getCurrentClef = function() {
+		return curClef;
+	},
+
 	setCurrentNoteRythSpecial = function(rythSpec) {
 		console.log("model " + rythSpec);
 		curRythSpec = rythSpec;
 	},
 
+	getCurrentNoteRythSpecial = function() {
+		return curRythSpec;
+	},
+
 	setCurrentOctave = function(octave) {
 		console.log("model " + octave);
 		curOctave = octave;
+	},
+
+	getCurrentOctave = function() {
+		return curOctave;
 	},
 
 	addNoteElement = function() {
@@ -160,10 +188,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	    console.log(noteElements4VexFlow);
 	},
 
-	getCurrentMode = function() {
-		return curMode;
-	},
-
 	getCompleteDurationIn64th = function() {
 		return completeDurationIn64th;
 	},
@@ -179,6 +203,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 	
 	
 	that.init = init;
+	that.getCurrentNoteName = getCurrentNoteName;
+	that.getCurrentAccidential = getCurrentAccidential;
+	that.getCurrentNoteDuration = getCurrentNoteDuration;
+	that.getCurrentClef = getCurrentClef;
+	that.getCurrentNoteRythSpecial = getCurrentNoteRythSpecial;
+	that.getCurrentOctave = getCurrentOctave;
 	that.setCurrentMode = setCurrentMode;
 	that.setCurrentNoteName = setCurrentNoteName;
 	that.setCurrentAccidential = setCurrentAccidential;
