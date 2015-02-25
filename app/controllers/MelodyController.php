@@ -43,7 +43,10 @@ class MelodyController {
 		foreach ($p as $note) {
 			if($note->type == "note"){
 				$interval = PatternController::getInterval($note);
-				array_push(self::$patternArray, $interval);
+				$obj = new stdClass();
+				$obj->interval = $interval;
+				$obj->type = $note->pitch->type;
+				array_push(self::$patternArray, $obj);
 			}else{
 				array_push(self::$patternArray, $note->duration);
 			}
@@ -97,18 +100,23 @@ class MelodyController {
 						$pitch->alter = $n->pitch->alter;
 						$pitch->octave = $n->pitch->octave;
 
+
 						$note = new stdClass();
 						$note->pitch = $pitch;
 						$note->voice = $n->voice;
+						// $note->type = $n->type;
 						$note->position = $i;
 
 						// if note
 						if(!$n->rest){
 
-							array_push(self::$xmlArray, PatternController::getInterval($note));
+							$obj = new stdClass();
+							$obj->interval = PatternController::getInterval($note);
+							$obj->type = $n->type;
+
+							array_push(self::$xmlArray, $obj);
 							array_push(self::$xmlPositionArray, $note->position + 1);
 
-							
 						}
 						// else if rest
 						else{
@@ -116,9 +124,9 @@ class MelodyController {
 							try{
 								$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / (int)$partBeatType);
 							} catch (Exception $e) {
-							    Debugbar::info($n->duration);
-							    Debugbar::info($partDivision);
-							    Debugbar::info($partBeatType);
+							    // Debugbar::info($n->duration);
+							    // Debugbar::info($partDivision);
+							    // Debugbar::info($partBeatType);
 							    echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
 							}
 
@@ -139,7 +147,12 @@ class MelodyController {
 							}elseif($restDurationFloat == 0.015625){
 								self::$restDuration = "64th";
 							}else{
-								Debugbar::info($restDurationFloat);
+								// 
+								// ERROR mit "0,75" -> punktierte halbe?
+								// 
+								// Debugbar::info($restDurationFloat);
+								// echo 'Rest duration unclear: ',  $restDurationFloat, "<br>";
+								// echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
 							}
 							array_push(self::$xmlArray, self::$restDuration);
 							array_push(self::$xmlPositionArray, $note->position + 1);
