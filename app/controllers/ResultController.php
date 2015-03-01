@@ -123,9 +123,9 @@ class ResultController extends BaseController {
 
 
 	public static function _getArtist($id) {
+		Debugbar::info(Upload::find($id)->url);
 		$xml = simplexml_load_file(Upload::find($id)->url);
 		$artist = $xml->xpath("//credit[credit-type='composer']");
-		// Debugbar::info($artist[0]);
 		if ($artist) {
 			return $artist[0]->{'credit-words'}->{0};
 		} else {

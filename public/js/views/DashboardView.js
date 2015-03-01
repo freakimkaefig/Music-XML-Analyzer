@@ -27,8 +27,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 		dashboardMessageCounter = 0;
 		$logMessages.show();
 		$logMessages.animate({
-			height: 100
-		}, 500);
+			height: 70
+		}, 3500);
 		addLogMessage('Fetching results from database ...');
 	},
 
@@ -335,7 +335,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		noteTypeDistribution = new d3pie("pie_noteTypeDistribution", {
 			header: {
 				title: {
-					text: "Notenlängen"
+					text: "Note duration"
 				}
 			},
 			data: {
@@ -361,7 +361,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		meterDistribution = new d3pie("pie2", {
 			header: {
 				title: {
-					text: "Taktarten"
+					text: "Meters"
 				}
 			},
 			data: {

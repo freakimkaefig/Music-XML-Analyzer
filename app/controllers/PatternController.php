@@ -20,7 +20,7 @@ class PatternController extends BaseController {
 		$pattern = Input::get('pattern');
 		$pattern = json_decode($pattern);
 
-		// Debugbar::info($pattern);
+		Debugbar::info($pattern);
 
 		switch ($pattern->type) {
 			case 0:
