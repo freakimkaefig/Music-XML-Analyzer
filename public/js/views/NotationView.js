@@ -1,8 +1,6 @@
 MusicXMLAnalyzer.NotationView = function(){
 
 	var that = {},
-	staveElements = [],
-	noteElements = [],
 	context = null,
 	canvas = null,
 	canvasLeft = null,
@@ -19,6 +17,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	init = function() {
 		console.log("notation view");
 		patternController = MusicXMLAnalyzer.PatternController();
+		patternModel = MusicXMLAnalyzer.PatternModel();
 
 		initCanvas();
 		setTopNoteValues();
@@ -28,12 +27,10 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/* This method inits canvas and context and sets canvas top and left to variable*/
 	initCanvas = function() {
-		// canvas = document.getElementById('myCanvas');
 		canvas = document.getElementById('myCanvas');
 	    canvasLeft = canvas.offsetLeft;
 	    canvasTop = canvas.offsetTop;
 
-	    // context = canvas.getContext('2d');
   		renderer = new Vex.Flow.Renderer(canvas,Vex.Flow.Renderer.Backends.CANVAS);
 
   		context = renderer.getContext();
@@ -76,23 +73,32 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 
 	renderVexFlowNotePreview = function(noteName) {
+		// delete canvas
+		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave.setContext(context).draw();
 
-  		// Create one note
-		var notes = [
-		  	new Vex.Flow.StaveNote({ keys: [noteName],
+  		var vexFlowNotes = patternModel.getAllVexFlowNoteElements();
+  		var completeDurationIn64th = patternModel.getCompleteDurationIn64th();
+  		
+
+  		//STOP
+  		//TODO duration anpassen auf aktuell ausgewählte
+  		//aufruf der Konvertierungsmethoden vom model
+		vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName],
 		    						 duration: "q",
-		    						 auto_stem: true }),
-		  	]
+		    						 auto_stem: true }));
+		  		  	
+		console.log("com dur: " + completeDurationIn64th);
+		console.log ("vexnotes", vexFlowNotes);
 
 		var voice = new Vex.Flow.Voice({
-		    num_beats: 1,
-		    beat_value: 4,
+		    num_beats: completeDurationIn64th + 16,
+		    beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
 
 		// Add notes to voice
-		voice.addTickables(notes);
+		voice.addTickables(vexFlowNotes);
 
 		// Format and justify the notes to 700 pixels
 		var formatter = new Vex.Flow.Formatter().
@@ -100,6 +106,9 @@ MusicXMLAnalyzer.NotationView = function(){
 
 		// Render voice
 		voice.draw(context, stave);
+
+		//delete last array entry
+		vexFlowNotes.pop();
 	},
 
 	onNotationViewUpdate = function(event, notes) {
@@ -145,13 +154,8 @@ MusicXMLAnalyzer.NotationView = function(){
 	        y = event.pageY - canvasTop;
 
     	//check if cursor is hover a existing note position
+    	//if yes the method returns val and not null
     	if (checkHorizontalArea(y)) {		
-    		// log current hovering note
-    		console.log("current note preview = " + checkHorizontalArea(y));
-
-    		// delete canvas
-    		context.clearRect(0, 0, canvas.width, canvas.height);
-
     		// call method to render note preview with given noteName
     		renderVexFlowNotePreview(checkHorizontalArea(y));
 

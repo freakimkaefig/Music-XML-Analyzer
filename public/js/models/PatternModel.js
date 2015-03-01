@@ -12,7 +12,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	curClef = null,
 	curRythSpec = null,
 	curOctave = null,
-
+	VEXFLOW_REST_SIGN = "r",
+	completeDurationIn64th = 0,
 
 	init = function(){
 		console.log("pattern model");
@@ -23,9 +24,17 @@ MusicXMLAnalyzer.PatternModel = function(){
 		console.log("mode set to: " + curMode + " fkt missing");
 	},
 
+	getCurrentMode = function() {
+		return curMode;
+	},
+
 	setCurrentNoteName = function(noteName) {
 		console.log("model " + noteName);
 		curName = noteName;
+	},
+
+	getCurrentNoteName = function() {
+		return curName;
 	},
 
 	setCurrentAccidential = function(accidential) {
@@ -33,9 +42,17 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curAccidential = accidential;
 	},
 
+	getCurrentAccidential = function() {
+		return curAccidential;
+	},
+
 	setCurrentNoteDuration = function(noteDuration) {
 		console.log("model " + noteDuration);
 		curDuration = noteDuration;
+	},
+
+	getCurrentNoteDuration = function() {
+		return curDuration;
 	},
 
 	setCurrentClef = function(clef) {
@@ -43,9 +60,17 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curClef = clef;
 	},
 
+	getCurrentClef = function() {
+		return curClef;
+	},
+
 	setCurrentNoteRythSpecial = function(rythSpec) {
 		console.log("model " + rythSpec);
 		curRythSpec = rythSpec;
+	},
+
+	getCurrentNoteRythSpecial = function() {
+		return curRythSpec;
 	},
 
 	setCurrentOctave = function(octave) {
@@ -53,8 +78,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curOctave = octave;
 	},
 
+	getCurrentOctave = function() {
+		return curOctave;
+	},
+
 	addNoteElement = function() {
-		var completeDurationIn64th = 0;
+		completeDurationIn64th = 0;
 
 		if (!curName) {
 			alert("name missing");
@@ -87,26 +116,21 @@ MusicXMLAnalyzer.PatternModel = function(){
 				completeDurationIn64th += getDurationIn64thNotes(noteElements[i].duration);
 			}
 
-			console.log("complete dur: " + completeDurationIn64th);
-			//adapt values for vexflow an put them into an array
-			
-			/*
-			noteElements4VexFlow.push({
-				name: curName,
-				accidential: curAccidential,
-				duration: getDuration4Vexflow(curDuration),
-				durationIn64th: getDurationIn64thNotes (curDuration),
-				rythSpecial: curRythSpec,
-				octave: curOctave
-			});
-			*/
-
-			noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "/" + curOctave],
+			//check if break or normal note
+			//then adapt values for vexflow an put them into an array
+			if (curName == "break") {
+				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: ["b/4"],
+		    						 duration: getDuration4Vexflow(curDuration) + VEXFLOW_REST_SIGN,
+		    						 auto_stem: true }));
+			} else {
+				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "/" + curOctave],
 		    						 duration: getDuration4Vexflow(curDuration),
 		    						 auto_stem: true }));
+			}			
 
 		}
 		$(that).trigger('patternChange', [noteElements]);
+		// send vexflow note elements and complete duration in 64th to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements(), completeDurationIn64th]);
 	},
 
@@ -161,10 +185,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	removeLastNoteElement = function() {
 	    console.log("model: remove last note button; function missing");
+	    console.log(noteElements4VexFlow);
 	},
 
-	getCurrentMode = function() {
-		return curMode;
+	getCompleteDurationIn64th = function() {
+		return completeDurationIn64th;
 	},
 
 	getAllNoteElements = function() {
@@ -175,9 +200,13 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return noteElements4VexFlow;
 	};
 
-	
-	
 	that.init = init;
+	that.getCurrentNoteName = getCurrentNoteName;
+	that.getCurrentAccidential = getCurrentAccidential;
+	that.getCurrentNoteDuration = getCurrentNoteDuration;
+	that.getCurrentClef = getCurrentClef;
+	that.getCurrentNoteRythSpecial = getCurrentNoteRythSpecial;
+	that.getCurrentOctave = getCurrentOctave;
 	that.setCurrentMode = setCurrentMode;
 	that.setCurrentNoteName = setCurrentNoteName;
 	that.setCurrentAccidential = setCurrentAccidential;
@@ -190,6 +219,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.removeLastNoteElement = removeLastNoteElement;
 	that.getCurrentMode = getCurrentMode;
 	that.getAllNoteElements = getAllNoteElements;
+	that.getAllVexFlowNoteElements = getAllVexFlowNoteElements;
+	that.getCompleteDurationIn64th = getCompleteDurationIn64th;
 
 	return that;
 }
