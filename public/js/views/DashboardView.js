@@ -309,7 +309,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 		keyDistribution = new d3pie("pie_keyDistribution", {
 			header: {
 				title: {
-					text: "Key Distribution"
+					text: "Key Distribution",
+					fontSize: 22,
+					font: "open sans"
 				}
 			},
 			data: {
@@ -335,7 +337,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 		noteTypeDistribution = new d3pie("pie_noteTypeDistribution", {
 			header: {
 				title: {
-					text: "Note duration"
+					text: "Note duration",
+					fontSize: 22,
+					font: "open sans"
 				}
 			},
 			data: {
@@ -361,7 +365,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 		meterDistribution = new d3pie("pie2", {
 			header: {
 				title: {
-					text: "Meters"
+					text: "Meters",
+					fontSize: 22,
+					font: "open sans"
 				}
 			},
 			data: {
