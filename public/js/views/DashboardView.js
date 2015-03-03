@@ -158,7 +158,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		   .attr("y", function(d) { return y(d.value); })
 		   .attr("height", function(d) { return height - y(d.value); });
 
-		   
+
 
 		   //.on("click", tip.show);
 
@@ -236,7 +236,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 			.data(data)
 			.enter()
 			.append("text")
-			.attr("class", "bar")
+			.attr("class", "bar-value")
 			.attr("x", function(d) { return x(d.label); })
 			.attr("y", function(d) { return y(d.value); })
 			.text(function(d) { return d.value; })
@@ -320,6 +320,17 @@ MusicXMLAnalyzer.DashboardView = function(){
 		   .attr("y", function(d) { return y(d.value); })
 		   .attr("height", function(d) { return height - y(d.value); })
 		   //.on("click", tip.show);
+
+		   svg.selectAll("text.bar")
+			.data(data)
+			.enter()
+			.append("text")
+			.attr("class", "bar-value")
+			.attr("x", function(d) { return x(d.label); })
+			.attr("y", function(d) { return y(d.value); })
+			.text(function(d) { return d.value; })
+			.attr("dx", ".8em")
+			.attr("dy", "-.5em");
 	},
 
 	initKeyDistribution = function(data) {
