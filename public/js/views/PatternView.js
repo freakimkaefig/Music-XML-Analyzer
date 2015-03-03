@@ -56,6 +56,7 @@ MusicXMLAnalyzer.PatternView = function(){
 				]
 			}
 		));
+
 		// melody pattern:
 		// $patternValue.val(JSON.stringify(
 		// 	{
@@ -68,6 +69,36 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 					type: "half",
 		// 					alter: 0,
 		// 					octave: 3
+		// 				}
+		// 			},
+		// 			{
+		// 				type: "rest",
+		// 				duration: "whole"
+		// 			}
+		// 		]
+		// 	}
+		// )); 
+
+		// rhythm pattern:
+		// $patternValue.val(JSON.stringify(
+		// 	{
+		// 		type: 1,
+		// 		notes: [
+		// 			{
+		// 				type: "note",
+		// 				pitch: {
+		// 					step: "E",
+		// 					type: "half",
+		// 					alter: -1,
+		// 					octave: 5,
+						// beam: "begin",
+						// ****<Eventuell miteinbeziehen>****
+						// timeModification:{
+						// 	actualNotes: 3,
+						// 	normalNotes: 2,
+						// 	normalType: "eight"
+						// }
+						// *****</Eventuell miteinbeziehen>****
 		// 				}
 		// 			},
 		// 			{
