@@ -13,9 +13,9 @@
 <div class="row">
 	<div class="col-xs-4">
 		<p>Choose Mode: </p>
-		<button type="button" class="btn btn-default btn-mode">melody</button>
-		<button type="button" class="btn btn-default btn-mode">sound sequence</button>
-		<button type="button" class="btn btn-default btn-mode">rhythm</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-mode">melody</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-mode">sound sequence</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-mode">rhythm</button>
 		<p></p>
 		<p></p>
 	</div>
@@ -29,21 +29,21 @@
 	<div class="col-xs-6">
 		<p></p>
 		<p>Notes: </p>
-		<button type="button" class="btn btn-default btn-note">c</button>
-		<button type="button" class="btn btn-default btn-note">d</button>
-		<button type="button" class="btn btn-default btn-note">e</button>
-		<button type="button" class="btn btn-default btn-note">f</button>
-		<button type="button" class="btn btn-default btn-note">g</button>
-		<button type="button" class="btn btn-default btn-note">a</button>
-		<button type="button" class="btn btn-default btn-note">b</button>
-		<button type="button" class="btn btn-default btn-note">break</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-note">c</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-note">d</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-note">e</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-note">f</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-note">g</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-note">a</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-note">b</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-note">break</button>
 	</div>
 	<div class="col-xs-6">
 		<p></p>
 		<p>Accidential: </p>
-		<button type="button" class="btn btn-default btn-accidential">none</button>
-		<button type="button" class="btn btn-default btn-accidential">#</button>
-		<button type="button" class="btn btn-default btn-accidential">b</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-accidential">none</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-accidential">#</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-accidential">b</button>
 	</div>
 </div>
 
@@ -51,33 +51,33 @@
 	<div class="col-xs-6">
 		<p></p>
 		<p>Duration: </p>
-		<button type="button" class="btn btn-default btn-duration">whole</button>
-		<button type="button" class="btn btn-default btn-duration">half</button>
-		<button type="button" class="btn btn-default btn-duration">quarter</button>
-		<button type="button" class="btn btn-default btn-duration">eighth</button>
-		<button type="button" class="btn btn-default btn-duration">16th</button>
-		<button type="button" class="btn btn-default btn-duration">32nd</button>
-		<button type="button" class="btn btn-default btn-duration">64th</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-duration">whole</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-duration">half</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-duration">quarter</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-duration">eighth</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-duration">16th</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-duration">32nd</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-duration">64th</button>
 	</div>
 	<div class="col-xs-6">
 		<p></p>
 		<p>Clef: </p>
-		<button type="button" class="btn btn-default btn-clef">F</button>
-		<button type="button" class="btn btn-default btn-clef">G</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-clef">F</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-clef">G</button>
 	</div>
 </div>
 <div class="row">
 	<div class="col-xs-6">
 		<p></p>
 		<p>Special Ryth: </p>
-		<button type="button" class="btn btn-default btn-special-ryth">Triplet</button>
-		<button type="button" class="btn btn-default btn-special-ryth">Dotted</button>
-		<button type="button" class="btn btn-default btn-special-ryth">None</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-special-ryth">Triplet</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-special-ryth">Dotted</button>
+		<button type="button" class="btn btn-default btn-material-grey btn-special-ryth">None</button>
 	</div>
 	<div class="col-xs-2">
 		<p></p>
 		<p>Octave: </p>
-	    <select id="select-octave" class="form-control">
+	    <select id="select-octave" class="form-control btn-material-grey">
 		  <option>2</option>
 		  <option>3</option>
 		  <option>4</option>

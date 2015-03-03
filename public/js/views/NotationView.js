@@ -8,6 +8,8 @@ MusicXMLAnalyzer.NotationView = function(){
 	renderer = null,
 	stave = null,
 
+	hoveredNote = null;
+
 	paddingTopStaves = 0,
 	spaceBetweenLines = 0,
 
@@ -77,22 +79,25 @@ MusicXMLAnalyzer.NotationView = function(){
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave.setContext(context).draw();
 
+		// get all vexflow note elements from model which already exist 
   		var vexFlowNotes = patternModel.getAllVexFlowNoteElements();
+  		// get complete duration for num_beats
   		var completeDurationIn64th = patternModel.getCompleteDurationIn64th();
+  		var currentDuration = patternModel.getCurrentNoteDuration();
+		// get Vexflow duration with duration from buttons
+  		var currentDuration4VexFlow = patternModel.getDuration4Vexflow(currentDuration);
+  		// get duration in 64th with currentDuration val
+  		var durationPreviewNoteIn64th = patternModel.getDurationIn64thNotes(currentDuration);
   		
-
-  		//STOP
-  		//TODO duration anpassen auf aktuell ausgewählte
-  		//aufruf der Konvertierungsmethoden vom model
 		vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName],
-		    						 duration: "q",
+		    						 duration: currentDuration4VexFlow,
 		    						 auto_stem: true }));
 		  		  	
-		console.log("com dur: " + completeDurationIn64th);
-		console.log ("vexnotes", vexFlowNotes);
+		// console.log("complete dur: " + completeDurationIn64th);
 
 		var voice = new Vex.Flow.Voice({
-		    num_beats: completeDurationIn64th + 16,
+		    //complete duration + the note you preview
+		    num_beats: completeDurationIn64th + durationPreviewNoteIn64th,
 		    beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
@@ -167,64 +172,62 @@ MusicXMLAnalyzer.NotationView = function(){
 	onMouseClickCanvas = function(event) {
 
 		console.log("on canvas click");
-		patternController.addNoteByCanvasClick("dummy/Note");
+		patternController.addNoteByCanvasClick(hoveredNote);
 
 	},
 
 	/* This method checks on which horizontal position the cursor is and saves the corresponding note to the variable */
 	checkHorizontalArea = function(y) {
 
-		var horizontalVal = null;
-
 		if (y > spaceBetweenLines * 1.25 && y <= spaceBetweenLines * 1.75) {
-			horizontalVal = "f/6";
+			hoveredNote = "f/6";
 		} else if (y > spaceBetweenLines * 1.75 && y <= spaceBetweenLines * 2.25) {
-			horizontalVal = "e/6";
+			hoveredNote = "e/6";
 		} else if (y > spaceBetweenLines * 2.25 && y <= spaceBetweenLines * 2.75) {
-			horizontalVal = "d/6";
+			hoveredNote = "d/6";
 		} else if (y > spaceBetweenLines * 2.75 && y <= spaceBetweenLines * 3.25) {
-			horizontalVal = "c/6";
+			hoveredNote = "c/6";
 		} else if (y > spaceBetweenLines * 3.25 && y <= spaceBetweenLines * 3.75) {
-			horizontalVal = "b/5";
+			hoveredNote = "b/5";
 		} else if (y > spaceBetweenLines * 3.75 && y <= spaceBetweenLines * 4.25) {
-			horizontalVal = "a/5";
+			hoveredNote = "a/5";
 		} else if (y > spaceBetweenLines * 4.25 && y <= spaceBetweenLines * 4.75) {
-			horizontalVal = "g/5";
+			hoveredNote = "g/5";
 		} else if (y > spaceBetweenLines * 4.75 && y <= spaceBetweenLines * 5.25) {
-			horizontalVal = "f/5";
+			hoveredNote = "f/5";
 		} else if (y > spaceBetweenLines * 5.25 && y <= spaceBetweenLines * 5.75) {
-			horizontalVal = "e/5";
+			hoveredNote = "e/5";
 		} else if (y > spaceBetweenLines * 5.75 && y <= spaceBetweenLines * 6.25) {
-			horizontalVal = "d/5";
+			hoveredNote = "d/5";
 		} else if (y > spaceBetweenLines * 6.25 && y <= spaceBetweenLines * 6.75) {
-			horizontalVal = "c/5";
+			hoveredNote = "c/5";
 		} else if (y > spaceBetweenLines * 6.75 && y <= spaceBetweenLines * 7.25) {
-			horizontalVal = "b/4";
+			hoveredNote = "b/4";
 		} else if (y > spaceBetweenLines * 7.25 && y <= spaceBetweenLines * 7.75) {
-			horizontalVal = "a/4";
+			hoveredNote = "a/4";
 		} else if (y > spaceBetweenLines * 7.75 && y <= spaceBetweenLines * 8.25) {
-			horizontalVal = "g/4";
+			hoveredNote = "g/4";
 		} else if (y > spaceBetweenLines * 8.25 && y <= spaceBetweenLines * 8.75) {
-			horizontalVal = "f/4";
+			hoveredNote = "f/4";
 		} else if (y > spaceBetweenLines * 8.75 && y <= spaceBetweenLines * 9.25) {
-			horizontalVal = "e/4";
+			hoveredNote = "e/4";
 		} else if (y > spaceBetweenLines * 9.25 && y <= spaceBetweenLines * 9.75) {
-			horizontalVal = "d/4";
+			hoveredNote = "d/4";
 		} else if (y > spaceBetweenLines * 9.75 && y <= spaceBetweenLines * 10.25) {
 			// eigentlich ein c1
-			horizontalVal = "c/4";
+			hoveredNote = "c/4";
 		} else if (y > spaceBetweenLines * 10.25 && y <= spaceBetweenLines * 10.75) {
-			horizontalVal = "b/3";
+			hoveredNote = "b/3";
 		} else if (y > spaceBetweenLines * 10.75 && y <= spaceBetweenLines * 11.25) {
-			horizontalVal = "a/3";
+			hoveredNote = "a/3";
 		} else if (y > spaceBetweenLines * 11.25 && y <= spaceBetweenLines * 11.75) {
-			horizontalVal = "g/3";
+			hoveredNote = "g/3";
 		} else if (y > spaceBetweenLines * 11.75 && y <= spaceBetweenLines * 12.25) {
-			horizontalVal = "f/3";
+			hoveredNote = "f/3";
 		} else if (y > spaceBetweenLines * 12.25 && y <= spaceBetweenLines * 12.75) {
-			horizontalVal = "e/3";
+			hoveredNote = "e/3";
 		}
-		return horizontalVal;
+		return hoveredNote;
 
 	};
 	

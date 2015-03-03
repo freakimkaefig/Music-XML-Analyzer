@@ -62,7 +62,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	initFileSelector = function(data) {
 		$fileSelector.empty();
-		var selectorElement = '<select class="form-control" name="fileSelector">';
+		var selectorElement = '<select class="form-control btn-material-grey" name="fileSelector">';
 		selectorElement += '<option value="all"> - All - </option>';
 
 		for (var i = 0; i < data.length; i++) {

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-material navbar-fixed-top">
 
 	<div class="container-fluid">
      	<ul class="nav navbar-nav">
@@ -13,7 +13,7 @@
                 <?php $uploads = $user->uploads; ?>
                 <?php if (!$uploads->isEmpty()): ?>
 			     	<li>
-                        <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#uploadModal">Uploads</button>
+                        <button type="button" class="btn btn-flat btn-material-purple navbar-btn" data-toggle="modal" data-target="#uploadModal">Uploads</button>
 			     		@include('upload.dropzone')
 			     	</li>
 			      	<li><a href="{{ URL::route('dashboard') }}">Dashboard</a></li>
