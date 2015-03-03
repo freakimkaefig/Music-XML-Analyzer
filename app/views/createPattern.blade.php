@@ -30,26 +30,26 @@
 		<p></p>
 		<p>Notes: </p>
 		<div class="btn-group" data-toggle="buttons">
-        	<label id="c" class="btn btn-note btn-warning active" data-toggle="tooltip" data-placement="top" title="" data-original-title="c">
-      			<input name="notetype" id="c" type="radio" value=":c">c
+        	<label id="c" class="btn btn-note btn-warning active" data-toggle="tooltip" data-placement="top">
+      			<input type="radio" value=":c">c
             </label>
-        	<label id="d" class="btn btn-note btn-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="d">
-        		<input name="notetype" id="d" type="radio" value=":d">d
+        	<label id="d" class="btn btn-note btn-warning" data-toggle="tooltip" data-placement="top">
+        		<input type="radio" value=":d">d
             </label>
-        	<label id="e" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="e">
-        		<input name="notetype" id="e" type="radio" value=":e">e
+        	<label id="e" class="btn btn-note btn-warning" data-toggle="tooltip" data-placement="top">
+        		<input type="radio" value=":e">e
             </label>
-        	<label id="f" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="f">
-        		<input name="notetype" id="f" type="radio" value=":f">f
+        	<label id="f" class="btn btn-note btn-warning" data-toggle="tooltip" data-placement="top">
+        		<input type="radio" value=":f">f
             </label>
-        	<label id="g" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="g">
-        		<input name="notetype" id="g" type="radio" value=":g">g
+        	<label id="g" class="btn btn-note btn-warning" data-toggle="tooltip" data-placement="top">
+        		<input type="radio" value=":g">g
             </label>
-        	<label id="a" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="a">
-        		<input name="notetype" id="a" type="radio" value=":a">a
+        	<label id="a" class="btn btn-note btn-warning" data-toggle="tooltip" data-placement="top">
+        		<input type="radio" value=":a">a
             </label>
-            <label id="b" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="b">
-        		<input name="notetype" id="b" type="radio" value=":b">b
+            <label id="b" class="btn btn-note btn-warning" data-toggle="tooltip" data-placement="top">
+        		<input type="radio" value=":b">b
             </label>
 
 			<!-- <button type="button" class="btn btn-default btn-note">c</button>
