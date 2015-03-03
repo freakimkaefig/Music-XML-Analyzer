@@ -77,22 +77,25 @@ MusicXMLAnalyzer.NotationView = function(){
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave.setContext(context).draw();
 
+		// get all vexflow note elements from model which already exist 
   		var vexFlowNotes = patternModel.getAllVexFlowNoteElements();
+  		// get complete duration for num_beats
   		var completeDurationIn64th = patternModel.getCompleteDurationIn64th();
+  		var currentDuration = patternModel.getCurrentNoteDuration();
+		// get Vexflow duration with duration from buttons
+  		var currentDuration4VexFlow = patternModel.getDuration4Vexflow(currentDuration);
+  		// get duration in 64th with currentDuration val
+  		var durationPreviewNoteIn64th = patternModel.getDurationIn64thNotes(currentDuration);
   		
-
-  		//STOP
-  		//TODO duration anpassen auf aktuell ausgewählte
-  		//aufruf der Konvertierungsmethoden vom model
 		vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName],
-		    						 duration: "q",
+		    						 duration: currentDuration4VexFlow,
 		    						 auto_stem: true }));
 		  		  	
-		console.log("com dur: " + completeDurationIn64th);
-		console.log ("vexnotes", vexFlowNotes);
+		// console.log("complete dur: " + completeDurationIn64th);
 
 		var voice = new Vex.Flow.Voice({
-		    num_beats: completeDurationIn64th + 16,
+		    //complete duration + the note you preview
+		    num_beats: completeDurationIn64th + durationPreviewNoteIn64th,
 		    beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
@@ -167,7 +170,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	onMouseClickCanvas = function(event) {
 
 		console.log("on canvas click");
-		patternController.addNoteByCanvasClick("dummy/Note");
+		patternController.addNoteByCanvasClick("c/4");
 
 	},
 
