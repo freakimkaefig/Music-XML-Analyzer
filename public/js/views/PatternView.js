@@ -57,7 +57,7 @@ MusicXMLAnalyzer.PatternView = function(){
 			}
 		));
 
-		// melody pattern:
+		// melody pattern: Triole
 		// $patternValue.val(JSON.stringify(
 		// 	{
 		// 		type: 2,
@@ -135,6 +135,35 @@ MusicXMLAnalyzer.PatternView = function(){
 						// *****</Eventuell miteinbeziehen>****
 		// 				}
 		// 			}
+		// 		]
+		// 	}
+		// )); 
+
+		// rhythm pattern #2: Punktierte Noten
+		// $patternValue.val(JSON.stringify(
+		// 	{
+		// 		type: 1,
+		// 		notes: [
+		// 			{
+		// 				type: "note",
+		// 				pitch: {
+		// 					step: "F",
+		// 					type: "half",
+		// 					alter: 0,
+		// 					octave: 1,
+		//					dot: true 
+		// 				}
+		// 			},
+		//			{
+		// 				type: "note",
+		// 				pitch: {
+		// 					step: "F",
+		// 					type: "half",
+		// 					alter: 0,
+		// 					octave: 2,
+		//					dot: true 
+		// 				}
+		// 			}  
 		// 		]
 		// 	}
 		// )); 
