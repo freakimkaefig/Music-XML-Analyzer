@@ -179,12 +179,21 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return durationIn64th;
 	},
 
+	/*
+	This method gets called when your click on the canvas
+	to add a note element.
+	The paramter note looks like "c/4"
+	*/
 	addNoteElementByCanvasClick = function(note) {
 		console.log("model add note by canavs click : " + note);
 		//split string at "/" to get noteName and ovtave
+		//and saves it into array noteContainer
 		var noteContainer = note.split("/");
-		console.log("part1: " + noteContainer[0]);
-		console.log("part2: " + noteContainer[1]);
+		
+		curName = noteContainer[0];
+		curOctave = noteContainer[1];
+		addNoteElement();
+
 	},
 
 	removeLastNoteElement = function() {
