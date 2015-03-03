@@ -102,8 +102,38 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 				}
 		// 			},
 		// 			{
-		// 				type: "rest",
-		// 				duration: "whole"
+		// 				type: "note",
+		// 				pitch: {
+		// 					step: "D",
+		// 					type: "eighth",
+		// 					alter: 0,
+		// 					octave: 5,
+						// beam: "continue",
+						// ****<Eventuell miteinbeziehen>****
+						// timeModification:{
+						// 	actualNotes: 3,
+						// 	normalNotes: 2,
+						// 	normalType: "eight"
+						// }
+						// *****</Eventuell miteinbeziehen>****
+		// 				}
+		// 			},
+		// 			{
+		// 				type: "note",
+		// 				pitch: {
+		// 					step: "C",
+		// 					type: "eighth",
+		// 					alter: 0,
+		// 					octave: 5,
+						// beam: "end",
+						// ****<Eventuell miteinbeziehen>****
+						// timeModification:{
+						// 	actualNotes: 3,
+						// 	normalNotes: 2,
+						// 	normalType: "eight"
+						// }
+						// *****</Eventuell miteinbeziehen>****
+		// 				}
 		// 			}
 		// 		]
 		// 	}
