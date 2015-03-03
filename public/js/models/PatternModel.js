@@ -5,6 +5,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	noteElements4VexFlow = [],
 	//noteElement = null,
 
+	//TODO Set Start Values
 	curMode = null,
 	curName = null,
 	curAccidential = null,
@@ -51,6 +52,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curDuration = noteDuration;
 	},
 
+	//duration like written on button
 	getCurrentNoteDuration = function() {
 		return curDuration;
 	},
@@ -135,12 +137,14 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	getDuration4Vexflow = function(duration) {
-		var duration4Vexflow = "q";
+		var duration4Vexflow = null;
 
 			if ( duration == "whole") {
 				duration4Vexflow = "w";
 			} else if ( duration == "half") {
 				duration4Vexflow = "h";
+			} else if ( duration == "quarter") {
+				duration4Vexflow = "q";
 			} else if ( duration == "eighth") {
 				duration4Vexflow = "8";
 			} else if ( duration == "16th") {
@@ -175,12 +179,21 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return durationIn64th;
 	},
 
+	/*
+	This method gets called when your click on the canvas
+	to add a note element.
+	The paramter note looks like "c/4"
+	*/
 	addNoteElementByCanvasClick = function(note) {
 		console.log("model add note by canavs click : " + note);
 		//split string at "/" to get noteName and ovtave
+		//and saves it into array noteContainer
 		var noteContainer = note.split("/");
-		console.log("part1: " + noteContainer[0]);
-		console.log("part2: " + noteContainer[1]);
+		
+		curName = noteContainer[0];
+		curOctave = noteContainer[1];
+		addNoteElement();
+
 	},
 
 	removeLastNoteElement = function() {
@@ -221,6 +234,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.getAllNoteElements = getAllNoteElements;
 	that.getAllVexFlowNoteElements = getAllVexFlowNoteElements;
 	that.getCompleteDurationIn64th = getCompleteDurationIn64th;
+	that.getDuration4Vexflow = getDuration4Vexflow;
+	that.getDurationIn64thNotes = getDurationIn64thNotes;
 
 	return that;
 }
