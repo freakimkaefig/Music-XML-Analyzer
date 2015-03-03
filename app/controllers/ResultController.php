@@ -24,7 +24,7 @@ class ResultController extends BaseController {
 		if (Cache::has('results') && Cache::has('pattern')) {
 
 			$results = Cache::get('results');
-			Debugbar::info($results);
+			// Debugbar::info($results);
 			foreach ($results as $item) {
 				if ($item->file_id == $id) {
 					$result = $item;
@@ -52,13 +52,11 @@ class ResultController extends BaseController {
 				$voice = $result->occurences[$i]->voice;
 				$part_id = $result->occurences[$i]->part_id;
 
-				$startMeasure = $xPath->query('//part[@id="' . $part_id . '"]//note[' . $start . ']/..');
-				$startMeasureNumber = $startMeasure->item(0)->getAttribute('number');
-				$endMeasure = $xPath->query('//part[@id="' . $part_id . '"]//note[' . $end . ']/..');
-				$endMeasureNumber = $endMeasure->item(0)->getAttribute('number');
+				$startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
+				$endMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($end)->parentNode->getAttribute('number');
 				for ($j = $startMeasureNumber; $j <= $endMeasureNumber; $j++) {
 					$measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note');
-
+					// Debugbar::info($measureNotes);
 					foreach ($measureNotes as $note) {
 						switch ($pattern->type) {
 							case 0:

@@ -85,7 +85,7 @@ class SoundSequenzController {
 						if((int)$n->voice == (int)$lastVoice){
 							// push current interval to xmlIntervalArray
 							array_push(self::$xmlIntervalArray, PatternController::getInterval($note));
-							array_push(self::$xmlPositionArray, $note->position + 1);
+							array_push(self::$xmlPositionArray, $note->position);
 							//check if Array-length equals Pattern-length already
 							if(count(self::$xmlIntervalArray) == count(self::$patternIntervalArray)){
 								
