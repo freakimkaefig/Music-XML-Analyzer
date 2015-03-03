@@ -56,7 +56,8 @@ MusicXMLAnalyzer.PatternView = function(){
 				]
 			}
 		));
-		// melody pattern:
+
+		// melody pattern: Triole
 		// $patternValue.val(JSON.stringify(
 		// 	{
 		// 		type: 2,
@@ -74,6 +75,95 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 				type: "rest",
 		// 				duration: "whole"
 		// 			}
+		// 		]
+		// 	}
+		// )); 
+
+		// rhythm pattern:
+		// $patternValue.val(JSON.stringify(
+		// 	{
+		// 		type: 1,
+		// 		notes: [
+		// 			{
+		// 				type: "note",
+		// 				pitch: {
+		// 					step: "E",
+		// 					type: "half",
+		// 					alter: -1,
+		// 					octave: 5,
+						// beam: "begin",
+						// ****<Eventuell miteinbeziehen>****
+						// timeModification:{
+						// 	actualNotes: 3,
+						// 	normalNotes: 2,
+						// 	normalType: "eight"
+						// }
+						// *****</Eventuell miteinbeziehen>****
+		// 				}
+		// 			},
+		// 			{
+		// 				type: "note",
+		// 				pitch: {
+		// 					step: "D",
+		// 					type: "eighth",
+		// 					alter: 0,
+		// 					octave: 5,
+						// beam: "continue",
+						// ****<Eventuell miteinbeziehen>****
+						// timeModification:{
+						// 	actualNotes: 3,
+						// 	normalNotes: 2,
+						// 	normalType: "eight"
+						// }
+						// *****</Eventuell miteinbeziehen>****
+		// 				}
+		// 			},
+		// 			{
+		// 				type: "note",
+		// 				pitch: {
+		// 					step: "C",
+		// 					type: "eighth",
+		// 					alter: 0,
+		// 					octave: 5,
+						// beam: "end",
+						// ****<Eventuell miteinbeziehen>****
+						// timeModification:{
+						// 	actualNotes: 3,
+						// 	normalNotes: 2,
+						// 	normalType: "eight"
+						// }
+						// *****</Eventuell miteinbeziehen>****
+		// 				}
+		// 			}
+		// 		]
+		// 	}
+		// )); 
+
+		// rhythm pattern #2: Punktierte Noten
+		// $patternValue.val(JSON.stringify(
+		// 	{
+		// 		type: 1,
+		// 		notes: [
+		// 			{
+		// 				type: "note",
+		// 				pitch: {
+		// 					step: "F",
+		// 					type: "half",
+		// 					alter: 0,
+		// 					octave: 1,
+		//					dot: true 
+		// 				}
+		// 			},
+		//			{
+		// 				type: "note",
+		// 				pitch: {
+		// 					step: "F",
+		// 					type: "half",
+		// 					alter: 0,
+		// 					octave: 2,
+		//					dot: true 
+		// 				}
+		// 			}  
 		// 		]
 		// 	}
 		// )); 
