@@ -50,13 +50,6 @@ MusicXMLAnalyzer.NotationView = function(){
 	// via controller
 	renderNotes = function(vexflowNotes, completeDurationIn64th) {
 		console.log("renderNotes");
-		console.log(vexflowNotes);
-		console.log(completeDurationIn64th);
-		console.log(context);
-
-		// STOP
-		// TODO
-		// bei button click wird note nicht mehr auf canvas gezeichnet
 
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
