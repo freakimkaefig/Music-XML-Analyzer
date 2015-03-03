@@ -24,6 +24,7 @@ class ResultController extends BaseController {
 		if (Cache::has('results') && Cache::has('pattern')) {
 
 			$results = Cache::get('results');
+			Debugbar::info($results);
 			foreach ($results as $item) {
 				if ($item->file_id == $id) {
 					$result = $item;
@@ -34,11 +35,12 @@ class ResultController extends BaseController {
 
 			$upload = Upload::find($id);
 
-			$xml = simplexml_load_file($upload->url);
+			$doc = new DOMDocument();
+			$doc->load($upload->url);
+			$xPath = new DOMXPath($doc);
 			// getting extracts with start, end and measures between
 			$resultNotes = array();
 			for ($i = 0; $i < count($result->occurences); $i++) {
-				// $resultExtracts[$i] = array();
 
 				$resultObject = new stdClass();
 				$resultObject->type = $pattern->type;
@@ -50,15 +52,12 @@ class ResultController extends BaseController {
 				$voice = $result->occurences[$i]->voice;
 				$part_id = $result->occurences[$i]->part_id;
 
-				$startMeasure = $xml->xpath('//part[@id="' . $part_id . '"]//note[' . $start . ']/..');
-				$startMeasureNumber = (int)$startMeasure[0]['number'];
-				$endMeasure = $xml->xpath('//part[@id="' . $part_id . '"]//note[' . $end . ']/..');
-				$endMeasureNumber = (int)$endMeasure[0]['number'];
+				$startMeasure = $xPath->query('//part[@id="' . $part_id . '"]//note[' . $start . ']/..');
+				$startMeasureNumber = $startMeasure->item(0)->getAttribute('number');
+				$endMeasure = $xPath->query('//part[@id="' . $part_id . '"]//note[' . $end . ']/..');
+				$endMeasureNumber = $endMeasure->item(0)->getAttribute('number');
 				for ($j = $startMeasureNumber; $j <= $endMeasureNumber; $j++) {
-					// $measure = $xml->xpath('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]');
-					// $resultExtracts[$i][] = $measure;
-					$measureNotes = $xml->xpath('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note');
-					// Debugbar::info($measureNotes);
+					$measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note');
 
 					foreach ($measureNotes as $note) {
 						switch ($pattern->type) {
@@ -73,11 +72,30 @@ class ResultController extends BaseController {
 								 *   }
 								 * }
 								 */
+								$pitch = $note->getElementsByTagName('pitch');
 								$noteObject = new stdClass();
 								$noteObject->pitch = new stdClass();
-								$noteObject->pitch->step = (string)$note->pitch->step;
-								$noteObject->pitch->alter = (int)$note->pitch->alter;
-								$noteObject->pitch->octave = (int)$note->pitch->octave;
+
+								$step = $pitch->item(0)->getElementsByTagName('step');
+								if ($step->length) {
+									$noteObject->pitch->step = $step->item(0)->nodeValue;
+								} else {
+									break;
+								}
+
+								$alter = $pitch->item(0)->getElementsByTagName('alter');
+								if ($alter->length) {
+									$noteObject->pitch->alter = $alter->item(0)->nodeValue;
+								} else {
+									$noteObject->pitch->alter = 0;
+								}
+
+								$octave = $pitch->item(0)->getElementsByTagName('octave');
+								if ($octave->length) {
+									$noteObject->pitch->octave = $octave->item(0)->nodeValue;
+								} else {
+									break;
+								}
 								$resultNotes[$i]->notes[] = $noteObject;
 								break;
 
