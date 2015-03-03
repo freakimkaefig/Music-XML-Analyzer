@@ -215,6 +215,10 @@ h1 {
   shape-rendering: crispEdges;
 }
 
+.bar-value{
+	font: 12px sans-serif;
+}
+
 /*RESULTLIST*/
 .canvas {
 	margin-bottom: 60px;

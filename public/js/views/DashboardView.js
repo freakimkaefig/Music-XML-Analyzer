@@ -240,7 +240,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 			.attr("x", function(d) { return x(d.label); })
 			.attr("y", function(d) { return y(d.value); })
 			.text(function(d) { return d.value; })
-			.attr("dx", "2em")
+			.attr("dx", "2.5em")
 			.attr("dy", "-.5em");
 	
 	},
@@ -329,7 +329,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 			.attr("x", function(d) { return x(d.label); })
 			.attr("y", function(d) { return y(d.value); })
 			.text(function(d) { return d.value; })
-			.attr("dx", ".8em")
+			.attr("dx", "1em")
 			.attr("dy", "-.5em");
 	},
 
