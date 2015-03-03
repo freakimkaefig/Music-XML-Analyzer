@@ -43,8 +43,8 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onNoteButtonClick = function(event) {
-		//console.log($(event.target).text());
-		patternController.changeNote($(event.target).text());
+		//console.log(event.target.id);
+		patternController.changeNote(event.target.id);
 	},
 
 	onAccidentialButtonClick = function(event) {
