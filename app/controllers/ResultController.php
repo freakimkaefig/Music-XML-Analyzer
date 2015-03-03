@@ -123,7 +123,7 @@ class ResultController extends BaseController {
 
 
 	public static function _getArtist($id) {
-		Debugbar::info(Upload::find($id)->url);
+		Debugbar::info($id);
 		$xml = simplexml_load_file(Upload::find($id)->url);
 		$artist = $xml->xpath("//credit[credit-type='composer']");
 		if ($artist) {

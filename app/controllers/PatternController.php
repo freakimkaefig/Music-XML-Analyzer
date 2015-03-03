@@ -40,16 +40,17 @@ class PatternController extends BaseController {
 				break;
 		}
 
-		$results = array(
-			(object)array(
-				"file_id" => 21,
-				"file_url" => "http://music-xml-analyzer.local/uploads/133/ActorPreludeSample.xml",
-				"occurences" => array(
-					(object)array('start' => 7, 'end' => 8, 'voice' => 1, 'part_id' => "P1"),
-					(object)array('start' => 7, 'end' => 10, 'voice' => 1, 'part_id' => "P1")
-				)
-			)
-		);
+		// $results = array(
+		// 	(object)array(
+		// 		"file_id" => 21,
+		// 		"file_url" => "http://music-xml-analyzer.local/uploads/133/ActorPreludeSample.xml",
+		// 		"occurences" => array(
+		// 			(object)array('start' => 7, 'end' => 8, 'voice' => 1, 'part_id' => "P1"),
+		// 			(object)array('start' => 7, 'end' => 10, 'voice' => 1, 'part_id' => "P1")
+		// 		)
+		// 	)
+		// );
+		
 		Cache::put('pattern', $pattern, $time);
 		Cache::put('results', $results, $time);
 
