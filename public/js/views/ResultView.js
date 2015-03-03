@@ -13,7 +13,7 @@ MusicXMLAnalyzer.ResultView = function(){
 
 		if ($('#patternCanvas').length) {
 			$patternValue = $('#patternValue');
-			initPatternCanvas(generateVexflowNotes(JSON.parse($patternValue.val())));
+			initPatternCanvas(JSON.parse($patternValue.val()));
 		}
 
 		if ($('#extract-carousel').length) {
@@ -25,22 +25,23 @@ MusicXMLAnalyzer.ResultView = function(){
 	initCanvasResults = function() {
 		console.info('MusicXMLAnalyzer.ResultView.initCanvasResults');
 		$carousel.find('.item').each(function(index, element) {
-			var notes = generateVexflowNotes(JSON.parse($(element).find('input.notes').val()));
+			var measures = generateVexflowNotes(JSON.parse($(element).find('input.notes').val()));
 			var canvas = document.getElementById('canvas' + index);
 			var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
 			var context = renderer.getContext();
 			var stave = new Vex.Flow.Stave(10, 0, 700);
 			stave.addClef("treble").setContext(context).draw();
 
-			renderNotes(notes, canvas, renderer, context, stave);
-			console.log(index, notes);
+			// console.log(index, notes);
+			renderNotes(measures, canvas, renderer, context, stave);
 		});
 	},
 
-	initPatternCanvas = function(vexflowNotes) {
+	initPatternCanvas = function(pattern) {
 		// console.info('MusicXMLAnalyzer.ResultView.initPatternCanvas');
 		patternCanvas = document.getElementById('patternCanvas');
 		
+		var vexflowNotes = generateVexflowNotes({ measures: [{ notes: pattern.notes }], type: pattern.type });
 		var renderer = new Vex.Flow.Renderer(patternCanvas, Vex.Flow.Renderer.Backends.CANVAS);
 		var context = renderer.getContext();
 		var stave = new Vex.Flow.Stave(10, 0, 700);
@@ -49,30 +50,165 @@ MusicXMLAnalyzer.ResultView = function(){
 		renderNotes(vexflowNotes, patternCanvas, renderer, context, stave);
 	},
 
-	renderNotes = function(notes, canvas, renderer, context, stave) {
+	renderNotes = function(measures, canvas, renderer, context, stave) {
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		
 		stave.setContext(context).draw();
 
 		var voice = new Vex.Flow.Voice({
-		    num_beats: notes.duration,
-		    beat_value: 64,
+		    num_beats: 4,
+		    beat_value: 4,
 		    resolution: Vex.Flow.RESOLUTION
 		});
 
-		// Add notes to voice
-		voice.addTickables(notes.notes);
+		// disable strict timing
+		voice.setStrict(false);
 
-		// Format and justify the notes to 700 pixels
-		var formatter = new Vex.Flow.Formatter().
-		    joinVoices([voice]).format([voice], 700);
+		for (var i = 0; i < measures.length; i++) {
+			
+			// Add measures to voice
+			voice.addTickables(measures[i].notes);
 
-		// Render voice
-		voice.draw(context, stave);
+			// Format and justify the measures to 700 pixels
+			var formatter = new Vex.Flow.Formatter().
+			    joinVoices([voice]).format([voice], 700);
+
+			// Render voice
+			voice.draw(context, stave);
+			
+		}
+
+
 		
 	},
 
+	generateVexflowNotes = function(pattern) {
+		var measures = [];
+
+		switch (pattern.type) {
+			case 0:
+				// sound sequence
+				for (var i = 0; i < pattern.measures.length; i++) {
+					var notes = [];
+					var duration = 0;
+					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
+						var step = pattern.measures[i].notes[j].pitch.step;
+						var octave = pattern.measures[i].notes[j].pitch.octave;
+						var alter = pattern.measures[i].notes[j].pitch.alter;
+						var keys = [getVexflowKey(step, octave, alter )];
+						if (alter == -1) {
+							notes.push(
+								new Vex.Flow.StaveNote(
+									{
+										keys: keys,
+										duration: "q",
+										auto_stem: true
+									}
+								).addAccidental(0, new Vex.Flow.Accidental("b"))
+							);
+						} else if (alter == 1) {
+							notes.push(
+								new Vex.Flow.StaveNote(
+									{
+										keys: keys,
+										duration: "q",
+										auto_stem: true
+									}
+								).addAccidental(0, new Vex.Flow.Accidental("#"))
+							);
+						} else {
+							notes.push(
+								new Vex.Flow.StaveNote(
+									{
+										keys: keys,
+										duration: "q",
+										auto_stem: true
+									}
+								)
+							);
+						}
+						duration += 16;
+					}
+					measures.push({ notes: notes, duration: duration });
+				}
+				break;
+
+			case 1:
+				//
+				break;
+
+			case 2:
+				// melody
+				for (var i = 0; i < pattern.measures.length; i++) {
+					var notes = [];
+					var duration = 0;
+					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
+						if (pattern.measures[i].notes[j].type == "note") {
+							var step = pattern.measures[i].notes[j].pitch.step;
+							var octave = pattern.measures[i].notes[j].pitch.octave;
+							var alter = pattern.measures[i].notes[j].pitch.alter;
+							var type = pattern.measures[i].notes[j].pitch.type;
+							var keys = [getVexflowKey(step, octave, alter )];
+							var noteDuration = getVexflowDuration(type, false)
+							if (alter == -1) {
+								notes.push(
+									new Vex.Flow.StaveNote(
+										{
+											keys: keys,
+											duration: noteDuration,
+											auto_stem: true
+										}
+									).addAccidental(0, new Vex.Flow.Accidental("b"))
+								);
+							} else if (alter == 1) {
+								notes.push(
+									new Vex.Flow.StaveNote(
+										{
+											keys: keys,
+											duration: noteDuration,
+											auto_stem: true
+										}
+									).addAccidental(0, new Vex.Flow.Accidental("#"))
+								);
+							} else {
+								notes.push(
+									new Vex.Flow.StaveNote(
+										{
+											keys: keys,
+											duration: noteDuration,
+											auto_stem: true
+										}
+									)
+								);
+							}
+							duration += getDurationIn64th(type);
+						} else if (pattern.measures[i].notes[j].type == "rest") {
+							var noteDuration = getVexflowDuration(pattern.measures[i].notes[j].duration, true);
+							notes.push(
+								new Vex.Flow.StaveNote(
+									{
+										keys: ["c/1"],
+										duration: duration,
+										auto_stem: true
+									}
+								)
+							);
+							duration += getDurationIn64th(pattern.measures[i].notes[j].duration);
+						}
+					}
+					measures.push({ notes: notes, duration: duration });
+				}
+				break;
+		}
+		
+		console.log(measures);
+		return measures;
+		// return { notes: notes, duration: duration };
+	},
+
+
+	/* HELPER FUNCTIONS */
 	getDurationIn64th = function(duration) {
 		switch (duration) {
 			case "whole":
@@ -115,50 +251,23 @@ MusicXMLAnalyzer.ResultView = function(){
 		}
 	},
 
-	generateVexflowNotes = function(pattern) {
-		var notes = [];
-		duration = 0;
-
-		switch (pattern.type) {
-			case 0:
-				// sound sequence
-				for (var i = 0; i < pattern.notes.length; i++) {
-					notes.push(new Vex.Flow.StaveNote({
-						keys: [pattern.notes[i].pitch.step.toLowerCase() + "/" + pattern.notes[i].pitch.octave],
-						duration: "q",
-						auto_stem: true
-					}));
-					duration += 16;
-				}
-				break;
-
+	getVexflowKey = function(step, octave, alter) {
+		key = step.toLowerCase();
+		switch (alter) {
+			case -2:
+				key += "bb"; break;
+			case -1:
+				key += "b"; break;
 			case 1:
-				//
-				break;
-
+				key += "#"; break;
 			case 2:
-				// melody
-				for (var i = 0; i < pattern.notes.length; i++) {
-					if (pattern.notes[i].type == "note") {
-						notes.push(new Vex.Flow.StaveNote({
-							keys: [pattern.notes[i].pitch.step.toLowerCase() + "/" + pattern.notes[i].pitch.octave],
-							duration: getVexflowDuration(pattern.notes[i].pitch.type, false),
-							auto_stem: true
-						}));
-						duration += getDurationIn64th(pattern.notes[i].pitch.type);
-					} else if (pattern.notes[i].type == "rest") {
-						notes.push(new Vex.Flow.StaveNote({
-							keys: ["b/4"],
-							duration: getVexflowDuration(pattern.notes[i].duration, true),
-							auto_stem: true
-						}));
-						duration += getDurationIn64th(pattern.notes[i].duration);
-					}
-				}
+				key += "##"; break;
+			default:
 				break;
 		}
-		
-		return { notes: notes, duration: duration };
+		key += "/";
+		key += octave;
+		return key;
 	};
 
 	that.init = init;

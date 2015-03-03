@@ -43,7 +43,7 @@ class ResultController extends BaseController {
 			for ($i = 0; $i < count($result->occurences); $i++) {
 
 				$resultObject = new stdClass();
-				$resultObject->type = $pattern->type;
+				$resultObject->type = 2;
 				$resultObject->notes = array();
 				$resultNotes[$i] = $resultObject;
 
@@ -54,9 +54,12 @@ class ResultController extends BaseController {
 
 				$startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
 				$endMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($end)->parentNode->getAttribute('number');
+				$measureCounter = 0;
 				for ($j = $startMeasureNumber; $j <= $endMeasureNumber; $j++) {
 					$measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note');
 					// Debugbar::info($measureNotes);
+					$measureObject = new stdClass();
+					$resultNotes[$i]->measures[$measureCounter] = $measureObject;
 					foreach ($measureNotes as $note) {
 						switch ($pattern->type) {
 							case 0:
@@ -70,31 +73,41 @@ class ResultController extends BaseController {
 								 *   }
 								 * }
 								 */
-								$pitch = $note->getElementsByTagName('pitch');
 								$noteObject = new stdClass();
-								$noteObject->pitch = new stdClass();
+								$pitch = $note->getElementsByTagName('pitch');
+								if ($pitch->length) {
+									// it's a note
+									$noteObject->type = "note";
+									$noteObject->pitch = new stdClass();
 
-								$step = $pitch->item(0)->getElementsByTagName('step');
-								if ($step->length) {
-									$noteObject->pitch->step = $step->item(0)->nodeValue;
-								} else {
-									break;
-								}
+									$step = $pitch->item(0)->getElementsByTagName('step');
+									if ($step->length) {
+										$noteObject->pitch->step = $step->item(0)->nodeValue;
+									}
 
-								$alter = $pitch->item(0)->getElementsByTagName('alter');
-								if ($alter->length) {
-									$noteObject->pitch->alter = $alter->item(0)->nodeValue;
-								} else {
-									$noteObject->pitch->alter = 0;
-								}
+									$alter = $pitch->item(0)->getElementsByTagName('alter');
+									if ($alter->length) {
+										$noteObject->pitch->alter = $alter->item(0)->nodeValue;
+									} else {
+										$noteObject->pitch->alter = 0;
+									}
 
-								$octave = $pitch->item(0)->getElementsByTagName('octave');
-								if ($octave->length) {
-									$noteObject->pitch->octave = $octave->item(0)->nodeValue;
+									$octave = $pitch->item(0)->getElementsByTagName('octave');
+									if ($octave->length) {
+										$noteObject->pitch->octave = $octave->item(0)->nodeValue;
+									}
+
+									$type = $note->getElementsByTagName('type');
+									if ($type->length) {
+										$noteObject->pitch->type = $type->item(0)->nodeValue;
+									}
+									
 								} else {
-									break;
+									// it's a rest
+									$noteObject->type = "rest";
+									$noteObject->duration = "half";		// TODO: calulate rest duration
 								}
-								$resultNotes[$i]->notes[] = $noteObject;
+								$resultNotes[$i]->measures[$measureCounter]->notes[] = $noteObject;
 								break;
 
 							case 1:
@@ -127,6 +140,7 @@ class ResultController extends BaseController {
 								break;
 						}
 					}
+					$measureCounter++;
 				}
 			}
 			// Debugbar::info($resultNotes);
