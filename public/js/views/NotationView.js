@@ -49,7 +49,14 @@ MusicXMLAnalyzer.NotationView = function(){
 	// display note elements on the canvas and get them from model
 	// via controller
 	renderNotes = function(vexflowNotes, completeDurationIn64th) {
-		//console.log("vex notes: ", vexflowNotes);
+		console.log("renderNotes");
+		console.log(vexflowNotes);
+		console.log(completeDurationIn64th);
+		console.log(context);
+
+		// STOP
+		// TODO
+		// bei button click wird note nicht mehr auf canvas gezeichnet
 
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -75,6 +82,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 
 	renderVexFlowNotePreview = function(noteName) {
+		console.log("render notes preview");
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave.setContext(context).draw();

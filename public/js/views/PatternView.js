@@ -39,7 +39,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	onModeButtonClick = function(event) {
 		//console.log($(event.target).text());
-		patternController.changeMode($(event.target).text());
+		patternController.changeMode(event.target.id);
 	},
 
 	onNoteButtonClick = function(event) {
@@ -49,22 +49,22 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	onAccidentialButtonClick = function(event) {
 		// console.log($(event.target).text());
-		patternController.changeAccidential($(event.target).text());
+		patternController.changeAccidential(event.target.id);
 	},
 
 	onDurationButtonClick = function(event) {
 		// console.log($(event.target).text());
-		patternController.changeDuration($(event.target).text());
+		patternController.changeDuration(event.target.id);
 	},
 
 	onClefButtonClick = function(event) {
 		// console.log($(event.target).text());
-		patternController.changeClef($(event.target).text());
+		patternController.changeClef(event.target.id);
 	},
 
 	onSpecialRythButtonClick = function(event) {
 		// console.log($(event.target).text());
-		patternController.changeSpecialRyth($(event.target).text());
+		patternController.changeSpecialRyth(event.target.id);
 	},
 
 	onOctaveChanged = function(event) {

@@ -14,13 +14,13 @@
 	<div class="col-xs-4">
 		<p>Choose Mode: </p>
 		<div class="btn-group" data-toggle="buttons">
-        	<label id="melody" class="btn btn-mode btn-warning active" data-toggle="tooltip" data-placement="top">
+        	<label id="melody" class="btn btn-mode btn-primary active" data-toggle="tooltip" data-placement="top">
       			<input type="radio" value=":melody">melody
             </label>
-        	<label id="sound sequence" class="btn btn-mode btn-warning" data-toggle="tooltip" data-placement="top">
+        	<label id="sound sequence" class="btn btn-mode btn-primary" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":sound sequence">sound sequence
             </label>
-        	<label id="rhythm" class="btn btn-mode btn-warning" data-toggle="tooltip" data-placement="top">
+        	<label id="rhythm" class="btn btn-mode btn-primary" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":rhythm">rhythm
             </label>
 		</div>
@@ -139,11 +139,11 @@
 		<p></p>
 		<p>Octave: </p>
 	    <select id="select-octave" class="form-control">
-		  <option>2</option>
-		  <option>3</option>
-		  <option>4</option>
-		  <option>5</option>
-		  <option>6</option>
+		  <option value="2">2</option>
+		  <option value="3">3</option>
+		  <option value="4">4</option>
+		  <option value="5">5</option>
+		  <option value="6">6</option>
 		</select>
 	</div>
 </div>
@@ -155,7 +155,6 @@
 		<button id="btn-remove-note" type="button" class="btn btn-default btn-danger">Delete</button>
 	</div>
 </div>
-<!-- oktave missing -->
 
 {{ Form::submit('Search') }}
 {{ Form::close() }}
