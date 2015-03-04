@@ -18,6 +18,17 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	init = function(){
 		console.log("pattern model");
+		setDefaultValues();
+	},
+
+	setDefaultValues = function() {
+		curMode = "melody";
+		curName = "c";
+		curAccidential = "none";
+		curDuration = "quarter";
+		curClef = "G";
+		curRythSpec = "none";
+		curOctave = "4";
 	},
 
 	setCurrentMode = function(mode) {
