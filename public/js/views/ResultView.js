@@ -54,7 +54,7 @@ MusicXMLAnalyzer.ResultView = function(){
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		
-		stave.setContext(context).draw();
+		// stave.setContext(context).draw();
 
 		var voice = new Vex.Flow.Voice({
 		    num_beats: 4,
@@ -66,71 +66,89 @@ MusicXMLAnalyzer.ResultView = function(){
 		voice.setStrict(false);
 
 		for (var i = 0; i < measures.length; i++) {
-			
-			// Add measures to voice
-			voice.addTickables(measures[i].notes);
 
-			// Format and justify the measures to 700 pixels
-			var formatter = new Vex.Flow.Formatter().
-			    joinVoices([voice]).format([voice], 700);
+			var x, y, width;
+			width = 340;
+			height = 80;
+			padding = 10;
+			if (i%2 == 0) {
+				x = padding;
+				y = i * (height / 2);
+			} else {
+				x = padding + width;
+				y = (i - 1) * (height / 2);
+			}
 
-			// Render voice
-			voice.draw(context, stave);
-			
-		}
-
-
-		
+			staveBar = new Vex.Flow.Stave(x, y, width);
+			if (i%2 == 0) {
+				staveBar.addClef("treble");
+				staveBar.addTimeSignature("2/4");	// TODO calculate time signature for each measure and print when necessary
+			}
+			if (i%2 == 1) {
+				
+			}
+			if (i > 0 && i < measures.length-1) {
+				// console.log("begin");
+				staveBar.setBegBarType(Vex.Flow.Barline.type.SINGLE);
+			}
+			if (i == measures.length-1) {
+				// console.log("end");
+				staveBar.setEndBarType(Vex.Flow.Barline.type.END);
+			}
+			staveBar.setContext(context).draw();
+			Vex.Flow.Formatter.FormatAndDraw(context, staveBar, measures[i].notes);
+		}		
 	},
 
 	generateVexflowNotes = function(pattern) {
+		console.log("MusicXMLAnalyzer.ResultView.generateVexflowNotes" , "pattern", pattern);
 		var measures = [];
 
 		switch (pattern.type) {
 			case 0:
 				// sound sequence
-				for (var i = 0; i < pattern.measures.length; i++) {
-					var notes = [];
-					var duration = 0;
-					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
-						var step = pattern.measures[i].notes[j].pitch.step;
-						var octave = pattern.measures[i].notes[j].pitch.octave;
-						var alter = pattern.measures[i].notes[j].pitch.alter;
-						var keys = [getVexflowKey(step, octave, alter )];
-						if (alter == -1) {
+				for (var i = 0; i < pattern.measures.length; i++) {	// iterate over measures in result
+					var notes = [];	//creating notes array for notes in current measure
+					var duration = 0;	// resetting duration to 0
+					for (var j = 0; j < pattern.measures[i].notes.length; j++) {	// iterate over all notes in current measure
+						var step = pattern.measures[i].notes[j].pitch.step;	// determine the step
+						var octave = pattern.measures[i].notes[j].pitch.octave;	// determine the octave
+						var alter = pattern.measures[i].notes[j].pitch.alter;	// determine the alter
+						var keys = [getVexflowKey(step, octave, alter )];	// generating key in vexflow format
+						if (alter == -1) {	// if accidental should be "b"
 							notes.push(
 								new Vex.Flow.StaveNote(
 									{
 										keys: keys,
-										duration: "q",
+										duration: "q",	// duration for sound sequence is always quarter
 										auto_stem: true
 									}
-								).addAccidental(0, new Vex.Flow.Accidental("b"))
+								).addAccidental(0, new Vex.Flow.Accidental("b"))	// add "b"
 							);
-						} else if (alter == 1) {
+						} else if (alter == 1) {	// if accidental should be "#"
 							notes.push(
 								new Vex.Flow.StaveNote(
 									{
 										keys: keys,
-										duration: "q",
+										duration: "q",	// duration for sound sequence is always quarter
 										auto_stem: true
 									}
-								).addAccidental(0, new Vex.Flow.Accidental("#"))
+								).addAccidental(0, new Vex.Flow.Accidental("#"))	// add "#"
 							);
-						} else {
+						} else {	// if no accidental
 							notes.push(
 								new Vex.Flow.StaveNote(
 									{
 										keys: keys,
-										duration: "q",
+										duration: "q",	// duration for sound sequence is always quarter
 										auto_stem: true
 									}
 								)
 							);
 						}
-						duration += 16;
+						duration += 16;	// add 16 to duration; quarter = 16/64
 					}
-					measures.push({ notes: notes, duration: duration });
+					measures.push({ notes: notes, duration: duration });	// push note to array
 				}
 				break;
 
@@ -142,6 +160,9 @@ MusicXMLAnalyzer.ResultView = function(){
 				// melody
 				for (var i = 0; i < pattern.measures.length; i++) {
 					var notes = [];
+					if (i > 0) {
+						// notes.push(new Vex.Flow.BarNote(0));
+					}
 					var duration = 0;
 					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
 						if (pattern.measures[i].notes[j].type == "note") {
@@ -188,8 +209,8 @@ MusicXMLAnalyzer.ResultView = function(){
 							notes.push(
 								new Vex.Flow.StaveNote(
 									{
-										keys: ["c/1"],
-										duration: duration,
+										keys: ["b/4"],	// key is b/4 to center rest vertical
+										duration: noteDuration,
 										auto_stem: true
 									}
 								)

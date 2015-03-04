@@ -31,7 +31,7 @@ class ResultController extends BaseController {
 				}
 			}
 
-			$pattern = Cache::get('pattern');
+			$pattern = Cache::get('pattern')[0];
 
 			$upload = Upload::find($id);
 
@@ -44,7 +44,6 @@ class ResultController extends BaseController {
 
 				$resultObject = new stdClass();
 				$resultObject->type = 2;
-				$resultObject->notes = array();
 				$resultNotes[$i] = $resultObject;
 
 				$start = $result->occurences[$i]->start;
@@ -52,12 +51,17 @@ class ResultController extends BaseController {
 				$voice = $result->occurences[$i]->voice;
 				$part_id = $result->occurences[$i]->part_id;
 
+				// Debugbar::info("start: " . $start);
+				// Debugbar::info("end: " . $end);
+
 				$startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
+				// Debugbar::info("start measure: " . $startMeasureNumber);
 				$endMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($end)->parentNode->getAttribute('number');
+				// Debugbar::info("end measure: " . $endMeasureNumber);
 				$measureCounter = 0;
 				for ($j = $startMeasureNumber; $j <= $endMeasureNumber; $j++) {
 					$measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note');
-					// Debugbar::info($measureNotes);
+					// Debugbar::info("counter: " . $measureCounter);
 					$measureObject = new stdClass();
 					$resultNotes[$i]->measures[$measureCounter] = $measureObject;
 					foreach ($measureNotes as $note) {
@@ -107,6 +111,7 @@ class ResultController extends BaseController {
 									$noteObject->type = "rest";
 									$noteObject->duration = "half";		// TODO: calulate rest duration
 								}
+								// Debugbar::info($noteObject);
 								$resultNotes[$i]->measures[$measureCounter]->notes[] = $noteObject;
 								break;
 
