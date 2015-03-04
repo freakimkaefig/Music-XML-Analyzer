@@ -15,6 +15,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	curOctave = null,
 	VEXFLOW_REST_SIGN = "r",
 	completeDurationIn64th = 0,
+	first = true,
 
 	init = function(){
 		console.log("pattern model");
@@ -22,9 +23,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setDefaultValues = function() {
-		curMode = "melody";
-		curName = "c";
-		curAccidential = "none";
+		curMode = "0";
+		curName = "C";
+		curAccidential = "0";
 		curDuration = "quarter";
 		curClef = "G";
 		curRythSpec = "none";
@@ -112,16 +113,65 @@ MusicXMLAnalyzer.PatternModel = function(){
 			alert("octave missing");
 		}
 		else {
+					// soundSequence pattern:
+		// $patternValue.val(JSON.stringify(
+		// 	{
+		// 		type: 0,
+		// 		notes: [
+		// 			{
+		// 				pitch: {
+		// 					step: "B",
+		// 					alter: 0,
+		// 					octave: 5
+		// 				}
+		// 			},
+		// 			{
+		// 				pitch: {
+		// 					step: "B",
+		// 					alter: 0,
+		// 					octave: 5
+		// 				}
+		// 			}
+		// 		]
+		// 	}
+		// ));
 
-			noteElements.push({
-				name: curName,
-				accidential: curAccidential,
-				duration: curDuration,
-				rythSpecial: curRythSpec,
-				octave: curOctave
-			});
+// 
+// Adding Notes (doesn't work on rest or anything else)
+// ToDo: differentiation between other ElementTypes (e.g. rests, or dotted notes, or triplets, ...)
+// ToDo: needs more specific var's according to ElementType [see patterns!]
+// 
+			if(first){
+				first = false;
+				noteElements.push({
+					type: curMode,
+					notes:[{
+						pitch: {
+							step: curName,
+							accidential: curAccidential,
+							type: curDuration,
+							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
+							octave: curOctave
+						}
+					}
+					]
+				});
+			}else{
+				noteElements[0].notes.push({
+					
+						pitch: {
+							step: curName,
+							accidential: curAccidential,
+							type: curDuration,
+							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
+							octave: curOctave
+						}
+					
+					
+				});
+			}
 
-			console.log("noteElements: ", noteElements);
+			// console.log("noteElements: ", noteElements);
 			
 
 			for (var i = 0; i < noteElements.length; i++) {
@@ -208,6 +258,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	removeLastNoteElement = function() {
+		//ToDo: do "first = true;"" if LastNoteElement equals first note element
+		//and remove this element
 	    console.log("model: remove last note button; function missing");
 	    console.log(noteElements4VexFlow);
 	},

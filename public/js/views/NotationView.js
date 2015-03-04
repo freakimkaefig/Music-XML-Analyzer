@@ -102,6 +102,8 @@ MusicXMLAnalyzer.NotationView = function(){
 		    beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
+		//easiest way to disable time-checking
+		voice.setStrict(false);
 
 		// Add notes to voice
 		voice.addTickables(vexFlowNotes);

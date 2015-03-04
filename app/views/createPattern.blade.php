@@ -14,13 +14,13 @@
 	<div class="col-xs-12">
 		<p>Choose Mode: </p>
 		<div class="btn-group" data-toggle="buttons">
-        	<label id="melody" class="btn btn-mode btn-primary active" data-toggle="tooltip" data-placement="top">
+        	<label id="2" class="btn btn-mode btn-primary active" data-toggle="tooltip" data-placement="top">
       			<input type="radio" value=":melody">melody
             </label>
-        	<label id="sound sequence" class="btn btn-mode btn-primary" data-toggle="tooltip" data-placement="top">
+        	<label id="0" class="btn btn-mode btn-primary" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":sound sequence">sound sequence
             </label>
-        	<label id="rhythm" class="btn btn-mode btn-primary" data-toggle="tooltip" data-placement="top">
+        	<label id="1" class="btn btn-mode btn-primary" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":rhythm">rhythm
             </label>
 		</div>
@@ -39,25 +39,25 @@
 		<p>Notes: </p>
 		<div class="btn-group" data-toggle="buttons">
         	<label id="c" class="btn btn-note btn-material-grey active" data-toggle="tooltip" data-placement="top">
-      			<input type="radio" value=":c">c
+      			<input type="radio" value=":c">C
             </label>
         	<label id="d" class="btn btn-note btn-material-grey" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":d">d
+        		<input type="radio" value=":d">D
             </label>
         	<label id="e" class="btn btn-note btn-material-grey" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":e">e
+        		<input type="radio" value=":e">E
             </label>
         	<label id="f" class="btn btn-note btn-material-grey" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":f">f
+        		<input type="radio" value=":f">F
             </label>
         	<label id="g" class="btn btn-note btn-material-grey" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":g">g
+        		<input type="radio" value=":g">G
             </label>
         	<label id="a" class="btn btn-note btn-material-grey" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":a">a
+        		<input type="radio" value=":a">A
             </label>
             <label id="b" class="btn btn-note btn-material-grey" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":b">b
+        		<input type="radio" value=":b">B
             </label>
 		</div>
 	</div>
@@ -95,14 +95,14 @@
 		<p></p>
 		<p>Accidential: </p>
 		<div class="btn-group" data-toggle="buttons">
-        	<label id="none" class="btn btn-accidential btn-material-grey active" data-toggle="tooltip" data-placement="top">
-      			<input type="radio" value=":none">none
+        	<label id="0" class="btn btn-accidential btn-material-grey active" data-toggle="tooltip" data-placement="top">
+      			<input type="radio" value=":0">none
             </label>
-        	<label id="#" class="btn btn-accidential btn-material-grey" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":#">#
+        	<label id="1" class="btn btn-accidential btn-material-grey" data-toggle="tooltip" data-placement="top">
+        		<input type="radio" value=":1">#
             </label>
-        	<label id="b" class="btn btn-accidential btn-material-grey" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":b">b
+        	<label id="-1" class="btn btn-accidential btn-material-grey" data-toggle="tooltip" data-placement="top">
+        		<input type="radio" value=":-1">b
             </label>
 		</div>
 	</div>
