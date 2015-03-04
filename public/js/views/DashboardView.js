@@ -62,7 +62,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	initFileSelector = function(data) {
 		$fileSelector.empty();
-		var selectorElement = '<select class="form-control" name="fileSelector">';
+		var selectorElement = '<select class="form-control btn-material-grey" name="fileSelector">';
 		selectorElement += '<option value="all"> - All - </option>';
 
 		for (var i = 0; i < data.length; i++) {
@@ -114,10 +114,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .scale(y)
 		              .orient("left");
 
-		var tip = d3.tip()
+		/*var tip = d3.tip()
 					.attr('class', 'd3-tip')
 					.offset([-10, 0])
-					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });
+					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });*/
 		  
 		var svg = d3.select("#bar_intervalDistribution")  
 		              .append("svg")  //append svg element inside #bar_intervalDistribution
@@ -126,7 +126,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .append("g")
 		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		svg.call(tip);
+		//svg.call(tip);
 
 		// transform data object
 	  	x.domain(data.map(function(d){ return d.label}));
@@ -156,8 +156,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 		   .attr("x", function(d) { return x(d.label); })
 		   .attr("width", x.rangeBand())
 		   .attr("y", function(d) { return y(d.value); })
-		   .attr("height", function(d) { return height - y(d.value); })
-		   .on("click", tip.show);
+		   .attr("height", function(d) { return height - y(d.value); });
+
+
+
+		   //.on("click", tip.show);
+
 	},
 
 	initNoteDistribution = function(data) {
@@ -183,10 +187,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .scale(y)
 		              .orient("left");
 
-		var tip = d3.tip()
+		/*var tip = d3.tip()
 					.attr('class', 'd3-tip')
 					.offset([-10, 0])
-					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });
+					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });*/
 		  
 		var svg = d3.select("#bar_noteDistribution")  
 		              .append("svg")  //append svg element inside #bar_noteDistribution
@@ -195,7 +199,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .append("g")
 		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		svg.call(tip);
+		//svg.call(tip);
 
 		// transform data object
 	  	x.domain(data.map(function(d){ return d.label}));
@@ -226,13 +230,25 @@ MusicXMLAnalyzer.DashboardView = function(){
 		   .attr("width", x.rangeBand())
 		   .attr("y", function(d) { return y(d.value); })
 		   .attr("height", function(d) { return height - y(d.value); })
-		   .on("click", tip.show); 
+		   //.on("click", tip.show); 
+
+		   svg.selectAll("text.bar")
+			.data(data)
+			.enter()
+			.append("text")
+			.attr("class", "bar-value")
+			.attr("x", function(d) { return x(d.label); })
+			.attr("y", function(d) { return y(d.value); })
+			.text(function(d) { return d.value; })
+			.attr("dx", "2.5em")
+			.attr("dy", "-.5em");
+	
 	},
 
 	initIntervalDistribution = function(data) {
 		$('#bar_intervalDistribution').empty();
 		var containerWidth = $('#bar_intervalDistribution').width() - 30;
-		var margin ={ top:20, right:30, bottom:50, left: 40 },
+		var margin ={ top:20, right:30, bottom:130, left: 40 },
 		    width = containerWidth - margin.left - margin.right, 
 		    height= 300 - margin.top - margin.bottom;
 
@@ -252,10 +268,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .scale(y)
 		              .orient("left");
 
-		var tip = d3.tip()
+		/*var tip = d3.tip()
 					.attr('class', 'd3-tip')
 					.offset([-10, 0])
-					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });
+					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });*/
 		  
 		var svg = d3.select("#bar_intervalDistribution")  
 		              .append("svg")  //append svg element inside #bar_intervalDistribution
@@ -264,16 +280,20 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .append("g")
 		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		svg.call(tip);
+		//svg.call(tip);
 
 		// transform data object
 	  	x.domain(data.map(function(d){ return d.label}));
 	  	y.domain([0, d3.max(data, function(d){return d.value})]);
 
-		// svg.append("g")
-		//      .attr("class", "x axis")
-		//      .attr("transform", "translate(0,"+ height+")")
-		//      .call(xAxis);
+		 svg.append("g")
+		      .attr("class", "x axis")
+		      .attr("transform", "translate(0,"+ height+")")
+		      .call(xAxis)
+		      .selectAll("text")  
+			    .style("text-anchor", "start")
+			    .attr("transform", "rotate(45)");
+			  
 		  
 		svg.append("g")
 		     .attr("class", "y axis")
@@ -299,7 +319,18 @@ MusicXMLAnalyzer.DashboardView = function(){
 		   .attr("width", x.rangeBand())
 		   .attr("y", function(d) { return y(d.value); })
 		   .attr("height", function(d) { return height - y(d.value); })
-		   .on("click", tip.show);
+		   //.on("click", tip.show);
+
+		   svg.selectAll("text.bar")
+			.data(data)
+			.enter()
+			.append("text")
+			.attr("class", "bar-value")
+			.attr("x", function(d) { return x(d.label); })
+			.attr("y", function(d) { return y(d.value); })
+			.text(function(d) { return d.value; })
+			.attr("dx", "1em")
+			.attr("dy", "-.5em");
 	},
 
 	initKeyDistribution = function(data) {

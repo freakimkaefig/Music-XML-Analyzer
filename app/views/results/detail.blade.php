@@ -5,7 +5,7 @@
 <div id="extract-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
 <?php
-Debugbar::info($resultNotes);
+// Debugbar::info($resultNotes);
 ?>
 
 	<!-- Indicators -->
@@ -19,7 +19,7 @@ Debugbar::info($resultNotes);
 	<div class="carousel-inner" role="listbox">
 		<?php for ($i = 0; $i < count($resultNotes); $i++): ?>
 			<div class="item<?php if ($i==0) echo ' active'; ?>">
-				<canvas id="canvas<?php echo $i; ?>" class="canvas" height="100" width="700"></canvas>
+				<canvas id="canvas<?php echo $i; ?>" class="canvas" height="200" width="700"></canvas>
 				{{ Form::hidden('resultNotes' . $i, json_encode($resultNotes[$i]), array('id' => 'notes' . $i, 'class' => 'notes')) }}
 			</div>
 		<?php endfor; ?>

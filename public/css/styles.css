@@ -24,6 +24,10 @@
 	font-weight: bold;
 }
 
+.btn.active {
+	opacity: 0.8;
+}
+
 /* === LOGS === */
 .logBox {
 	display: none;
@@ -213,6 +217,10 @@ h1 {
   fill: none;
   stroke : #fff;
   shape-rendering: crispEdges;
+}
+
+.bar-value{
+	font: 12px sans-serif;
 }
 
 /*RESULTLIST*/
