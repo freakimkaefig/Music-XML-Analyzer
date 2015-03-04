@@ -62,7 +62,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	initFileSelector = function(data) {
 		$fileSelector.empty();
-		var selectorElement = '<select class="form-control btn-material-grey" name="fileSelector">';
+		var selectorElement = '<select class="form-control btn-material-blue-grey" name="fileSelector">';
 		selectorElement += '<option value="all"> - All - </option>';
 
 		for (var i = 0; i < data.length; i++) {
@@ -92,7 +92,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	},
 
-	initBarChart = function(data) {
+	/*initBarChart = function(data) {
 		var containerWidth = $('#bar_intervalDistribution').width() - 30;
 		var margin ={ top:20, right:30, bottom:50, left: 40 },
 		    width = containerWidth - margin.left - margin.right, 
@@ -112,24 +112,24 @@ MusicXMLAnalyzer.DashboardView = function(){
 		// key on y axis
 		var yAxis = d3.svg.axis()
 		              .scale(y)
-		              .orient("left");
+		              .orient("left");*/
 
 		/*var tip = d3.tip()
 					.attr('class', 'd3-tip')
 					.offset([-10, 0])
 					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });*/
 		  
-		var svg = d3.select("#bar_intervalDistribution")  
+/*		var svg = d3.select("#bar_intervalDistribution")  
 		              .append("svg")  //append svg element inside #bar_intervalDistribution
 		              .attr("width", width+(2*margin.left)+margin.right)    //set width
 		              .attr("height", height+margin.top+margin.bottom)  //set height
 		              .append("g")
-		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");*/
 
 		//svg.call(tip);
 
 		// transform data object
-	  	x.domain(data.map(function(d){ return d.label}));
+/*	  	x.domain(data.map(function(d){ return d.label}));
 	  	y.domain([0, d3.max(data, function(d){return d.value})]);
 
 		svg.append("g")
@@ -162,7 +162,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 		   //.on("click", tip.show);
 
-	},
+	},*/
 
 	initNoteDistribution = function(data) {
 		$('#bar_noteDistribution').empty();
@@ -613,7 +613,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.disposeLogMessages = disposeLogMessages;
 	that.addLogMessage = addLogMessage;
 	that.initFileSelector = initFileSelector;
-	that.initBarChart = initBarChart;
+	//that.initBarChart = initBarChart;
 	that.initNoteDistribution = initNoteDistribution;
 	that.initIntervalDistribution = initIntervalDistribution;
 	that.initKeyDistribution = initKeyDistribution;
