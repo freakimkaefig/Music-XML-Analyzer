@@ -22,7 +22,7 @@ class PatternController extends BaseController {
 
 		Debugbar::info($pattern);
 
-		switch ($pattern->type) {
+		switch ($pattern[0]->type) {
 			case 0:
 				// Type == Tonfolge
 				$ssConntroller = new SoundSequenzController();

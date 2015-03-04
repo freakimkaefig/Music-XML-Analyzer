@@ -7,11 +7,6 @@
 		<h1 class="text-center">Create Your Pattern</h1>
 	</div>	
 
-
-<!-- HINT: if there is a column arround you get problems with mouse x and y-->
-<canvas class="center-block" id="myCanvas" width="700" height="120" style="border:1px solid #000000; margin:auto"></canvas>
-
-
 {{ Form::open(array('route' => 'patternSearch')) }}
 {{ Form::hidden('pattern', '', array('id' => 'patternValue')) }}
 
@@ -20,13 +15,13 @@
     	<div class="col-xs-8 col-centered col-min">
     		<p>Choose Mode: </p>
     		<div class="btn-group" data-toggle="buttons">
-            	<label id="melody" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+            	<label id="2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
           			<input type="radio" value=":melody">melody
                 </label>
-            	<label id="sound sequence" class="btn btn-mode btn-material-blue-grey " data-toggle="tooltip" data-placement="top">
+            	<label id="0" class="btn btn-mode btn-material-blue-grey " data-toggle="tooltip" data-placement="top">
             		<input type="radio" value=":sound sequence">sound sequence
                 </label>
-            	<label id="rhythm" class="btn btn-mode btn-material-blue-grey " data-toggle="tooltip" data-placement="top">
+            	<label id="1" class="btn btn-mode btn-material-blue-grey " data-toggle="tooltip" data-placement="top">
             		<input type="radio" value=":rhythm">rhythm
                 </label>
     		</div>
@@ -51,27 +46,27 @@
     <div class="row row-centered">
     	<div class="col-xs-8 col-centered col-min">
     		<p>Notes: </p>
-    		<div class="btn-group" data-toggle="buttons">
+		<div class="btn-group btn-group-names" data-toggle="buttons">
             	<label id="c" class="btn btn-note btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
-          			<input type="radio" value=":c">c
+      			<input type="radio" value=":c">C
                 </label>
             	<label id="d" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-            		<input type="radio" value=":d">d
+        		<input type="radio" value=":d">D
                 </label>
             	<label id="e" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-            		<input type="radio" value=":e">e
+        		<input type="radio" value=":e">E
                 </label>
             	<label id="f" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-            		<input type="radio" value=":f">f
+        		<input type="radio" value=":f">F
                 </label>
             	<label id="g" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-            		<input type="radio" value=":g">g
+        		<input type="radio" value=":g">G
                 </label>
             	<label id="a" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-            		<input type="radio" value=":a">a
+        		<input type="radio" value=":a">A
                 </label>
                 <label id="b" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-            		<input type="radio" value=":b">b
+        		<input type="radio" value=":b">B
                 </label>
     		</div>
     	</div>
@@ -121,7 +116,19 @@
             </div>
         </div>
 
-        <div class="col-xs-4 col-centered col-min">
+<div class="row">
+	<div class="col-xs-6">
+		<p></p>
+		<p>Accidential: </p>
+		<div class="btn-group" data-toggle="buttons">
+        	<label id="0" class="btn btn-accidential btn-material-grey active" data-toggle="tooltip" data-placement="top">
+      			<input type="radio" value=":0">none
+            </label>
+        	<label id="1" class="btn btn-accidential btn-material-grey" data-toggle="tooltip" data-placement="top">
+        		<input type="radio" value=":1">#
+            </label>
+        	<label id="-1" class="btn btn-accidential btn-material-grey" data-toggle="tooltip" data-placement="top">
+        		<input type="radio" value=":-1">b
             <p></p>
             <p>Clef: </p>
             <div class="btn-group" data-toggle="buttons">

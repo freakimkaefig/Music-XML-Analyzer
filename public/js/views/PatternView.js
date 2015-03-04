@@ -36,27 +36,27 @@ MusicXMLAnalyzer.PatternView = function(){
 
 
 		// soundSequence pattern:
-		$patternValue.val(JSON.stringify(
-			{
-				type: 0,
-				notes: [
-					{
-						pitch: {
-							step: "B",
-							alter: 0,
-							octave: 5
-						}
-					},
-					{
-						pitch: {
-							step: "B",
-							alter: 0,
-							octave: 5
-						}
-					}
-				]
-			}
-		));
+		// $patternValue.val(JSON.stringify(
+		// 	{
+		// 		type: 0,
+		// 		notes: [
+		// 			{
+		// 				pitch: {
+		// 					step: "B",
+		// 					alter: 0,
+		// 					octave: 5
+		// 				}
+		// 			},
+		// 			{
+		// 				pitch: {
+		// 					step: "B",
+		// 					alter: 0,
+		// 					octave: 5
+		// 				}
+		// 			}
+		// 		]
+		// 	}
+		// ));
 
 
 		// melody pattern:
@@ -128,7 +128,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 					type: "eighth",
 		// 					alter: 0,
 		// 					octave: 5,
-		// 				beam: "end"//,
+		// 					beam: "end"//,
 		// 				// ****<Eventuell miteinbeziehen>****
 		// 				// timeModification:{
 		// 				// 	actualNotes: 3,
@@ -212,7 +212,7 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onOctaveChanged = function(event) {
-		//console.log($(event.target).val());
+		console.log($(event.target).val());
 		patternController.changeOctave($(event.target).val());
 	},
 
@@ -223,6 +223,13 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setPatternValue = function(pattern) {
 		$patternValue.val(pattern);
+		console.log("pattern changed to: ",$patternValue.val());
+	},
+
+	setNoteNameActive = function(noteName) {
+		$(".btn-group-names>label.active").removeClass("active");
+		//$('btn-group-names label.active').removeClass('active');
+		$("#" + noteName + "").addClass("active");
 	},
 
 	onRemoveButtonClick = function(event) {
@@ -232,6 +239,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	that.init = init;
 	that.setPatternValue = setPatternValue;
+	that.setNoteNameActive = setNoteNameActive;
 
 	return that;
 }

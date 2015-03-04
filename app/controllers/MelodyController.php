@@ -35,7 +35,7 @@ class MelodyController {
 // 	}
 // ]
 	
-		$p = $pattern->notes;
+		$p = $pattern[0]->notes;
 		self::$patternArray = array();
 		self::$results = array();
 
