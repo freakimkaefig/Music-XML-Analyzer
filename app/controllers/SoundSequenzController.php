@@ -9,6 +9,7 @@ class SoundSequenzController {
 	static $results;
 	static $exactMatch;
 	static $once;
+	static $noteCounter;
 
 	function __construct() {
 	
@@ -23,7 +24,7 @@ class SoundSequenzController {
 		// #intervall differenzen aus pattern berechnen
 		// #differenzen vergleichen mit 
 		// 
-
+		self::$noteCounter = 0;
 		self::$patternIntervalArray = array();
 		self::$results = array();
 
@@ -59,95 +60,96 @@ class SoundSequenzController {
 
 				//traverse §notes[]
 				for ($i = 0; $i < count($part->measure)-1; $i++) {
-					$n = $part->measure[$i]->note;
-					
-					//set lastVoice at beginning of xml file
-					if(self::$once){
-						self::$once = false;
-						$lastVoice = $part->measure[$i]->note->voice;
-					}
-					
-					if(!$n->rest){
-
-						$pitch = new stdClass();
-						$pitch->step = $n->pitch->step;
-						$pitch->alter = $n->pitch->alter;
-						$pitch->octave = $n->pitch->octave;
-
-						$note = new stdClass();
-						$note->pitch = $pitch;
-						$note->voice = $n->voice;
-						$note->position = $i;
-					// var_dump($note);
-					// echo "<hr><br>";
-
-						// if voice stays the same
-						if((int)$n->voice == (int)$lastVoice){
-							// push current interval to xmlIntervalArray
-							array_push(self::$xmlIntervalArray, PatternController::getInterval($note));
-							array_push(self::$xmlPositionArray, $note->position);
-							//check if Array-length equals Pattern-length already
-							if(count(self::$xmlIntervalArray) == count(self::$patternIntervalArray)){
-								
-								// compare arrays
-								if(array_values(self::$xmlIntervalArray) == array_values(self::$patternIntervalArray)){
-									// create result
-									self::$result->file_id = $file_id;
-									self::$result->file_url = $file_url;
-
-			// Dummy results
-			// $results = array(
-			// 	(object)array(
-			// 		"file_id" => 4,
-			// 		"file_url" => "http://music-xml-analyzer.local/uploads/90/ActorPreludeSample.xml",
-			// 		"occurences" => array(
-			// 			(object)array('start' => 2, 'end' => 3, 'voice' => 1),
-			// 			(object)array('start' => 7, 'end' => 12, 'voice' => 2)
-			// 		)
-			// 	)
-			// );
-									//fill with occurences
-									$occ = new stdClass();
-									$occ->start = reset(self::$xmlPositionArray);
-									$occ->end = end(self::$xmlPositionArray);
-									$occ->voice = (int)$note->voice;
-									$occ->part_id = (string)$part['id'];
-									// var_dump($occ);
-									array_push(self::$result->occurences, $occ);
-
-									//reset arrays
-									self::$xmlIntervalArray = array();
-									self::$xmlPositionArray = array();
-
-								}else{
-
-									self::$xmlIntervalArray = array_splice(self::$xmlIntervalArray, 0, 0);
-
-									self::$xmlPositionArray = array_splice(self::$xmlPositionArray, 0, 0);
-
-									self::$xmlIntervalArray = array_values(self::$xmlIntervalArray);
-
-									self::$xmlPositionArray = array_values(self::$xmlPositionArray);
-
-									// self::$result = new stdClass();
-									// self::$result->occurences = array();
-
-								}
-
-							} //if array lengths aren't equal yet, continue	
-
-							// save current voice for comparison with next note
-							$lastVoice = $n->voice;
+					for($j = 0; $j < count($part->measure[$i]->note); $j++){
+						$n = $part->measure[$i]->note[$j];
+						
+						//set lastVoice at beginning of xml file
+						if(self::$once){
+							self::$once = false;
+							$lastVoice = $part->measure[$i]->note[$j]->voice;
 						}
-						else{ //different voice incoming next; unset array; begin from scratch
-							// self::$result = new stdClass();
-							// self::$result->occurences = array();
-							self::$xmlIntervalArray = array(); 
-							self::$xmlPositionArray = array();
+						
+						if(!isset($n->rest)){
+
+							$pitch = new stdClass();
+							$pitch->step = $n->pitch->step;
+							$pitch->alter = $n->pitch->alter;
+							$pitch->octave = $n->pitch->octave;
+
+							$note = new stdClass();
+							$note->pitch = $pitch;
+							$note->voice = $n->voice;
+							$note->position = 	self::$noteCounter = 0;;
+						// var_dump($note);
+						// echo "<hr><br>";
+
+							// if voice stays the same
+							if((int)$n->voice == (int)$lastVoice){
+								// push current interval to xmlIntervalArray
+								array_push(self::$xmlIntervalArray, PatternController::getInterval($note));
+								array_push(self::$xmlPositionArray, $note->position);
+								//check if Array-length equals Pattern-length already
+								if(count(self::$xmlIntervalArray) == count(self::$patternIntervalArray)){
+									
+									// compare arrays
+									if(array_values(self::$xmlIntervalArray) == array_values(self::$patternIntervalArray)){
+										// create result
+										self::$result->file_id = $file_id;
+										self::$result->file_url = $file_url;
+
+				// Dummy results
+				// $results = array(
+				// 	(object)array(
+				// 		"file_id" => 4,
+				// 		"file_url" => "http://music-xml-analyzer.local/uploads/90/ActorPreludeSample.xml",
+				// 		"occurences" => array(
+				// 			(object)array('start' => 2, 'end' => 3, 'voice' => 1),
+				// 			(object)array('start' => 7, 'end' => 12, 'voice' => 2)
+				// 		)
+				// 	)
+				// );
+										//fill with occurences
+										$occ = new stdClass();
+										$occ->start = reset(self::$xmlPositionArray);
+										$occ->end = end(self::$xmlPositionArray);
+										$occ->voice = (int)$note->voice;
+										$occ->part_id = (string)$part['id'];
+										// var_dump($occ);
+										array_push(self::$result->occurences, $occ);
+
+										//reset arrays
+										self::$xmlIntervalArray = array();
+										self::$xmlPositionArray = array();
+
+									}else{
+
+										self::$xmlIntervalArray = array_splice(self::$xmlIntervalArray, 1);
+
+										self::$xmlPositionArray = array_splice(self::$xmlPositionArray, 1);
+
+										self::$xmlIntervalArray = array_values(self::$xmlIntervalArray);
+
+										self::$xmlPositionArray = array_values(self::$xmlPositionArray);
+
+										// self::$result = new stdClass();
+										// self::$result->occurences = array();
+
+									}
+
+								} //if array lengths aren't equal yet, continue	
+
+								// save current voice for comparison with next note
+								$lastVoice = $n->voice;
+							}
+							else{ //different voice incoming next; unset array; begin from scratch
+								$lastVoice = $part->measure[$i]->note[$j]->voice;
+								$j--;
+								self::$xmlIntervalArray = array(); 
+								self::$xmlPositionArray = array();
+							}
 						}
-					}
-				} //end of foreach(notes as note){blabla}
-				
+					} //end of foreach(notes as note){blabla}
+				}
 			} //end of foreach(parts as part)
 
 			// check if result->occ is empty

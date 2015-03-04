@@ -31,7 +31,7 @@ class PatternController extends BaseController {
 			case 1:
 				// Type == Rhythmus
 				$rConntroller = new RhythmController();
-				// $results = $rConntroller->search($pattern);
+				$results = $rConntroller->search($pattern);
 				break;
 			case 2:
 				// Type == Melodie
