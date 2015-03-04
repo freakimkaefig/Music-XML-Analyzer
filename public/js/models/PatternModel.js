@@ -23,8 +23,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setDefaultValues = function() {
-		curMode = "0";
-		curName = "C";
+		curMode = "2";
+		curName = "c";
 		curAccidential = "0";
 		curDuration = "quarter";
 		curClef = "G";
@@ -144,7 +144,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 			if(first){
 				first = false;
 				noteElements.push({
-					type: curMode,
+					//TODO 
+					//Mode im moment hart gecoded
+					type: 0,
 					notes:[{
 						pitch: {
 							step: curName.toUpperCase(),
