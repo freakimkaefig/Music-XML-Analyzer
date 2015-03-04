@@ -65,13 +65,13 @@
 		<p></p>
 		<p>Duration: </p>
 		<div class="btn-group" data-toggle="buttons">
-        	<label id="whole" class="btn btn-duration btn-material-grey active" data-toggle="tooltip" data-placement="top">
+        	<label id="whole" class="btn btn-duration btn-material-grey" data-toggle="tooltip" data-placement="top">
       			<input type="radio" value=":whole">1/1
             </label>
         	<label id="half" class="btn btn-duration btn-material-grey" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":half">1/2
             </label>
-        	<label id="quarter" class="btn btn-duration btn-material-grey" data-toggle="tooltip" data-placement="top">
+        	<label id="quarter" class="btn btn-duration btn-material-grey active" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":quarter">1/4
             </label>
             <label id="eighth" class="btn btn-duration btn-material-grey" data-toggle="tooltip" data-placement="top">
@@ -110,10 +110,10 @@
 		<p></p>
 		<p>Clef: </p>
 		<div class="btn-group" data-toggle="buttons">
-        	<label id="F" class="btn btn-clef btn-material-grey active" data-toggle="tooltip" data-placement="top">
+        	<label id="F" class="btn btn-clef btn-material-grey" data-toggle="tooltip" data-placement="top">
       			<input type="radio" value=":F">F
             </label>
-        	<label id="G" class="btn btn-clef btn-material-grey" data-toggle="tooltip" data-placement="top">
+        	<label id="G" class="btn btn-clef btn-material-grey active" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":G">G
             </label>
 		</div>
@@ -125,13 +125,13 @@
 		<p>Special Ryth: </p>
 		<div class="btn-group" data-toggle="buttons">
         	<label id="Triplet" class="btn btn-special-ryth btn-material-grey active" data-toggle="tooltip" data-placement="top">
-      			<input type="radio" value=":Triplet">Triplet
+                <input type="radio" value=":None">none
             </label>
         	<label id="Dotted" class="btn btn-special-ryth btn-material-grey" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":Dotted">Dotted
+        		<input type="radio" value=":Dotted">dotted
             </label>
             <label id="None" class="btn btn-special-ryth btn-material-grey" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":None">None
+                <input type="radio" value=":Triplet">triplet
             </label>
 		</div>
 	</div>
@@ -141,7 +141,7 @@
 	    <select id="select-octave" class="form-control btn-material-grey">
 		  <option value="2">2</option>
 		  <option value="3">3</option>
-		  <option value="4">4</option>
+		  <option selected="selected" value="4">4</option>
 		  <option value="5">5</option>
 		  <option value="6">6</option>
 		</select>
@@ -151,8 +151,8 @@
 	<div class="col-xs-6">
 		<p></p>
 		<p>Controls: </p>
-		<button id="btn-add-note" type="button" class="btn btn-default btn-success">Add</button>
-		<button id="btn-remove-note" type="button" class="btn btn-default btn-danger">Delete</button>
+		<button id="btn-add-note" type="button" class="btn btn-default btn-success">add</button>
+		<button id="btn-remove-note" type="button" class="btn btn-default btn-danger">delete</button>
 	</div>
 </div>
 
