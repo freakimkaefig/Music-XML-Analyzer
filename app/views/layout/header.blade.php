@@ -13,7 +13,7 @@
                 <?php $uploads = $user->uploads; ?>
                 <?php if (!$uploads->isEmpty()): ?>
 			     	<li>
-                        <button type="button" class="btn btn-flat btn-material-purple navbar-btn" data-toggle="modal" data-target="#uploadModal">Uploads</button>
+                        <button id="uploadButton" type="button" class="btn btn-flat btn-material-white navbar-btn" data-toggle="modal" data-target="#uploadModal">Uploads</button>
 			     		@include('upload.dropzone')
 			     	</li>
 			      	<li><a href="{{ URL::route('dashboard') }}">Dashboard</a></li>

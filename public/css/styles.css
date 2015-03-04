@@ -49,6 +49,12 @@
 .navbar {
 	color: #ddd;
 }
+.navbar-material{
+	background-color: #37474f !important;
+}
+#uploadButton{
+	color: white !important;
+}
 
 /* === CONTENT === */
 #content {
@@ -130,9 +136,9 @@ h1 {
 	fill: #337ab7;
 }
 .bar:hover {
-	fill: #286090 ;
+	fill: #37474f ;
 }
-.d3-tip {
+/*.d3-tip {
 	line-height: 1;
 	font-weight: bold;
 	padding: 12px;
@@ -155,7 +161,7 @@ h1 {
 	margin: -1px 0 0 0;
 	top: 100%;
 	left: 0;
-}
+}*/
 
 /*PIE-CHART*/
 
@@ -215,7 +221,7 @@ h1 {
 
 .axis path, .axis line{
   fill: none;
-  stroke : #fff;
+  stroke : black;
   shape-rendering: crispEdges;
 }
 
@@ -232,9 +238,31 @@ h1 {
 }
 .carousel-indicators .active {
 	background-color: #666;
+	
 }
 .carousel-control.right,
 .carousel-control.left {
 	background: transparent;
 	color: #000;
+	position: absolute;
+	margin-left: 200px;
+	margin-right: 200px;
+}
+
+
+/*PATTERN SEARCH*/
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+.col-min {
+    /* custom min width */
+    min-width:0px;
 }
