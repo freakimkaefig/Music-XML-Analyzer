@@ -1,5 +1,9 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
+a:focus {
+	outline: none;
+}
+
 /* === HELPER CLASSES === */
 .img-center {
 	margin: 0 auto;
@@ -46,14 +50,8 @@
 }
 
 /* === NAVBAR === */
-.navbar {
-	color: #ddd;
-}
-.navbar-material{
-	background-color: #37474f !important;
-}
-#uploadButton{
-	color: white !important;
+ul.navbar-nav li a {
+	text-transform: uppercase;
 }
 
 /* === CONTENT === */

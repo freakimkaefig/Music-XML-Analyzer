@@ -29,7 +29,7 @@
 		</form>
 		<div id="uploadMessages" class="logBox text-left"></div>
 		<div id="buttonContainer">
-			<button type="button" id="uploadClose" class="btn btn-default pull-left btn-lg">Close</button>
+			<button type="button" id="uploadClose" class="btn btn-material-grey-600 pull-left btn-lg">Close</button>
 			<button type="button" id="uploadSubmit" class="btn btn-primary pull-right btn-lg">Analyze</button>
 		</div>
 	</div>
