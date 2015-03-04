@@ -136,16 +136,7 @@
     </div>
 
     <div class="row row-centered">
-        <div class="col-xs-8 col-centered col-min">
-            <p></p>
-            <p>Controls: </p>
-            <button id="btn-add-note" type="button" class="btn btn-default btn-success">Add</button>
-            <button id="btn-remove-note" type="button" class="btn btn-default btn-danger">Delete</button>
-            {{ Form::submit('Search') }}
-            {{ Form::close() }}
-        </div>
-
-    	<div class="col-xs-4 col-centered col-min">
+    	<div class="col-xs-2">
             <p>Octave: </p>
                 <select id="select-octave" class="form-control btn-material-blue-grey">
                   <option value="2">2</option>
@@ -154,6 +145,15 @@
                   <option value="5">5</option>
                   <option value="6">6</option>
                 </select>
+        </div>
+    </div>
+
+    <div class="row row-centered">
+        <div class="col-xs-12">
+            <button id="btn-add-note" type="button" class="btn btn-default btn-success">Add</button>
+            <button id="btn-remove-note" type="button" class="btn btn-default btn-danger">Delete</button>
+            {{ Form::submit('Search') }}
+            {{ Form::close() }}
         </div>
     </div>
 </div>
