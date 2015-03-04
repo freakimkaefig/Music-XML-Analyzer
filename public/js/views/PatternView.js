@@ -128,7 +128,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 					type: "eighth",
 		// 					alter: 0,
 		// 					octave: 5,
-		// 				beam: "end"//,
+		// 					beam: "end"//,
 		// 				// ****<Eventuell miteinbeziehen>****
 		// 				// timeModification:{
 		// 				// 	actualNotes: 3,
@@ -212,7 +212,7 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onOctaveChanged = function(event) {
-		//console.log($(event.target).val());
+		console.log($(event.target).val());
 		patternController.changeOctave($(event.target).val());
 	},
 

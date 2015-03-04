@@ -113,7 +113,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 			alert("octave missing");
 		}
 		else {
-					// soundSequence pattern:
+		// soundSequence pattern:
 		// $patternValue.val(JSON.stringify(
 		// 	{
 		// 		type: 0,
@@ -147,8 +147,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 					type: curMode,
 					notes:[{
 						pitch: {
-							step: curName,
-							accidential: curAccidential,
+							step: curName.toUpperCase(),
+							alter: curAccidential,
 							type: curDuration,
 							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
 							octave: curOctave
@@ -160,8 +160,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 				noteElements[0].notes.push({
 					
 						pitch: {
-							step: curName,
-							accidential: curAccidential,
+							step: curName.toUpperCase(),
+							alter: curAccidential,
 							type: curDuration,
 							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
 							octave: curOctave

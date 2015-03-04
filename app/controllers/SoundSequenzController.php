@@ -16,7 +16,8 @@ class SoundSequenzController {
 	}
 
 	public function search($pattern) {
-		$p = $pattern->notes;
+		Debugbar::info($pattern);
+		$p = $pattern[0]->notes;
 		// $exactMatch = $pattern->exact;
 		// 
 		// NICE TO HAVE: 
