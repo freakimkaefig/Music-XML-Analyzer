@@ -341,8 +341,10 @@ class SearchController extends BaseController {
 	private function _determineMeter($xml){
 		$beat = $xml->xpath("//beats");
 		$beatType =  $xml->xpath("//beat-type");
-		$meter = $beat[0] ."/". $beatType[0];
-		return $meter;
+		if(count($beat)>0 && count($beatType)>0){
+			$meter = $beat[0] ."/". $beatType[0];
+			return $meter;
+		}
 	}
 
 

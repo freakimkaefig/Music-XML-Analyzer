@@ -6,7 +6,8 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"liebig/cron": "dev-master"
+		"liebig/cron": "dev-master",
+		"barryvdh/laravel-debugbar": "1.8"
 	},
 	"autoload": {
 		"classmap": [

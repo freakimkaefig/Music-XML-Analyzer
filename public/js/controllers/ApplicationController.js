@@ -2,59 +2,40 @@ MusicXMLAnalyzer.ApplicationController = function() {
 
 	var that = {},
 
-	headerView = null,
 	headerController = null,
-
-	uploadView = null,
 	uploadController = null,
-
-	patternController = null,
-	
-	dashboardModel = null,
-	dashboardView = null,
 	dashboardController = null,
-	
-	patternModel = null,
+	patternController = null,
+	resultController = null,
 
 
 	init = function() {
 		console.info('MusicXMLAnalyzer.ApplicationController.init');
 
-		headerView = MusicXMLAnalyzer.HeaderView();
-		headerView.init();
 		headerController = MusicXMLAnalyzer.HeaderController();
-		headerController.init(headerView);
+		headerController.init();
 
-		uploadView = MusicXMLAnalyzer.UploadView();
-		uploadView.init();
 		uploadController = MusicXMLAnalyzer.UploadController();
-		uploadController.init(uploadView);
-
-		if (Route.check('/')) {
-
-		}
-
-		if (Route.check('/search')) {
-
-		}
+		uploadController.init();
 
 		if (Route.check('/imprint')) {
 			console.log("Imprint");
 		}
 
 		if (Route.check('/dashboard')) {
-			dashboardModel = MusicXMLAnalyzer.DashboardModel();
-			dashboardModel.init();
-			dashboardView = MusicXMLAnalyzer.DashboardView();
-			dashboardView.init();
 			dashboardController = MusicXMLAnalyzer.DashboardController();
-			dashboardController.init(dashboardModel, dashboardView);
+			dashboardController.init();
 		}
 
 		if (Route.check('/pattern')) {
 			console.log("Pattern");
 			patternController = MusicXMLAnalyzer.PatternController();
 			patternController.init();
+		}
+
+		if (Route.check('/results')) {
+			resultController = MusicXMLAnalyzer.ResultController();
+			resultController.init();
 		}
 	},
 	

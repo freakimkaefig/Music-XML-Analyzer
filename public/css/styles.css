@@ -19,6 +19,15 @@
 	margin: 0;
 }
 
+.thead {
+	font-size: 125%;
+	font-weight: bold;
+}
+
+.btn.active {
+	opacity: 0.8;
+}
+
 /* === LOGS === */
 .logBox {
 	display: none;
@@ -116,6 +125,38 @@ h1 {
 	margin-bottom: 45px;
 }
 
+/* BAR-CHART */
+.bar {
+	fill: #337ab7;
+}
+.bar:hover {
+	fill: #286090 ;
+}
+.d3-tip {
+	line-height: 1;
+	font-weight: bold;
+	padding: 12px;
+	background: rgba(0, 0, 0, 0.8);
+	color: #fff;
+	border-radius: 2px;
+}
+.d3-tip:after {
+	box-sizing: border-box;
+	display: inline;
+	font-size: 10px;
+	width: 100%;
+	line-height: 1;
+	color: rgba(0, 0, 0, 0.8);
+	content: "\25BC";
+	position: absolute;
+	text-align: center;
+}
+.d3-tip.n:after {
+	margin: -1px 0 0 0;
+	top: 100%;
+	left: 0;
+}
+
 /*PIE-CHART*/
 
 .pie {
@@ -178,4 +219,22 @@ h1 {
   shape-rendering: crispEdges;
 }
 
+.bar-value{
+	font: 12px sans-serif;
+}
+
 /*RESULTLIST*/
+.canvas {
+	margin-bottom: 60px;
+}
+.carousel-indicators li {
+	background-color: #000;
+}
+.carousel-indicators .active {
+	background-color: #666;
+}
+.carousel-control.right,
+.carousel-control.left {
+	background: transparent;
+	color: #000;
+}
