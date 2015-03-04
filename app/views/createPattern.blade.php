@@ -37,7 +37,7 @@
 	<div class="col-xs-12">
 		<p></p>
 		<p>Notes: </p>
-		<div class="btn-group" data-toggle="buttons">
+		<div class="btn-group btn-group-names" data-toggle="buttons">
         	<label id="c" class="btn btn-note btn-material-grey active" data-toggle="tooltip" data-placement="top">
       			<input type="radio" value=":c">C
             </label>
