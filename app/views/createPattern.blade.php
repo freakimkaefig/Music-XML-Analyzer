@@ -83,13 +83,13 @@
 		<p></p>
 		<p>Duration: </p>
 		<div class="btn-group" data-toggle="buttons">
-        	<label id="whole" class="btn btn-duration btn-warning active" data-toggle="tooltip" data-placement="top">
+        	<label id="whole" class="btn btn-duration btn-warning" data-toggle="tooltip" data-placement="top">
       			<input type="radio" value=":whole">whole
             </label>
         	<label id="half" class="btn btn-duration btn-warning" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":half">half
             </label>
-        	<label id="quarter" class="btn btn-duration btn-warning" data-toggle="tooltip" data-placement="top">
+        	<label id="quarter" class="btn btn-duration btn-warning active" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":quarter">quarter
             </label>
             <label id="eighth" class="btn btn-duration btn-warning" data-toggle="tooltip" data-placement="top">
@@ -110,10 +110,10 @@
 		<p></p>
 		<p>Clef: </p>
 		<div class="btn-group" data-toggle="buttons">
-        	<label id="F" class="btn btn-clef btn-warning active" data-toggle="tooltip" data-placement="top">
+        	<label id="F" class="btn btn-clef btn-warning" data-toggle="tooltip" data-placement="top">
       			<input type="radio" value=":F">F
             </label>
-        	<label id="G" class="btn btn-clef btn-warning" data-toggle="tooltip" data-placement="top">
+        	<label id="G" class="btn btn-clef btn-warning active" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":G">G
             </label>
 		</div>
@@ -124,14 +124,14 @@
 		<p></p>
 		<p>Special Ryth: </p>
 		<div class="btn-group" data-toggle="buttons">
-        	<label id="Triplet" class="btn btn-special-ryth btn-warning active" data-toggle="tooltip" data-placement="top">
-      			<input type="radio" value=":Triplet">Triplet
+        	<label id="None" class="btn btn-special-ryth btn-warning active" data-toggle="tooltip" data-placement="top">
+                <input type="radio" value=":None">None
             </label>
         	<label id="Dotted" class="btn btn-special-ryth btn-warning" data-toggle="tooltip" data-placement="top">
         		<input type="radio" value=":Dotted">Dotted
             </label>
-            <label id="None" class="btn btn-special-ryth btn-warning" data-toggle="tooltip" data-placement="top">
-        		<input type="radio" value=":None">None
+            <label id="Triplet" class="btn btn-special-ryth btn-warning" data-toggle="tooltip" data-placement="top">
+                <input type="radio" value=":Triplet">Triplet
             </label>
 		</div>
 	</div>
@@ -141,7 +141,7 @@
 	    <select id="select-octave" class="form-control">
 		  <option value="2">2</option>
 		  <option value="3">3</option>
-		  <option value="4">4</option>
+		  <option selected="selected" value="4">4</option>
 		  <option value="5">5</option>
 		  <option value="6">6</option>
 		</select>
