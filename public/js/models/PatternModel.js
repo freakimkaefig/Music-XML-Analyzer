@@ -202,6 +202,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		var noteContainer = note.split("/");
 		
 		curName = noteContainer[0];
+		$(that).trigger('changeSelectedNoteNameByClick', [curName]);
 		curOctave = noteContainer[1];
 		addNoteElement();
 

@@ -213,6 +213,12 @@ MusicXMLAnalyzer.PatternView = function(){
 		$patternValue.val(pattern);
 	},
 
+	setNoteNameActive = function(noteName) {
+		$(".btn-group-names>label.active").removeClass("active");
+		//$('btn-group-names label.active').removeClass('active');
+		$("#" + noteName + "").addClass("active");
+	},
+
 	onRemoveButtonClick = function(event) {
 		// console.log("remove btn");
 		patternController.removeLastNote();
@@ -220,6 +226,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	that.init = init;
 	that.setPatternValue = setPatternValue;
+	that.setNoteNameActive = setNoteNameActive;
 
 	return that;
 }
