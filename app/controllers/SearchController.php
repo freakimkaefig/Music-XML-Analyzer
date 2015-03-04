@@ -248,7 +248,7 @@ class SearchController extends BaseController {
 		if ($artist) {
 			return $artist[0]->{'credit-words'}->{0};
 		} else {
-			return "Unknown";
+			return "Unknown Artist";
 		}
 	}
 
@@ -259,7 +259,7 @@ class SearchController extends BaseController {
 		if ($title) {
 			return $title[0]->{'credit-words'}->{0};
 		} else {
-			return "Unknown";
+			return "Unknown Title";
 		}
 	}
 

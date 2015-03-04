@@ -159,7 +159,7 @@ class ResultController extends BaseController {
 		if ($artist) {
 			return $artist[0]->{'credit-words'}->{0};
 		} else {
-			return "Unknown";
+			return "Unknown Artist";
 		}
 	}
 	public static function _getTitle($id) {
@@ -169,7 +169,7 @@ class ResultController extends BaseController {
 		if ($title) {
 			return $title[0]->{'credit-words'}->{0};
 		} else {
-			return "Unknown";
+			return "Unknown Title";
 		}
 	}
 }

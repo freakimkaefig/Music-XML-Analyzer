@@ -38,10 +38,12 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h2>DEBUG</h2>
+			<h4>PATTERN</h4>
 			<?php
 			echo"<pre>";
 			var_dump(Cache::get('pattern'));
 			echo"</pre>";
+			echo "<h4>RESULTS</h4>";
 			echo"<pre>";
 			var_dump(Cache::get('results'));
 			echo"</pre>";
