@@ -19,7 +19,6 @@ class RhythmController {
 public function search($pattern) {
 	
 	$p = $pattern->notes;
-	self::$noteCounter = 0;
 	self::$patternArray = array();
 	self::$results = array();
 
@@ -66,6 +65,7 @@ public function search($pattern) {
 // var_dump($parts);
 
 		foreach($parts as $part){
+			self::$noteCounter = 0;
 			for($i = 0; $i < count($part->measure); $i++){
 // echo"<br><hr>part->measure[$i] : ";
 // var_dump($part->measure[$i]);
@@ -87,6 +87,8 @@ public function search($pattern) {
 
 				for($j = 0; $j < count($part->measure[$i]->note); $j++){
 					self::$noteCounter++;
+		// echo"<br><hr>noteCounter: ";
+		// var_dump(self::$noteCounter);
 					$n = $part->measure[$i]->note[$j];
 					if(self::$once){
 						self::$once = false;

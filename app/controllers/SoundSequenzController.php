@@ -24,7 +24,6 @@ class SoundSequenzController {
 		// #intervall differenzen aus pattern berechnen
 		// #differenzen vergleichen mit 
 		// 
-		self::$noteCounter = 0;
 		self::$patternIntervalArray = array();
 		self::$results = array();
 
@@ -55,8 +54,7 @@ class SoundSequenzController {
 			// echo "<hr><br>";
 
 			foreach($parts as $part){
-				//get notes of xml file
-				// $notes = $xml->xpath("//note");
+				self::$noteCounter = 0;
 
 				//traverse §notes[]
 				for ($i = 0; $i < count($part->measure)-1; $i++) {

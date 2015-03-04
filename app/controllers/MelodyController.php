@@ -36,7 +36,6 @@ class MelodyController {
 // ]
 	
 		$p = $pattern->notes;
-		self::$noteCounter = 0;
 		self::$patternArray = array();
 		self::$results = array();
 
@@ -70,6 +69,7 @@ class MelodyController {
 
 
 			foreach($parts as $part){
+				self::$noteCounter = 0;
 				for($i = 0; $i < count($part->measure); $i++){
 					
 					if($i == 0){
