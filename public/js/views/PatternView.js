@@ -34,30 +34,32 @@ MusicXMLAnalyzer.PatternView = function(){
 		$addNoteButton.on("click", onAddButtonClick);
 		$removeNoteButton.on("click", onRemoveButtonClick);
 
-		// soundSequence pattern:
-		$patternValue.val(JSON.stringify(
-			{
-				type: 0,
-				notes: [
-					{
-						pitch: {
-							step: "B",
-							alter: 0,
-							octave: 5
-						}
-					},
-					{
-						pitch: {
-							step: "B",
-							alter: 0,
-							octave: 5
-						}
-					}
-				]
-			}
-		));
 
-		// melody pattern: Triole
+		// soundSequence pattern:
+		// $patternValue.val(JSON.stringify(
+		// 	{
+		// 		type: 0,
+		// 		notes: [
+		// 			{
+		// 				pitch: {
+		// 					step: "B",
+		// 					alter: 0,
+		// 					octave: 5
+		// 				}
+		// 			},
+		// 			{
+		// 				pitch: {
+		// 					step: "B",
+		// 					alter: 0,
+		// 					octave: 5
+		// 				}
+		// 			}
+		// 		]
+		// 	}
+		// ));
+
+
+		// melody pattern:
 		// $patternValue.val(JSON.stringify(
 		// 	{
 		// 		type: 2,
@@ -65,10 +67,10 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 			{
 		// 				type: "note",
 		// 				pitch: {
-		// 					step: "C",
-		// 					type: "half",
+		// 					step: "B",
+		// 					type: "whole",
 		// 					alter: 0,
-		// 					octave: 3
+		// 					octave: 5
 		// 				}
 		// 			},
 		// 			{
@@ -79,7 +81,8 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 	}
 		// )); 
 
-		// rhythm pattern:
+
+		// rhythm pattern: Triole
 		// $patternValue.val(JSON.stringify(
 		// 	{
 		// 		type: 1,
@@ -88,17 +91,17 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 				type: "note",
 		// 				pitch: {
 		// 					step: "E",
-		// 					type: "half",
+		// 					type: "eighth",
 		// 					alter: -1,
 		// 					octave: 5,
-						// beam: "begin",
-						// ****<Eventuell miteinbeziehen>****
-						// timeModification:{
-						// 	actualNotes: 3,
-						// 	normalNotes: 2,
-						// 	normalType: "eight"
-						// }
-						// *****</Eventuell miteinbeziehen>****
+		// 				beam: "begin"//,
+		// 				// ****<Eventuell miteinbeziehen>****
+		// 				// timeModification:{
+		// 				// 	actualNotes: 3,
+		// 				// 	normalNotes: 2,
+		// 				// 	normalType: "eight"
+		// 				// }
+		// 				// *****</Eventuell miteinbeziehen>****
 		// 				}
 		// 			},
 		// 			{
@@ -108,14 +111,14 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 					type: "eighth",
 		// 					alter: 0,
 		// 					octave: 5,
-						// beam: "continue",
-						// ****<Eventuell miteinbeziehen>****
-						// timeModification:{
-						// 	actualNotes: 3,
-						// 	normalNotes: 2,
-						// 	normalType: "eight"
-						// }
-						// *****</Eventuell miteinbeziehen>****
+		// 				beam: "continue"//,
+		// 				// ****<Eventuell miteinbeziehen>****
+		// 				// timeModification:{
+		// 				// 	actualNotes: 3,
+		// 				// 	normalNotes: 2,
+		// 				// 	normalType: "eight"
+		// 				// }
+		// 				// *****</Eventuell miteinbeziehen>****
 		// 				}
 		// 			},
 		// 			{
@@ -125,19 +128,24 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 					type: "eighth",
 		// 					alter: 0,
 		// 					octave: 5,
-						// beam: "end",
-						// ****<Eventuell miteinbeziehen>****
-						// timeModification:{
-						// 	actualNotes: 3,
-						// 	normalNotes: 2,
-						// 	normalType: "eight"
-						// }
-						// *****</Eventuell miteinbeziehen>****
+		// 					beam: "end"//,
+		// 				// ****<Eventuell miteinbeziehen>****
+		// 				// timeModification:{
+		// 				// 	actualNotes: 3,
+		// 				// 	normalNotes: 2,
+		// 				// 	normalType: "eight"
+		// 				// }
+		// 				// *****</Eventuell miteinbeziehen>****
 		// 				}
-		// 			}
+		// 			}//,
+		// 			// {
+		// 			// 	type: "rest",
+		// 			// 	duration: "whole"
+		// 			// }
 		// 		]
 		// 	}
 		// )); 
+
 
 		// rhythm pattern #2: Punktierte Noten
 		// $patternValue.val(JSON.stringify(
@@ -151,19 +159,23 @@ MusicXMLAnalyzer.PatternView = function(){
 		// 					type: "half",
 		// 					alter: 0,
 		// 					octave: 1,
-		//					dot: true 
+		// 					dot: true 
 		// 				}
 		// 			},
-		//			{
+		// 			{
 		// 				type: "note",
 		// 				pitch: {
 		// 					step: "F",
 		// 					type: "half",
 		// 					alter: 0,
 		// 					octave: 2,
-		//					dot: true 
+		// 					dot: true 
 		// 				}
-		// 			}  
+		// 			}//,
+		// // 			{
+		// // 				type: "rest",
+		// // 				duration: "whole"
+		// // 			} 
 		// 		]
 		// 	}
 		// )); 
@@ -200,7 +212,7 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onOctaveChanged = function(event) {
-		//console.log($(event.target).val());
+		console.log($(event.target).val());
 		patternController.changeOctave($(event.target).val());
 	},
 
@@ -211,6 +223,13 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setPatternValue = function(pattern) {
 		$patternValue.val(pattern);
+		console.log("pattern changed to: ",$patternValue.val());
+	},
+
+	setNoteNameActive = function(noteName) {
+		$(".btn-group-names>label.active").removeClass("active");
+		//$('btn-group-names label.active').removeClass('active');
+		$("#" + noteName + "").addClass("active");
 	},
 
 	onRemoveButtonClick = function(event) {
@@ -220,6 +239,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	that.init = init;
 	that.setPatternValue = setPatternValue;
+	that.setNoteNameActive = setNoteNameActive;
 
 	return that;
 }

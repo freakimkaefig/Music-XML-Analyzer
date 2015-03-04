@@ -14,6 +14,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternModel.init();
 		$(patternModel).on('patternChange', onPatternChange);
 		$(patternModel).on('updateNotationView', onNotationViewUpdate);
+		$(patternModel).on('changeSelectedNoteNameByClick', onNoteNameSelectionChange);
 
 	},
 
@@ -21,6 +22,10 @@ MusicXMLAnalyzer.PatternController = function() {
 		//console.log("onNotationViewUpdate controller");
 		notationView.renderNotes(vexflowNotes, completeDurationIn64th);
 		//notationView.renderNotes();
+	},
+
+	onNoteNameSelectionChange = function(event, selectedNoteNameByClick) {
+		patternView.setNoteNameActive(selectedNoteNameByClick);
 	},
 
 	changeMode = function(val) {
@@ -64,6 +69,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	onPatternChange = function(event, pattern) {
+		console.log("Trigger patternChange: ",pattern);
 		patternView.setPatternValue(JSON.stringify(pattern));
 	},
 
