@@ -66,7 +66,7 @@ MusicXMLAnalyzer.ResultView = function(){
 		voice.setStrict(false);
 
 		for (var i = 0; i < measures.length; i++) {
-
+			// calculate x & y coordinates and width of the current measure
 			var x, y, width;
 			width = 340;
 			height = 80;
@@ -79,26 +79,51 @@ MusicXMLAnalyzer.ResultView = function(){
 				y = (i - 1) * (height / 2);
 			}
 
-			staveBar = new Vex.Flow.Stave(x, y, width);
+			staveBar = new Vex.Flow.Stave(x, y, width);	// generate new stave for measure
+
 			if (i%2 == 0) {
-				staveBar.addClef("treble");
+				staveBar.addClef("treble");	// add clef to every measure starting in a new line
 			}
 			if (measures[i].time_signature) {
-				staveBar.addTimeSignature(measures[i].time_signature);	// TODO calculate time signature for each measure and print when necessary
-			}
-			if (i%2 == 1) {
-				
+				staveBar.addTimeSignature(measures[i].time_signature);	// add time signature if changed
 			}
 			if (i > 0 && i < measures.length-1) {
-				// console.log("begin");
-				staveBar.setBegBarType(Vex.Flow.Barline.type.SINGLE);
+				staveBar.setBegBarType(Vex.Flow.Barline.type.SINGLE);	// set measure bar line
 			}
 			if (i == measures.length-1) {
-				// console.log("end");
-				staveBar.setEndBarType(Vex.Flow.Barline.type.END);
+				staveBar.setEndBarType(Vex.Flow.Barline.type.END);	// set double measure bar line at last measure
 			}
+
+			// creating beams between notes
+			var start = null;
+			var end = null;
+			var beams = [];
+			for (var j = 0; j < measures[i].notes.length; j++) {
+				if (measures[i].beams[j] == "begin") {
+					start = j;
+				}
+				if (measures[i].beams[j] == "end") {
+					end = j;
+				}
+				if (start != null && end != null) {
+					var beamNotes = measures[i].notes.slice(start, end+1);
+					var beam = new Vex.Flow.Beam(beamNotes, true);
+					beams.push(beam);
+					start = null;
+					end = null;
+				}
+			}
+
+			// draw measure bar line
 			staveBar.setContext(context).draw();
+			
+			// draw measure with notes
 			Vex.Flow.Formatter.FormatAndDraw(context, staveBar, measures[i].notes);
+
+			// draw beams
+			for ( var b = 0; b < beams.length; b++) {
+				beams[b].setContext(context).draw();
+			}
 		}		
 	},
 
@@ -163,10 +188,8 @@ MusicXMLAnalyzer.ResultView = function(){
 				// melody
 				for (var i = 0; i < pattern.measures.length; i++) {
 					var notes = [];
-					if (i > 0) {
-						// notes.push(new Vex.Flow.BarNote(0));
-					}
 					var duration = 0;
+					var beams = [];
 					var time_signature = pattern.measures[i].time_signature;
 					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
 						if (pattern.measures[i].notes[j].type == "note") {
@@ -175,7 +198,8 @@ MusicXMLAnalyzer.ResultView = function(){
 							var alter = pattern.measures[i].notes[j].pitch.alter;
 							var type = pattern.measures[i].notes[j].pitch.type;
 							var keys = [getVexflowKey(step, octave, alter )];
-							var noteDuration = getVexflowDuration(type, false)
+							var noteDuration = getVexflowDuration(type, false);
+							var noteBeam = pattern.measures[i].notes[j].pitch.beam;
 							if (alter == -1) {
 								notes.push(
 									new Vex.Flow.StaveNote(
@@ -214,22 +238,21 @@ MusicXMLAnalyzer.ResultView = function(){
 								new Vex.Flow.StaveNote(
 									{
 										keys: ["b/4"],	// key is b/4 to center rest vertical
-										duration: noteDuration,
-										auto_stem: true
+										duration: noteDuration
 									}
 								)
 							);
 							duration += getDurationIn64th(pattern.measures[i].notes[j].duration);
 						}
+						beams[j] = noteBeam;
 					}
-					measures.push({ notes: notes, duration: duration, time_signature: time_signature });
+					measures.push({ notes: notes, duration: duration, beams: beams, time_signature: time_signature });
 				}
 				break;
 		}
 		
-		console.log(measures);
+		// console.log(measures);
 		return measures;
-		// return { notes: notes, duration: duration };
 	},
 
 

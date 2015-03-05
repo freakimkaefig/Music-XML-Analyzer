@@ -135,6 +135,14 @@ class ResultController extends BaseController {
 										if ($type->length) {
 											$noteObject->pitch->type = $type->item(0)->nodeValue;
 										}
+
+										// determine beam type
+										$beam = $note->getElementsByTagName('beam');
+										if ($beam->length) {
+											$noteObject->pitch->beam = $beam->item(0)->nodeValue;
+										} else {
+											$noteObject->pitch->beam = false;
+										}
 										
 									} else {
 										// it's a rest
