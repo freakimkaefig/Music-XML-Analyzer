@@ -68,6 +68,10 @@ class ResultController extends BaseController {
 					$endMeasureNumber += 1;
 				}
 				$measureCounter = 0;
+				$partBeats = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('beats')->item(0)->nodeValue;
+				$curBeats = $partBeats;
+				$partBeatType = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('beat-type')->item(0)->nodeValue;
+				$curBeatType = $partBeatType;
 				for ($j = $startMeasureNumber; $j <= $endMeasureNumber; $j++) {
 					$measure = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]')->item(0);
 					$measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note');
@@ -76,9 +80,12 @@ class ResultController extends BaseController {
 					$time_signature = false;
 					$beats = $measure->getElementsByTagName('beats');
 					$beat_type = $measure->getElementsByTagName('beat-type');
-					if ($beats->length && $beat_type->length) {
-						$curBeatType = $beat_type->item(0)->nodeValue;
-						$time_signature = $beats->item(0)->nodeValue . "/" . $beat_type->item(0)->nodeValue;
+					if (($beats->length && $beat_type->length) || $measureCounter == 0) {
+						if ($measureCounter > 0) {
+							$curBeats = $beats->item(0)->nodeValue;
+							$curBeatType = $beat_type->item(0)->nodeValue;
+						}
+						$time_signature = $curBeats . "/" . $curBeatType;
 					}
 					$measureObject->time_signature = $time_signature;
 					$resultNotes[$i]->measures[$measureCounter] = $measureObject;
