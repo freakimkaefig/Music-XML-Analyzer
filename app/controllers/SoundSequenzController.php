@@ -60,6 +60,8 @@ class SoundSequenzController {
 				//traverse §notes[]
 				for ($i = 0; $i < count($part->measure)-1; $i++) {
 					for($j = 0; $j < count($part->measure[$i]->note); $j++){
+						self::$noteCounter++;
+
 						$n = $part->measure[$i]->note[$j];
 						
 						//set lastVoice at beginning of xml file
@@ -78,7 +80,7 @@ class SoundSequenzController {
 							$note = new stdClass();
 							$note->pitch = $pitch;
 							$note->voice = $n->voice;
-							$note->position = 	self::$noteCounter = 0;;
+							$note->position = self::$noteCounter;
 						// var_dump($note);
 						// echo "<hr><br>";
 
@@ -87,9 +89,18 @@ class SoundSequenzController {
 								// push current interval to xmlIntervalArray
 								array_push(self::$xmlIntervalArray, PatternController::getInterval($note));
 								array_push(self::$xmlPositionArray, $note->position);
+		// echo"<br><br>xmlIntervalArray: ";
+		// var_dump(self::$xmlIntervalArray);
 								//check if Array-length equals Pattern-length already
 								if(count(self::$xmlIntervalArray) == count(self::$patternIntervalArray)){
-									
+							
+		// echo"<br><br><hr>array_values: <br>";
+		// var_dump(array_values(self::$xmlIntervalArray));
+		// echo"<br><br>";
+		// var_dump(array_values(self::$patternArray));
+		// echo"<br><br>xmlPositionArray:";
+		// var_dump(self::$xmlPositionArray);
+		// echo"<br><br>";		
 									// compare arrays
 									if(array_values(self::$xmlIntervalArray) == array_values(self::$patternIntervalArray)){
 										// create result
@@ -166,7 +177,7 @@ class SoundSequenzController {
 // 		echo "result is empty!";
 // 		}
 // echo "<hr>";
-		// bla;
+// 		bla;
 	}
 
 }
