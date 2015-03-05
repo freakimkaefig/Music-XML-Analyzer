@@ -19,7 +19,7 @@
 	<div class="carousel-inner" role="listbox">
 		<?php for ($i = 0; $i < count($resultNotes); $i++): ?>
 			<div class="item<?php if ($i==0) echo ' active'; ?>">
-				<center><canvas id="canvas<?php echo $i; ?>" class="canvas" height="<?php echo floor(count($resultNotes[$i]->measures) / 2) * 120; ?>" width="700"></canvas></center>
+				<center><canvas id="canvas<?php echo $i; ?>" class="canvas" height="<?php echo round(count($resultNotes[$i]->measures) / 2) * 120; ?>" width="700"></canvas></center>
 				{{ Form::hidden('resultNotes' . $i, json_encode($resultNotes[$i]), array('id' => 'notes' . $i, 'class' => 'notes')) }}
 			</div>
 		<?php endfor; ?>
