@@ -178,6 +178,6 @@ class SoundSequenzController {
 // 		}
 // echo "<hr>";
 // 		bla;
-// 	}
+	}
 
 }
