@@ -77,6 +77,7 @@ class ResultController extends BaseController {
 					$beats = $measure->getElementsByTagName('beats');
 					$beat_type = $measure->getElementsByTagName('beat-type');
 					if ($beats->length && $beat_type->length) {
+						$curBeatType = $beat_type->item(0)->nodeValue;
 						$time_signature = $beats->item(0)->nodeValue . "/" . $beat_type->item(0)->nodeValue;
 					}
 					$measureObject->time_signature = $time_signature;
@@ -131,33 +132,46 @@ class ResultController extends BaseController {
 									} else {
 										// it's a rest
 										$noteObject->type = "rest";
-										$duration = "";
+										$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
 										$partDivision = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('divisions')->item(0)->nodeValue;
-										$partBeatType = "";
-										// $restDurationFloat = (float)((int)$n->duration / (int)$partDivision / (int)$partBeatType);
-										// if($restDurationFloat == 1){
-										// 	self::$restDuration = "whole";
-										// }elseif($restDurationFloat == 0.5){
-										// 	self::$restDuration = "half";
-										// }elseif($restDurationFloat == 0.25){
-										// 	self::$restDuration = "quarter";
-										// }elseif($restDurationFloat == 0.125){
-										// 	self::$restDuration = "eighth";
-										// }elseif($restDurationFloat == 0.0625){
-										// 	self::$restDuration = "16th";
-										// }elseif($restDurationFloat == 0.03125){
-										// 	self::$restDuration = "32nd";
-										// }elseif($restDurationFloat == 0.015625){
-										// 	self::$restDuration = "64th";
-										// }else{
-										// 	// 
-										// 	// ERROR mit "0,75" -> punktierte halbe?
-										// 	// 
-										// 	// Debugbar::info($restDurationFloat);
-										// 	// echo 'Rest duration unclear: ',  $restDurationFloat, "<br>";
-										// 	// echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
-										// }
-										$noteObject->duration = "half";		// TODO: calulate rest duration
+										Debugbar::info($curDuration);
+										Debugbar::info($partDivision);
+										Debugbar::info($curBeatType);
+										$restDurationFloat = (float)((int)$curDuration / (int)$partDivision / (int)$curBeatType);
+										Debugbar::info($restDurationFloat);
+										if ($restDurationFloat == 1){
+											$restDuration = "whole";
+										} elseif ($restDurationFloat == 0.75) {
+											$restDuration = "whole";
+										} elseif ($restDurationFloat == 0.5){
+											$restDuration = "half";
+										} elseif ($restDurationFloat == 0.375){
+											$restDuration = "half";
+										} elseif ($restDurationFloat == 0.25){
+											$restDuration = "quarter";
+										} elseif ($restDurationFloat == 0.1875){
+											$restDuration = "quarter";
+										} elseif ($restDurationFloat == 0.125){
+											$restDuration = "eight";
+										} elseif ($restDurationFloat == 0.09375){
+											$restDuration = "eighth";
+										} elseif ($restDurationFloat == 0.0625){
+											$restDuration = "16th";
+										} elseif ($restDurationFloat == 0.046875){
+											$restDuration = "16th";
+										} elseif ($restDurationFloat == 0.03125){
+											$restDuration = "32nd";
+										} elseif ($restDurationFloat == 0.0234375){
+											$restDuration = "32nd";
+										} elseif ($restDurationFloat == 0.015625){
+											$restDuration = "64th";
+										} elseif ($restDurationFloat == 0.01171875){
+											$restDuration = "64th";
+										} else {
+											// catch strange values (FALLBACK)
+											$restDuration = "64th";	// set to lowest possible value
+										}
+										$noteObject->duration = $restDuration;
 									}
 									// Debugbar::info($noteObject);
 									$resultNotes[$i]->measures[$measureCounter]->notes[] = $noteObject;
