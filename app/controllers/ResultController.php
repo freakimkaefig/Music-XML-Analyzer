@@ -134,11 +134,7 @@ class ResultController extends BaseController {
 										$noteObject->type = "rest";
 										$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
 										$partDivision = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('divisions')->item(0)->nodeValue;
-										Debugbar::info($curDuration);
-										Debugbar::info($partDivision);
-										Debugbar::info($curBeatType);
 										$restDurationFloat = (float)((int)$curDuration / (int)$partDivision / (int)$curBeatType);
-										Debugbar::info($restDurationFloat);
 										if ($restDurationFloat == 1){
 											$restDuration = "whole";
 										} elseif ($restDurationFloat == 0.75) {
@@ -221,7 +217,6 @@ class ResultController extends BaseController {
 
 
 	public static function _getArtist($id) {
-		Debugbar::info($id);
 		$xml = simplexml_load_file(Upload::find($id)->url);
 		$artist = $xml->xpath("//credit[credit-type='composer']");
 		if ($artist) {
