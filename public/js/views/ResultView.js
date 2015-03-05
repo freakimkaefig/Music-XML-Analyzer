@@ -82,7 +82,9 @@ MusicXMLAnalyzer.ResultView = function(){
 			staveBar = new Vex.Flow.Stave(x, y, width);
 			if (i%2 == 0) {
 				staveBar.addClef("treble");
-				staveBar.addTimeSignature("2/4");	// TODO calculate time signature for each measure and print when necessary
+			}
+			if (measures[i].time_signature) {
+				staveBar.addTimeSignature(measures[i].time_signature);	// TODO calculate time signature for each measure and print when necessary
 			}
 			if (i%2 == 1) {
 				
@@ -110,6 +112,7 @@ MusicXMLAnalyzer.ResultView = function(){
 				for (var i = 0; i < pattern.measures.length; i++) {	// iterate over measures in result
 					var notes = [];	//creating notes array for notes in current measure
 					var duration = 0;	// resetting duration to 0
+					var time_signature = pattern.measures[i].time_signature;
 					for (var j = 0; j < pattern.measures[i].notes.length; j++) {	// iterate over all notes in current measure
 						var step = pattern.measures[i].notes[j].pitch.step;	// determine the step
 						var octave = pattern.measures[i].notes[j].pitch.octave;	// determine the octave
@@ -148,7 +151,7 @@ MusicXMLAnalyzer.ResultView = function(){
 						}
 						duration += 16;	// add 16 to duration; quarter = 16/64
 					}
-					measures.push({ notes: notes, duration: duration });	// push note to array
+					measures.push({ notes: notes, duration: duration, time_signature: time_signature });	// push note to array
 				}
 				break;
 
@@ -164,6 +167,7 @@ MusicXMLAnalyzer.ResultView = function(){
 						// notes.push(new Vex.Flow.BarNote(0));
 					}
 					var duration = 0;
+					var time_signature = pattern.measures[i].time_signature;
 					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
 						if (pattern.measures[i].notes[j].type == "note") {
 							var step = pattern.measures[i].notes[j].pitch.step;
@@ -218,7 +222,7 @@ MusicXMLAnalyzer.ResultView = function(){
 							duration += getDurationIn64th(pattern.measures[i].notes[j].duration);
 						}
 					}
-					measures.push({ notes: notes, duration: duration });
+					measures.push({ notes: notes, duration: duration, time_signature: time_signature });
 				}
 				break;
 		}
