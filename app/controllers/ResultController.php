@@ -143,6 +143,14 @@ class ResultController extends BaseController {
 										} else {
 											$noteObject->pitch->beam = false;
 										}
+
+										// determine dot
+										$dot = $note->getElementsByTagName('dot');
+										if ($dot->length) {
+											$noteObject->pitch->dot = true;
+										} else {
+											$noteObject->pitch->dot = false;
+										}
 										
 									} else {
 										// it's a rest

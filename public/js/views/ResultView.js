@@ -143,37 +143,16 @@ MusicXMLAnalyzer.ResultView = function(){
 						var octave = pattern.measures[i].notes[j].pitch.octave;	// determine the octave
 						var alter = pattern.measures[i].notes[j].pitch.alter;	// determine the alter
 						var keys = [getVexflowKey(step, octave, alter )];	// generating key in vexflow format
+
+						var note = new Vex.Flow.StaveNote({ keys: keys, duration: "q", auto_stem: true });
+
 						if (alter == -1) {	// if accidental should be "b"
-							notes.push(
-								new Vex.Flow.StaveNote(
-									{
-										keys: keys,
-										duration: "q",	// duration for sound sequence is always quarter
-										auto_stem: true
-									}
-								).addAccidental(0, new Vex.Flow.Accidental("b"))	// add "b"
-							);
+							note.addAccidental(0, new Vex.Flow.Accidental("b"));	// add "b"
 						} else if (alter == 1) {	// if accidental should be "#"
-							notes.push(
-								new Vex.Flow.StaveNote(
-									{
-										keys: keys,
-										duration: "q",	// duration for sound sequence is always quarter
-										auto_stem: true
-									}
-								).addAccidental(0, new Vex.Flow.Accidental("#"))	// add "#"
-							);
-						} else {	// if no accidental
-							notes.push(
-								new Vex.Flow.StaveNote(
-									{
-										keys: keys,
-										duration: "q",	// duration for sound sequence is always quarter
-										auto_stem: true
-									}
-								)
-							);
+							note.addAccidental(0, new Vex.Flow.Accidental("#"));	// add "#"
 						}
+
+						notes.push(note);
 						duration += 16;	// add 16 to duration; quarter = 16/64
 					}
 					measures.push({ notes: notes, duration: duration, time_signature: time_signature });	// push note to array
@@ -192,58 +171,38 @@ MusicXMLAnalyzer.ResultView = function(){
 					var beams = [];
 					var time_signature = pattern.measures[i].time_signature;
 					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
+						var note;
 						if (pattern.measures[i].notes[j].type == "note") {
 							var step = pattern.measures[i].notes[j].pitch.step;
 							var octave = pattern.measures[i].notes[j].pitch.octave;
 							var alter = pattern.measures[i].notes[j].pitch.alter;
 							var type = pattern.measures[i].notes[j].pitch.type;
 							var keys = [getVexflowKey(step, octave, alter )];
-							var noteDuration = getVexflowDuration(type, false);
-							var noteBeam = pattern.measures[i].notes[j].pitch.beam;
-							if (alter == -1) {
-								notes.push(
-									new Vex.Flow.StaveNote(
-										{
-											keys: keys,
-											duration: noteDuration,
-											auto_stem: true
-										}
-									).addAccidental(0, new Vex.Flow.Accidental("b"))
-								);
-							} else if (alter == 1) {
-								notes.push(
-									new Vex.Flow.StaveNote(
-										{
-											keys: keys,
-											duration: noteDuration,
-											auto_stem: true
-										}
-									).addAccidental(0, new Vex.Flow.Accidental("#"))
-								);
-							} else {
-								notes.push(
-									new Vex.Flow.StaveNote(
-										{
-											keys: keys,
-											duration: noteDuration,
-											auto_stem: true
-										}
-									)
-								);
+							var durationType = 0;
+							if (pattern.measures[i].notes[j].pitch.dot) {
+								durationType = 2;
 							}
-							duration += getDurationIn64th(type);
+							var noteDuration = getVexflowDuration(type, durationType);
+							var noteBeam = pattern.measures[i].notes[j].pitch.beam;
+
+							note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true });
+							if (alter == -1) {
+								note.addAccidental(0, new Vex.Flow.Accidental("b")).addDotToAll();
+							} else if (alter == 1) {
+								note.addAccidental(0, new Vex.Flow.Accidental("#")).addDotToAll();
+							}
+
+							if (pattern.measures[i].notes[j].pitch.dot) {
+								note.addDotToAll();
+							}
 						} else if (pattern.measures[i].notes[j].type == "rest") {
-							var noteDuration = getVexflowDuration(pattern.measures[i].notes[j].duration, true);
-							notes.push(
-								new Vex.Flow.StaveNote(
-									{
-										keys: ["b/4"],	// key is b/4 to center rest vertical
-										duration: noteDuration
-									}
-								)
-							);
+							var durationType = 1; // rests type is 1
+							var restDuration = getVexflowDuration(pattern.measures[i].notes[j].duration, durationType);
+
+							note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: restDuration })
 							duration += getDurationIn64th(pattern.measures[i].notes[j].duration);
 						}
+						notes.push(note);
 						beams[j] = noteBeam;
 					}
 					measures.push({ notes: notes, duration: duration, beams: beams, time_signature: time_signature });
@@ -278,22 +237,64 @@ MusicXMLAnalyzer.ResultView = function(){
 		}
 	},
 
-	getVexflowDuration = function(duration, rest) {
+	getVexflowDuration = function(duration, type) {
 		switch (duration) {
 			case "whole":
-				if (rest) { return "wr"; } else { return "w"; } break;
+				switch (type) {
+					case 0: return "w"; break;
+					case 1: return "wr"; break;
+					case 2: return "wd"; break;
+
+				}
+				break;
 			case "half":
-				if (rest) { return "hr"; } else { return "h"; } break;
+				switch (type) {
+					case 0: return "h"; break;
+					case 1: return "hr"; break;
+					case 2: return "hd"; break;
+
+				}
+				break;
 			case "quarter":
-				if (rest) { return "qr"; } else { return "q"; } break;
+				switch (type) {
+					case 0: return "q"; break;
+					case 1: return "qr"; break;
+					case 2: return "qd"; break;
+
+				}
+				break;
 			case "eighth":
-				if (rest) { return "8r"; } else { return "8"; } break;
+				switch (type) {
+					case 0: return "8"; break;
+					case 1: return "8r"; break;
+					case 2: return "8d"; break;
+
+				}
+				break;
 			case "16th":
-				if (rest) { return "16r"; } else { return "16"; } break;
+				switch (type) {
+					case 0: return "16"; break;
+					case 1: return "16r"; break;
+					case 2: return "16d"; break;
+
+				}
+				break;
 			case "32nd":
-				if (rest) { return "32r"; } else { return "32"; } break;
+				switch (type) {
+					case 0: return "32"; break;
+					case 1: return "32r"; break;
+					case 2: return "32d"; break;
+
+				}
+				break;
 			case "64th":
-				if (rest) { return "64r"; } else { return "64"; } break;
+				switch (type) {
+					case 0: return "64"; break;
+					case 1: return "64r"; break;
+					case 2: return "64d"; break;
+
+				}
+				break;
 			default:
 				return false; break;
 		}
