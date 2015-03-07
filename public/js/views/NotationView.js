@@ -48,8 +48,7 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	// display note elements on the canvas and get them from model
 	// via controller
-	renderNotes = function(vexflowNotes, completeDurationIn64th) {
-		console.log("renderNotes");
+	renderNotes = function(vexflowNotes) {
 
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -57,8 +56,8 @@ MusicXMLAnalyzer.NotationView = function(){
 		stave.setContext(context).draw();
 
 		var voice = new Vex.Flow.Voice({
-		    num_beats: completeDurationIn64th,
-		    beat_value: 64,
+		    // num_beats: completeDurationIn64th,
+		    // beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
 		//easiest way to disable time-checking

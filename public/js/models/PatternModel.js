@@ -12,7 +12,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	curRythSpec = null,
 	curOctave = null,
 	VEXFLOW_REST_SIGN = "r",
-	completeDurationIn64th = 0,
+	// completeDurationIn64th = 0,
 	first = true,
 
 	init = function(){
@@ -94,7 +94,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	addNoteElement = function() {
-		completeDurationIn64th = 0;
+		// completeDurationIn64th = 0;
 
 		// soundSequence pattern:
 		// $patternValue.val(JSON.stringify(
@@ -158,11 +158,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 			// console.log("noteElements: ", noteElements);
 			
-
+			/*
 			for (var i = 0; i < noteElements.length; i++) {
 				//console.log("d64 of " + i + " " + getDurationIn64thNotes(noteElements[i].duration));
 				completeDurationIn64th += getDurationIn64thNotes(noteElements[i].duration);
 			}
+			*/
 
 			//check if break or normal note
 			//then adapt values for vexflow an put them into an array
@@ -177,8 +178,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 			}			
 
 		$(that).trigger('patternChange', [noteElements]);
-		// send vexflow note elements and complete duration in 64th to controller and then back to view
-		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements(), completeDurationIn64th]);
+		// send vexflow note elements to controller and then back to view
+		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
 	},
 
 	getDuration4Vexflow = function(duration) {
@@ -203,6 +204,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return duration4Vexflow;
 	},
 
+	/*
 	getDurationIn64thNotes = function(noteDuration) {
 		//when 64th note
 		var durationIn64th = 1;
@@ -223,6 +225,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		return durationIn64th;
 	},
+	*/
 
 	/*
 	This method gets called when your click on the canvas
@@ -253,9 +256,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 	    console.log(noteElements4VexFlow);
 	},
 
+	/*
 	getCompleteDurationIn64th = function() {
 		return completeDurationIn64th;
 	},
+	*/
 
 	getAllNoteElements = function() {
 		return noteElements;
@@ -285,9 +290,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.getCurrentMode = getCurrentMode;
 	that.getAllNoteElements = getAllNoteElements;
 	that.getAllVexFlowNoteElements = getAllVexFlowNoteElements;
-	that.getCompleteDurationIn64th = getCompleteDurationIn64th;
+	// that.getCompleteDurationIn64th = getCompleteDurationIn64th;
 	that.getDuration4Vexflow = getDuration4Vexflow;
-	that.getDurationIn64thNotes = getDurationIn64thNotes;
+	// that.getDurationIn64thNotes = getDurationIn64thNotes;
 
 	return that;
 }
