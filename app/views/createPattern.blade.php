@@ -27,14 +27,14 @@
 			<p></p>
 			<p>Special Ryth: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label id="Triplet" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+				<label id="None" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+                    <input type="radio" value=":None">None
+                </label>
+                <label id="Triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":Triplet">Triplet
 				</label>
 				<label id="Dotted" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":Dotted">Dotted
-				</label>
-				<label id="None" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-					<input type="radio" value=":None">None
 				</label>
 			</div>
 		</div>
@@ -87,13 +87,13 @@
 			<p></p>
 			<p>Duration: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label id="whole" class="btn btn-duration btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+				<label id="whole" class="btn btn-duration btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":whole">1/1
 				</label>
 				<label id="half" class="btn btn-duration btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":half">1/2
 				</label>
-				<label id="quarter" class="btn btn-duration btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+				<label id="quarter" class="btn btn-duration btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":quarter">1/4
 				</label>
 				<label id="eighth" class="btn btn-duration btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
@@ -114,10 +114,10 @@
 			<p></p>
 			<p>Clef: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label id="F" class="btn btn-clef btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+				<label id="F" class="btn btn-clef btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":F">F
 				</label>
-				<label id="G" class="btn btn-clef btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+				<label id="G" class="btn btn-clef btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":G">G
 				</label>
 			</div>
