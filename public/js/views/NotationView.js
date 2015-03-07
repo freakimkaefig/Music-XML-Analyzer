@@ -219,7 +219,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		} else if (y > spaceBetweenLines * 9.25 && y <= spaceBetweenLines * 9.75) {
 			hoveredNote = "d/4";
 		} else if (y > spaceBetweenLines * 9.75 && y <= spaceBetweenLines * 10.25) {
-			// eigentlich ein c1
+			// c1
 			hoveredNote = "c/4";
 		} else if (y > spaceBetweenLines * 10.25 && y <= spaceBetweenLines * 10.75) {
 			hoveredNote = "b/3";

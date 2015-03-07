@@ -96,20 +96,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	addNoteElement = function() {
 		completeDurationIn64th = 0;
 
-		if (!curName) {
-			alert("name missing");
-		} else if (!curAccidential) {
-			alert("accidential missing");
-		} else if (!curDuration) {
-			alert("duration missing");
-		} else if (!curClef) {
-			alert("clef missing");
-		} else if (!curRythSpec) {
-			alert("ryth spec missing");
-		} else if (!curOctave) {
-			alert("octave missing");
-		}
-		else {
 		// soundSequence pattern:
 		// $patternValue.val(JSON.stringify(
 		// 	{
@@ -133,16 +119,16 @@ MusicXMLAnalyzer.PatternModel = function(){
 		// 	}
 		// ));
 
-// 
-// Adding Notes (doesn't work on rest or anything else)
-// ToDo: differentiation between other ElementTypes (e.g. rests, or dotted notes, or triplets, ...)
-// ToDo: needs more specific var's according to ElementType [see patterns!]
-// 
+		// 
+		// Adding Notes (doesn't work on rest or anything else)
+		// ToDo: differentiation between other ElementTypes (e.g. rests, or dotted notes, or triplets, ...)
+		// ToDo: needs more specific var's according to ElementType [see patterns!]
+		// 
 			if(first){
 				first = false;
 				noteElements.push({
 					//TODO 
-					//Mode im moment hart gecoded
+					//Mode für Dave im moment hart gecoded
 					type: 0,
 					notes:[{
 						pitch: {
@@ -190,7 +176,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		    						 auto_stem: true }));
 			}			
 
-		}
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements and complete duration in 64th to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements(), completeDurationIn64th]);
@@ -242,10 +227,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 	/*
 	This method gets called when your click on the canvas
 	to add a note element.
-	The paramter note looks like "c/4"
+	The paramter note looks like "c/4".
+	It updates the model values curName and curOctave and calls addNoteElement
 	*/
 	addNoteElementByCanvasClick = function(note) {
-		console.log("model add note by canavs click : " + note);
 		//split string at "/" to get noteName and ovtave
 		//and saves it into array noteContainer
 		var noteContainer = note.split("/");
