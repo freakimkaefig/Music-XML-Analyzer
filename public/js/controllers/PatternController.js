@@ -15,6 +15,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('patternChange', onPatternChange);
 		$(patternModel).on('updateNotationView', onNotationViewUpdate);
 		$(patternModel).on('changeSelectedNoteNameByClick', onNoteNameSelectionChange);
+		$(patternModel).on('changeSelectedOctaveByClick', onOctaveSelectionChange);
 
 	},
 
@@ -26,6 +27,10 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	onNoteNameSelectionChange = function(event, selectedNoteNameByClick) {
 		patternView.setNoteNameActive(selectedNoteNameByClick);
+	},
+
+	onOctaveSelectionChange = function(event, selectedOctaveByClick) {
+		patternView.setOctaveActive(selectedOctaveByClick);
 	},
 
 	changeMode = function(val) {

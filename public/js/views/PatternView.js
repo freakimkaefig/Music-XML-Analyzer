@@ -224,9 +224,16 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	setNoteNameActive = function(noteName) {
-		$(".btn-group-names>label.active").removeClass("active");
+		console.log("setNoteNameActive");
+		$(".btn-note.active").removeClass("active");
 		//$('btn-group-names label.active').removeClass('active');
 		$("#" + noteName + "").addClass("active");
+	},
+
+	setOctaveActive = function(octave) {
+		$(".btn-octave.active").removeClass("active");
+		$('btn-group-names label.active').removeClass('active');
+		$("#" + octave + "").addClass("active");
 	},
 
 	onRemoveButtonClick = function(event) {
@@ -237,6 +244,7 @@ MusicXMLAnalyzer.PatternView = function(){
 	that.init = init;
 	that.setPatternValue = setPatternValue;
 	that.setNoteNameActive = setNoteNameActive;
+	that.setOctaveActive = setOctaveActive;
 
 	return that;
 }
