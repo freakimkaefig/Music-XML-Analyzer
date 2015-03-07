@@ -165,6 +165,16 @@ class ResultController extends BaseController {
 										} else {
 											$noteObject->pitch->dot = false;
 										}
+
+										// determine ties
+										$ties = $note->getElementsByTagName('tie');
+										if ($ties->length) {
+											foreach ($ties as $tie) {
+												$noteObject->pitch->ties[] = $tie->getAttribute('type');
+											}
+										} else {
+											$noteObject->pitch->ties[] = false;
+										}
 										
 									} else {
 										// it's a rest

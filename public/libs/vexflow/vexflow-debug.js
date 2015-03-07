@@ -4834,7 +4834,6 @@ Vex.Flow.StaveNote = (function() {
       if (this.ys.length === 0) throw new Vex.RERR("NoYValues",
           "Can't draw note without Y values.");
 
-      console.log(this);
       if ("color" in this) {
         this.context.setStrokeStyle(this.color);
         this.context.setFillStyle(this.color);

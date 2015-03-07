@@ -65,12 +65,15 @@ MusicXMLAnalyzer.ResultView = function(){
 		// disable strict timing
 		voice.setStrict(false);
 
+		var tieStart = null;
+		var tieStop = null;
+		var ties = [];
 		for (var i = 0; i < measures.length; i++) {
 			// calculate x & y coordinates and width of the current measure
 			var x, y, width;
-			width = 340;
-			height = 80;
-			padding = 10;
+			width = 480;
+			height = 90;
+			padding = 5;
 			if (i%2 == 0) {
 				x = padding;
 				y = i * (height / 2);
@@ -94,24 +97,48 @@ MusicXMLAnalyzer.ResultView = function(){
 				staveBar.setEndBarType(Vex.Flow.Barline.type.END);	// set double measure bar line at last measure
 			}
 
-			// creating beams between notes
-			var start = null;
-			var end = null;
+			// creating ties and beams between notes
+			var beamBegin = null;
+			var beamEnd = null;
 			var beams = [];
 			for (var j = 0; j < measures[i].notes.length; j++) {
+				// beams
 				if (measures[i].beams[j] == "begin") {
-					start = j;
+					beamBegin = j;
 				}
 				if (measures[i].beams[j] == "end") {
-					end = j;
+					beamEnd = j;
 				}
-				if (start != null && end != null) {
-					var beamNotes = measures[i].notes.slice(start, end+1);
+				if (beamBegin != null && beamEnd != null) {
+					var beamNotes = measures[i].notes.slice(beamBegin, beamEnd+1);
 					var beam = new Vex.Flow.Beam(beamNotes, true);
 					beams.push(beam);
-					start = null;
-					end = null;
+					beamBegin = null;
+					beamEnd = null;
 				}
+
+				// ties
+				// console.log(measures[i]);
+				if (measures[i].ties[j].indexOf("stop") > -1) {
+					// console.warn("TieStop");
+					tieStop = measures[i].notes[j];
+					if (tieStart != null) {
+						console.warn("Tie");
+						var tie = new Vex.Flow.StaveTie({ first_note: tieStart, last_note: tieStop, first_indices: [0], last_indices: [0] });
+						ties.push(tie);
+						tieStart = null;
+						tieStop = null;
+					}
+				}
+				if (measures[i].ties[j].indexOf("start") > -1) {
+					// console.warn("TieStart");
+					tieStart = measures[i].notes[j];
+				}
+				// for (var k = 0; k < measures[i].ties.length; k++) {
+				// 	if (measures[i].ties[j][k] == "start") {
+
+				// 	}
+				// }
 			}
 
 			// draw measure bar line
@@ -124,7 +151,11 @@ MusicXMLAnalyzer.ResultView = function(){
 			for ( var b = 0; b < beams.length; b++) {
 				beams[b].setContext(context).draw();
 			}
-		}		
+		}
+
+		for (var t = 0; t < ties.length; t++) {
+			ties[t].setContext(context).draw();
+		}
 	},
 
 	generateVexflowNotes = function(pattern) {
@@ -169,6 +200,7 @@ MusicXMLAnalyzer.ResultView = function(){
 					var notes = [];
 					var duration = 0;
 					var beams = [];
+					var ties = [];
 					var time_signature = pattern.measures[i].time_signature;
 					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
 						var color = "#000000";
@@ -177,6 +209,7 @@ MusicXMLAnalyzer.ResultView = function(){
 						}
 						var note;
 						if (pattern.measures[i].notes[j].type == "note") {
+							var noteTies = pattern.measures[i].notes[j].pitch.ties;
 							var step = pattern.measures[i].notes[j].pitch.step;
 							var octave = pattern.measures[i].notes[j].pitch.octave;
 							var alter = pattern.measures[i].notes[j].pitch.alter;
@@ -192,25 +225,27 @@ MusicXMLAnalyzer.ResultView = function(){
 							note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true });
 							note.color = color;
 							if (alter == -1) {
-								note.addAccidental(0, new Vex.Flow.Accidental("b")).addDotToAll();
+								note.addAccidental(0, new Vex.Flow.Accidental("b"));
 							} else if (alter == 1) {
-								note.addAccidental(0, new Vex.Flow.Accidental("#")).addDotToAll();
+								note.addAccidental(0, new Vex.Flow.Accidental("#"));
 							}
 
 							if (pattern.measures[i].notes[j].pitch.dot) {
 								note.addDotToAll();
 							}
+							beams[j] = noteBeam;
+							ties[j] = noteTies;
 						} else if (pattern.measures[i].notes[j].type == "rest") {
 							var durationType = 1; // rests type is 1
 							var restDuration = getVexflowDuration(pattern.measures[i].notes[j].duration, durationType);
 
-							note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: restDuration })
+							note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: restDuration });
 							duration += getDurationIn64th(pattern.measures[i].notes[j].duration);
+							ties[j] = [false];
 						}
 						notes.push(note);
-						beams[j] = noteBeam;
 					}
-					measures.push({ notes: notes, duration: duration, beams: beams, time_signature: time_signature });
+					measures.push({ notes: notes, duration: duration, beams: beams, ties: ties, time_signature: time_signature });
 				}
 				break;
 		}
