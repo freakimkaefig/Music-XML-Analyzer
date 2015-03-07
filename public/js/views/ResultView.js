@@ -171,6 +171,10 @@ MusicXMLAnalyzer.ResultView = function(){
 					var beams = [];
 					var time_signature = pattern.measures[i].time_signature;
 					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
+						var color = "#000000";
+						if ("color" in pattern.measures[i].notes[j]) {
+							color = pattern.measures[i].notes[j].color;
+						}
 						var note;
 						if (pattern.measures[i].notes[j].type == "note") {
 							var step = pattern.measures[i].notes[j].pitch.step;
@@ -186,6 +190,7 @@ MusicXMLAnalyzer.ResultView = function(){
 							var noteBeam = pattern.measures[i].notes[j].pitch.beam;
 
 							note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true });
+							note.color = color;
 							if (alter == -1) {
 								note.addAccidental(0, new Vex.Flow.Accidental("b")).addDotToAll();
 							} else if (alter == 1) {

@@ -54,25 +54,35 @@ class ResultController extends BaseController {
 				$voice = $result->occurences[$i]->voice;
 				$part_id = $result->occurences[$i]->part_id;
 
-				// calculating measure number, where the first note is in
+				$colors = array();
+
+				// calculating measure number, where the first and last note is in
 				$startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
+				$endMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($end)->parentNode->getAttribute('number');
+				
+				$startExtract = $startMeasureNumber;
 				if ($startMeasureNumber != 1) {
 					// Check if measure before can be included in extract
-					$startMeasureNumber -= 1;
+					$startExtract -= 1;
+					$colors[] = "#000000";
 				}
 
-				// calculate measure number, where the last note is in
-				$endMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($end)->parentNode->getAttribute('number');
+				for ($j = $startMeasureNumber; $j <= $endMeasureNumber; $j++) {
+					$colors[] = "#FF0000";
+				}
+
+				$endExtract = $endMeasureNumber;
 				if ($endMeasureNumber < $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('measure')->length) {
 					// Check if measure after can be included in extract
-					$endMeasureNumber += 1;
+					$endExtract += 1;
+					$colors[] = "#000000";
 				}
 				$measureCounter = 0;
 				$partBeats = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('beats')->item(0)->nodeValue;
 				$curBeats = $partBeats;
 				$partBeatType = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('beat-type')->item(0)->nodeValue;
 				$curBeatType = $partBeatType;
-				for ($j = $startMeasureNumber; $j <= $endMeasureNumber; $j++) {
+				for ($j = $startExtract; $j <= $endExtract; $j++) {
 					$measure = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]')->item(0);
 					$measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note');
 					// Debugbar::info("counter: " . $measureCounter);
@@ -89,6 +99,9 @@ class ResultController extends BaseController {
 					}
 					$measureObject->time_signature = $time_signature;
 					$resultNotes[$i]->measures[$measureCounter] = $measureObject;
+
+					$currentColor = $colors[$measureCounter];
+
 					foreach ($measureNotes as $note) {
 						switch ($pattern->type) {
 							case 0:
@@ -104,6 +117,7 @@ class ResultController extends BaseController {
 								 */
 								if ($note->getElementsByTagName('voice')->item(0)->nodeValue == $voice) {
 									$noteObject = new stdClass();
+									$noteObject->color = $currentColor;
 									$pitch = $note->getElementsByTagName('pitch');
 									if ($pitch->length) {
 										// it's a note
