@@ -124,23 +124,33 @@
 		</div>
 	</div>
 	<div class="row row-centered">
-		<div class="col-xs-2">
-			<p>Octave: </p>
-			<select id="select-octave" class="form-control btn-material-blue-grey">
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-			</select>
+		<div class="col-xs-8 col-centered col-min">
+			<p></p>
+            <p>Octave: </p>
+            <div class="btn-group" data-toggle="buttons">
+                <label id="2" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+                    <input type="radio" value=":2">2
+                </label>
+                <label id="3" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+                    <input type="radio" value=":3">3
+                </label>
+                <label id="4" class="btn btn-octave btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+                    <input type="radio" value=":4">4
+                </label>
+                <label id="5" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+                    <input type="radio" value=":5">5
+                </label>
+                <label id="6" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+                    <input type="radio" value=":6">6
+                </label>
+            </div>
 		</div>
+        <div class="col-xs-4 col-centered col-min">
+            <button id="btn-add-note" type="button" class="btn btn-material-green-400">Add</button>
+            <button id="btn-remove-note" type="button" class="btn btn-material-red-400">Delete</button>
+        </div>
 	</div>
-	<div class="row row-centered">
-		<div class="col-xs-12">
-			<button id="btn-add-note" type="button" class="btn btn-material-green-400">Add</button>
-			<button id="btn-remove-note" type="button" class="btn btn-material-red-400">Delete</button>
-		</div>
-	</div>
+
 	<div class="row">
 		<div class="col-xs-12">
 			{{ Form::submit('Search', array('class' => 'btn btn-success btn-xxl pull-right')) }}

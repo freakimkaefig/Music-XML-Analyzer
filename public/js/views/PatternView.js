@@ -8,7 +8,7 @@ MusicXMLAnalyzer.PatternView = function(){
 	$durationButtonClass = $(".btn-duration"),
 	$clefButtonClass = $(".btn-clef"),
 	$specialRythButtonClass = $(".btn-special-ryth"),
-	$selectOctave = $("#select-octave"),
+	$octaveButtonClass = $(".btn-octave"),
 
 	$addNoteButton = $("#btn-add-note"),
 	$removeNoteButton = $("#btn-remove-note"),
@@ -28,9 +28,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		$durationButtonClass.on("click", onDurationButtonClick);
 		$clefButtonClass.on("click", onClefButtonClick);
 		$specialRythButtonClass.on("click", onSpecialRythButtonClick);
-
-		$selectOctave.on("change", onOctaveChanged);
-
+		$octaveButtonClass.on("click", onOctaveButtonClick);
 		$addNoteButton.on("click", onAddButtonClick);
 		$removeNoteButton.on("click", onRemoveButtonClick);
 
@@ -211,9 +209,8 @@ MusicXMLAnalyzer.PatternView = function(){
 		patternController.changeSpecialRyth(event.target.id);
 	},
 
-	onOctaveChanged = function(event) {
-		console.log($(event.target).val());
-		patternController.changeOctave($(event.target).val());
+	onOctaveButtonClick = function(event) {
+		patternController.changeOctave(event.target.id);
 	},
 
 	onAddButtonClick = function(event) {
