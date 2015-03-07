@@ -77,34 +77,36 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 
 	renderVexFlowNotePreview = function(noteName) {
-		console.log("render notes preview");
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave.setContext(context).draw();
 
 		// get all vexflow note elements from model which already exist 
   		var vexFlowNotes = patternModel.getAllVexFlowNoteElements();
+  		
+  		//64th stuff:
   		// get complete duration for num_beats
-  		var completeDurationIn64th = patternModel.getCompleteDurationIn64th();
+  		// var completeDurationIn64th = patternModel.getCompleteDurationIn64th();
+  		// get duration in 64th with currentDuration val
+  		// var durationPreviewNoteIn64th = patternModel.getDurationIn64thNotes(currentDuration);
+  		
   		var currentDuration = patternModel.getCurrentNoteDuration();
 		// get Vexflow duration with duration from buttons
   		var currentDuration4VexFlow = patternModel.getDuration4Vexflow(currentDuration);
-  		// get duration in 64th with currentDuration val
-  		var durationPreviewNoteIn64th = patternModel.getDurationIn64thNotes(currentDuration);
-  		
+
+  		// add the preview to to notes array
+  		// further down it's been removed again
 		vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName],
 		    						 duration: currentDuration4VexFlow,
 		    						 auto_stem: true }));
 		  		  	
-		// console.log("complete dur: " + completeDurationIn64th);
-
 		var voice = new Vex.Flow.Voice({
 		    //complete duration + the note you preview
-		    num_beats: completeDurationIn64th + durationPreviewNoteIn64th,
-		    beat_value: 64,
+		    // num_beats: completeDurationIn64th + durationPreviewNoteIn64th,
+		    // beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
-		//easiest way to disable time-checking
+		//disable time-checking
 		voice.setStrict(false);
 
 		// Add notes to voice
