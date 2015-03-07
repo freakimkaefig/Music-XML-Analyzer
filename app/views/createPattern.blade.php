@@ -12,13 +12,13 @@
 		<div class="col-xs-8 col-centered col-min">
 			<p>Choose Mode: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label id="2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+				<label id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":melody">melody
 				</label>
-				<label id="0" class="btn btn-mode btn-material-blue-grey " data-toggle="tooltip" data-placement="top">
+				<label id="sound-sequence-mode-0" class="btn btn-mode btn-material-blue-grey " data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":sound sequence">sound sequence
 				</label>
-				<label id="1" class="btn btn-mode btn-material-blue-grey " data-toggle="tooltip" data-placement="top">
+				<label id="rhythm-mode-1" class="btn btn-mode btn-material-blue-grey " data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":rhythm">rhythm
 				</label>
 			</div>

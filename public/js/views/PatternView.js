@@ -180,12 +180,12 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onModeButtonClick = function(event) {
-		//console.log($(event.target).text());
-		patternController.changeMode(event.target.id);
+		var modeButtonId = event.target.id;
+		// slice -1 gets the last char of the mode id
+		patternController.changeMode(modeButtonId.slice(-1));
 	},
 
 	onNoteButtonClick = function(event) {
-		//console.log(event.target.id);
 		patternController.changeNote(event.target.id);
 	},
 
