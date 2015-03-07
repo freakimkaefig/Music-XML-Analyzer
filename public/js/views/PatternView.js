@@ -190,22 +190,18 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onAccidentialButtonClick = function(event) {
-		// console.log($(event.target).text());
 		patternController.changeAccidential(event.target.id);
 	},
 
 	onDurationButtonClick = function(event) {
-		// console.log($(event.target).text());
 		patternController.changeDuration(event.target.id);
 	},
 
 	onClefButtonClick = function(event) {
-		// console.log($(event.target).text());
 		patternController.changeClef(event.target.id);
 	},
 
 	onSpecialRythButtonClick = function(event) {
-		// console.log($(event.target).text());
 		patternController.changeSpecialRyth(event.target.id);
 	},
 
@@ -214,7 +210,6 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onAddButtonClick = function(event) {
-		// console.log("add btn");
 		patternController.addNote();
 	},
 
@@ -226,7 +221,6 @@ MusicXMLAnalyzer.PatternView = function(){
 	setNoteNameActive = function(noteName) {
 		console.log("setNoteNameActive");
 		$(".btn-note.active").removeClass("active");
-		//$('btn-group-names label.active').removeClass('active');
 		$("#" + noteName + "").addClass("active");
 	},
 
@@ -237,7 +231,6 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onRemoveButtonClick = function(event) {
-		// console.log("remove btn");
 		patternController.removeLastNote();
 	};
 

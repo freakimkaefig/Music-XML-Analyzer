@@ -3,9 +3,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	var that = {},
 	noteElements = [],
 	noteElements4VexFlow = [],
-	//noteElement = null,
 
-	//TODO Set Start Values
 	curMode = null,
 	curName = null,
 	curAccidential = null,
@@ -18,7 +16,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	first = true,
 
 	init = function(){
-		console.log("pattern model");
 		setDefaultValues();
 	},
 
@@ -255,7 +252,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		
 		curName = noteContainer[0];
 		curOctave = noteContainer[1];
-		
+
 		// updates selected btns for note name and view in pattern view
 		$(that).trigger('changeSelectedNoteNameByClick', [curName]);
 		$(that).trigger('changeSelectedOctaveByClick', [curOctave]);
