@@ -94,7 +94,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	addNoteElement = function() {
-		console.log(curName);	
 		// completeDurationIn64th = 0;
 
 		// soundSequence pattern:
@@ -170,14 +169,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 			//then adapt values for vexflow an put them into an array
 			if (curName == "break") {
 				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: ["b/4"],
-		    						 duration: getDuration4Vexflow(curDuration) + VEXFLOW_REST_SIGN,
-		    						 auto_stem: true }));
-			} else if (curAccidential != "none") {
-				//...
+		    						duration: getDuration4Vexflow(curDuration) + VEXFLOW_REST_SIGN,
+		    						auto_stem: true }));
 			} else {
 				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "/" + curOctave],
-		    						 duration: getDuration4Vexflow(curDuration),
-		    						 auto_stem: true }));
+		    						duration: getDuration4Vexflow(curDuration),
+		    						auto_stem: true }));
 			}			
 
 		$(that).trigger('patternChange', [noteElements]);
