@@ -92,12 +92,20 @@ MusicXMLAnalyzer.NotationView = function(){
   		var currentDuration = patternModel.getCurrentNoteDuration();
 		// get Vexflow duration with duration from buttons
   		var currentDuration4VexFlow = patternModel.getDuration4Vexflow(currentDuration);
-
+  		var currentAccidential = patternModel.getCurrentAccidential();
+  		console.log(currentAccidential);
   		// add the preview to to notes array
   		// further down it's been removed again
-		vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName],
+  		if (currentAccidential == "#" || currentAccidential == "b") {
+  			vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName + currentAccidential],
+		    						 duration: currentDuration4VexFlow,
+		    						 auto_stem: true }).addAccidental(0, new Vex.Flow.Accidental(currentAccidential)));
+  		} else {
+  			vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName],
 		    						 duration: currentDuration4VexFlow,
 		    						 auto_stem: true }));
+  		}
+		
 		  		  	
 		var voice = new Vex.Flow.Voice({
 		    //complete duration + the note you preview
