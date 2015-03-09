@@ -64,6 +64,9 @@
 				<label id="b" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":b">B
 				</label>
+                <label id="break" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+                    <input type="radio" value=":break">Pause
+                </label>
 			</div>
 		</div>
 		<div class="col-xs-4 col-centered col-min">

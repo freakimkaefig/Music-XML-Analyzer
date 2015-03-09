@@ -94,6 +94,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	addNoteElement = function() {
+		console.log(curName);	
 		// completeDurationIn64th = 0;
 
 		// soundSequence pattern:
