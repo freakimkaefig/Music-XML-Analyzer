@@ -166,12 +166,14 @@ MusicXMLAnalyzer.PatternModel = function(){
 			}
 			*/
 
-			//check if break or normal note
+			//check if break or normal note or note with accidential
 			//then adapt values for vexflow an put them into an array
 			if (curName == "break") {
 				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: ["b/4"],
 		    						 duration: getDuration4Vexflow(curDuration) + VEXFLOW_REST_SIGN,
 		    						 auto_stem: true }));
+			} else if (curAccidential != "none") {
+				//...
 			} else {
 				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "/" + curOctave],
 		    						 duration: getDuration4Vexflow(curDuration),

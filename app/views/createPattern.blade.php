@@ -27,14 +27,14 @@
 			<p></p>
 			<p>Special Ryth: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label id="None" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
-                    <input type="radio" value=":None">None
+				<label id="none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+                    <input type="radio" value=":none">None
                 </label>
-                <label id="Triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-					<input type="radio" value=":Triplet">Triplet
+                <label id="triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+					<input type="radio" value=":triplet">Triplet
 				</label>
-				<label id="Dotted" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-					<input type="radio" value=":Dotted">Dotted
+				<label id="dotted" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+					<input type="radio" value=":dotted">Dotted
 				</label>
 			</div>
 		</div>
