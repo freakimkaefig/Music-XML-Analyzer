@@ -155,8 +155,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 					
 				});
 			}
-
-			// console.log("noteElements: ", noteElements);
 			
 			/*
 			for (var i = 0; i < noteElements.length; i++) {
@@ -171,8 +169,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: ["b/4"],
 		    						duration: getDuration4Vexflow(curDuration) + VEXFLOW_REST_SIGN,
 		    						auto_stem: true }));
+			} else if (curAccidential == "#" || curAccidential == "b") {
+				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + curAccidential + "/" + curOctave],
+		    						duration: getDuration4Vexflow(curDuration),
+		    						auto_stem: true }).addAccidental(0, new Vex.Flow.Accidental(curAccidential)));
 			} else {
-				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "/" + curOctave],
+				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "b" + "/" + curOctave],
 		    						duration: getDuration4Vexflow(curDuration),
 		    						auto_stem: true }));
 			}			
