@@ -14,7 +14,9 @@ The user should be able to search for specific patterns in his corpus. The searc
 - [ ] Implement functionality
   - [x] Upload
   - [x] Analyse
-  - [ ] Dashboard
-  - [ ] Pattern search
+  - [x] Dashboard
+  - [x] Pattern search
   - [ ] Playing search results
+  - [ ] Export of results
+- [ ] Bug fixing
 - [ ] Document the project
