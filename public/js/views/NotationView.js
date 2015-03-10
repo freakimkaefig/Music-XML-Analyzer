@@ -82,10 +82,20 @@ MusicXMLAnalyzer.NotationView = function(){
 		stave.setContext(context).draw();
 
 		// get all vexflow note elements from model which already exist 
-  		var vexFlowNotes = patternModel.getAllVexFlowNoteElements();
+  		var vexflowNotes = patternModel.getAllVexFlowNoteElements();
+
+  		//bugprevention: vexflow changes the position of dots
+  		//for loop sets the position of all available dots to 0
+  		for (var i=0;  i < vexflowNotes.length; i++) {
+
+  			if (typeof vexflowNotes[i].modifiers[0] !== 'undefined') {
+  				vexflowNotes[i].modifiers[0].dot_shiftY = 0;
+  				console.log("removed: " + i);
+  			}	
+  		}
   		
-  		console.log("vexflow notes: ", vexFlowNotes);
-  		var previewNote;
+  		console.log("vexflow notes: ", vexflowNotes);
+  		var previewNote = null;
 		var key = hoveredNote;
   		var durationContent = patternModel.getDuration4Vexflow(patternModel.getCurrentNoteDuration());
   		var noteName = patternModel.getCurrentNoteName();
@@ -112,12 +122,12 @@ MusicXMLAnalyzer.NotationView = function(){
 		}
 
 		if (rythSpec == "dotted") {
-			previewNote.addDotToAll();	
+			previewNote.addDot(0);
 		}
 
-  		vexFlowNotes.push(previewNote);
+  		vexflowNotes.push(previewNote);
 
-  		// vexflowNotes[0].modifiers[0].dot_shiftY = 0;
+  		// console.log("shiftY: " + vexflowNotes[1].modifiers[0].dot_shiftY);
 		  		  	
 		var voice = new Vex.Flow.Voice({
 		    //complete duration + the note you preview
@@ -129,7 +139,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		voice.setStrict(false);
 
 		// Add notes to voice
-		voice.addTickables(vexFlowNotes);
+		voice.addTickables(vexflowNotes);
 
 		// Format and justify the notes to 700 pixels
 		var formatter = new Vex.Flow.Formatter().
@@ -139,7 +149,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		voice.draw(context, stave);
 
 		//delete last array entry
-		vexFlowNotes.pop();
+		vexflowNotes.pop();		
 
 	},
 
