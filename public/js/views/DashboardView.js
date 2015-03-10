@@ -68,7 +68,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		for (var i = 0; i < data.length; i++) {
 			selectorElement += '<option value="';
 			selectorElement += data[i].id
-			selectorElement += '">';
+			selectorElement += '" class="btn-material-blue-grey-100">';
 			selectorElement += data[i].value.artist;
 			selectorElement += ' - ';
 			selectorElement += data[i].value.title;
