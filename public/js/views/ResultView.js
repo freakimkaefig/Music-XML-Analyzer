@@ -161,6 +161,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	generateVexflowNotes = function(pattern) {
 		console.log("MusicXMLAnalyzer.ResultView.generateVexflowNotes" , "pattern", pattern);
 		var measures = [];
+		var beams = [];
 
 		switch (pattern.type) {
 			case 0:
@@ -199,7 +200,6 @@ MusicXMLAnalyzer.ResultView = function(){
 				for (var i = 0; i < pattern.measures.length; i++) {
 					var notes = [];
 					var duration = 0;
-					var beams = [];
 					var ties = [];
 					var time_signature = pattern.measures[i].time_signature;
 					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
