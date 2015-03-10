@@ -335,16 +335,14 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 	/*PIE-CHART KEY-DISTRIBUTION*/
 	initKeyDistribution = function(data) {
+		// console.log("Key Distribution Pie data: ",typeof(data), data);
 		if (keyDistribution) {
 			keyDistribution.destroy();
 		}
 		keyDistribution = new d3pie("pie_keyDistribution", {
 			header: {
 				title: {
-					text: "Key Distribution",
-					fontSize: 23,
-					font: "RobotoDraft"
-					// 'font-weight': 'light'
+					text: "Key Distribution"
 				}
 			},
 			data: {
@@ -370,10 +368,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		noteTypeDistribution = new d3pie("pie_noteTypeDistribution", {
 			header: {
 				title: {
-					text: "Note duration",
-					fontSize: 23,
-					font: "RobotoDraft"
-					// 'font-weight': 'light'
+					text: "Note duration"
 				}
 			},
 			data: {
@@ -393,20 +388,25 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 	/*PIE-CHART METERS*/
 	initMeterDistribution = function(data) {
+		var data2;
+		if(typeof(data) == 'string'){
+			data2 = [{label: data, value: 1}];
+		}else{
+			data2 = data;
+		}
+			// console.log("Meter Pie data: ",typeof(data2), data2);
+
 		if (meterDistribution) {
 			meterDistribution.destroy();
 		}
 		meterDistribution = new d3pie("pie_meterDistribution", {
 			header: {
 				title: {
-					text: "Meters",
-					fontSize: 23,
-					font: "RobotoDraft"
-					// 'font-weight': 'light'
+					text: "Meters"
 				}
 			},
 			data: {
-				content: data
+				content: data2
 			},
 			tooltips: {
 			    enabled: true,
