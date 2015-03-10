@@ -2,11 +2,16 @@
 
 @section('content')
 
-<div id="extract-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			{{ Form::hidden('pattern', json_encode(Cache::get('pattern')[0]), array('id' => 'patternValue')) }}
+			<canvas id="patternCanvas" width="950" height="186"></canvas>
+		</div>
+	</div>
+</div>
 
-<?php
-// Debugbar::info($resultNotes);
-?>
+<div id="extract-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
 	<!-- Indicators -->
 	<ol class="carousel-indicators">
@@ -34,6 +39,12 @@
 		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 		<span class="sr-only">Next</span>
 	</a>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<a href="{{ URL::route('searchResults') }}">&laquo; Back to results</a>
+	</div>
 </div>
 
 @stop

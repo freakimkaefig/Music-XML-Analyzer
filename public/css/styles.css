@@ -42,6 +42,13 @@ a:focus {
 .thead {
 	font-size: 125%;
 	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid #333;
+}
+.tr {
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .btn.active {
