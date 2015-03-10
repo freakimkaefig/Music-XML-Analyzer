@@ -4,29 +4,21 @@ MusicXMLAnalyzer.PatternModel = function(){
 	noteElements = [],
 	noteElements4VexFlow = [],
 
-	curMode = null,
-	curName = null,
-	curAccidential = null,
-	curDuration = null,
-	curClef = null,
-	curRythSpec = null,
-	curOctave = null,
+	curMode = "2",
+	curName = "c",
+	curAccidential = "none",
+	curDuration = "quarter",
+	curClef = "G",
+	curRythSpec = "none",
+	curOctave = "4",
 	VEXFLOW_REST_SIGN = "r",
 	// completeDurationIn64th = 0,
 	first = true,
 
-	init = function(){
-		setDefaultValues();
-	},
+	noteElementAccidential = 0,
 
-	setDefaultValues = function() {
-		curMode = "2";
-		curName = "c";
-		curAccidential = "0";
-		curDuration = "quarter";
-		curClef = "G";
-		curRythSpec = "none";
-		curOctave = "4";
+	init = function(){
+
 	},
 
 	setCurrentMode = function(mode) {
@@ -93,6 +85,18 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return curOctave;
 	},
 
+	setValuesForNoteElement = function() {
+
+		//accidential
+		if (curAccidential == "#") {
+			noteElementAccidential = 1;
+		} else if (curAccidential == "b") {
+			noteElementAccidential = -1;
+		} else {
+			noteElementAccidential = 0;
+		}
+	},
+
 	addNoteElement = function() {
 		// completeDurationIn64th = 0;
 
@@ -119,6 +123,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 		// 	}
 		// ));
 
+		setValuesForNoteElement();
+
+
 		// 
 		// Adding Notes (doesn't work on rest or anything else)
 		// ToDo: differentiation between other ElementTypes (e.g. rests, or dotted notes, or triplets, ...)
@@ -133,7 +140,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					notes:[{
 						pitch: {
 							step: curName.toUpperCase(),
-							alter: curAccidential,
+							alter: noteElementAccidential,
 							type: curDuration,
 							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
 							octave: curOctave
@@ -146,7 +153,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					
 						pitch: {
 							step: curName.toUpperCase(),
-							alter: curAccidential,
+							alter: noteElementAccidential,
 							type: curDuration,
 							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
 							octave: curOctave
