@@ -3,33 +3,22 @@ MusicXMLAnalyzer.PatternModel = function(){
 	var that = {},
 	noteElements = [],
 	noteElements4VexFlow = [],
-	//noteElement = null,
 
-	//TODO Set Start Values
-	curMode = null,
-	curName = null,
-	curAccidential = null,
-	curDuration = null,
-	curClef = null,
-	curRythSpec = null,
-	curOctave = null,
+	curMode = "2",
+	curName = "c",
+	curAccidential = "none",
+	curDuration = "quarter",
+	curClef = "G",
+	curRythSpec = "none",
+	curOctave = "4",
 	VEXFLOW_REST_SIGN = "r",
-	completeDurationIn64th = 0,
+	// completeDurationIn64th = 0,
 	first = true,
 
-	init = function(){
-		console.log("pattern model");
-		setDefaultValues();
-	},
+	noteElementAccidential = 0,
 
-	setDefaultValues = function() {
-		curMode = "2";
-		curName = "c";
-		curAccidential = "0";
-		curDuration = "quarter";
-		curClef = "G";
-		curRythSpec = "none";
-		curOctave = "4";
+	init = function(){
+
 	},
 
 	setCurrentMode = function(mode) {
@@ -95,24 +84,22 @@ MusicXMLAnalyzer.PatternModel = function(){
 	getCurrentOctave = function() {
 		return curOctave;
 	},
+	
+	setValuesForNoteElement = function() {
+
+		//accidential
+		if (curAccidential == "#") {
+			noteElementAccidential = 1;
+		} else if (curAccidential == "b") {
+			noteElementAccidential = -1;
+		} else {
+			noteElementAccidential = 0;
+		}
+	},
 
 	addNoteElement = function() {
-		completeDurationIn64th = 0;
+		// completeDurationIn64th = 0;
 
-		if (!curName) {
-			alert("name missing");
-		} else if (!curAccidential) {
-			alert("accidential missing");
-		} else if (!curDuration) {
-			alert("duration missing");
-		} else if (!curClef) {
-			alert("clef missing");
-		} else if (!curRythSpec) {
-			alert("ryth spec missing");
-		} else if (!curOctave) {
-			alert("octave missing");
-		}
-		else {
 		// soundSequence pattern:
 		// $patternValue.val(JSON.stringify(
 		// 	{
@@ -136,21 +123,24 @@ MusicXMLAnalyzer.PatternModel = function(){
 		// 	}
 		// ));
 
-// 
-// Adding Notes (doesn't work on rest or anything else)
-// ToDo: differentiation between other ElementTypes (e.g. rests, or dotted notes, or triplets, ...)
-// ToDo: needs more specific var's according to ElementType [see patterns!]
-// 
+		setValuesForNoteElement();
+
+
+		// 
+		// Adding Notes (doesn't work on rest or anything else)
+		// ToDo: differentiation between other ElementTypes (e.g. rests, or dotted notes, or triplets, ...)
+		// ToDo: needs more specific var's according to ElementType [see patterns!]
+		// 
 			if(first){
 				first = false;
 				noteElements.push({
 					//TODO 
-					//Mode im moment hart gecoded
+					//Mode für Dave im moment hart gecoded
 					type: 0,
 					notes:[{
 						pitch: {
 							step: curName.toUpperCase(),
-							alter: curAccidential,
+							alter: noteElementAccidential,
 							type: curDuration,
 							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
 							octave: curOctave
@@ -163,7 +153,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					
 						pitch: {
 							step: curName.toUpperCase(),
-							alter: curAccidential,
+							alter: noteElementAccidential,
 							type: curDuration,
 							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
 							octave: curOctave
@@ -172,31 +162,33 @@ MusicXMLAnalyzer.PatternModel = function(){
 					
 				});
 			}
-
-			// console.log("noteElements: ", noteElements);
 			
-
+			/*
 			for (var i = 0; i < noteElements.length; i++) {
 				//console.log("d64 of " + i + " " + getDurationIn64thNotes(noteElements[i].duration));
 				completeDurationIn64th += getDurationIn64thNotes(noteElements[i].duration);
 			}
+			*/
 
-			//check if break or normal note
+			//check if break or normal note or note with accidential
 			//then adapt values for vexflow an put them into an array
 			if (curName == "break") {
 				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: ["b/4"],
-		    						 duration: getDuration4Vexflow(curDuration) + VEXFLOW_REST_SIGN,
-		    						 auto_stem: true }));
+		    						duration: getDuration4Vexflow(curDuration) + VEXFLOW_REST_SIGN,
+		    						auto_stem: true }));
+			} else if (curAccidential == "#" || curAccidential == "b") {
+				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + curAccidential + "/" + curOctave],
+		    						duration: getDuration4Vexflow(curDuration),
+		    						auto_stem: true }).addAccidental(0, new Vex.Flow.Accidental(curAccidential)));
 			} else {
-				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "/" + curOctave],
-		    						 duration: getDuration4Vexflow(curDuration),
-		    						 auto_stem: true }));
+				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "b" + "/" + curOctave],
+		    						duration: getDuration4Vexflow(curDuration),
+		    						auto_stem: true }));
 			}			
 
-		}
 		$(that).trigger('patternChange', [noteElements]);
-		// send vexflow note elements and complete duration in 64th to controller and then back to view
-		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements(), completeDurationIn64th]);
+		// send vexflow note elements to controller and then back to view
+		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
 	},
 
 	getDuration4Vexflow = function(duration) {
@@ -221,6 +213,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return duration4Vexflow;
 	},
 
+	/*
 	getDurationIn64thNotes = function(noteDuration) {
 		//when 64th note
 		var durationIn64th = 1;
@@ -241,21 +234,26 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		return durationIn64th;
 	},
+	*/
 
 	/*
 	This method gets called when your click on the canvas
 	to add a note element.
-	The paramter note looks like "c/4"
+	The paramter note looks like "c/4".
+	It updates the model values curName and curOctave and calls addNoteElement
 	*/
 	addNoteElementByCanvasClick = function(note) {
-		console.log("model add note by canavs click : " + note);
 		//split string at "/" to get noteName and ovtave
 		//and saves it into array noteContainer
 		var noteContainer = note.split("/");
 		
 		curName = noteContainer[0];
-		$(that).trigger('changeSelectedNoteNameByClick', [curName]);
 		curOctave = noteContainer[1];
+
+		// updates selected btns for note name and view in pattern view
+		$(that).trigger('changeSelectedNoteNameByClick', [curName]);
+		$(that).trigger('changeSelectedOctaveByClick', [curOctave]);
+		
 		addNoteElement();
 
 	},
@@ -267,9 +265,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 	    console.log(noteElements4VexFlow);
 	},
 
+	/*
 	getCompleteDurationIn64th = function() {
 		return completeDurationIn64th;
 	},
+	*/
 
 	getAllNoteElements = function() {
 		return noteElements;
@@ -299,9 +299,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.getCurrentMode = getCurrentMode;
 	that.getAllNoteElements = getAllNoteElements;
 	that.getAllVexFlowNoteElements = getAllVexFlowNoteElements;
-	that.getCompleteDurationIn64th = getCompleteDurationIn64th;
+	// that.getCompleteDurationIn64th = getCompleteDurationIn64th;
 	that.getDuration4Vexflow = getDuration4Vexflow;
-	that.getDurationIn64thNotes = getDurationIn64thNotes;
+	// that.getDurationIn64thNotes = getDurationIn64thNotes;
 
 	return that;
 }

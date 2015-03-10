@@ -15,17 +15,20 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('patternChange', onPatternChange);
 		$(patternModel).on('updateNotationView', onNotationViewUpdate);
 		$(patternModel).on('changeSelectedNoteNameByClick', onNoteNameSelectionChange);
+		$(patternModel).on('changeSelectedOctaveByClick', onOctaveSelectionChange);
 
 	},
 
-	onNotationViewUpdate = function(event, vexflowNotes, completeDurationIn64th) {
-		//console.log("onNotationViewUpdate controller");
-		notationView.renderNotes(vexflowNotes, completeDurationIn64th);
-		//notationView.renderNotes();
+	onNotationViewUpdate = function(event, vexflowNotes) {
+		notationView.renderNotes(vexflowNotes);
 	},
 
 	onNoteNameSelectionChange = function(event, selectedNoteNameByClick) {
 		patternView.setNoteNameActive(selectedNoteNameByClick);
+	},
+
+	onOctaveSelectionChange = function(event, selectedOctaveByClick) {
+		patternView.setOctaveActive(selectedOctaveByClick);
 	},
 
 	changeMode = function(val) {

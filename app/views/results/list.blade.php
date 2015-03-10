@@ -3,7 +3,7 @@
 @section('content')
 
 
-{{ Form::hidden('pattern', json_encode(Cache::get('pattern')), array('id' => 'patternValue')) }}
+{{ Form::hidden('pattern', json_encode(Cache::get('pattern')[0]), array('id' => 'patternValue')) }}
 
 <div class="container">
 	<div class="row">

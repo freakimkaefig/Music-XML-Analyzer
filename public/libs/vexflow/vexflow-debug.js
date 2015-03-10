@@ -4834,6 +4834,11 @@ Vex.Flow.StaveNote = (function() {
       if (this.ys.length === 0) throw new Vex.RERR("NoYValues",
           "Can't draw note without Y values.");
 
+      if ("color" in this) {
+        this.context.setStrokeStyle(this.color);
+        this.context.setFillStyle(this.color);
+      }
+
       var x_begin = this.getNoteHeadBeginX();
       var x_end = this.getNoteHeadEndX();
 
@@ -4855,6 +4860,10 @@ Vex.Flow.StaveNote = (function() {
       this.drawNoteHeads();
       this.drawFlag();
       this.drawModifiers();
+
+      // reset color
+      this.context.setStrokeStyle("#000000");
+      this.context.setFillStyle("#000000");
     }
   });
 
