@@ -12,18 +12,18 @@
 		<div class=" col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
 			<div id="dashboardMessages" class="logBox"></div>
 		</div>
-		<h4 class="text-center col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">Showing results for:</h4>
+		<div id="showingResultsFor" class="text-center col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3"></div>
 		<div id="fileSelector" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3"></div>
 	</div>
 	<div>
 	<hr>
-	<h3 class="text-center">Note distribution</h3>
+	{{-- <h3 class="text-center">Note distribution</h3> --}}
 	<div class="row">
 		<div id="bar_noteDistribution" class="bar-chart col-xs-12"></div>
 	</div>
 	</div>
 	<hr>
-	<h3 class="text-center">Interval distribution</h3>
+	{{-- <h3 class="text-center">Interval distribution</h3> --}}
 	<div class="row">
 		<div id="bar_intervalDistribution" class="bar-chart col-xs-12"></div>
 	</div>
