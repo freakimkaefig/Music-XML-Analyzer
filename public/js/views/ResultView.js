@@ -20,6 +20,10 @@ MusicXMLAnalyzer.ResultView = function(){
 			$carousel = $('#extract-carousel');
 			initCanvasResults();
 		}
+
+		// MIDI.loadPlugin(function() {
+		// 	MIDI.noteOn(0, 100, 127, 0);
+		// }, "../../libs/midijs/soundfont/soundfont-ogg-guitar.js");
 	},
 
 	initCanvasResults = function() {

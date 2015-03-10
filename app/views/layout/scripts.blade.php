@@ -17,6 +17,9 @@
 <!-- Dropzone -->
 {{ HTML::script('libs/dropzone-4.0.0/dist/min/dropzone.min.js') }}
 
+<!-- MIDI.js -->
+{{ HTML::script('libs/midijs/build/MIDI.js') }}
+
 {{ HTML::script('js/helpers/Route.js') }}
 {{ HTML::script('js/App.js') }}
 
