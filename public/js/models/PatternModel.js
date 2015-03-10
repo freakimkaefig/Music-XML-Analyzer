@@ -183,7 +183,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		    						duration: durationContent + VEXFLOW_REST_SIGN,
 		    						auto_stem: true });
 			} else {
-				note = new Vex.Flow.StaveNote({ keys: [getKeyContent4Vexflow(curName) + "/" + curOctave],
+				note = new Vex.Flow.StaveNote({ keys: [keyContent + "/" + curOctave],
 		    						duration: durationContent,
 		    						auto_stem: true });	
 			}
@@ -193,7 +193,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 			}
 
 			if (curRythSpec = "dotted") {
-				console.log("dotted");
 				note.addDotToAll();	
 			}
 
@@ -312,6 +311,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	};
 
 	that.init = init;
+	that.getKeyContent4Vexflow = getKeyContent4Vexflow;
 	that.getCurrentNoteName = getCurrentNoteName;
 	that.getCurrentAccidential = getCurrentAccidential;
 	that.getCurrentNoteDuration = getCurrentNoteDuration;
