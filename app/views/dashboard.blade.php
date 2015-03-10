@@ -3,9 +3,11 @@
 @section('content')
 
 <div class="col-xs-12">
-	<h1 class="text-center">Dashboard</h1>
 	
-
+<div class"row"="">
+	<h1 class="text-center col-sm-9" style="float: none; margin: 0 auto;">Dashboard</h1>
+	<a class="btn btn-success btn-lg col-sm-3" style="float: right; margin: -40px 0 20px 0" href="http://music-xml-analyzer.local/pattern">Search for Patterns</a>
+</div>
 	<div class="row">
 		<div class=" col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3">
 			<div id="dashboardMessages" class="logBox"></div>
