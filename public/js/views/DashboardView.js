@@ -28,7 +28,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$logMessages.show();
 		$logMessages.animate({
 			height: 70
-		}, 2500);
+		}, 10);
 		addLogMessage('Fetching results from database ...');
 	},
 
@@ -42,7 +42,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 				$logMessages.hide();
 				$logMessages.empty();
 			});
-		}, 3000);
+		}, 1500);
 	},
 
 	addLogMessage = function(msg) {
