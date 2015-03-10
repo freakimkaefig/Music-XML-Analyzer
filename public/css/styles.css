@@ -1,5 +1,21 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
+/*svg {
+	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif';
+	font-size: 23px;
+  font-weight: 300;
+}*/
+
+/*#p0_title {
+	font-weight: 300;
+}*/
+
+*[id*='_title']{
+	font-weight: 300;
+	font-size: 23;
+	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif';
+}
+
 a:focus {
 	outline: none;
 }

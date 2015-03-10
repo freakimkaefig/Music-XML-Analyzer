@@ -339,13 +339,14 @@ MusicXMLAnalyzer.DashboardView = function(){
 			keyDistribution.destroy();
 		}
 		keyDistribution = new d3pie("pie_keyDistribution", {
-			/*header: {
+			header: {
 				title: {
 					text: "Key Distribution",
-					fontSize: 22,
-					font: "open sans"
+					fontSize: 23,
+					font: "RobotoDraft"
+					// 'font-weight': 'light'
 				}
-			},*/
+			},
 			data: {
 				content: data
 			},
@@ -367,13 +368,14 @@ MusicXMLAnalyzer.DashboardView = function(){
 			noteTypeDistribution.destroy();
 		}
 		noteTypeDistribution = new d3pie("pie_noteTypeDistribution", {
-			/*header: {
+			header: {
 				title: {
 					text: "Note duration",
-					fontSize: 22,
-					font: "open sans"
+					fontSize: 23,
+					font: "RobotoDraft"
+					// 'font-weight': 'light'
 				}
-			},*/
+			},
 			data: {
 				content: data
 			},
@@ -395,13 +397,14 @@ MusicXMLAnalyzer.DashboardView = function(){
 			meterDistribution.destroy();
 		}
 		meterDistribution = new d3pie("pie_meterDistribution", {
-			/*header: {
+			header: {
 				title: {
 					text: "Meters",
-					fontSize: 22,
-					font: "helvetica"
+					fontSize: 23,
+					font: "RobotoDraft"
+					// 'font-weight': 'light'
 				}
-			},*/
+			},
 			data: {
 				content: data
 			},

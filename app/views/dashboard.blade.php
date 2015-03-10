@@ -30,13 +30,13 @@
 	<hr>
 
 	<div class="row row-centered">
-		<h3 class="text-center">Key Distribution</h3>
+		{{-- <h3 class="text-center">Key Distribution</h3> --}}
 		<div id="pie_keyDistribution" class="pie col-xs-4"></div>
 
-		<h3 class="text-center">Note Distribution</h3>
+		{{-- <h3 class="text-center">Note Distribution</h3> --}}
 		<div id="pie_noteTypeDistribution" class="pie col-xs-4"></div>
 
-		<h3 class="text-center">Meters</h3>
+		{{-- <h3 class="text-center">Meters</h3> --}}
 		<div id="pie_meterDistribution" class="pie col-xs-4"></div>
 	</div>
 
