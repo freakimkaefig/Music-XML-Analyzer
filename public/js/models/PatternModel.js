@@ -85,6 +85,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return curOctave;
 	},
 
+	
 	setValuesForNoteElement = function() {
 
 		//accidential
