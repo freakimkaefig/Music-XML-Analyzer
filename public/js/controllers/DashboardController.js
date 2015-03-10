@@ -36,7 +36,10 @@ MusicXMLAnalyzer.DashboardController = function() {
 		view.initMeterDistribution(results.all.value.meter);
 		view.initNoteTypeDistribution(results.all.value.note_types);
 		
-		view.disposeLogMessages();
+		window.setTimeout(function() {
+			
+			view.disposeLogMessages();
+		}, 3000);
 	},
 
 	onFileSelectorChange = function(event, id) {

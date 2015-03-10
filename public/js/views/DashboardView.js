@@ -28,7 +28,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$logMessages.show();
 		$logMessages.animate({
 			height: 70
-		}, 2500);
+		}, 10);
 		addLogMessage('Fetching results from database ...');
 	},
 
@@ -42,7 +42,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 				$logMessages.hide();
 				$logMessages.empty();
 			});
-		}, 3000);
+		}, 1500);
 	},
 
 	addLogMessage = function(msg) {
@@ -62,13 +62,13 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	initFileSelector = function(data) {
 		$fileSelector.empty();
-		var selectorElement = '<select class="form-control btn-material-blue-grey" name="fileSelector">';
-		selectorElement += '<option value="all"> - All - </option>';
+		var selectorElement = '<select class="form-control btn-material-blue-grey-100" name="fileSelector">';
+		selectorElement += '<option value="all" class="btn-material-blue-grey-100"> - All - </option>';
 
 		for (var i = 0; i < data.length; i++) {
 			selectorElement += '<option value="';
 			selectorElement += data[i].id
-			selectorElement += '">';
+			selectorElement += '" class="btn-material-blue-grey-100">';
 			selectorElement += data[i].value.artist;
 			selectorElement += ' - ';
 			selectorElement += data[i].value.title;
@@ -164,6 +164,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	},*/
 
+	/*BAR-CHART NOTE-DISTRIBUTION*/
 	initNoteDistribution = function(data) {
 		$('#bar_noteDistribution').empty();
 		var containerWidth = $('#bar_noteDistribution').width() - 30;
@@ -244,7 +245,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 			.attr("dy", "-.5em");
 	
 	},
-
+	/*BAR-CHART INTERVAL-DISTRIBUTION*/
 	initIntervalDistribution = function(data) {
 		$('#bar_intervalDistribution').empty();
 		var containerWidth = $('#bar_intervalDistribution').width() - 30;
@@ -332,17 +333,16 @@ MusicXMLAnalyzer.DashboardView = function(){
 			.attr("dx", "1em")
 			.attr("dy", "-.5em");
 	},
-
+	/*PIE-CHART KEY-DISTRIBUTION*/
 	initKeyDistribution = function(data) {
+		// console.log("Key Distribution Pie data: ",typeof(data), data);
 		if (keyDistribution) {
 			keyDistribution.destroy();
 		}
 		keyDistribution = new d3pie("pie_keyDistribution", {
 			header: {
 				title: {
-					text: "Key Distribution",
-					fontSize: 22,
-					font: "open sans"
+					text: "Key Distribution"
 				}
 			},
 			data: {
@@ -360,7 +360,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 			}
 		}); 
 	},
-
+	/*PIE-CHART NOTE-DURATION*/
 	initNoteTypeDistribution = function(data) {
 		if (noteTypeDistribution) {
 			noteTypeDistribution.destroy();
@@ -368,9 +368,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		noteTypeDistribution = new d3pie("pie_noteTypeDistribution", {
 			header: {
 				title: {
-					text: "Note duration",
-					fontSize: 22,
-					font: "open sans"
+					text: "Note duration"
 				}
 			},
 			data: {
@@ -388,21 +386,27 @@ MusicXMLAnalyzer.DashboardView = function(){
 			}
 		});
 	},
-
+	/*PIE-CHART METERS*/
 	initMeterDistribution = function(data) {
+		var data2;
+		if(typeof(data) == 'string'){
+			data2 = [{label: data, value: 1}];
+		}else{
+			data2 = data;
+		}
+			// console.log("Meter Pie data: ",typeof(data2), data2);
+
 		if (meterDistribution) {
 			meterDistribution.destroy();
 		}
-		meterDistribution = new d3pie("pie2", {
+		meterDistribution = new d3pie("pie_meterDistribution", {
 			header: {
 				title: {
-					text: "Meters",
-					fontSize: 22,
-					font: "open sans"
+					text: "Meters"
 				}
 			},
 			data: {
-				content: data
+				content: data2
 			},
 			tooltips: {
 			    enabled: true,
@@ -415,9 +419,11 @@ MusicXMLAnalyzer.DashboardView = function(){
 			    }
 			}
 		});
-	},
+	};
 
-	initInstruments = function() {
+
+
+	/*initInstruments = function() {
 		instruments = new d3pie("pie3", {
 			header: {
 				title: {
@@ -451,9 +457,13 @@ MusicXMLAnalyzer.DashboardView = function(){
 			    }
 			  }
 		});
-	},
+	},*/
 
-	initBarChart1 = function() {
+
+
+
+
+/*	initBarChart1 = function() {
 		var names = ['Anzahl Takte', 'Anzahl Noten', 'Anzahl Instrumente'],
 		    occ_numbers = [34, 15, 20],
 		    chart,
@@ -535,10 +545,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 			.attr("text-anchor", "middle")
 			.attr('class', 'name')
 			.text(String);
-	},
+	},*/
 
 
-	initBarChart2 = function() {
+
+
+	/*initBarChart2 = function() {
 		var margin ={top:20, right:30, bottom:30, left:40},
 		    width=960-margin.left - margin.right, 
 		    height=500-margin.top-margin.bottom;
@@ -607,18 +619,22 @@ MusicXMLAnalyzer.DashboardView = function(){
 		        .style("text-anchor", "end")
 		        .text("Frequency");
 		});
-	};
+	};*/
+
+
+
 
 	that.init = init;
 	that.disposeLogMessages = disposeLogMessages;
 	that.addLogMessage = addLogMessage;
 	that.initFileSelector = initFileSelector;
 	//that.initBarChart = initBarChart;
-	that.initNoteDistribution = initNoteDistribution;
-	that.initIntervalDistribution = initIntervalDistribution;
-	that.initKeyDistribution = initKeyDistribution;
-	that.initNoteTypeDistribution = initNoteTypeDistribution;
-	that.initMeterDistribution = initMeterDistribution;
+
+	that.initNoteDistribution = initNoteDistribution;	/*BAR-CHART NOTE-DISTRIBUTION*/
+	that.initIntervalDistribution = initIntervalDistribution;	/*BAR-CHART INTERVAL-DISTRIBUTION*/
+	that.initKeyDistribution = initKeyDistribution;		/*PIE-CHART KEY-DISTRIBUTION*/
+	that.initNoteTypeDistribution = initNoteTypeDistribution;	/*PIE-CHART NOTE-DURATION*/
+	that.initMeterDistribution = initMeterDistribution;		/*PIE-CHART METERS*/
 
 	that.changeFile = changeFile;
 

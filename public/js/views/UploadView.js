@@ -30,7 +30,7 @@ MusicXMLAnalyzer.UploadView = function(){
 
 		Dropzone.options.uploadDropzone = {
 			acceptedFiles: '.xml',
-			maxFiles: 10,
+			maxFiles: null,
 			maxFilesize: 1024,
 			// addRemoveLinks: true,
 			// addedfile: onAddedFile,
