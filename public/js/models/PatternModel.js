@@ -173,23 +173,50 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 			//check if break or normal note or note with accidential
 			//then adapt values for vexflow an put them into an array
+			var note;
+			var keyContent = getKeyContent4Vexflow(curName);
+			var durationContent = getDuration4Vexflow(curDuration);
+			//check if break or normal note or note with accidential
+			//then adapt values for vexflow an put them into an array
 			if (curName == "break") {
-				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: ["b/4"],
-		    						duration: getDuration4Vexflow(curDuration) + VEXFLOW_REST_SIGN,
-		    						auto_stem: true }));
-			} else if (curAccidential == "#" || curAccidential == "b") {
-				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + curAccidential + "/" + curOctave],
-		    						duration: getDuration4Vexflow(curDuration),
-		    						auto_stem: true }).addAccidental(0, new Vex.Flow.Accidental(curAccidential)));
+				note = new Vex.Flow.StaveNote({ keys: ["b/4"],
+		    						duration: durationContent + VEXFLOW_REST_SIGN,
+		    						auto_stem: true });
 			} else {
-				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "b" + "/" + curOctave],
-		    						duration: getDuration4Vexflow(curDuration),
-		    						auto_stem: true }));
-			}			
+				note = new Vex.Flow.StaveNote({ keys: [getKeyContent4Vexflow(curName) + "/" + curOctave],
+		    						duration: durationContent,
+		    						auto_stem: true });	
+			}
+
+			if (curAccidential == "#" || curAccidential == "b") {
+				note.addAccidental(0, new Vex.Flow.Accidental(curAccidential));
+			}
+
+			if (curRythSpec = "dotted") {
+				console.log("dotted");
+				note.addDotToAll();	
+			}
+
+			noteElements4VexFlow.push(note);			
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
+	},
+
+	getKeyContent4Vexflow = function(noteName) {
+		var keyContent = noteName;
+		switch (curAccidential) {
+			case "#":
+				keyContent += "#";
+				break;
+			case "b":
+				keyContent += "b";
+				break;
+			default:
+				//...
+		}
+		return keyContent;
 	},
 
 	getDuration4Vexflow = function(duration) {
@@ -209,6 +236,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 				duration4Vexflow = "32";
 			} else if ( duration == "64th") {
 				duration4Vexflow = "64";
+			}
+
+			if (curRythSpec == "dotted") {
+				duration4Vexflow += "d";
 			}
 
 		return duration4Vexflow;
