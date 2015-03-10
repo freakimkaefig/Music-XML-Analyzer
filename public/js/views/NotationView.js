@@ -84,6 +84,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		// get all vexflow note elements from model which already exist 
   		var vexFlowNotes = patternModel.getAllVexFlowNoteElements();
   		
+  		console.log("vexflow notes: ", vexFlowNotes);
   		var previewNote;
 		var key = hoveredNote;
   		var durationContent = patternModel.getDuration4Vexflow(patternModel.getCurrentNoteDuration());
@@ -115,6 +116,8 @@ MusicXMLAnalyzer.NotationView = function(){
 		}
 
   		vexFlowNotes.push(previewNote);
+
+  		// vexflowNotes[0].modifiers[0].dot_shiftY = 0;
 		  		  	
 		var voice = new Vex.Flow.Voice({
 		    //complete duration + the note you preview
@@ -137,6 +140,7 @@ MusicXMLAnalyzer.NotationView = function(){
 
 		//delete last array entry
 		vexFlowNotes.pop();
+
 	},
 
 	onNotationViewUpdate = function(event, notes) {

@@ -192,7 +192,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 				note.addAccidental(0, new Vex.Flow.Accidental(curAccidential));
 			}
 
-			if (curRythSpec = "dotted") {
+			if (curRythSpec == "dotted") {
 				note.addDotToAll();	
 			}
 
