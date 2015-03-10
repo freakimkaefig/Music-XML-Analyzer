@@ -117,6 +117,9 @@ h1 {
 	background: rgba(81, 81, 81, 0.5);
 	text-align: center;
 }
+.dz-image{
+	width: 250px !important;
+}
 #uploadMessages {
 	position: absolute;
 	bottom: 60px;

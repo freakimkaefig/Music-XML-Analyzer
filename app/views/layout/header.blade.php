@@ -27,7 +27,7 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a id="deleteMeLink" href="/delete/me" class="navbar-btn btn-danger">You need a fresh start?</a></li>
+                            <li><a id="deleteMeLink" href="/delete/me" class="navbar-btn btn-material-blue-grey-300">You need a fresh start?</a></li>
                         </ul>
                     </li>
                 <?php endif; ?>
