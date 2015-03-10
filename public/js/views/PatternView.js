@@ -8,7 +8,7 @@ MusicXMLAnalyzer.PatternView = function(){
 	$durationButtonClass = $(".btn-duration"),
 	$clefButtonClass = $(".btn-clef"),
 	$specialRythButtonClass = $(".btn-special-ryth"),
-	$selectOctave = $("#select-octave"),
+	$octaveButtonClass = $(".btn-octave"),
 
 	$addNoteButton = $("#btn-add-note"),
 	$removeNoteButton = $("#btn-remove-note"),
@@ -28,9 +28,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		$durationButtonClass.on("click", onDurationButtonClick);
 		$clefButtonClass.on("click", onClefButtonClick);
 		$specialRythButtonClass.on("click", onSpecialRythButtonClick);
-
-		$selectOctave.on("change", onOctaveChanged);
-
+		$octaveButtonClass.on("click", onOctaveButtonClick);
 		$addNoteButton.on("click", onAddButtonClick);
 		$removeNoteButton.on("click", onRemoveButtonClick);
 
@@ -182,42 +180,36 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onModeButtonClick = function(event) {
-		//console.log($(event.target).text());
-		patternController.changeMode(event.target.id);
+		var modeButtonId = event.target.id;
+		// slice -1 gets the last char of the mode id
+		patternController.changeMode(modeButtonId.slice(-1));
 	},
 
 	onNoteButtonClick = function(event) {
-		//console.log(event.target.id);
 		patternController.changeNote(event.target.id);
 	},
 
 	onAccidentialButtonClick = function(event) {
-		// console.log($(event.target).text());
 		patternController.changeAccidential(event.target.id);
 	},
 
 	onDurationButtonClick = function(event) {
-		// console.log($(event.target).text());
 		patternController.changeDuration(event.target.id);
 	},
 
 	onClefButtonClick = function(event) {
-		// console.log($(event.target).text());
 		patternController.changeClef(event.target.id);
 	},
 
 	onSpecialRythButtonClick = function(event) {
-		// console.log($(event.target).text());
 		patternController.changeSpecialRyth(event.target.id);
 	},
 
-	onOctaveChanged = function(event) {
-		console.log($(event.target).val());
-		patternController.changeOctave($(event.target).val());
+	onOctaveButtonClick = function(event) {
+		patternController.changeOctave(event.target.id);
 	},
 
 	onAddButtonClick = function(event) {
-		// console.log("add btn");
 		patternController.addNote();
 	},
 
@@ -227,19 +219,25 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	setNoteNameActive = function(noteName) {
-		$(".btn-group-names>label.active").removeClass("active");
-		//$('btn-group-names label.active').removeClass('active');
+		console.log("setNoteNameActive");
+		$(".btn-note.active").removeClass("active");
 		$("#" + noteName + "").addClass("active");
 	},
 
+	setOctaveActive = function(octave) {
+		$(".btn-octave.active").removeClass("active");
+		$('btn-group-names label.active').removeClass('active');
+		$("#" + octave + "").addClass("active");
+	},
+
 	onRemoveButtonClick = function(event) {
-		// console.log("remove btn");
 		patternController.removeLastNote();
 	};
 
 	that.init = init;
 	that.setPatternValue = setPatternValue;
 	that.setNoteNameActive = setNoteNameActive;
+	that.setOctaveActive = setOctaveActive;
 
 	return that;
 }
