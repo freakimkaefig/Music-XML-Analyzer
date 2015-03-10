@@ -28,4 +28,5 @@ push.sh
 *.dia~
 
 public/uploads
+public/downloads
 sftp-config.json
