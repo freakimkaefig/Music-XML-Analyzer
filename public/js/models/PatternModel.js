@@ -17,6 +17,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	// in this app a triplet must consist of 3 notes
 	tripletCurrentAmount = 0,
+	tripletEndPositions = [],
 
 	noteElementAccidential = 0,
 
@@ -199,22 +200,28 @@ MusicXMLAnalyzer.PatternModel = function(){
 				note.addDotToAll();	
 			}
 
-
-
 			noteElements4VexFlow.push(note);
 
 			if (curRythSpec == "triplet") {
 				tripletCurrentAmount++;
 				if (tripletCurrentAmount == 3) {
 					tripletCurrentAmount = 0;
-					$(that).trigger('tripletComplete', [noteElements4VexFlow.length]);
+					tripletEndPositions.push(noteElements4VexFlow.length);
+					console.log("tep: ",tripletEndPositions)
 				}
-			}			
+			} else {
+				tripletCurrentAmount = 0;
+			}	
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
+	
 	},
+
+	getTripletEndPositions = function() {
+		return tripletEndPositions;
+	}
 
 	getKeyContent4Vexflow = function(noteName) {
 		var keyContent = noteName;

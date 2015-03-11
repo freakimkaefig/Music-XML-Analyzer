@@ -16,13 +16,8 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('updateNotationView', onNotationViewUpdate);
 		$(patternModel).on('changeSelectedNoteNameByClick', onNoteNameSelectionChange);
 		$(patternModel).on('changeSelectedOctaveByClick', onOctaveSelectionChange);
-		$(patternModel).on('tripletComplete', onTripletComplete);
 
 	},
-
-	onTripletComplete = function(event, currentVexflowArrayLength) {
-		notationView.addBeamAndTuplet(currentVexflowArrayLength);
-	}
 
 	onNotationViewUpdate = function(event, vexflowNotes) {
 		notationView.renderNotes(vexflowNotes);

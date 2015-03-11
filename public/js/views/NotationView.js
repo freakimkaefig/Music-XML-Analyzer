@@ -76,51 +76,6 @@ MusicXMLAnalyzer.NotationView = function(){
 		voice.draw(context, stave);
 		
 	},
-	
-
-	/*
-	//triplet test
-	renderNotes = function() {
-
-		var vexflowNotes = [
-	        new Vex.Flow.StaveNote({ keys: ["c/4"], duration: "8",  stem_direction: -1}),
-	        new Vex.Flow.StaveNote({ keys: ["c/5"], duration: "8", stem_direction: -1}),
-	        new Vex.Flow.StaveNote({ keys: ["c/4"], duration: "8",  stem_direction: -1}),
-	    ]; 
-
-		// delete canvas
-		context.clearRect(0, 0, canvas.width, canvas.height);
-
-		stave.setContext(context).draw();
-
-		var voice = new Vex.Flow.Voice({
-		    // num_beats: completeDurationIn64th,
-		    // beat_value: 64,
-		    resolution: Vex.Flow.RESOLUTION
-		});
-
-		var tuplet1 = new Vex.Flow.Tuplet(vexflowNotes.slice(0, 3));
-
-		voice.setStrict(false);
-		voice.addTickables(vexflowNotes);
-
-		var beams1 = Vex.Flow.Beam.applyAndGetBeams(voice);
-
-		// Format and justify the notes to 700 pixels
-		var formatter = new Vex.Flow.Formatter().
-		    joinVoices([voice]).format([voice], 700);
-
-		// Render voice
-		stave.setContext(context).draw();  
-		voice.draw(context, stave);
-		tuplet1.setContext(context).draw();
-
-		for(var i = 0; i < beams1.length; i++){
-        	beams1[i].setContext(context).draw();
-    	}    
-		
-	},
-	*/
 
 	renderVexFlowNotePreview = function(noteName) {
 		// delete canvas
@@ -136,11 +91,11 @@ MusicXMLAnalyzer.NotationView = function(){
 
   			if (typeof vexflowNotes[i].modifiers[0] !== 'undefined') {
   				vexflowNotes[i].modifiers[0].dot_shiftY = 0;
-  				console.log("removed: " + i);
+  				console.log("removedy: " + i);
   			}	
   		}
   		
-  		console.log("vexflow notes: ", vexflowNotes);
+  		// console.log("vexflow notes: ", vexflowNotes);
   		var previewNote = null;
 		var key = hoveredNote;
   		var durationContent = patternModel.getDuration4Vexflow(patternModel.getCurrentNoteDuration());
@@ -181,9 +136,9 @@ MusicXMLAnalyzer.NotationView = function(){
 		    // beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
+
 		//disable time-checking
 		voice.setStrict(false);
-
 		// Add notes to voice
 		voice.addTickables(vexflowNotes);
 
@@ -198,10 +153,43 @@ MusicXMLAnalyzer.NotationView = function(){
 		vexflowNotes.pop();		
 
 	},
-
+	/*
 	addBeamAndTuplet = function(currentVexflowArrayLength) {
-		console.log(("display beam and tuplet"));
+		console.log(("display beam and tuplet: " + currentVexflowArrayLength));
+
+		var vexflowNotes = patternModel.getAllVexFlowNoteElements();
+
+		// delete canvas
+		context.clearRect(0, 0, canvas.width, canvas.height);
+
+		stave.setContext(context).draw();
+
+		var voice = new Vex.Flow.Voice({
+		    // num_beats: completeDurationIn64th,
+		    // beat_value: 64,
+		    resolution: Vex.Flow.RESOLUTION
+		});
+
+		var tuplet1 = new Vex.Flow.Tuplet(vexflowNotes.slice(0, 3));
+		var beams1 = Vex.Flow.Beam.applyAndGetBeams(voice);
+
+		voice.setStrict(false);
+		voice.addTickables(vexflowNotes);
+
+		// Format and justify the notes to 700 pixels
+		var formatter = new Vex.Flow.Formatter().
+		    joinVoices([voice]).format([voice], 700);
+
+		// Render voice
+		stave.setContext(context).draw();  
+		voice.draw(context, stave);
+		tuplet1.setContext(context).draw();
+
+		for(var i = 0; i < beams1.length; i++){
+        	beams1[i].setContext(context).draw();
+    	} 
 	},
+	*/
 
 	onNotationViewUpdate = function(event, notes) {
 		console.log("view triggered");
@@ -344,7 +332,6 @@ MusicXMLAnalyzer.NotationView = function(){
 	
 	that.init = init;
 	that.renderNotes = renderNotes;
-	that.addBeamAndTuplet = addBeamAndTuplet;
 
 	return that;
 }
