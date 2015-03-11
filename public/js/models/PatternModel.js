@@ -209,10 +209,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 				if (tripletCurrentAmount == 3) {
 					tripletCurrentAmount = 0;
 					tripletEndPositions.push(noteElements4VexFlow.length);
-					var tuplet = new Vex.Flow.Tuplet(vexflowNotes.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
-					var beam = new Vex.Flow.Tuplet(vexflowNotes.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
-					tupletArray.push()
-					beamArray.push()
+					var tuplet = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+					var beam = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+					tupletArray.push(tuplet);
+					beamArray.push(beam);
 					console.log("tep: ",tripletEndPositions)
 				}
 			} else {
@@ -227,6 +227,14 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	getTripletEndPositions = function() {
 		return tripletEndPositions;
+	}
+
+	getTupletArray = function() {
+		return tupletArray;
+	}
+
+	getBeamArray = function() {
+		return beamArray;
 	}
 
 	getKeyContent4Vexflow = function(noteName) {
@@ -330,6 +338,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.getAllNoteElements = getAllNoteElements;
 	that.getAllVexFlowNoteElements = getAllVexFlowNoteElements;
 	that.getDuration4Vexflow = getDuration4Vexflow;
+	that.getTupletArray = getTupletArray;
+	that.getBeamArray = getBeamArray;
 
 	return that;
 }
