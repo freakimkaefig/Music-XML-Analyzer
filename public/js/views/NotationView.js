@@ -9,6 +9,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	stave = null,
 
 	hoveredNote = null;
+	hoveredOctave = null;
 
 	paddingTopStaves = 0,
 	spaceBetweenLines = 0,
@@ -46,6 +47,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		$("#myCanvas").on("click", onMouseClickCanvas);
 	},
 
+	
 	// display note elements on the canvas and get them from model
 	// via controller
 	renderNotes = function(vexflowNotes) {
@@ -60,6 +62,8 @@ MusicXMLAnalyzer.NotationView = function(){
 		    // beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
+
+		
 		//easiest way to disable time-checking
 		voice.setStrict(false);
 
@@ -70,10 +74,66 @@ MusicXMLAnalyzer.NotationView = function(){
 		var formatter = new Vex.Flow.Formatter().
 		    joinVoices([voice]).format([voice], 700);
 
-		// Render voice
+		//TRIPLET
+		//get beams and tuplets from model
+		var beams = patternModel.getTupletArray();
+		var tuplets = patternModel.getBeamArray();
+
 		voice.draw(context, stave);
+
+		//TODO
+		//create triplets
+		//add the triplets here
+		//TRIPLET
+		for(var i=0; i < tuplets.length; i++) {
+			tuplets[i].setContext(context).draw();
+		}
+
+		for(var i=0; i < beams.length; i++) {
+			for(var j=0; j < beams[i].length; j++) {
+				beams[i][j].setContext(context).draw();
+			}	
+		}
+
 		
+
 	},
+
+	/*
+	addBeamAndTuplet = function(currentVexflowArrayLength) {
+		console.log(("display beam and tuplet: " + currentVexflowArrayLength));
+
+		var vexflowNotes = patternModel.getAllVexFlowNoteElements();
+
+		// delete canvas
+		context.clearRect(0, 0, canvas.width, canvas.height);
+
+		stave.setContext(context).draw();
+
+		var voice = new Vex.Flow.Voice({
+		    resolution: Vex.Flow.RESOLUTION
+		});
+
+		var tuplet1 = new Vex.Flow.Tuplet(vexflowNotes.slice(0, 3));
+		var beams1 = Vex.Flow.Beam.applyAndGetBeams(voice);
+
+		voice.setStrict(false);
+		voice.addTickables(vexflowNotes);
+
+		// Format and justify the notes to 700 pixels
+		var formatter = new Vex.Flow.Formatter().
+		    joinVoices([voice]).format([voice], 700);
+
+		// Render voice
+		stave.setContext(context).draw();  
+		voice.draw(context, stave);
+		tuplet1.setContext(context).draw();
+
+		for(var i = 0; i < beams1.length; i++){
+        	beams1[i].setContext(context).draw();
+    	} 
+	},
+	*/
 
 	renderVexFlowNotePreview = function(noteName) {
 		// delete canvas
@@ -81,43 +141,59 @@ MusicXMLAnalyzer.NotationView = function(){
 		stave.setContext(context).draw();
 
 		// get all vexflow note elements from model which already exist 
-  		var vexFlowNotes = patternModel.getAllVexFlowNoteElements();
+  		var vexflowNotes = patternModel.getAllVexFlowNoteElements();
+
+  		//bugprevention: vexflow changes the position of dots
+  		//for loop sets the position of all available dots to 0
+  		for (var i=0;  i < vexflowNotes.length; i++) {
+
+  			if (typeof vexflowNotes[i].modifiers[0] !== 'undefined') {
+  				vexflowNotes[i].modifiers[0].dot_shiftY = 0;
+  				console.log("removedy: " + i);
+  			}	
+  		}
   		
-  		//64th stuff:
-  		// get complete duration for num_beats
-  		// var completeDurationIn64th = patternModel.getCompleteDurationIn64th();
-  		// get duration in 64th with currentDuration val
-  		// var durationPreviewNoteIn64th = patternModel.getDurationIn64thNotes(currentDuration);
-  		
-  		var currentDuration = patternModel.getCurrentNoteDuration();
-		// get Vexflow duration with duration from buttons
-  		var currentDuration4VexFlow = patternModel.getDuration4Vexflow(currentDuration);
-  		var currentAccidential = patternModel.getCurrentAccidential();
-  		console.log(currentAccidential);
+  		// console.log("vexflow notes: ", vexflowNotes);
+  		var previewNote = null;
+		var key = hoveredNote;
+  		var durationContent = patternModel.getDuration4Vexflow(patternModel.getCurrentNoteDuration());
+  		var noteName = patternModel.getCurrentNoteName();
+  		var accidental = patternModel.getCurrentAccidential();
+  		var rythSpec = patternModel.getCurrentNoteRythSpecial();
+
+  		if (accidental == "#" || accidental == "b") {
+			key += accidental;
+		}
   		// add the preview to to notes array
   		// further down it's been removed again
-  		if (currentAccidential == "#" || currentAccidential == "b") {
-  			vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName + currentAccidential],
-		    						 duration: currentDuration4VexFlow,
-		    						 auto_stem: true }).addAccidental(0, new Vex.Flow.Accidental(currentAccidential)));
-  		} else {
-  			vexFlowNotes.push(new Vex.Flow.StaveNote({ keys: [noteName],
-		    						 duration: currentDuration4VexFlow,
-		    						 auto_stem: true }));
-  		}
-		
+  		if (noteName == "break") {
+			previewNote = new Vex.Flow.StaveNote({ keys: ["b/4"],
+	    						duration: durationContent + VEXFLOW_REST_SIGN,
+	    						auto_stem: true });
+		} else {
+			previewNote = new Vex.Flow.StaveNote({ keys: [key + "/" + hoveredOctave],
+	    						duration: durationContent,
+	    						auto_stem: true });	
+		}
+
+		if (accidental == "#" || accidental == "b") {
+			previewNote.addAccidental(0, new Vex.Flow.Accidental(accidental));
+		}
+
+		if (rythSpec == "dotted") {
+			previewNote.addDot(0);
+		}
+
+  		vexflowNotes.push(previewNote);
 		  		  	
 		var voice = new Vex.Flow.Voice({
-		    //complete duration + the note you preview
-		    // num_beats: completeDurationIn64th + durationPreviewNoteIn64th,
-		    // beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
+
 		//disable time-checking
 		voice.setStrict(false);
-
 		// Add notes to voice
-		voice.addTickables(vexFlowNotes);
+		voice.addTickables(vexflowNotes);
 
 		// Format and justify the notes to 700 pixels
 		var formatter = new Vex.Flow.Formatter().
@@ -127,7 +203,8 @@ MusicXMLAnalyzer.NotationView = function(){
 		voice.draw(context, stave);
 
 		//delete last array entry
-		vexFlowNotes.pop();
+		vexflowNotes.pop();		
+
 	},
 
 	onNotationViewUpdate = function(event, notes) {
@@ -185,8 +262,8 @@ MusicXMLAnalyzer.NotationView = function(){
 	/* This method handels the mouseover event of canvas */
 	onMouseClickCanvas = function(event) {
 
-		console.log("on canvas click");
-		patternController.addNoteByCanvasClick(hoveredNote);
+		var hoveredArea = hoveredNote + "/" + hoveredOctave
+		patternController.addNoteByCanvasClick(hoveredArea);
 
 	},
 
@@ -194,52 +271,75 @@ MusicXMLAnalyzer.NotationView = function(){
 	checkHorizontalArea = function(y) {
 
 		if (y > spaceBetweenLines * 1.25 && y <= spaceBetweenLines * 1.75) {
-			hoveredNote = "f/6";
+			hoveredNote = "f";
+			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 1.75 && y <= spaceBetweenLines * 2.25) {
-			hoveredNote = "e/6";
+			hoveredNote = "e";
+			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 2.25 && y <= spaceBetweenLines * 2.75) {
-			hoveredNote = "d/6";
+			hoveredNote = "d";
+			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 2.75 && y <= spaceBetweenLines * 3.25) {
-			hoveredNote = "c/6";
+			hoveredNote = "c";
+			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 3.25 && y <= spaceBetweenLines * 3.75) {
-			hoveredNote = "b/5";
+			hoveredNote = "b";
+			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 3.75 && y <= spaceBetweenLines * 4.25) {
-			hoveredNote = "a/5";
+			hoveredNote = "a";
+			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 4.25 && y <= spaceBetweenLines * 4.75) {
-			hoveredNote = "g/5";
+			hoveredNote = "g";
+			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 4.75 && y <= spaceBetweenLines * 5.25) {
-			hoveredNote = "f/5";
+			hoveredNote = "f";
+			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 5.25 && y <= spaceBetweenLines * 5.75) {
-			hoveredNote = "e/5";
+			hoveredNote = "e";
+			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 5.75 && y <= spaceBetweenLines * 6.25) {
-			hoveredNote = "d/5";
+			hoveredNote = "d";
+			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 6.25 && y <= spaceBetweenLines * 6.75) {
-			hoveredNote = "c/5";
+			hoveredNote = "c";
+			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 6.75 && y <= spaceBetweenLines * 7.25) {
-			hoveredNote = "b/4";
+			hoveredNote = "b";
+			hoveredOctave = "4";
 		} else if (y > spaceBetweenLines * 7.25 && y <= spaceBetweenLines * 7.75) {
-			hoveredNote = "a/4";
+			hoveredNote = "a";
+			hoveredOctave = "4";
 		} else if (y > spaceBetweenLines * 7.75 && y <= spaceBetweenLines * 8.25) {
-			hoveredNote = "g/4";
+			hoveredNote = "g";
+			hoveredOctave = "4";
 		} else if (y > spaceBetweenLines * 8.25 && y <= spaceBetweenLines * 8.75) {
-			hoveredNote = "f/4";
+			hoveredNote = "f";
+			hoveredOctave = "4";
 		} else if (y > spaceBetweenLines * 8.75 && y <= spaceBetweenLines * 9.25) {
-			hoveredNote = "e/4";
+			hoveredNote = "e";
+			hoveredOctave = "4";
 		} else if (y > spaceBetweenLines * 9.25 && y <= spaceBetweenLines * 9.75) {
-			hoveredNote = "d/4";
+			hoveredNote = "d";
+			hoveredOctave = "4";
 		} else if (y > spaceBetweenLines * 9.75 && y <= spaceBetweenLines * 10.25) {
 			// c1
-			hoveredNote = "c/4";
+			hoveredNote = "c";
+			hoveredOctave = "4";
 		} else if (y > spaceBetweenLines * 10.25 && y <= spaceBetweenLines * 10.75) {
-			hoveredNote = "b/3";
+			hoveredNote = "b";
+			hoveredOctave = "3";
 		} else if (y > spaceBetweenLines * 10.75 && y <= spaceBetweenLines * 11.25) {
-			hoveredNote = "a/3";
+			hoveredNote = "a";
+			hoveredOctave = "3";
 		} else if (y > spaceBetweenLines * 11.25 && y <= spaceBetweenLines * 11.75) {
-			hoveredNote = "g/3";
+			hoveredNote = "g";
+			hoveredOctave = "3";
 		} else if (y > spaceBetweenLines * 11.75 && y <= spaceBetweenLines * 12.25) {
-			hoveredNote = "f/3";
+			hoveredNote = "f";
+			hoveredOctave = "3";
 		} else if (y > spaceBetweenLines * 12.25 && y <= spaceBetweenLines * 12.75) {
-			hoveredNote = "e/3";
+			hoveredNote = "e";
+			hoveredOctave = "3";
 		}
 		return hoveredNote;
 

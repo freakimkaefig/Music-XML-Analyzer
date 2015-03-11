@@ -15,6 +15,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 	// completeDurationIn64th = 0,
 	first = true,
 
+	// in this app a triplet must consist of 3 notes
+	tripletCurrentAmount = 0,
+	tripletEndPositions = [],
+	tupletArray = [],
+	beamArray = [],
+
 	noteElementAccidential = 0,
 
 	init = function(){
@@ -84,6 +90,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	getCurrentOctave = function() {
 		return curOctave;
 	},
+	
 	
 	setValuesForNoteElement = function() {
 
@@ -172,23 +179,77 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 			//check if break or normal note or note with accidential
 			//then adapt values for vexflow an put them into an array
+			var note;
+			var keyContent = getKeyContent4Vexflow(curName);
+			var durationContent = getDuration4Vexflow(curDuration);
+			//check if break or normal note or note with accidential
+			//then adapt values for vexflow an put them into an array
 			if (curName == "break") {
-				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: ["b/4"],
-		    						duration: getDuration4Vexflow(curDuration) + VEXFLOW_REST_SIGN,
-		    						auto_stem: true }));
-			} else if (curAccidential == "#" || curAccidential == "b") {
-				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + curAccidential + "/" + curOctave],
-		    						duration: getDuration4Vexflow(curDuration),
-		    						auto_stem: true }).addAccidental(0, new Vex.Flow.Accidental(curAccidential)));
+				note = new Vex.Flow.StaveNote({ keys: ["b/4"],
+		    						duration: durationContent + VEXFLOW_REST_SIGN,
+		    						auto_stem: true });
 			} else {
-				noteElements4VexFlow.push(new Vex.Flow.StaveNote({ keys: [curName + "b" + "/" + curOctave],
-		    						duration: getDuration4Vexflow(curDuration),
-		    						auto_stem: true }));
-			}			
+				note = new Vex.Flow.StaveNote({ keys: [keyContent + "/" + curOctave],
+		    						duration: durationContent,
+		    						auto_stem: true });	
+			}
+
+			if (curAccidential == "#" || curAccidential == "b") {
+				note.addAccidental(0, new Vex.Flow.Accidental(curAccidential));
+			}
+
+			if (curRythSpec == "dotted") {
+				note.addDotToAll();	
+			}
+
+			noteElements4VexFlow.push(note);
+
+			if (curRythSpec == "triplet") {
+				tripletCurrentAmount++;
+				if (tripletCurrentAmount == 3) {
+					tripletCurrentAmount = 0;
+					tripletEndPositions.push(noteElements4VexFlow.length);
+					var tuplet = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+					var beam = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+					tupletArray.push(tuplet);
+					beamArray.push(beam);
+					console.log("tep: ",tripletEndPositions)
+				}
+			} else {
+				tripletCurrentAmount = 0;
+			}	
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
+	
+	},
+
+	getTripletEndPositions = function() {
+		return tripletEndPositions;
+	}
+
+	getTupletArray = function() {
+		return tupletArray;
+	}
+
+	getBeamArray = function() {
+		return beamArray;
+	}
+
+	getKeyContent4Vexflow = function(noteName) {
+		var keyContent = noteName;
+		switch (curAccidential) {
+			case "#":
+				keyContent += "#";
+				break;
+			case "b":
+				keyContent += "b";
+				break;
+			default:
+				//...
+		}
+		return keyContent;
 	},
 
 	getDuration4Vexflow = function(duration) {
@@ -210,31 +271,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 				duration4Vexflow = "64";
 			}
 
-		return duration4Vexflow;
-	},
-
-	/*
-	getDurationIn64thNotes = function(noteDuration) {
-		//when 64th note
-		var durationIn64th = 1;
-
-			if ( noteDuration == "whole") {
-				durationIn64th = 64;
-			} else if ( noteDuration == "half") {
-				durationIn64th = 32;
-			} else if ( noteDuration == "quarter") {
-				durationIn64th = 16;
-			} else if ( noteDuration == "eighth") {
-				durationIn64th = 8;
-			} else if ( noteDuration == "16th") {
-				durationIn64th = 4;
-			} else if ( noteDuration == "32nd") {
-				durationIn64th = 2;
+			if (curRythSpec == "dotted") {
+				duration4Vexflow += "d";
 			}
 
-		return durationIn64th;
+		return duration4Vexflow;
 	},
-	*/
 
 	/*
 	This method gets called when your click on the canvas
@@ -265,11 +307,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	    console.log(noteElements4VexFlow);
 	},
 
-	/*
-	getCompleteDurationIn64th = function() {
-		return completeDurationIn64th;
-	},
-	*/
 
 	getAllNoteElements = function() {
 		return noteElements;
@@ -280,6 +317,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	};
 
 	that.init = init;
+	that.getKeyContent4Vexflow = getKeyContent4Vexflow;
 	that.getCurrentNoteName = getCurrentNoteName;
 	that.getCurrentAccidential = getCurrentAccidential;
 	that.getCurrentNoteDuration = getCurrentNoteDuration;
@@ -299,9 +337,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.getCurrentMode = getCurrentMode;
 	that.getAllNoteElements = getAllNoteElements;
 	that.getAllVexFlowNoteElements = getAllVexFlowNoteElements;
-	// that.getCompleteDurationIn64th = getCompleteDurationIn64th;
 	that.getDuration4Vexflow = getDuration4Vexflow;
-	// that.getDurationIn64thNotes = getDurationIn64thNotes;
+	that.getTupletArray = getTupletArray;
+	that.getBeamArray = getBeamArray;
 
 	return that;
 }

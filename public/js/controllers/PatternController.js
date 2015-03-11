@@ -72,7 +72,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	onPatternChange = function(event, pattern) {
-		console.log("Trigger patternChange: ",pattern);
+		// console.log("Trigger patternChange: ",pattern);
 		patternView.setPatternValue(JSON.stringify(pattern));
 	},
 
