@@ -147,6 +147,10 @@ h1 {
 #dashboardMessages {
 	margin-bottom: 45px;
 }
+#overallStatistics li{
+  display: inline;
+  font-size: 16px;
+}
 
 /* BAR-CHART */
 .bar {

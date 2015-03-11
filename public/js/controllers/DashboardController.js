@@ -35,6 +35,13 @@ MusicXMLAnalyzer.DashboardController = function() {
 		view.initKeyDistribution(results.all.value.key);
 		view.initMeterDistribution(results.all.value.meter);
 		view.initNoteTypeDistribution(results.all.value.note_types);
+
+		
+		view.initCountNotes(results.all.value.count_notes);
+		view.initCountRests(results.all.value.count_rests);
+		view.initCountMeasures(results.all.value.count_measures);
+		view.initMostFrequentNote(results.all.value.most_frequent_note);
+		view.initInstruments(results.all.value.instruments);
 		
 		window.setTimeout(function() {
 			

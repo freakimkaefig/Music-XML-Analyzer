@@ -21,6 +21,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 		initLogMessages();
 		$showingResultsFor = $('#showingResultsFor');
 		$fileSelector = $('#fileSelector');
+		$plainFacts = $('#plainFacts');
+		
 	},
 
 	initLogMessages = function() {
@@ -93,6 +95,34 @@ MusicXMLAnalyzer.DashboardView = function(){
 	changeFile = function(result) {
 
 	},
+
+	initCountNotes = function(results){
+		$plainFacts.append('<br><li><strong>Total Notes:  </strong>' + results + '</li>');
+	},
+
+	initCountRests = function(results){
+		$plainFacts.append('<br><br><li><strong>Total Rests:  </strong>' + results + '</li>');
+	},
+
+	initCountMeasures = function(results){
+		$plainFacts.append('<br><br><li><strong>Total Measures:  </strong>' + results + '</li>');
+	},
+
+	initMostFrequentNote = function(results){
+		$plainFacts.append('<br><br><li><strong>Most frequent Note:  </strong>' + results + '</li>')
+	},
+
+	initInstruments = function(results) {
+		$plainFacts.append('<br><br><li><strong>Instruments:  </strong></li>');
+		for(var i = 0; i < results.length; i++){
+			if(results.length == 1){
+				$plainFacts.append('<li>' + results[i] + '</li>');
+			}else{
+				$plainFacts.append('<li>' + results[i] + ', ' + '</li>');
+			}
+		}
+	},
+
 
 	/*initBarChart = function(data) {
 		var containerWidth = $('#bar_intervalDistribution').width() - 30;
@@ -655,7 +685,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.initKeyDistribution = initKeyDistribution;		/*PIE-CHART KEY-DISTRIBUTION*/
 	that.initNoteTypeDistribution = initNoteTypeDistribution;	/*PIE-CHART NOTE-DURATION*/
 	that.initMeterDistribution = initMeterDistribution;		/*PIE-CHART METERS*/
-
+	
+	that.initCountNotes = initCountNotes;
+	that.initCountRests = initCountRests;
+	that.initCountMeasures = initCountMeasures;
+	that.initMostFrequentNote = initMostFrequentNote;
+	that.initInstruments = initInstruments;
 	that.changeFile = changeFile;
 
 	return that;
