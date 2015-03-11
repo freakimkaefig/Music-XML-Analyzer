@@ -4,33 +4,81 @@ class DownloadController extends BaseController {
 	public function getResultsCSV() {
 		$user = User::find(Cookie::get('user_id'));
 
-		$this->_generateCSV($user);
-		return View::make('home');
+		$path = $this->_generateCSV($user);
+		return View::make('download.download')->with('path', $path);
 	}
 
 	private function _generateCSV($user) {
 
+		// csv variables
+		$x = ';';
+		$y = '"';
+		$z = '\\';
+
 		$uploads = $user->uploads->toArray();
+		$filename = 'analysis_results.csv';
+		$download_path = public_path() . '\\downloads\\' . $user->id . '\\';
+		if (!file_exists($download_path) || !is_dir($download_path)) {
+			mkdir($download_path, 0755);
+		}
+		$file_path = $download_path . $filename;
+		file_put_contents($file_path, '');	// empty file
+		$file = fopen($file_path, 'c+');	// open file
+		$headRow = array( "artist", "title", "meter", "count_measures", "count_notes", "count_rests", "most_frequent_note", "soprano clef", "mezzo-sopran clef", "alto clef", "tenor clef", "baritone clef", "bass clef", "G clef", "percussion clef", "tablature", "none", "C major", "G major", "D major", "A major", "E major", "H major", "F sharp major", "C sharp major", "F major", "B major", "Es major", "As major", "D flat major", "G flat major", "C flat major", "A minor", "E minor", "H minor", "F sharp minor", "C sharp minor", "G sharp minor", "D sharp minor", "A sharp minor", "D minor", "G minor", "C minor", "F minor", "B minor", "E flat minor", "A flat minor", "B", "C", "D", "Eb", "F", "D#", "E", "F#", "G", "A", "Bb", "C#", "A#", "E#", "Db", "Gb", "G#", "Cb", "Ab", "whole", "half", "quarter", "eighth",  "16th", "32nd", "64th", "Perfect unison", "Minor second", "Major second", "Minor third", "Major third", "Perfect fourth", "Tritone", "Perfect fifth", "Minor sixth", "Major sixth", "Minor seventh", "Major seventh", "Perfect octave", "Minor ninth", "Major ninth", "Minor tenth", "Major tenth", "Perfect eleventh", "Augmented eleventh", "Perfect twelfth", "Minor thirteenth", "Major thirteenth", "Minor fourteenth", "Major fourteenth", "Double octave", "Double octaven + Minor second", "Double octave + Major second",  "Double octave + Minor third", "Double octave + Major third", "Double octave + Perfect fourth", "Double octave + Tritone", "Double octave + Perfect fifth", "Double octave + Minor sixth", "Double octave + Major sixth", "instruments");
+		$write = fputcsv($file, $headRow, $x, $y, $z);
 		foreach ($uploads as $upload) {
 			$upload = Upload::find($upload['id']);
 			if ($upload->result) {	// check if upload is already analyised
-				$download_path = public_path() . '\\downloads\\' . $user->id . '\\';
-				if (!file_exists($download_path) || !is_dir($download_path)) {
-					mkdir($download_path, 0755);
-				}
-				$filename = 'analysis_results.csv';
-				$file_path = $download_path . $filename;
-				$file = fopen($file_path, 'c');
-				$result_value = json_decode($upload->result->value);
 
-				Debugbar::info($result_value);
+				$result_value = json_decode($upload->result->value);
+				
+				$artist 			= $result_value->artist[0];				// string
+				$title 				= $result_value->title[0];				// string
+				$meter 				= $result_value->meter;					// meter
+				$count_measures 	= $result_value->count_measures;		// int
+				$count_notes 		= $result_value->count_notes;			// int
+				$count_rests 		= $result_value->count_rests;			// int
+				$most_frequent_note = $result_value->most_frequent_note;	// string
+				$clefs 				= $result_value->clef;					// array('label' => string, 'value' => int)
+				$keys 				= $result_value->key;					// array('label' => string, 'value' => int)
+				$note_distribution	= $result_value->note_distribution;		// array('label' => string, 'value' => int)
+				$note_types			= $result_value->note_types;			// array('label' => string, 'value' => int)
+				$intervals			= $result_value->intervals;				// array('label' => string, 'value' => int)
+				$instruments 		= $result_value->instruments;			// array('string') 		// undefined length
+
+				$row = array();
+
+				array_push($row, $artist);
+				array_push($row, $title);
+				array_push($row, $meter);
+				array_push($row, $count_measures);
+				array_push($row, $count_notes);
+				array_push($row, $count_rests);
+				array_push($row, $most_frequent_note);
+				foreach ($clefs as $clef) {
+					array_push($row, $clef->value);
+				}
+				foreach ($keys as $key) {
+					array_push($row, $key->value);
+				}
+				foreach($note_distribution as $note) {
+					array_push($row, $note->value);
+				}
+				foreach ($note_types as $note_type) {
+					array_push($row, $note_type->value);
+				}
+				foreach ($intervals as $interval) {
+					array_push($row, $interval->value);
+				}
+				array_push($row, implode(',', $instruments));
+
+				Debugbar::info($row);
+
+				$write = fputcsv($file, $row, $x, $y, $z);
 			}
 		}
+		fclose($file);
 
-		// Debugbar::info($results);
-
+		return URL::to('/downloads/') . '/' . $user->id . '/' . $filename;
 	}
 }
-
-
-// {"file_url":"http:\/\/music-xml-analyzer.local\/uploads\/139\/ActorPreludeSample.xml","artist":["Lee Actor (2003)"],"title":["Prelude to a Tragedy"],"clef":[{"label":"soprano clef","value":0},{"label":"mezzo-sopran clef","value":0},{"label":"alto clef","value":1},{"label":"tenor clef","value":1},{"label":"baritone clef","value":0},{"label":"bass clef","value":8},{"label":"G clef","value":13},{"label":"percussion clef","value":2},{"label":"tablature","value":0},{"label":"none","value":0}],"key":[{"label":"C major","value":22},{"label":"G major","value":0},{"label":"D major","value":0},{"label":"A major","value":0},{"label":"E major","value":0},{"label":"H major","value":0},{"label":"F sharp major","value":0},{"label":"C sharp major","value":0},{"label":"F major","value":0},{"label":"B major","value":0},{"label":"Es major","value":0},{"label":"As major","value":0},{"label":"D flat major","value":0},{"label":"G flat major","value":0},{"label":"C flat major","value":0},{"label":"A minor","value":0},{"label":"E minor","value":0},{"label":"H minor","value":0},{"label":"F sharp minor","value":0},{"label":"C sharp minor","value":0},{"label":"G sharp minor","value":0},{"label":"D sharp minor","value":0},{"label":"A sharp minor","value":0},{"label":"D minor","value":0},{"label":"G minor","value":0},{"label":"C minor","value":0},{"label":"F minor","value":0},{"label":"B minor","value":0},{"label":"E flat minor","value":0},{"label":"A flat minor","value":0}],"meter":"3\/4","instruments":["Piccolo","Flutes","Oboes","English Horn","Clarinets in Bb","Bass Clarinet in Bb","Bassoons","Trumpets in C","Tuba","Timpani","Harp","Violin I","Violin II","Viola","Violoncello","Contrabass","Horns in F","Trombones","Percussion"],"count_measures":902,"count_notes":2945,"note_distribution":[{"label":"B","value":165},{"label":"C","value":173},{"label":"D","value":128},{"label":"Eb","value":85},{"label":"F","value":164},{"label":"D#","value":34},{"label":"E","value":280},{"label":"F#","value":233},{"label":"G","value":218},{"label":"A","value":134},{"label":"Bb","value":110},{"label":"C#","value":61},{"label":"A#","value":13},{"label":"E#","value":4},{"label":"Db","value":21},{"label":"Gb","value":33},{"label":"G#","value":58},{"label":"Cb","value":12},{"label":"Ab","value":25}],"note_types":[{"label":"whole","value":52},{"label":"half","value":188},{"label":"quarter","value":249},{"label":"eighth","value":22},{"label":"16th","value":1595},{"label":"32nd","value":0},{"label":"64th","value":0}],"count_rests":757,"most_frequent_note":15,"intervals":[{"label":"Perfect unison","value":97},{"label":"Minor second","value":513},{"label":"Major second","value":107},{"label":"Minor third","value":15},{"label":"Major third","value":27},{"label":"Perfect fourth","value":40},{"label":"Tritone","value":0},{"label":"Perfect fifth","value":23},{"label":"Minor sixth","value":9},{"label":"Major sixth","value":4},{"label":"Minor seventh","value":28},{"label":"Major seventh","value":0},{"label":"Perfect octave","value":37},{"label":"Minor ninth","value":44},{"label":"Major ninth","value":14},{"label":"Minor tenth","value":4},{"label":"Major tenth","value":4},{"label":"Perfect eleventh","value":0},{"label":"Augmented eleventh","value":0},{"label":"Perfect twelfth","value":2},{"label":"Minor thirteenth","value":0},{"label":"Major thirteenth","value":0},{"label":"Minor fourteenth","value":0},{"label":"Major fourteenth","value":0},{"label":"Double octave","value":1},{"label":"Double octaven + Minor second","value":0},{"label":"Double octave + Major second","value":1},{"label":"Double octave + Minor third","value":0},{"label":"Double octave + Major third","value":0},{"label":"Double octave + Perfect fourth","value":0},{"label":"Double octave + Tritone","value":1},{"label":"Double octave + Perfect fifth","value":0},{"label":"Double octave + Minor sixth","value":0},{"label":"Double octave + Major sixth","value":0}]}
