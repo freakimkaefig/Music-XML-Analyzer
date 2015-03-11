@@ -62,6 +62,8 @@ MusicXMLAnalyzer.NotationView = function(){
 		    // beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
+
+		
 		//easiest way to disable time-checking
 		voice.setStrict(false);
 
@@ -72,10 +74,45 @@ MusicXMLAnalyzer.NotationView = function(){
 		var formatter = new Vex.Flow.Formatter().
 		    joinVoices([voice]).format([voice], 700);
 
-		// Render voice
 		voice.draw(context, stave);
-		
+
 	},
+
+	/*
+	addBeamAndTuplet = function(currentVexflowArrayLength) {
+		console.log(("display beam and tuplet: " + currentVexflowArrayLength));
+
+		var vexflowNotes = patternModel.getAllVexFlowNoteElements();
+
+		// delete canvas
+		context.clearRect(0, 0, canvas.width, canvas.height);
+
+		stave.setContext(context).draw();
+
+		var voice = new Vex.Flow.Voice({
+		    resolution: Vex.Flow.RESOLUTION
+		});
+
+		var tuplet1 = new Vex.Flow.Tuplet(vexflowNotes.slice(0, 3));
+		var beams1 = Vex.Flow.Beam.applyAndGetBeams(voice);
+
+		voice.setStrict(false);
+		voice.addTickables(vexflowNotes);
+
+		// Format and justify the notes to 700 pixels
+		var formatter = new Vex.Flow.Formatter().
+		    joinVoices([voice]).format([voice], 700);
+
+		// Render voice
+		stave.setContext(context).draw();  
+		voice.draw(context, stave);
+		tuplet1.setContext(context).draw();
+
+		for(var i = 0; i < beams1.length; i++){
+        	beams1[i].setContext(context).draw();
+    	} 
+	},
+	*/
 
 	renderVexFlowNotePreview = function(noteName) {
 		// delete canvas
@@ -127,13 +164,8 @@ MusicXMLAnalyzer.NotationView = function(){
 		}
 
   		vexflowNotes.push(previewNote);
-
-  		// console.log("shiftY: " + vexflowNotes[1].modifiers[0].dot_shiftY);
 		  		  	
 		var voice = new Vex.Flow.Voice({
-		    //complete duration + the note you preview
-		    // num_beats: completeDurationIn64th + durationPreviewNoteIn64th,
-		    // beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
 
@@ -153,43 +185,6 @@ MusicXMLAnalyzer.NotationView = function(){
 		vexflowNotes.pop();		
 
 	},
-	/*
-	addBeamAndTuplet = function(currentVexflowArrayLength) {
-		console.log(("display beam and tuplet: " + currentVexflowArrayLength));
-
-		var vexflowNotes = patternModel.getAllVexFlowNoteElements();
-
-		// delete canvas
-		context.clearRect(0, 0, canvas.width, canvas.height);
-
-		stave.setContext(context).draw();
-
-		var voice = new Vex.Flow.Voice({
-		    // num_beats: completeDurationIn64th,
-		    // beat_value: 64,
-		    resolution: Vex.Flow.RESOLUTION
-		});
-
-		var tuplet1 = new Vex.Flow.Tuplet(vexflowNotes.slice(0, 3));
-		var beams1 = Vex.Flow.Beam.applyAndGetBeams(voice);
-
-		voice.setStrict(false);
-		voice.addTickables(vexflowNotes);
-
-		// Format and justify the notes to 700 pixels
-		var formatter = new Vex.Flow.Formatter().
-		    joinVoices([voice]).format([voice], 700);
-
-		// Render voice
-		stave.setContext(context).draw();  
-		voice.draw(context, stave);
-		tuplet1.setContext(context).draw();
-
-		for(var i = 0; i < beams1.length; i++){
-        	beams1[i].setContext(context).draw();
-    	} 
-	},
-	*/
 
 	onNotationViewUpdate = function(event, notes) {
 		console.log("view triggered");

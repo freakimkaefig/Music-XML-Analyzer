@@ -18,6 +18,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	// in this app a triplet must consist of 3 notes
 	tripletCurrentAmount = 0,
 	tripletEndPositions = [],
+	tupletArray = [],
+	beamArray = [],
 
 	noteElementAccidential = 0,
 
@@ -207,6 +209,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 				if (tripletCurrentAmount == 3) {
 					tripletCurrentAmount = 0;
 					tripletEndPositions.push(noteElements4VexFlow.length);
+					var tuplet = new Vex.Flow.Tuplet(vexflowNotes.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+					var beam = new Vex.Flow.Tuplet(vexflowNotes.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+					tupletArray.push()
+					beamArray.push()
 					console.log("tep: ",tripletEndPositions)
 				}
 			} else {
