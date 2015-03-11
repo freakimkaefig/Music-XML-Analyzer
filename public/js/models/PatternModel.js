@@ -245,29 +245,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	/*
-	getDurationIn64thNotes = function(noteDuration) {
-		//when 64th note
-		var durationIn64th = 1;
-
-			if ( noteDuration == "whole") {
-				durationIn64th = 64;
-			} else if ( noteDuration == "half") {
-				durationIn64th = 32;
-			} else if ( noteDuration == "quarter") {
-				durationIn64th = 16;
-			} else if ( noteDuration == "eighth") {
-				durationIn64th = 8;
-			} else if ( noteDuration == "16th") {
-				durationIn64th = 4;
-			} else if ( noteDuration == "32nd") {
-				durationIn64th = 2;
-			}
-
-		return durationIn64th;
-	},
-	*/
-
-	/*
 	This method gets called when your click on the canvas
 	to add a note element.
 	The paramter note looks like "c/4".
@@ -296,11 +273,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	    console.log(noteElements4VexFlow);
 	},
 
-	/*
-	getCompleteDurationIn64th = function() {
-		return completeDurationIn64th;
-	},
-	*/
 
 	getAllNoteElements = function() {
 		return noteElements;
@@ -331,9 +303,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.getCurrentMode = getCurrentMode;
 	that.getAllNoteElements = getAllNoteElements;
 	that.getAllVexFlowNoteElements = getAllVexFlowNoteElements;
-	// that.getCompleteDurationIn64th = getCompleteDurationIn64th;
 	that.getDuration4Vexflow = getDuration4Vexflow;
-	// that.getDurationIn64thNotes = getDurationIn64thNotes;
 
 	return that;
 }

@@ -47,6 +47,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		$("#myCanvas").on("click", onMouseClickCanvas);
 	},
 
+	
 	// display note elements on the canvas and get them from model
 	// via controller
 	renderNotes = function(vexflowNotes) {
@@ -75,6 +76,51 @@ MusicXMLAnalyzer.NotationView = function(){
 		voice.draw(context, stave);
 		
 	},
+	
+
+	/*
+	//triplet test
+	renderNotes = function() {
+
+		var vexflowNotes = [
+	        new Vex.Flow.StaveNote({ keys: ["c/4"], duration: "8",  stem_direction: -1}),
+	        new Vex.Flow.StaveNote({ keys: ["c/5"], duration: "8", stem_direction: -1}),
+	        new Vex.Flow.StaveNote({ keys: ["c/4"], duration: "8",  stem_direction: -1}),
+	    ]; 
+
+		// delete canvas
+		context.clearRect(0, 0, canvas.width, canvas.height);
+
+		stave.setContext(context).draw();
+
+		var voice = new Vex.Flow.Voice({
+		    // num_beats: completeDurationIn64th,
+		    // beat_value: 64,
+		    resolution: Vex.Flow.RESOLUTION
+		});
+
+		var tuplet1 = new Vex.Flow.Tuplet(vexflowNotes.slice(0, 3));
+
+		voice.setStrict(false);
+		voice.addTickables(vexflowNotes);
+
+		var beams1 = Vex.Flow.Beam.applyAndGetBeams(voice);
+
+		// Format and justify the notes to 700 pixels
+		var formatter = new Vex.Flow.Formatter().
+		    joinVoices([voice]).format([voice], 700);
+
+		// Render voice
+		stave.setContext(context).draw();  
+		voice.draw(context, stave);
+		tuplet1.setContext(context).draw();
+
+		for(var i = 0; i < beams1.length; i++){
+        	beams1[i].setContext(context).draw();
+    	}    
+		
+	},
+	*/
 
 	renderVexFlowNotePreview = function(noteName) {
 		// delete canvas
