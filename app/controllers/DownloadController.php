@@ -24,7 +24,7 @@ class DownloadController extends BaseController {
 		$file_path = $download_path . $filename;
 		file_put_contents($file_path, '');	// empty file
 		$file = fopen($file_path, 'c+');	// open file
-		$headRow = array( "artist", "title", "meter", "count_measures", "count_notes", "count_rests", "most_frequent_note", "soprano clef", "mezzo-sopran clef", "alto clef", "tenor clef", "baritone clef", "bass clef", "G clef", "percussion clef", "tablature", "none", "C major", "G major", "D major", "A major", "E major", "H major", "F sharp major", "C sharp major", "F major", "B major", "Es major", "As major", "D flat major", "G flat major", "C flat major", "A minor", "E minor", "H minor", "F sharp minor", "C sharp minor", "G sharp minor", "D sharp minor", "A sharp minor", "D minor", "G minor", "C minor", "F minor", "B minor", "E flat minor", "A flat minor", "B", "C", "D", "Eb", "F", "D#", "E", "F#", "G", "A", "Bb", "C#", "A#", "E#", "Db", "Gb", "G#", "Cb", "Ab", "whole", "half", "quarter", "eighth",  "16th", "32nd", "64th", "Perfect unison", "Minor second", "Major second", "Minor third", "Major third", "Perfect fourth", "Tritone", "Perfect fifth", "Minor sixth", "Major sixth", "Minor seventh", "Major seventh", "Perfect octave", "Minor ninth", "Major ninth", "Minor tenth", "Major tenth", "Perfect eleventh", "Augmented eleventh", "Perfect twelfth", "Minor thirteenth", "Major thirteenth", "Minor fourteenth", "Major fourteenth", "Double octave", "Double octaven + Minor second", "Double octave + Major second",  "Double octave + Minor third", "Double octave + Major third", "Double octave + Perfect fourth", "Double octave + Tritone", "Double octave + Perfect fifth", "Double octave + Minor sixth", "Double octave + Major sixth", "instruments");
+		$headRow = array("filename", "artist", "title", "meter", "count_measures", "count_notes", "count_rests", "most_frequent_note", "soprano clef", "mezzo-sopran clef", "alto clef", "tenor clef", "baritone clef", "bass clef", "G clef", "percussion clef", "tablature", "none", "C major", "G major", "D major", "A major", "E major", "H major", "F sharp major", "C sharp major", "F major", "B major", "Es major", "As major", "D flat major", "G flat major", "C flat major", "A minor", "E minor", "H minor", "F sharp minor", "C sharp minor", "G sharp minor", "D sharp minor", "A sharp minor", "D minor", "G minor", "C minor", "F minor", "B minor", "E flat minor", "A flat minor", "B", "C", "D", "Eb", "F", "D#", "E", "F#", "G", "A", "Bb", "C#", "A#", "E#", "Db", "Gb", "G#", "Cb", "Ab", "whole", "half", "quarter", "eighth",  "16th", "32nd", "64th", "Perfect unison", "Minor second", "Major second", "Minor third", "Major third", "Perfect fourth", "Tritone", "Perfect fifth", "Minor sixth", "Major sixth", "Minor seventh", "Major seventh", "Perfect octave", "Minor ninth", "Major ninth", "Minor tenth", "Major tenth", "Perfect eleventh", "Augmented eleventh", "Perfect twelfth", "Minor thirteenth", "Major thirteenth", "Minor fourteenth", "Major fourteenth", "Double octave", "Double octaven + Minor second", "Double octave + Major second",  "Double octave + Minor third", "Double octave + Major third", "Double octave + Perfect fourth", "Double octave + Tritone", "Double octave + Perfect fifth", "Double octave + Minor sixth", "Double octave + Major sixth", "instruments");
 		$write = fputcsv($file, $headRow, $x, $y, $z);
 		foreach ($uploads as $upload) {
 			$upload = Upload::find($upload['id']);
@@ -32,6 +32,7 @@ class DownloadController extends BaseController {
 
 				$result_value = json_decode($upload->result->value);
 				
+				$upload_filename	= $upload->name();
 				$artist 			= $result_value->artist[0];				// string
 				$title 				= $result_value->title[0];				// string
 				$meter 				= $result_value->meter;					// meter
@@ -48,6 +49,7 @@ class DownloadController extends BaseController {
 
 				$row = array();
 
+				array_push($row, $upload_filename);
 				array_push($row, $artist);
 				array_push($row, $title);
 				array_push($row, $meter);
