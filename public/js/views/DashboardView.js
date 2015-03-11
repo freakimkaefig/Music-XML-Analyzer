@@ -22,6 +22,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$showingResultsFor = $('#showingResultsFor');
 		$fileSelector = $('#fileSelector');
 		$plainFacts = $('#plainFacts');
+		$plainFacts2 = $('#plainFacts2');
+		$plainFacts3 = $('#plainFacts3');
 		
 	},
 
@@ -97,28 +99,28 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	initCountNotes = function(results){
-		$plainFacts.append('<br><li><strong>Total Notes:  </strong>' + results + '</li>');
+		$plainFacts.append('<li><strong>Total Notes:  </strong>' + results + '</li><br><br>');
 	},
 
 	initCountRests = function(results){
-		$plainFacts.append('<br><br><li><strong>Total Rests:  </strong>' + results + '</li>');
+		$plainFacts.append('<li><strong>Total Rests:  </strong>' + results + '</li>');
 	},
 
 	initCountMeasures = function(results){
-		$plainFacts.append('<br><br><li><strong>Total Measures:  </strong>' + results + '</li>');
+		$plainFacts2.append('<li><strong>Total Measures:  </strong>' + results + '</li><br><br>');
 	},
 
 	initMostFrequentNote = function(results){
-		$plainFacts.append('<br><br><li><strong>Most frequent Note:  </strong>' + results + '</li>')
+		$plainFacts2.append('<li><strong>Most frequent Note:  </strong>' + results + '</li>')
 	},
 
 	initInstruments = function(results) {
-		$plainFacts.append('<br><br><li><strong>Instruments:  </strong></li>');
+		$plainFacts3.append('<li><strong>Instruments:  </strong></li>');
 		for(var i = 0; i < results.length; i++){
 			if(results.length == 1){
-				$plainFacts.append('<li>' + results[i] + '</li>');
+				$plainFacts3.append('<li>' + results[i] + '</li>');
 			}else{
-				$plainFacts.append('<li>' + results[i] + ', ' + '</li>');
+				$plainFacts3.append('<li>' + results[i] + ', ' + '</li>');
 			}
 		}
 	},

@@ -15,11 +15,23 @@
 		<div id="showingResultsFor" class="text-center col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3"></div>
 		<div id="fileSelector" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3"></div>
 	</div>
-
+	<hr>
+	<hr>
+	<h3 class="text-center">Overall Statistics</h3>
+	<hr>
 	<div class="row">
-		<div id="overallStatistics">
-			<h3 class="">Overall Statistics</h3>
+		<div id="overallStatistics" class="col-xs-3 col-xs-offset-2">
 			<ul id="plainFacts" style="list-style: none;">
+
+			</ul>
+		</div>
+		<div id="overallStatistics" class="col-xs-3">
+			<ul id="plainFacts2" style="list-style: none;">
+
+			</ul>
+		</div>
+		<div id="overallStatistics" class="col-xs-3">
+			<ul id="plainFacts3" style="list-style: none;">
 
 			</ul>
 		</div>
