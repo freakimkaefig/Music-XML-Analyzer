@@ -99,7 +99,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	initCountNotes = function(results){
+		$plainFacts.empty();
 		$plainFacts.append('<li><strong>Total Notes:  </strong>' + results + '</li><br><br>');
+		$plainFacts.find('li').on('change', onFileSelectorChange);
 	},
 
 	initCountRests = function(results){
@@ -107,6 +109,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	initCountMeasures = function(results){
+		$plainFacts2.empty();
 		$plainFacts2.append('<li><strong>Total Measures:  </strong>' + results + '</li><br><br>');
 	},
 
@@ -115,6 +118,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	initInstruments = function(results) {
+		$plainFacts3.empty();
 		$plainFacts3.append('<li><strong>Instruments:  </strong></li>');
 		for(var i = 0; i < results.length; i++){
 			if(results.length == 1){
