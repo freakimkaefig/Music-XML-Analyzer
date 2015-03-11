@@ -15,6 +15,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 	// completeDurationIn64th = 0,
 	first = true,
 
+	// in this app a triplet must consist of 3 notes
+	tripletCurrentAmount = 0,
+
 	noteElementAccidential = 0,
 
 	init = function(){
@@ -196,7 +199,17 @@ MusicXMLAnalyzer.PatternModel = function(){
 				note.addDotToAll();	
 			}
 
-			noteElements4VexFlow.push(note);			
+
+
+			noteElements4VexFlow.push(note);
+
+			if (curRythSpec == "triplet") {
+				tripletCurrentAmount++;
+				if (tripletCurrentAmount == 3) {
+					tripletCurrentAmount = 0;
+					$(that).trigger('tripletComplete', [noteElements4VexFlow.length]);
+				}
+			}			
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view

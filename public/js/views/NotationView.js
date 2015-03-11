@@ -199,6 +199,10 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	},
 
+	addBeamAndTuplet = function(currentVexflowArrayLength) {
+		console.log(("display beam and tuplet"));
+	},
+
 	onNotationViewUpdate = function(event, notes) {
 		console.log("view triggered");
 		//console.log("notes: " + notes);
@@ -340,6 +344,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	
 	that.init = init;
 	that.renderNotes = renderNotes;
+	that.addBeamAndTuplet = addBeamAndTuplet;
 
 	return that;
 }

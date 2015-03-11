@@ -215,11 +215,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setPatternValue = function(pattern) {
 		$patternValue.val(pattern);
-		console.log("pattern changed to: ",$patternValue.val());
+		//console.log("pattern changed to: ",$patternValue.val());
 	},
 
 	setNoteNameActive = function(noteName) {
-		console.log("setNoteNameActive");
 		$(".btn-note.active").removeClass("active");
 		$("#" + noteName + "").addClass("active");
 	},

@@ -16,8 +16,13 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('updateNotationView', onNotationViewUpdate);
 		$(patternModel).on('changeSelectedNoteNameByClick', onNoteNameSelectionChange);
 		$(patternModel).on('changeSelectedOctaveByClick', onOctaveSelectionChange);
+		$(patternModel).on('tripletComplete', onTripletComplete);
 
 	},
+
+	onTripletComplete = function(event, currentVexflowArrayLength) {
+		notationView.addBeamAndTuplet(currentVexflowArrayLength);
+	}
 
 	onNotationViewUpdate = function(event, vexflowNotes) {
 		notationView.renderNotes(vexflowNotes);
@@ -72,7 +77,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	onPatternChange = function(event, pattern) {
-		console.log("Trigger patternChange: ",pattern);
+		// console.log("Trigger patternChange: ",pattern);
 		patternView.setPatternValue(JSON.stringify(pattern));
 	},
 
