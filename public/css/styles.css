@@ -11,9 +11,9 @@
 }*/
 
 *[id*='_title']{
-	font-weight: 300;
-	font-size: 23;
-	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif';
+	font-weight: 300 !important;
+	font-size: 23px !important;
+	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif' !important;
 }
 
 a:focus {
@@ -153,6 +153,10 @@ h1 {
 /* === DASHBOARD == */
 #dashboardMessages {
 	margin-bottom: 45px;
+}
+#overallStatistics li{
+  display: inline;
+  font-size: 16px;
 }
 
 /* BAR-CHART */

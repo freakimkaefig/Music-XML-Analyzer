@@ -19,8 +19,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 		$logMessages = $('#dashboardMessages');
 		initLogMessages();
-
+		$showingResultsFor = $('#showingResultsFor');
 		$fileSelector = $('#fileSelector');
+		$plainFacts = $('#plainFacts');
+		$plainFacts2 = $('#plainFacts2');
+		$plainFacts3 = $('#plainFacts3');
+		
 	},
 
 	initLogMessages = function() {
@@ -64,6 +68,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$fileSelector.empty();
 		var selectorElement = '<select class="form-control btn-material-blue-grey-100" name="fileSelector">';
 		selectorElement += '<option value="all" class="btn-material-blue-grey-100"> - All - </option>';
+		var showingResultsForText = '<h4>Showing results for:</h4>';
 
 		for (var i = 0; i < data.length; i++) {
 			selectorElement += '<option value="';
@@ -79,6 +84,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		}
 
 		selectorElement += '</select>';
+		$showingResultsFor.append(showingResultsForText);
 		$fileSelector.append(selectorElement);
 		$fileSelector.find('select').on('change', onFileSelectorChange);
 	},
@@ -91,6 +97,38 @@ MusicXMLAnalyzer.DashboardView = function(){
 	changeFile = function(result) {
 
 	},
+
+	initCountNotes = function(results){
+		$plainFacts.empty();
+		$plainFacts.append('<li><strong>Total Notes:  </strong>' + results + '</li><br><br>');
+		$plainFacts.find('li').on('change', onFileSelectorChange);
+	},
+
+	initCountRests = function(results){
+		$plainFacts.append('<li><strong>Total Rests:  </strong>' + results + '</li>');
+	},
+
+	initCountMeasures = function(results){
+		$plainFacts2.empty();
+		$plainFacts2.append('<li><strong>Total Measures:  </strong>' + results + '</li><br><br>');
+	},
+
+	initMostFrequentNote = function(results){
+		$plainFacts2.append('<li><strong>Most frequent Note:  </strong>' + results + '</li>')
+	},
+
+	initInstruments = function(results) {
+		$plainFacts3.empty();
+		$plainFacts3.append('<li><strong>Instruments:  </strong></li>');
+		for(var i = 0; i < results.length; i++){
+			if(results.length == 1){
+				$plainFacts3.append('<li>' + results[i] + '</li>');
+			}else{
+				$plainFacts3.append('<li>' + results[i] + ', ' + '</li>');
+			}
+		}
+	},
+
 
 	/*initBarChart = function(data) {
 		var containerWidth = $('#bar_intervalDistribution').width() - 30;
@@ -170,7 +208,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		var containerWidth = $('#bar_noteDistribution').width() - 30;
 		var margin ={ top:20, right:30, bottom:50, left: 40 },
 		    width = containerWidth - margin.left - margin.right, 
-		    height= 300 - margin.top - margin.bottom;
+		    height= 300 - margin.top - margin.bottom +30;
 
 		// scale to ordinal because x axis is not numerical
 		var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
@@ -198,7 +236,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .attr("width", width+(2*margin.left)+margin.right)    //set width
 		              .attr("height", height+margin.top+margin.bottom)  //set height
 		              .append("g")
-		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		              .attr("transform", "translate(" + margin.left + ",50)");
 
 		//svg.call(tip);
 
@@ -221,6 +259,15 @@ MusicXMLAnalyzer.DashboardView = function(){
 		     .attr("dy", ".71em")
 		     .style("text-anchor", "end")
 		     .text("Count");
+
+		svg.append("text")
+	        .attr("x", (width / 2))             
+	        .attr("y", 0 - (margin.top / 2) -20)
+	        .attr("text-anchor", "middle")  
+	        .style("font-size", "23px") 
+	        .style("font-weight", 300)
+	        .style("font-family", 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif')
+	        .text("Note distribution");
 
 		svg.selectAll(".bar")
 		   .data(data)
@@ -251,7 +298,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		var containerWidth = $('#bar_intervalDistribution').width() - 30;
 		var margin ={ top:20, right:30, bottom:130, left: 40 },
 		    width = containerWidth - margin.left - margin.right, 
-		    height= 300 - margin.top - margin.bottom;
+		    height= 300 - margin.top - margin.bottom+30;
 
 		// scale to ordinal because x axis is not numerical
 		var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
@@ -279,7 +326,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .attr("width", width+(2*margin.left)+margin.right)    //set width
 		              .attr("height", height+margin.top+margin.bottom)  //set height
 		              .append("g")
-		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		              .attr("transform", "translate(" + margin.left + ",50)");
 
 		//svg.call(tip);
 
@@ -310,6 +357,15 @@ MusicXMLAnalyzer.DashboardView = function(){
 		// svg.select(".x.axis")
 		//    .selectAll(".tick")
 		//    .attr("transform", "rotate(-90) translate(0,"+height+")");
+
+		svg.append("text")
+	        .attr("x", (width / 2))             
+	        .attr("y", 0 - (margin.top / 2) - 20)
+	        .attr("text-anchor", "middle")  
+	        .style("font-size", "23px") 
+	        .style("font-weight", 300)
+	        .style("font-family", 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif')
+	        .text("Intervall distribution");
 
 		svg.selectAll(".bar")
 		   .data(data)
@@ -635,7 +691,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.initKeyDistribution = initKeyDistribution;		/*PIE-CHART KEY-DISTRIBUTION*/
 	that.initNoteTypeDistribution = initNoteTypeDistribution;	/*PIE-CHART NOTE-DURATION*/
 	that.initMeterDistribution = initMeterDistribution;		/*PIE-CHART METERS*/
-
+	
+	that.initCountNotes = initCountNotes;
+	that.initCountRests = initCountRests;
+	that.initCountMeasures = initCountMeasures;
+	that.initMostFrequentNote = initMostFrequentNote;
+	that.initInstruments = initInstruments;
 	that.changeFile = changeFile;
 
 	return that;
