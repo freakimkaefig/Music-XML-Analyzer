@@ -24,6 +24,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$plainFacts = $('#plainFacts');
 		$plainFacts2 = $('#plainFacts2');
 		$plainFacts3 = $('#plainFacts3');
+		$overallStatistics = $('#overallStatistics');
 		
 	},
 
@@ -99,6 +100,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	initCountNotes = function(results){
+		$overallStatistics.empty();
+		$overallStatistics.append('<h3 class="text-center">Overall Statistics</h3><br>');
 		$plainFacts.empty();
 		$plainFacts.append('<li><strong>Total Notes:  </strong>' + results + '</li><br><br>');
 		$plainFacts.find('li').on('change', onFileSelectorChange);
@@ -298,7 +301,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		var containerWidth = $('#bar_intervalDistribution').width() - 30;
 		var margin ={ top:20, right:30, bottom:130, left: 40 },
 		    width = containerWidth - margin.left - margin.right, 
-		    height= 300 - margin.top - margin.bottom+30;
+		    height= 300 - margin.top - margin.bottom+80;
 
 		// scale to ordinal because x axis is not numerical
 		var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);

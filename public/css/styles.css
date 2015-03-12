@@ -1,18 +1,28 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
-/*svg {
-	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif';
-	font-size: 23px;
-  font-weight: 300;
-}*/
 
-/*#p0_title {
-	font-weight: 300;
-}*/
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #CBCBCB;
+}
 
 *[id*='_title']{
 	font-weight: 300 !important;
 	font-size: 23px !important;
+	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif' !important;
+}
+
+*[id*='_segmentMainLabel']{
+	font-weight: 300 !important;
+	font-size: 13px !important;
+	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif' !important;
+}
+
+*[id*='_segmentPercentage']{
+	font-weight: 300 !important;
+	font-size: 12px !important;
 	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif' !important;
 }
 
@@ -244,7 +254,9 @@ h1 {
 }
 
 .axis text{
-  font: 10px sans-serif;
+	font-weight: 300 !important;
+	font-size: 13px !important;
+	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif' !important;
 }
 
 .axis path, .axis line{

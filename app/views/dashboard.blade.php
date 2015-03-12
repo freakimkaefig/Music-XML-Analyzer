@@ -22,10 +22,11 @@
 		<div id="showingResultsFor" class="text-center col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3"></div>
 		<div id="fileSelector" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3"></div>
 	</div>
-	<hr>
-	<hr>
-	<h3 class="text-center">Overall Statistics</h3>
-	<hr>
+
+	<br><br><br>
+	<div id='overallStatistics'>
+		
+	</div>
 	<div class="row">
 		<div id="overallStatistics" class="col-xs-3 col-xs-offset-2">
 			<ul id="plainFacts" style="list-style: none;">
@@ -44,19 +45,19 @@
 		</div>
 	</div>
 
+	<br><br><br><br>
 	<div>
-	<hr>
 	{{-- <h3 class="text-center">Note distribution</h3> --}}
 	<div class="row">
 		<div id="bar_noteDistribution" class="bar-chart col-xs-12"></div>
 	</div>
 	</div>
-	<hr>
+	<br><br><br><br>
 	{{-- <h3 class="text-center">Interval distribution</h3> --}}
 	<div class="row">
 		<div id="bar_intervalDistribution" class="bar-chart col-xs-12"></div>
 	</div>
-	<hr>
+	<br><br><br><br>
 
 	<div class="row row-centered">
 		{{-- <h3 class="text-center">Key Distribution</h3> --}}
