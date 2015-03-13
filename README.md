@@ -17,6 +17,7 @@ The user should be able to search for specific patterns in his corpus. The searc
   - [x] Dashboard
   - [x] Pattern search
   - [ ] Playing search results
-  - [ ] Export of results
+  - [x] Export of analysis results
+  - [ ] Export of pattern search results
 - [ ] Bug fixing
 - [ ] Document the project
