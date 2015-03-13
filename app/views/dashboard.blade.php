@@ -29,17 +29,17 @@
 	</div>
 	<div class="row">
 		<div id="overallStatistics" class="col-xs-3 col-xs-offset-2">
-			<ul id="plainFacts" style="list-style: none;">
+			<ul id="plainFacts" class="nolist">
 
 			</ul>
 		</div>
 		<div id="overallStatistics" class="col-xs-3">
-			<ul id="plainFacts2" style="list-style: none;">
+			<ul id="plainFacts2" class="nolist">
 
 			</ul>
 		</div>
 		<div id="overallStatistics" class="col-xs-3">
-			<ul id="plainFacts3" style="list-style: none;">
+			<ul id="plainFacts3" class="nolist">
 
 			</ul>
 		</div>
