@@ -21,7 +21,7 @@ class SearchController extends BaseController {
 				$resultObject->meter = $this->_determineMeter($xml);
 				$resultObject->instruments = $this->_determineInstruments($xml);
 				$resultObject->count_measures = $this->_countMeasures($xml);
-				$resultObject->count_notes = $this->_countNotes($xml);
+				$resultObject->count_notes = (int)$this->_countNotes($xml) - (int)$this->_countRests($xml);
 				$resultObject->note_distribution = $this->_countNoteValues($xml);
 				$resultObject->note_types = $this->_countNoteTypes($xml);
 				$resultObject->count_rests = $this->_countRests($xml);

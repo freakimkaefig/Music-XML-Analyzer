@@ -46,6 +46,7 @@ class ResultController extends BaseController {
 				// setting up result object for current occurence
 				$resultObject = new stdClass();
 				$resultObject->type = 2;
+				$resultObject->file_id = $result->file_id;
 				$resultNotes[$i] = $resultObject;
 
 				// setting variables from search results
@@ -53,6 +54,12 @@ class ResultController extends BaseController {
 				$end = $result->occurences[$i]->end - 1;	// make end zero-based
 				$voice = $result->occurences[$i]->voice;
 				$part_id = $result->occurences[$i]->part_id;
+				$part_name = $xPath->query('//score-part[@id="' . $part_id . '"]/part-name')->item(0)->nodeValue;
+
+
+				$resultObject->voice = $voice;
+				$resultObject->part_id = $part_id;
+				$resultObject->part_name = $part_name;
 
 				// calculating measure number, where the first and last note is in
 				$startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
@@ -70,6 +77,9 @@ class ResultController extends BaseController {
 					// Check if measure after can be included in extract
 					$endExtract += 1;
 				}
+
+				$resultObject->startExtract = $startExtract;
+				$resultObject->endExtract = $endExtract;
 
 				$measureCounter = 0;
 
@@ -247,7 +257,11 @@ class ResultController extends BaseController {
 				}
 			}
 
-			return View::make('results.detail')->with('resultNotes', $resultNotes);
+			return View::make('results.detail',
+				array(
+					'result' => $result,
+					'resultNotes' => $resultNotes
+				));
 		} else {
 			Redirect::route('pattern');
 		}
@@ -271,6 +285,53 @@ class ResultController extends BaseController {
 			return $title[0]->{'credit-words'}->{0};
 		} else {
 			return "Unknown Title";
+		}
+	}
+
+	public static function _getKey($id){
+		$xml = simplexml_load_file(Upload::find($id)->url);
+		$keys = $xml->xpath("//key");
+		$key = $keys[0];
+
+		$fifths = $key->fifths;
+		$mode = (string)$key->mode;
+		
+		if($fifths != null && $mode === "major"){
+			switch($fifths) {
+				case "0": return "C major"; break;
+				case "1": return "G major"; break;
+				case "2": return "D major"; break;
+				case "3": return "A major"; break;
+				case "4": return "E major"; break;
+				case "5": return "H major"; break;
+				case "6": return "F sharp major"; break;
+				case "7": return "C sharp major"; break;
+				case "-1": return "F major"; break;
+				case "-2": return "B major"; break;
+				case "-3": return "E flat major"; break;
+				case "-4": return "A flat major"; break;
+				case "-5": return "D flat major"; break;
+				case "-6": return "G flat major"; break;
+				case "-7": return "C flat major"; break;
+			}
+		} elseif($fifths != null && $mode === "minor") {
+			switch($fifths) {
+				case "0": return "A minor"; break;
+				case "1": return "E minor"; break;
+				case "2": return "H minor"; break;
+				case "3": return "F sharp minor"; break;
+				case "4": return "C sharp minor"; break;
+				case "5": return "G sharp minor"; break;
+				case "6": return "D sharp minor"; break;
+				case "7": return "A sharp minor"; break;
+				case "-1": return "D minor"; break;
+				case "-2": return "G minor"; break;
+				case "-3": return "C minor"; break;
+				case "-4": return "F minor"; break;
+				case "-5": return "B minor"; break;
+				case "-6": return "E flat minor"; break;
+				case "-7": return "A flat minor"; break;
+			}
 		}
 	}
 }
