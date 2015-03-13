@@ -277,9 +277,13 @@ h1 {
 	font: 12px sans-serif;
 }
 
-/*RESULTLIST*/
+/*RESULT LIST*/
 .canvas {
 	margin-bottom: 60px;
+}
+#patternCanvas {
+	display: block;
+	margin: 0 auto;
 }
 .carousel-indicators li {
 	background-color: #000;
@@ -295,6 +299,10 @@ h1 {
 	position: absolute;
 }
 
+/*RESULT DETAIL*/
+#extract-carousel .carousel-inner .item .facts-list {
+	font-size: 16px;
+}
 
 /*PATTERN SEARCH*/
 .row-centered {

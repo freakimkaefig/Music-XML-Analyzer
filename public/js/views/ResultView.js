@@ -95,6 +95,11 @@ MusicXMLAnalyzer.ResultView = function(){
 				y = (i - 1) * (height / 2);
 			}
 
+			if (measures[i].pattern.type < 2) {
+				width = 690;
+				height = 120;
+			}
+
 			staveBar = new Vex.Flow.Stave(x, y, width);	// generate new stave for measure
 
 			if (i%2 == 0) {
@@ -195,12 +200,48 @@ MusicXMLAnalyzer.ResultView = function(){
 						notes.push(note);
 						duration += 16;	// add 16 to duration; quarter = 16/64
 					}
-					measures.push({ notes: notes, duration: duration, time_signature: time_signature });	// push note to array
+					measures.push({ notes: notes, duration: duration, time_signature: time_signature, pattern: pattern });	// push note to array
 				}
 				break;
 
 			case 1:
-				//
+				// rhythm
+				for (var i = 0; i < pattern.measure.length; i++) {
+					var notes = [];
+					var duration = 0;
+					var time_signature = pattern.measures[i].time_signature;
+					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
+
+						// set color of current note
+						var note;
+						if (pattern.measures[i].notes[j].type == "note") {
+							// determine note variables
+							var keys = ["b/4"];
+
+							var type = pattern.measures[i].notes[j].pitch.type;
+							var durationType = 0;
+							if (pattern.measures[i].notes[j].pitch.dot) {
+								durationType = 2;
+							}
+							var noteDuration = getVexflowDuration(type, durationType);
+
+							note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true });
+
+							if (pattern.measures[i].notes[j].pitch.dot) {
+								note.addDotToAll();
+							}
+							notes.push(note);
+						} else if (pattern.measures[i].notes[j].type == "rest") {
+							var durationType = 1; // rests type is 1
+							var duration = getVexflowDuration(pattern.measures[i].notes[j].duration, durationType);
+
+							note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: duration });
+							duration += getDurationIn64th(pattern.measures[i].notes[j].duration);
+							notes.push(note);
+						}
+					}
+					measures.push({ notes: notes, duration: duration, time_signature: time_signature, pattern: pattern });
+				}
 				break;
 
 			case 2:
@@ -224,8 +265,7 @@ MusicXMLAnalyzer.ResultView = function(){
 								var octave = pattern.measures[i].notes[j].pitch.octave;
 								var alter = pattern.measures[i].notes[j].pitch.alter;
 								var keys = [getVexflowKey(step, octave, alter )];
-								// keys = checkNotesResult.keys;
-								// color = checkNotesResult.color;
+
 								var noteTies = pattern.measures[i].notes[j].pitch.ties;
 								var type = pattern.measures[i].notes[j].pitch.type;
 								var durationType = 0;
@@ -263,7 +303,7 @@ MusicXMLAnalyzer.ResultView = function(){
 							notes.push(note);
 						}
 					}
-					measures.push({ notes: notes, duration: duration, beams: beams, ties: ties, time_signature: time_signature });
+					measures.push({ notes: notes, duration: duration, beams: beams, ties: ties, time_signature: time_signature, pattern: pattern });
 				}
 				break;
 		}

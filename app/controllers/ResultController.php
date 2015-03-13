@@ -46,6 +46,7 @@ class ResultController extends BaseController {
 				// setting up result object for current occurence
 				$resultObject = new stdClass();
 				$resultObject->type = 2;
+				$resultObject->file_id = $result->file_id;
 				$resultNotes[$i] = $resultObject;
 
 				// setting variables from search results
@@ -53,6 +54,12 @@ class ResultController extends BaseController {
 				$end = $result->occurences[$i]->end - 1;	// make end zero-based
 				$voice = $result->occurences[$i]->voice;
 				$part_id = $result->occurences[$i]->part_id;
+				$part_name = $xPath->query('//score-part[@id="' . $part_id . '"]/part-name')->item(0)->nodeValue;
+
+
+				$resultObject->voice = $voice;
+				$resultObject->part_id = $part_id;
+				$resultObject->part_name = $part_name;
 
 				// calculating measure number, where the first and last note is in
 				$startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
@@ -70,6 +77,9 @@ class ResultController extends BaseController {
 					// Check if measure after can be included in extract
 					$endExtract += 1;
 				}
+
+				$resultObject->startExtract = $startExtract;
+				$resultObject->endExtract = $endExtract;
 
 				$measureCounter = 0;
 
@@ -247,7 +257,11 @@ class ResultController extends BaseController {
 				}
 			}
 
-			return View::make('results.detail')->with('resultNotes', $resultNotes);
+			return View::make('results.detail',
+				array(
+					'result' => $result,
+					'resultNotes' => $resultNotes
+				));
 		} else {
 			Redirect::route('pattern');
 		}
