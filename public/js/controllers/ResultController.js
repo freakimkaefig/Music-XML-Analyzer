@@ -115,11 +115,14 @@ MusicXMLAnalyzer.ResultController = function(){
 					var noteDuration = getDuration(note.pitch.type);
 
 					if(noteAlter != 0){
+						if(noteAlter == -1){
+							noteAlter = 2;
+						}
 						keyToNote = noteStep.concat(noteOctave, noteAlter);
 					}else{
 						keyToNote = noteStep.concat(noteOctave);
 					}
-					// console.log("megaKeyToNoteObject{keyToNote}: ",megaKeyToNoteObject[keyToNote]);
+					console.log("keyToNote: ", keyToNote, " - megaKeyToNoteObject{keyToNote}: ",megaKeyToNoteObject[keyToNote]);
 					notesToBePlayed.push({'note': megaKeyToNoteObject[keyToNote], 'noteDuration': noteDuration});
 				}
 			}
@@ -135,7 +138,7 @@ MusicXMLAnalyzer.ResultController = function(){
 				playTune = function(){
 
 					if(i < notesToBePlayed.length){						
-						console.log("notesToBePlayed: ",notesToBePlayed[i]);
+						// console.log("notesToBePlayed: ",notesToBePlayed[i]);
 						var delay = notesToBePlayed[i].noteDuration;
 						var note = notesToBePlayed[i].note;
 						var noteDuration = notesToBePlayed[i].noteDuration;
