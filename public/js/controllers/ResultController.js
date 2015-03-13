@@ -21,8 +21,6 @@ MusicXMLAnalyzer.ResultController = function(){
 						  'F3': 53, 'F4': 65, 'F5': 77, 'F6': 89, 'F7': 101, 'G1': 31, 'G2': 43, 'G3': 55, 'G4': 67, 'G5': 79, 'G6': 91,
 						  'G7': 103, 'G12': 30, 'F11': 30, 'G22': 42, 'F21':42, 'G32': 54, 'F31': 54, 'G42': 66, 'F41': 66, 'G52': 78,
 						  'F51': 78, 'G62': 90, 'F61': 90, 'G72': 102, 'F71': 102},
-
-	notesToBePlayed = [],
 	keyToNote = "",
 
 	init = function(){
@@ -73,6 +71,7 @@ MusicXMLAnalyzer.ResultController = function(){
 	},
 
 	playResult = function(){
+		var notesToBePlayed = [];
 		// console.log("playResult keyToNote: ",MIDI.keyToNote['A0']); //<-- returns key for var note
 		// console.log("playResult keytonote: ",MIDI.noteToKey); // 21 => A0
 
