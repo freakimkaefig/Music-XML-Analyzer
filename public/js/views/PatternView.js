@@ -34,7 +34,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 
 		// soundSequence pattern:
-		/*$patternValue.val(JSON.stringify(
+		/*$('#patternValue').val(JSON.stringify(
 			[{
 				type: 0,
 				notes: [
@@ -58,7 +58,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 
 		// rhythm pattern:
-		/*$patternValue.val(JSON.stringify(
+		/*$('#patternValue').val(JSON.stringify(
 			[{
 				type: 1,
 				notes: [
@@ -77,11 +77,11 @@ MusicXMLAnalyzer.PatternView = function(){
 					}
 				]
 			}]
-		)); */
+		));*/
 
 
 		// melody pattern:
-		/*$patternValue.val(JSON.stringify(
+		/*$('#patternValue').val(JSON.stringify(
 			[{
 				type: 2,
 				notes: [
