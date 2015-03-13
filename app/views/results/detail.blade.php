@@ -10,7 +10,7 @@
 		</div>
 	</div>
 </div>
-
+<input id="playResult" type="button" value="Play Result"/>
 <div id="extract-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
 	<!-- Indicators -->
