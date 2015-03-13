@@ -65,8 +65,12 @@ a:focus {
 	opacity: 0.8;
 }
 
-.nolist {
+.no-list {
 	list-style: none;
+}
+
+.inline-list li {
+	display: inline;
 }
 
 /* === LOGS === */
@@ -169,7 +173,7 @@ h1 {
 	margin-bottom: 45px;
 }
 #overallStatistics li{
-  display: inline;
+  /*display: inline;*/
   font-size: 16px;
 }
 
