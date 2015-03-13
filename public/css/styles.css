@@ -301,6 +301,8 @@ h1 {
 
 /*RESULT DETAIL*/
 #extract-carousel .carousel-inner .item .facts-list {
+	overflow: hidden;
+	margin-bottom: 25px;
 	font-size: 16px;
 }
 

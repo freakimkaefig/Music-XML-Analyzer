@@ -37,6 +37,7 @@
 							<li><strong>Part name (Instrument):</strong> {{ $resultNotes[$i]->part_name }}</li>
 							<li><strong>Part ID:</strong> {{ $resultNotes[$i]->part_id }}</li>
 							<li><strong>Voice:</strong> {{ $resultNotes[$i]->voice }}</li>
+							<li><strong>Key:</strong> {{ ResultController::_getKey($result->file_id) }}</li>
 						</ul>
 					</div>
 					<div class="col-xs-4">

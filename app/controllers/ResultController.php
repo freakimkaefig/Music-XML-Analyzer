@@ -287,4 +287,51 @@ class ResultController extends BaseController {
 			return "Unknown Title";
 		}
 	}
+
+	public static function _getKey($id){
+		$xml = simplexml_load_file(Upload::find($id)->url);
+		$keys = $xml->xpath("//key");
+		$key = $keys[0];
+
+		$fifths = $key->fifths;
+		$mode = (string)$key->mode;
+		
+		if($fifths != null && $mode === "major"){
+			switch($fifths) {
+				case "0": return "C major"; break;
+				case "1": return "G major"; break;
+				case "2": return "D major"; break;
+				case "3": return "A major"; break;
+				case "4": return "E major"; break;
+				case "5": return "H major"; break;
+				case "6": return "F sharp major"; break;
+				case "7": return "C sharp major"; break;
+				case "-1": return "F major"; break;
+				case "-2": return "B major"; break;
+				case "-3": return "E flat major"; break;
+				case "-4": return "A flat major"; break;
+				case "-5": return "D flat major"; break;
+				case "-6": return "G flat major"; break;
+				case "-7": return "C flat major"; break;
+			}
+		} elseif($fifths != null && $mode === "minor") {
+			switch($fifths) {
+				case "0": return "A minor"; break;
+				case "1": return "E minor"; break;
+				case "2": return "H minor"; break;
+				case "3": return "F sharp minor"; break;
+				case "4": return "C sharp minor"; break;
+				case "5": return "G sharp minor"; break;
+				case "6": return "D sharp minor"; break;
+				case "7": return "A sharp minor"; break;
+				case "-1": return "D minor"; break;
+				case "-2": return "G minor"; break;
+				case "-3": return "C minor"; break;
+				case "-4": return "F minor"; break;
+				case "-5": return "B minor"; break;
+				case "-6": return "E flat minor"; break;
+				case "-7": return "A flat minor"; break;
+			}
+		}
+	}
 }
