@@ -60,11 +60,14 @@ MusicXMLAnalyzer.ResultView = function(){
 			// TESTING
 			// start playing extract of first shown result
 			// TODO: call again when sliding through caroussel
-			if(once){
-				once=false;
-				playResult();
-			}
 		});
+
+		// TODO
+		// call playtune on user-interaction
+		if(once){
+			once=false;
+			playResult();
+		}
 	},
 
 	playResult = function(){
@@ -72,17 +75,18 @@ MusicXMLAnalyzer.ResultView = function(){
 		// console.log("playResult keytonote: ",MIDI.noteToKey); // 21 => A0
 
 		// TODO: 
-		// get results according to current caroussel position
-		// eg. no hardcoded '#notes0', but '#notes'+carousselPosition (0-based)
-		// console.log(typeof(JSON.parse($('#notes0')[0].value)),": ",JSON.parse($('#notes0')[0].value));
+		// [DONE] get results according to current caroussel position
+		// [DONE] eg. no hardcoded '#notes0', but '#notes'+carousselPosition (0-based)
+
 		// TODO:
 		// set duration correctly if dotted note
+
 		// TODO:
 		// determine velocity
 
-		//get notes of current result:
-		var currentResultNotes = JSON.parse($('#notes0')[0].value);
-		// console.log("megaKeyToNoteObject: ",megaKeyToNoteObject);
+		//get notes of current extract:
+		var currentResultNotes = JSON.parse($('#extract-carousel').find('div.carousel-inner').find('div.item.active').find('.notes')[0].value);
+		// console.log("currentResultNotes: ",currentResultNotes);
 
 		//determine MIDI values for currentResultNotes
 		for(var i = 0; i < currentResultNotes.measures.length; i++){
@@ -121,29 +125,30 @@ MusicXMLAnalyzer.ResultView = function(){
 			soundfontUrl: "../../libs/midijs/soundfont/",
 			instrument: "acoustic_grand_piano",
 			callback: function() {					
-					playTune = function(){
+				var i = 0;
+				playTune = function(){
 
-						if(i < notesToBePlayed.length){						
-							// console.log("notesToBePlayed: ",notesToBePlayed[i]);
-							var delay = notesToBePlayed[i].noteDuration; // play one note every quarter second
-							var note = notesToBePlayed[i].note; // the MIDI note
-							var velocity = 127; // how hard the note hits
-							// play the note
-							MIDI.setVolume(0, 127);
-							// delay --> https://stackoverflow.com/questions/21296450/midi-js-note-duration-does-not-change
-							MIDI.noteOn(0, note, velocity, delay + i + 1);
-							MIDI.noteOff(0, note, delay + i + 1 + notesToBePlayed[i].noteDuration);
-							MIDI.Player.stop();
-							i++;
-							// recursively call playTune()
-							playTune();
-						} 
-					}
-					var i = 0; 
-					if(once2){ 
-						once2 = false;
+					if(i < notesToBePlayed.length){						
+						// console.log("notesToBePlayed: ",notesToBePlayed[i]);
+						var delay = notesToBePlayed[i].noteDuration;
+						var note = notesToBePlayed[i].note;
+						var noteDuration = notesToBePlayed[i].noteDuration;
+						var velocity = 127; // how hard the note hits
+						// play the note
+						MIDI.setVolume(0, 127);
+						// delay --> https://stackoverflow.com/questions/21296450/midi-js-note-duration-does-not-change
+						MIDI.noteOn(0, note, velocity, delay + i + 1);
+						MIDI.noteOff(0, note, delay + i + 1 + noteDuration);
+						MIDI.Player.stop();
+						i++;
+						// recursively call playTune()
 						playTune();
-					 }
+					} 
+				}
+				if(once2){ 
+					once2 = false;
+					playTune();
+				 }
 			}
 		});
 	},
