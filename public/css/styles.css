@@ -65,6 +65,14 @@ a:focus {
 	opacity: 0.8;
 }
 
+.no-list {
+	list-style: none;
+}
+
+.inline-list li {
+	display: inline;
+}
+
 /* === LOGS === */
 .logBox {
 	display: none;
@@ -165,7 +173,7 @@ h1 {
 	margin-bottom: 45px;
 }
 #overallStatistics li{
-  display: inline;
+  /*display: inline;*/
   font-size: 16px;
 }
 
@@ -269,9 +277,13 @@ h1 {
 	font: 12px sans-serif;
 }
 
-/*RESULTLIST*/
+/*RESULT LIST*/
 .canvas {
 	margin-bottom: 60px;
+}
+#patternCanvas {
+	display: block;
+	margin: 0 auto;
 }
 .carousel-indicators li {
 	background-color: #000;
@@ -287,6 +299,12 @@ h1 {
 	position: absolute;
 }
 
+/*RESULT DETAIL*/
+#extract-carousel .carousel-inner .item .facts-list {
+	overflow: hidden;
+	margin-bottom: 25px;
+	font-size: 16px;
+}
 
 /*PATTERN SEARCH*/
 .row-centered {

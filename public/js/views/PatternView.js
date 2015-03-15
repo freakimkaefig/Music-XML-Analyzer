@@ -34,149 +34,124 @@ MusicXMLAnalyzer.PatternView = function(){
 
 
 		// soundSequence pattern:
-		// $patternValue.val(JSON.stringify(
-		// 	{
-		// 		type: 0,
-		// 		notes: [
-		// 			{
-		// 				pitch: {
-		// 					step: "B",
-		// 					alter: 0,
-		// 					octave: 5
-		// 				}
-		// 			},
-		// 			{
-		// 				pitch: {
-		// 					step: "B",
-		// 					alter: 0,
-		// 					octave: 5
-		// 				}
-		// 			}
-		// 		]
-		// 	}
-		// ));
+		/*$('#patternValue').val(JSON.stringify(
+			[{
+				type: 0,
+				notes: [
+					{
+						pitch: {
+							step: "B",
+							alter: 0,
+							octave: 5
+						}
+					},
+					{
+						pitch: {
+							step: "B",
+							alter: 0,
+							octave: 5
+						}
+					}
+				]
+			}]
+		));*/
+
+
+		// rhythm pattern:
+		/*$('#patternValue').val(JSON.stringify(
+			[{
+				type: 1,
+				notes: [
+					{
+						type: "note",
+						ptich: {
+							type: "half",
+							dot: true,
+							beam: false,
+							timeModification: false
+						}
+					},
+					{
+						type: "rest",
+						duration: "whole"
+					}
+				]
+			}]
+		));*/
 
 
 		// melody pattern:
-		// $patternValue.val(JSON.stringify(
-		// 	{
-		// 		type: 2,
-		// 		notes: [
-		// 			{
-		// 				type: "note",
-		// 				pitch: {
-		// 					step: "B",
-		// 					type: "whole",
-		// 					alter: 0,
-		// 					octave: 5
-		// 				}
-		// 			},
-		// 			{
-		// 				type: "rest",
-		// 				duration: "whole"
-		// 			}
-		// 		]
-		// 	}
-		// )); 
-
-
-		// rhythm pattern: Triole
-		// $patternValue.val(JSON.stringify(
-		// 	{
-		// 		type: 1,
-		// 		notes: [
-		// 			{
-		// 				type: "note",
-		// 				pitch: {
-		// 					step: "E",
-		// 					type: "eighth",
-		// 					alter: -1,
-		// 					octave: 5,
-		// 				beam: "begin"//,
-		// 				// ****<Eventuell miteinbeziehen>****
-		// 				// timeModification:{
-		// 				// 	actualNotes: 3,
-		// 				// 	normalNotes: 2,
-		// 				// 	normalType: "eight"
-		// 				// }
-		// 				// *****</Eventuell miteinbeziehen>****
-		// 				}
-		// 			},
-		// 			{
-		// 				type: "note",
-		// 				pitch: {
-		// 					step: "D",
-		// 					type: "eighth",
-		// 					alter: 0,
-		// 					octave: 5,
-		// 				beam: "continue"//,
-		// 				// ****<Eventuell miteinbeziehen>****
-		// 				// timeModification:{
-		// 				// 	actualNotes: 3,
-		// 				// 	normalNotes: 2,
-		// 				// 	normalType: "eight"
-		// 				// }
-		// 				// *****</Eventuell miteinbeziehen>****
-		// 				}
-		// 			},
-		// 			{
-		// 				type: "note",
-		// 				pitch: {
-		// 					step: "C",
-		// 					type: "eighth",
-		// 					alter: 0,
-		// 					octave: 5,
-		// 					beam: "end"//,
-		// 				// ****<Eventuell miteinbeziehen>****
-		// 				// timeModification:{
-		// 				// 	actualNotes: 3,
-		// 				// 	normalNotes: 2,
-		// 				// 	normalType: "eight"
-		// 				// }
-		// 				// *****</Eventuell miteinbeziehen>****
-		// 				}
-		// 			}//,
-		// 			// {
-		// 			// 	type: "rest",
-		// 			// 	duration: "whole"
-		// 			// }
-		// 		]
-		// 	}
-		// )); 
-
-
-		// rhythm pattern #2: Punktierte Noten
-		// $patternValue.val(JSON.stringify(
-		// 	{
-		// 		type: 1,
-		// 		notes: [
-		// 			{
-		// 				type: "note",
-		// 				pitch: {
-		// 					step: "F",
-		// 					type: "half",
-		// 					alter: 0,
-		// 					octave: 1,
-		// 					dot: true 
-		// 				}
-		// 			},
-		// 			{
-		// 				type: "note",
-		// 				pitch: {
-		// 					step: "F",
-		// 					type: "half",
-		// 					alter: 0,
-		// 					octave: 2,
-		// 					dot: true 
-		// 				}
-		// 			}//,
-		// // 			{
-		// // 				type: "rest",
-		// // 				duration: "whole"
-		// // 			} 
-		// 		]
-		// 	}
-		// )); 
+		/*$('#patternValue').val(JSON.stringify(
+			[{
+				type: 2,
+				notes: [
+					{
+						type: "note",
+						pitch: {
+							step: "E",
+							type: "eighth",
+							alter: -1,
+							octave: 5,
+							dot: false,
+							beam: "begin",	// Triole (1)
+							timeModification: {
+								actualNotes: 3,
+								normalNotes: 2,
+								normalType: "eight"
+							}
+						}
+					},
+					{
+						type: "note",
+						pitch: {
+							step: "D",
+							type: "eighth",
+							alter: 0,
+							octave: 5,
+							dot: false,
+							beam: "continue",	// Triole (2)
+							timeModification: {
+								actualNotes: 3,
+								normalNotes: 2,
+								normalType: "eight"
+							}
+						}
+					},
+					{
+						type: "note",
+						pitch: {
+							step: "C",
+							type: "eighth",
+							alter: 0,
+							octave: 5,
+							dot: false,
+							beam: "end",	// Triole (3)
+							timeModification: {
+								actualNotes: 3,
+								normalNotes: 2,
+								normalType: "eight"
+							}
+						}
+					},
+					{
+						type: "note",
+						pitch: {
+							step: "C",
+							type: "eighth",
+							alter: 0,
+							octave: 5,
+							dot: true,	// punktierte Note
+							beam: false,
+							timeModification: false,
+						}
+					}
+					{
+						type: "rest",	// Pause
+						duration: "whole"
+					}
+				]
+			}]
+		)); */
 	},
 
 	onModeButtonClick = function(event) {

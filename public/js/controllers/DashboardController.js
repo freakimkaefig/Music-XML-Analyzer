@@ -37,7 +37,7 @@ MusicXMLAnalyzer.DashboardController = function() {
 		view.initNoteTypeDistribution(results.all.value.note_types);
 
 		
-		view.initCountNotes(results.all.value.count_notes - results.all.value.count_rests);
+		view.initCountNotes(results.all.value.count_notes);
 		view.initCountRests(results.all.value.count_rests);
 		view.initCountMeasures(results.all.value.count_measures);
 		view.initMostFrequentNote(results.all.value.most_frequent_note);

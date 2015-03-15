@@ -8,7 +8,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
-			<canvas id="patternCanvas" width="950" height="186"></canvas>
+			<canvas id="patternCanvas" width="700" height="186"></canvas>
 			<h1 class="text-center">Search results</h1>
 		</div>
 	</div>
