@@ -36,18 +36,7 @@ MusicXMLAnalyzer.ResultView = function(){
 
 			// console.log(index, notes);
 			renderNotes(measures, canvas, renderer, context, stave);
-
-			// TESTING
-			// start playing extract of first shown result
-			// TODO: call again when sliding through caroussel
 		});
-
-		// TODO
-		// call playtune on user-interaction
-		// if(once){
-		// 	once=false;
-		// 	playResult();
-		// }
 	},
 
 	initPatternCanvas = function(pattern) {
