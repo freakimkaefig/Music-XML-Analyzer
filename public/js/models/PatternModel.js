@@ -28,6 +28,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	// val for beam: false, begin, continue, end
 	beamVal = false,
 
+
 	init = function(){
 
 	},
@@ -119,6 +120,23 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 
 		//beam
+		if(curRythSpec == "triplet") {
+			tripletCurrentAmount++;
+		}
+		
+		switch(tripletCurrentAmount) {
+		    case 1:
+		        beamVal = "begin";
+		        break;
+	        case 2:
+		        beamVal = "continue";
+		        break;
+		    case 3:
+		        beamVal = "end";
+		        break;
+		    default:
+		        beamVal = false;
+		}
 		beamVal = false;
 	},
 
@@ -185,13 +203,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 			}
 
 			console.log("noteELements: ", noteElements);
-			
-			/*
-			for (var i = 0; i < noteElements.length; i++) {
-				//console.log("d64 of " + i + " " + getDurationIn64thNotes(noteElements[i].duration));
-				completeDurationIn64th += getDurationIn64thNotes(noteElements[i].duration);
-			}
-			*/
 
 			//check if break or normal note or note with accidential
 			//then adapt values for vexflow an put them into an array
@@ -222,7 +233,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		//check if triplet
 		if (curRythSpec == "triplet") {
-			tripletCurrentAmount++;
 			console.log("tripletCurrentAmount: " + tripletCurrentAmount);
 			if (tripletCurrentAmount == 3) {
 				tripletCurrentAmount = 0;
