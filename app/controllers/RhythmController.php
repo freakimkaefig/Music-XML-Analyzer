@@ -35,7 +35,9 @@ public function search($pattern) {
 			}
 			// else if dotted note
 			elseif(isset($note->pitch->dot)){
-				$obj->dot = (string)$note->pitch->dot;
+				if($note->pitch->dot == true){
+					$obj->dot = "1";
+				}
 			}
 			array_push(self::$patternArray, $obj);
 		}else{
@@ -43,8 +45,8 @@ public function search($pattern) {
 		}
 	}
 
-	echo"patternArray: ";
-	var_dump(self::$patternArray);
+	// echo"patternArray: ";
+	// var_dump(self::$patternArray);
 
 	//get user uploads & file_id's & file_url
 	$user = User::find(Cookie::get('user_id'));
