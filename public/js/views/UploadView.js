@@ -28,6 +28,11 @@ MusicXMLAnalyzer.UploadView = function(){
 		$uploadClose.on('click', onUploadClose);
 		setUploadSubmit(false);
 
+		var previewNode = document.querySelector('#template');
+		previewNode.id = '';
+		var previewTemplate = previewNode.parentNode.innerHTML;
+		previewNode.parentNode.removeChild(previewNode);
+
 		Dropzone.options.uploadDropzone = {
 			acceptedFiles: '.xml',
 			maxFiles: null,
@@ -36,7 +41,8 @@ MusicXMLAnalyzer.UploadView = function(){
 			// addedfile: onAddedFile,
 			error: onError,
 			success: onSuccess,
-			queuecomplete: onQueueComplete
+			queuecomplete: onQueueComplete,
+			previewTemplate: previewTemplate
 		};
 
 		gotValidFile = false;
