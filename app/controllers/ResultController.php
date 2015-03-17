@@ -24,7 +24,7 @@ class ResultController extends BaseController {
 		if (Cache::has('results') && Cache::has('pattern')) {
 
 			$results = Cache::get('results');
-			Debugbar::info($results);
+			// Debugbar::info($results);
 			foreach ($results as $item) {
 				if ($item->file_id == $id) {
 					$result = $item;
@@ -131,7 +131,7 @@ class ResultController extends BaseController {
 							if ($noteCounter >= $start && $noteCounter <= $end) {
 								// set color to red if note is between start and end of result
 								$currentColor = "#FF0000";
-								Debugbar::info("Counter: " . $noteCounter . " | " . $start . " | " . $end . " Part ID: " . $part_id);
+								// Debugbar::info("Counter: " . $noteCounter . " | " . $start . " | " . $end . " Part ID: " . $part_id);
 							}
 							$noteObject->color = $currentColor;
 
