@@ -15,6 +15,8 @@ MusicXMLAnalyzer.NotationView = function(){
 	spaceBetweenLines = 0,
 
 	topValsNoteElements = null,
+
+	VEXFLOW_REST_SIGN = "r",
 	
 
 	init = function() {
@@ -81,9 +83,6 @@ MusicXMLAnalyzer.NotationView = function(){
 
 		voice.draw(context, stave);
 
-		//TODO
-		//create triplets
-		//add the triplets here
 		//TRIPLET
 		for(var i=0; i < tuplets.length; i++) {
 			tuplets[i].setContext(context).draw();
@@ -199,8 +198,24 @@ MusicXMLAnalyzer.NotationView = function(){
 		var formatter = new Vex.Flow.Formatter().
 		    joinVoices([voice]).format([voice], 700);
 
+	    //TRIPLET
+		//get beams and tuplets from model
+		var beams = patternModel.getTupletArray();
+		var tuplets = patternModel.getBeamArray();
+
 		// Render voice
 		voice.draw(context, stave);
+
+		//TRIPLET
+		for(var i=0; i < tuplets.length; i++) {
+			tuplets[i].setContext(context).draw();
+		}
+
+		for(var i=0; i < beams.length; i++) {
+			for(var j=0; j < beams[i].length; j++) {
+				beams[i][j].setContext(context).draw();
+			}	
+		}
 
 		//delete last array entry
 		vexflowNotes.pop();		
