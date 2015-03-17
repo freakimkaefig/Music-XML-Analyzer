@@ -174,9 +174,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 							duration: curDuration
 					});
 				}
-
-				
-			}else{
+	
+			} else {
 				if (curName != "break") {
 					noteElements.push(
 					{
