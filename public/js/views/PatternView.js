@@ -200,6 +200,18 @@ MusicXMLAnalyzer.PatternView = function(){
 		$("#" + octave + "").addClass("active");
 	},
 
+	setToMelodyMode = function() {
+		//TODO
+	},
+
+	setToSoundSequenceMode = function() {
+		//TODO
+	},
+
+	setToRhythmMode = function() {
+		//TODO
+	},
+
 	onRemoveButtonClick = function(event) {
 		patternController.removeLastNote();
 	};
