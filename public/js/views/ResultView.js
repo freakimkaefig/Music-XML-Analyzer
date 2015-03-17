@@ -356,10 +356,9 @@ MusicXMLAnalyzer.ResultView = function(){
 		switch (duration) {
 			case "whole":
 				switch (type) {
-					case 0: return "w"; break;
-					case 1: return "wr"; break;
-					case 2: return "wd"; break;
-
+					case 0: return "w"; break;		// 0 is normal note
+					case 1: return "wr"; break;		// 1 is a rest
+					case 2: return "wd"; break;		// 2 is a dotted note
 				}
 				break;
 			case "half":
@@ -367,7 +366,6 @@ MusicXMLAnalyzer.ResultView = function(){
 					case 0: return "h"; break;
 					case 1: return "hr"; break;
 					case 2: return "hd"; break;
-
 				}
 				break;
 			case "quarter":
@@ -375,7 +373,6 @@ MusicXMLAnalyzer.ResultView = function(){
 					case 0: return "q"; break;
 					case 1: return "qr"; break;
 					case 2: return "qd"; break;
-
 				}
 				break;
 			case "eighth":
@@ -383,7 +380,6 @@ MusicXMLAnalyzer.ResultView = function(){
 					case 0: return "8"; break;
 					case 1: return "8r"; break;
 					case 2: return "8d"; break;
-
 				}
 				break;
 			case "16th":
@@ -391,7 +387,6 @@ MusicXMLAnalyzer.ResultView = function(){
 					case 0: return "16"; break;
 					case 1: return "16r"; break;
 					case 2: return "16d"; break;
-
 				}
 				break;
 			case "32nd":
@@ -399,7 +394,6 @@ MusicXMLAnalyzer.ResultView = function(){
 					case 0: return "32"; break;
 					case 1: return "32r"; break;
 					case 2: return "32d"; break;
-
 				}
 				break;
 			case "64th":
@@ -407,7 +401,6 @@ MusicXMLAnalyzer.ResultView = function(){
 					case 0: return "64"; break;
 					case 1: return "64r"; break;
 					case 2: return "64d"; break;
-
 				}
 				break;
 			default:
