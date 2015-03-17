@@ -159,7 +159,12 @@ h1 {
 	text-align: center;
 }
 .dz-image{
-	width: 250px !important;
+	width: 350px !important;
+	height: 100px !important;
+	border-radius: 0px !important;
+	box-shadow: 5px 5px 30px #222222 !important;
+	background: #dadada !important;
+
 }
 #uploadMessages {
 	position: absolute;
