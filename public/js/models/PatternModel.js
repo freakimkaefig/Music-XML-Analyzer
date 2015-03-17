@@ -36,6 +36,22 @@ MusicXMLAnalyzer.PatternModel = function(){
 	setCurrentMode = function(mode) {
 		curMode = mode;
 		console.log("mode set to: " + curMode + " fkt missing");
+		//TODO add 3 trigger
+		switch(curMode) {
+		    //sound sequence
+		    case 0:
+		    console.log("TODO set sound sequence");
+		        break;
+	        //rhythm
+	        case 1:
+		    console.log("TODO set rhythm");
+		        break;
+		    //melody
+		    case 2:
+		    console.log("TODO melody");
+		    	break;
+		}
+
 	},
 
 	getCurrentMode = function() {
