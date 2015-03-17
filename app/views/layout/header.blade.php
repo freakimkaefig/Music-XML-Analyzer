@@ -11,24 +11,21 @@
 		     	<ul class="nav navbar-nav navbar-right">
                 <?php $uploads = $user->uploads; ?>
                 <?php if (!$uploads->isEmpty()): ?>
-			     	<li>
+			     	<li class="btn-flat btn-material-grey-200">
                         <a id="uploadButton" href="#" data-toggle="modal" data-target="#uploadModal">Uploads</a>
 			     		@include('upload.dropzone')
 			     	</li>
-			      	<li>
+			      	<li class="btn-flat btn-material-grey-200">
                         <a href="{{ URL::route('dashboard') }}">Dashboard</a>
                     </li>
-      		        <li>
+      		        <li class="btn-flat btn-material-grey-200">
                         <a href="{{ URL::route('pattern') }}">Search</a>
                     </li>
-                    <li class="dropdown no-padding">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                            &nbsp;
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a id="deleteMeLink" href="/delete/me" class="navbar-btn btn-material-blue-grey-300">You need a fresh start?</a></li>
-                        </ul>
+                    <li class="divider">
+                        <p class="navbar-text"></p>
+                    </li>
+                    <li class="btn-flat btn-material-red-A100">
+                        <a id="deleteMeLink" href="/delete/me">Reset</a>
                     </li>
                 <?php endif; ?>
 			  	</ul>
