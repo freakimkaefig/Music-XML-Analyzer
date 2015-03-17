@@ -3,6 +3,14 @@
 <div class="col-xs-12">
 	<h1 class="text-center">Create Your Pattern</h1>
 </div>
+<div class="row">
+	<div class="col-xs-6">
+		<button id="playPattern" type="submit" class="btn btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
+	</div>
+	<div class="col-xs-6">
+		<button id="stopPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
+	</div>
+</div>
 <!-- HINT: if there is a column arround you get problems with mouse x and y-->
 <canvas class="center-block" id="myCanvas" width="700" height="120" style="border:1px solid #000000; margin:auto"></canvas>
 {{ Form::open(array('route' => 'patternSearch')) }}

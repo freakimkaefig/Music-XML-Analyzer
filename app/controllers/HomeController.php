@@ -51,8 +51,10 @@ class HomeController extends BaseController {
 			$upload->delete();
 	    });
 
-		$directory = public_path() . '/uploads/' . $user->id;
-		$success = Upload::delTree($directory);
+		$upload_directory = public_path() . '/uploads/' . $user->id;
+		$success = Upload::delTree($upload_directory);
+		$download_directory = public_path() . '/downloads/' . $user->id;
+		$success = Upload::delTree($download_directory);
 	    $user->delete();
 
 	    $this->_createNewUser();

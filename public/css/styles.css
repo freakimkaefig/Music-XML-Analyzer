@@ -1,5 +1,31 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
 
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #CBCBCB;
+}
+
+*[id*='_title']{
+	font-weight: 300 !important;
+	font-size: 23px !important;
+	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif' !important;
+}
+
+*[id*='_segmentMainLabel']{
+	font-weight: 300 !important;
+	font-size: 13px !important;
+	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif' !important;
+}
+
+*[id*='_segmentPercentage']{
+	font-weight: 300 !important;
+	font-size: 12px !important;
+	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif' !important;
+}
+
 a:focus {
 	outline: none;
 }
@@ -26,10 +52,25 @@ a:focus {
 .thead {
 	font-size: 125%;
 	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid #333;
+}
+.tr {
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .btn.active {
 	opacity: 0.8;
+}
+
+.no-list {
+	list-style: none;
+}
+
+.inline-list li {
+	display: inline;
 }
 
 /* === LOGS === */
@@ -117,6 +158,9 @@ h1 {
 	background: rgba(81, 81, 81, 0.5);
 	text-align: center;
 }
+.dz-image{
+	width: 250px !important;
+}
 #uploadMessages {
 	position: absolute;
 	bottom: 60px;
@@ -127,6 +171,22 @@ h1 {
 /* === DASHBOARD == */
 #dashboardMessages {
 	margin-bottom: 45px;
+}
+#overallStatistics li{
+  /*display: inline;*/
+  font-size: 16px;
+}
+
+div#fileSelector {
+	margin-bottom: 60px;
+}
+div#bar_noteDistribution,
+div#bar_intervalDistribution,
+div#pie_keyDistribution,
+div#pie_noteTypeDistribution,
+div#pie_meterDistribution {
+	margin-top: 120px;
+	margin-bottom: 30px;
 }
 
 /* BAR-CHART */
@@ -214,7 +274,9 @@ h1 {
 }
 
 .axis text{
-  font: 10px sans-serif;
+	font-weight: 300 !important;
+	font-size: 13px !important;
+	font-family: 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif' !important;
 }
 
 .axis path, .axis line{
@@ -227,9 +289,13 @@ h1 {
 	font: 12px sans-serif;
 }
 
-/*RESULTLIST*/
+/*RESULT LIST*/
 .canvas {
 	margin-bottom: 60px;
+}
+#patternCanvas {
+	display: block;
+	margin: 0 auto;
 }
 .carousel-indicators li {
 	background-color: #000;
@@ -243,10 +309,14 @@ h1 {
 	background: transparent;
 	color: #000;
 	position: absolute;
-	margin-left: 200px;
-	margin-right: 200px;
 }
 
+/*RESULT DETAIL*/
+#extract-carousel .carousel-inner .item .facts-list {
+	overflow: hidden;
+	margin-bottom: 25px;
+	font-size: 16px;
+}
 
 /*PATTERN SEARCH*/
 .row-centered {

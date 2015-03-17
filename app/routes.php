@@ -66,6 +66,12 @@ Route::group(array('before' => 'uploads'), function()
 		'as' => 'delete-me',
 		'uses' => 'HomeController@getDeleteMe'
 	));
+
+	/* === DOWNLOAD ROUTES === */
+	Route::get('/download', array(
+		'as' => 'download',
+		'uses' => 'DownloadController@getResultsCSV'
+	));
 });
 
 	Route::get('/pattern', array(

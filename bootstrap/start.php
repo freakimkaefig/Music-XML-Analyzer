@@ -27,7 +27,7 @@ $app = new Illuminate\Foundation\Application;
 $env = $app->detectEnvironment(function() {
 
 	$_stratohost = 'tim';
-	$_localhosts = array('LuitenantXPS', 'mat-PC', 'DL-XMG-PC', 'Tobias-PC');
+	$_localhosts = array('Luitenant-XPS', 'mat-PC', 'DL-XMG-PC', 'Tobias-PC');
 
 	if (isset($_SERVER['LARAVEL_ENV'])) {
 		return $_SERVER['LARAVEL_ENV'];

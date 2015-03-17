@@ -17,6 +17,29 @@
 <!-- Dropzone -->
 {{ HTML::script('libs/dropzone-4.0.0/dist/min/dropzone.min.js') }}
 
+ <!-- extras -->
+{{ HTML::script('libs/midijs/inc/Base64.js') }}
+{{ HTML::script('libs/midijs/inc/base64binary.js') }}
+<!-- MIDI.js -->
+{{ HTML::script('libs/midijs/js/Color/SpaceW3.js') }}
+{{ HTML::script('libs/midijs/js/MIDI/AudioDetect.js') }}
+{{ HTML::script('libs/midijs/js/Window/DOMLoader.XMLHttp.js') }}
+{{ HTML::script('libs/midijs/js/MIDI/LoadPlugin.js') }}
+{{ HTML::script('libs/midijs/js/MIDI/Plugin.js') }}
+{{ HTML::script('libs/midijs/js/MIDI/Player.js') }}
+{{ HTML::script('libs/midijs/js/MusicTheory/Synesthesia.js') }}
+{{ HTML::script('libs/midijs/js/Widgets/Loader.js') }}
+{{ HTML::script('libs/midijs/js/Window/Event.js') }}
+ <!-- jasmid package -->
+{{ HTML::script('libs/midijs/inc/jasmid/stream.js') }}
+{{ HTML::script('libs/midijs/inc/jasmid/midifile.js') }}
+{{-- {{ HTML::script('libs/inc/jasmid/synth.js') }} --}}
+{{-- {{ HTML::script('libs/inc/jasmid/audio.js') }} --}}
+{{ HTML::script('libs/midijs/inc/jasmid/replayer.js') }}
+ <!-- midi.js css -->
+{{-- {{ HTML::script('libs/midijs/css/MIDIPlayer.css') }} --}}
+
+ <!-- others -->
 {{ HTML::script('js/helpers/Route.js') }}
 {{ HTML::script('js/App.js') }}
 

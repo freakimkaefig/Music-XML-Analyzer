@@ -90,7 +90,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	getCurrentOctave = function() {
 		return curOctave;
 	},
-
+	
 	
 	setValuesForNoteElement = function() {
 

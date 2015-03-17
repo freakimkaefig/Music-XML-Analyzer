@@ -3,12 +3,12 @@
 @section('content')
 
 
-{{ Form::hidden('pattern', json_encode(Cache::get('pattern')), array('id' => 'patternValue')) }}
+{{ Form::hidden('pattern', json_encode(Cache::get('pattern')[0]), array('id' => 'patternValue')) }}
 
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
-			<canvas id="patternCanvas" width="950" height="186"></canvas>
+			<canvas id="patternCanvas" width="700" height="186"></canvas>
 			<h1 class="text-center">Search results</h1>
 		</div>
 	</div>
@@ -18,10 +18,10 @@
 	<div class="thead">
 		<div class="row">
 			<div class="col-xs-7 col-sm-10 text-left">
-				Artist - Title (Filename)
+				<h3>Artist - Title (Filename)</h3>
 			</div>
 			<div class="col-xs-5 col-sm-2 text-right">
-				Occurences
+				<h3>Occurences</h3>
 			</div>
 		</div>
 	</div>
@@ -35,21 +35,6 @@
 		<p class="no-results text-center">No results found for your pattern!</p>
 	@endif
 
-	<div class="row">
-		<div class="col-xs-12">
-			<h2>DEBUG</h2>
-			<h4>PATTERN</h4>
-			<?php
-			echo"<pre>";
-			var_dump(Cache::get('pattern'));
-			echo"</pre>";
-			echo "<h4>RESULTS</h4>";
-			echo"<pre>";
-			var_dump(Cache::get('results'));
-			echo"</pre>";
-			?>
-		</div>
-	</div>
 </div>
 
 @stop
