@@ -191,10 +191,10 @@ div#pie_meterDistribution {
 
 /* BAR-CHART */
 .bar {
-	fill: #337ab7;
+	fill: #64b5f6;
 }
 .bar:hover {
-	fill: #37474f ;
+	fill: #448aff;
 }
 /*.d3-tip {
 	line-height: 1;

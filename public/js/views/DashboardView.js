@@ -13,6 +13,38 @@ MusicXMLAnalyzer.DashboardView = function(){
 	meterDistribution = null,
 	instruments = null,
 
+	segmentColors = [
+		"#64b5f6",	// blue-300
+		"#81c784",	// green-300
+		"#dce775",	// lime-300
+		"#ff8a65",	// deep-orange-300
+		"#ba68c8",	// purple-300
+		"#4db6ac",	// teal-300
+		"#fff176",	// yellow-300
+		"#ffb74d",	// orange-300
+		"#90a4ae",	// blue-grey-300
+
+		"#1e88e5",	// blue-600
+		"#43a047",	// green-600
+		"#c0ca33",	// lime-600
+		"#f4511e",	// deep-orange-600
+		"#8e24aa",	// purple-600
+		"#00897b",	// teal-600
+		"#fdd835",	// yellow-600
+		"#fb8c00",	// orange-600
+		"#546e7a",	// blue-grey-600
+
+		"#0d47a1",	// blue-900
+		"#1b5e20",	// green-900
+		"#827717",	// lime-900
+		"#bf360c",	// deep-orange-900
+		"#4a148c",	// purple-900
+		"#004d40",	// teal-900
+		"#f57f17",	// yellow-900
+		"#e65100",	// orange-900
+		"#263238",	// blue-grey-900
+	],
+
 
 	init = function(){
 		console.info('MusicXMLAnalyzer.DashboardView.init');
@@ -394,6 +426,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 	/*PIE-CHART KEY-DISTRIBUTION*/
 	initKeyDistribution = function(data) {
+		console.log(this);
 		// console.log("Key Distribution Pie data: ",typeof(data), data);
 		if (keyDistribution) {
 			keyDistribution.destroy();
@@ -416,6 +449,11 @@ MusicXMLAnalyzer.DashboardView = function(){
 			      data.percentage = data.percentage;
 			      data.value = data.value;
 			    }
+			},
+			misc: {
+				colors: {
+					segments: segmentColors
+				}
 			}
 		}); 
 	},
@@ -442,6 +480,11 @@ MusicXMLAnalyzer.DashboardView = function(){
 			      data.percentage = data.percentage;
 			      data.value = data.value;
 			    }
+			},
+			misc: {
+				colors: {
+					segments: segmentColors
+				}
 			}
 		});
 	},
@@ -476,6 +519,11 @@ MusicXMLAnalyzer.DashboardView = function(){
 			      data.percentage = data.percentage;
 			      data.value = data.value;
 			    }
+			},
+			misc: {
+				colors: {
+					segments: segmentColors
+				}
 			}
 		});
 	};
