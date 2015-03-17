@@ -189,6 +189,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setToMelodyMode = function() {
 		//TODO
+		// $playPattern.prop('disabled', true);
+		// $stopPattern.prop('disabled', false);
 	},
 
 	setToSoundSequenceMode = function() {
