@@ -27,7 +27,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	initCanvasResults = function() {
 		console.info('MusicXMLAnalyzer.ResultView.initCanvasResults');
 		$carousel.find('.item').each(function(index, element) {
-			var measures = generateVexflowNotes(JSON.parse($(element).find('input.notes').val()));
+			var measures = generateVexflowNotes(JSON.parse($(element).find('input.notes').val()), true);
 			var canvas = document.getElementById('canvas' + index);
 			var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
 			var context = renderer.getContext();
@@ -43,7 +43,7 @@ MusicXMLAnalyzer.ResultView = function(){
 		// console.info('MusicXMLAnalyzer.ResultView.initPatternCanvas');
 		patternCanvas = document.getElementById('patternCanvas');
 		
-		var vexflowNotes = generateVexflowNotes({ measures: [{ notes: pattern.notes }], type: pattern.type });
+		var vexflowNotes = generateVexflowNotes({ measures: [{ notes: pattern.notes }], type: pattern.type }, false);
 		var renderer = new Vex.Flow.Renderer(patternCanvas, Vex.Flow.Renderer.Backends.CANVAS);
 		var context = renderer.getContext();
 		var stave = new Vex.Flow.Stave(10, 0, 700);
@@ -53,6 +53,8 @@ MusicXMLAnalyzer.ResultView = function(){
 	},
 
 	renderNotes = function(measures, canvas, renderer, context, stave) {
+		console.log("before", measures);
+
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		
@@ -147,26 +149,70 @@ MusicXMLAnalyzer.ResultView = function(){
 				}
 			}
 
+			var tuplets = [];
+			for (var j = 0; j < measures[i].notes.length; j++) {
+				if (measures[i].tuplets) {
+					// tuplets
+					if (measures[i].tuplets) {
+						if (measures[i].tuplets[j] != false) {
+							// console.log("slice", j, (j + parseInt(measures[i].tuplets[j])))
+							var tupletNotes = measures[i].notes.slice(j, (j + parseInt(measures[i].tuplets[j])));
+							var tupletLocation = tupletNotes[0].stem.stem_direction;
+							console.log("tupletNotes", tupletNotes);
+							// var beam = new Vex.Flow.Beam(tupletNotes, true);
+							// beams.push(beam);
+							var tuplet = new Vex.Flow.Tuplet(tupletNotes);
+							tuplet.setTupletLocation(tupletLocation);
+							tuplets.push(tuplet);
+							j = (j + parseInt(measures[i].tuplets[j])-1);
+						}
+					}
+				}
+			}
+
+
 			// draw measure bar line
 			staveBar.setContext(context).draw();
 			
 			// draw measure with notes
 			Vex.Flow.Formatter.FormatAndDraw(context, staveBar, measures[i].notes);
 
+			// draw tuplets
+			for (var t = 0; t < tuplets.length; t++) {
+				tuplets[t].setContext(context).draw();
+			}
+
 			// draw beams
-			for ( var b = 0; b < beams.length; b++) {
+			for (var b = 0; b < beams.length; b++) {
 				beams[b].setContext(context).draw();
 			}
+
 		}
 
 		for (var t = 0; t < ties.length; t++) {
 			ties[t].setContext(context).draw();
 		}
 
+		console.log("after", measures);
 	},
 
-	generateVexflowNotes = function(pattern) {
+	generateVexflowNotes = function(pattern, result) {
 		console.log("MusicXMLAnalyzer.ResultView.generateVexflowNotes" , "pattern", pattern);
+
+		// prepare pattern if no result from ResultController.php
+		if (!result) {
+			for (var i = 0; i < pattern.measures.length; i++) {
+				for (var j = 0; j < pattern.measures[i].notes.length; j++) {
+					if (pattern.measures[i].notes[j].pitch.beam) {
+						pattern.measures[i].notes[j].pitch.tuplet = "3";
+					} else {
+						pattern.measures[i].notes[j].pitch.tuplet = false;
+					}
+				}
+			}
+		}
+
+
 		var measures = [];
 
 		switch (pattern.type) {
@@ -245,8 +291,9 @@ MusicXMLAnalyzer.ResultView = function(){
 				for (var i = 0; i < pattern.measures.length; i++) {
 					var notes = [];
 					var duration = 0;
-					var ties = [];
 					var beams = [];
+					var ties = [];
+					var tuplets = [];
 					var time_signature = pattern.measures[i].time_signature;
 					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
 
@@ -266,6 +313,12 @@ MusicXMLAnalyzer.ResultView = function(){
 								if (pattern.measures[i].notes[j].pitch.ties) {
 									noteTies = pattern.measures[i].notes[j].pitch.ties;
 								}
+
+								var tuplet = false;
+								if (pattern.measures[i].notes[j].pitch.tuplet) {
+									tuplet = pattern.measures[i].notes[j].pitch.tuplet;
+								}
+
 								var type = pattern.measures[i].notes[j].pitch.type;
 								var durationType = 0;
 								if (pattern.measures[i].notes[j].pitch.dot) {
@@ -289,6 +342,7 @@ MusicXMLAnalyzer.ResultView = function(){
 								}
 								beams[j] = noteBeam;
 								ties[j] = noteTies;
+								tuplets[j] = tuplet;
 								notes.push(note);
 							}
 						} else if (pattern.measures[i].notes[j].type == "rest") {
@@ -302,7 +356,7 @@ MusicXMLAnalyzer.ResultView = function(){
 							notes.push(note);
 						}
 					}
-					measures.push({ notes: notes, duration: duration, beams: beams, ties: ties, time_signature: time_signature, pattern: pattern });
+					measures.push({ notes: notes, duration: duration, beams: beams, ties: ties, tuplets: tuplets, time_signature: time_signature, pattern: pattern });
 				}
 				break;
 		}
