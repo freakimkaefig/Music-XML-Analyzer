@@ -128,44 +128,63 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 			if(first){
 				first = false;
-				noteElements.push({
+				if (curName != "break") {
+					noteElements.push({
 					//TODO 
 					//Mode für Dave im moment hart gecoded
 					//meldoy modes
 					type: 2,
-
-					notes:[
-					{
-						type: "note",
-						pitch: {
-							step: curName.toUpperCase(),
-							alter: noteElementAccidential,
-							type: curDuration,
-							octave: curOctave,
-							dot: isDot,
-							beam: beamVal
-						}
-					}
+						notes:[
+							{
+								type: "note",
+								pitch: {
+									step: curName.toUpperCase(),
+									alter: noteElementAccidential,
+									type: curDuration,
+									octave: curOctave,
+									dot: isDot,
+									beam: beamVal
+								}
+							}
 					]
-				});
+					});
+				} else {
+					//break
+					noteElements.push(
+					{
+							type: "rest",	
+							duration: curDuration
+					});
+				}
+
+				
 			}else{
-				noteElements.push(
-				{
-						type: "note",	
-						pitch: {
-							step: curName.toUpperCase(),
-							alter: noteElementAccidential,
-							type: curDuration,
-							octave: curOctave,
-							dot: isDot,
-							beam: beamVal
-						}
-					
-					
-				});
+				if (curName != "break") {
+					noteElements.push(
+					{
+							type: "note",	
+							pitch: {
+								step: curName.toUpperCase(),
+								alter: noteElementAccidential,
+								type: curDuration,
+								octave: curOctave,
+								dot: isDot,
+								beam: beamVal
+							}
+						
+						
+					});	
+				} else {
+					//break
+					noteElements.push(
+					{
+							type: "rest",	
+							duration: curDuration
+					});
+				}
 			}
 
-			console.log("noteELements: " + noteElements);
+			console.log("noteELements: ", noteElements);
 			
 			/*
 			for (var i = 0; i < noteElements.length; i++) {
