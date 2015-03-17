@@ -126,7 +126,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 		for(var i = 0; i < results.length; i++){
 			if(results.length == 1){
 				$plainFacts3.append('<li>' + results[i] + '</li>');
-			}else{
+			}else if(results[i] == results[results.length-1]){
+				$plainFacts3.append('<li>' + results[i] + '</li>');
+			}
+			else{
 				$plainFacts3.append('<li>' + results[i] + ', ' + '</li>');
 			}
 		}
