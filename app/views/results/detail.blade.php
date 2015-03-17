@@ -18,13 +18,10 @@
 </div>
 <div class="row">
 	<div class="col-xs-6">
-		{{-- <input id="playResult" type="button" value="Play"/> --}}
-		<button id="playResult" type="submit" class="btn btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
+		<button id="playResult" type="submit" class="btn btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-play"></span> <span>Play Pattern</span></button>
 	</div>
-		{{-- <input id="pauseResult" type="button" value="Pause" style="display: none;"/> --}}
-		{{-- <input id="stopResult" type="button" value="Stop"/> --}}
 	<div class="col-xs-6">
-		<button id="stopResult" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
+		<button id="stopResult" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop Pattern</span></button>
 	</div>
 </div>
 
