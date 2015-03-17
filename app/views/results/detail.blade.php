@@ -13,15 +13,19 @@
 
 <div class="row text-center">
 	<div class="col-xs-12">
-		<h1>{{ ResultController::_getArtist($result->file_id) }} - {{ ResultController::_getTitle($result->file_id) }}</h1>
+		<h1><span id="artist">{{ ResultController::_getArtist($result->file_id) }}</span> - <span id="title">{{ ResultController::_getTitle($result->file_id) }}</span></h1>
 	</div>
 </div>
-<div class="row">
+
+<div class="row marbo20">
 	<div class="col-xs-6">
-		<button id="playResult" type="submit" class="btn btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
+		<button id="playResult" type="button" class="btn btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
 	</div>
-	<div class="col-xs-6">
-		<button id="stopResult" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
+	<div class="col-xs-3">
+		<button id="stopResult" type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
+	</div>
+	<div class="col-xs-3">
+		<button id="exportButton" type="button" class="btn btn-lg btn-success pull-right"><span class="glyphicon glyphicon-file"></span> <span>Export as PDF</span></button>
 	</div>
 </div>
 
@@ -41,20 +45,21 @@
 				<div class="facts-list">
 					<div class="col-xs-4 col-xs-offset-2">
 						<ul class="no-list">
-							<li><strong>Part name (Instrument):</strong> {{ $resultNotes[$i]->part_name }}</li>
-							<li><strong>Part ID:</strong> {{ $resultNotes[$i]->part_id }}</li>
-							<li><strong>Voice:</strong> {{ $resultNotes[$i]->voice }}</li>
-							<li><strong>Key:</strong> {{ ResultController::_getKey($result->file_id) }}</li>
+							<li class="partName"><strong>Part name (Instrument):</strong> {{ $resultNotes[$i]->part_name }}</li>
+							<li class="partId"><strong>Part ID:</strong> {{ $resultNotes[$i]->part_id }}</li>
+							<li class="voice"><strong>Voice:</strong> {{ $resultNotes[$i]->voice }}</li>
+							<li class="key"><strong>Key:</strong> {{ ResultController::_getKey($result->file_id) }}</li>
 						</ul>
 					</div>
 					<div class="col-xs-4">
 						<ul class="no-list">
-							<li><strong>Measures:</strong><br>{{ $resultNotes[$i]->startExtract }} - {{ $resultNotes[$i]->endExtract }}</li>
+							<li class="measures"><strong>Measures: </strong><br>{{ $resultNotes[$i]->startExtract }} - {{ $resultNotes[$i]->endExtract }}</li>
 						</ul>
 					</div>
 				</div>
 				<center><canvas id="canvas<?php echo $i; ?>" class="canvas" height="<?php echo round(count($resultNotes[$i]->measures) / 2) * 190; ?>" width="970"></canvas></center>
 				{{ Form::hidden('resultNotes' . $i, json_encode($resultNotes[$i]), array('id' => 'notes' . $i, 'class' => 'notes')) }}
+				{{ Form::hidden('base64Image' . $i, "", array('id' => 'image' . $i, 'class' => 'image')) }}
 			</div>
 		<?php endfor; ?>
 	</div>

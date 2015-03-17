@@ -8,6 +8,10 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	$carousel = null,
 
+	$artist = null,
+	$title = null,
+	$exportButton = null,
+
 
 	init = function(){
 		console.info('MusicXMLAnalyzer.ResultView.init');
@@ -22,6 +26,103 @@ MusicXMLAnalyzer.ResultView = function(){
 			initCanvasResults();
 		}
 
+		$artist = $('#artist');
+		$title = $('#title');
+		$exportButton = $('#exportButton');
+		$exportButton.on('click', generateExportPdf);
+
+		prepareExport();
+	},
+
+	prepareExport = function() {
+		$('.item').each(function(index) {
+			var canvas = $(this).find('.canvas')[0]
+			var canvasImg = canvas.toDataURL("image/jpeg", 1.0);
+			var origImg = new Image;
+			origImg.src = canvasImg;
+			width = 700;
+			height = (width * origImg.height) / origImg.width;
+			resultImage = resizedataURL(canvasImg, width, height, index);
+		});
+	},
+
+	resizedataURL = function(datas, wantedWidth, wantedHeight, index) {
+        // We create an image to receive the Data URI
+        var img = document.createElement('img');
+
+        // When the event "onload" is triggered we can resize the image.
+        img.onload = function() {        
+            // We create a canvas and get its context.
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+
+            // We set the dimensions at the wanted size.
+            canvas.width = wantedWidth;
+            canvas.height = wantedHeight;
+
+            // We resize the image with the canvas method drawImage();
+            ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);
+
+            var dataURI = canvas.toDataURL("image/jpeg", 1.0);
+
+            // return dataURI;
+        	console.log(dataURI);
+        	addImageToDOM(index, dataURI);
+        };
+
+        // We put the Data URI in the image's src attribute
+    	img.src = datas;
+    },
+
+    addImageToDOM = function(index, dataURI) {
+    	$('#image' + index).val(dataURI);
+    },
+
+	generateExportPdf = function() {
+		console.info('MusicXMLAnalyzer.ResultView.generateExportPdf');
+
+		var doc = new jsPDF();
+
+		// add title page
+		doc.setFontSize(36);
+		doc.text(15, 30, "SEARCH RESULTS");
+
+		// insert pattern
+		doc.setFontSize(14);
+		doc.text(15, 70, "for your pattern:");
+		var patternImg = patternCanvas.toDataURL("image/jpeg", 1.0);
+		doc.addImage(patternImg, "JPEG", 15, 80);
+
+		// insert artist and title
+		doc.setFontSize(24);
+		doc.text(15, 180, "Artist: " + $artist.text());
+		doc.text(15, 200, "Title: " + $title.text());
+
+		doc.setFontSize(14);
+		doc.text(15, 240, "created with MusicXMLAnalyzer");
+		doc.text(15, 250, "http://mydomain.de");
+
+		console.log(doc);
+
+		// add page for each result
+		$('.item').each(function(index) {
+			doc.addPage();
+
+			// insert facts
+			doc.setFontSize(14);
+			doc.text(15, 20, $(this).find('.partName').text());
+			doc.text(15, 30, $(this).find('.partId').text());
+			doc.text(15, 40, $(this).find('.voice').text());
+			doc.text(15, 50, $(this).find('.key').text());
+			doc.text(15, 60, $(this).find('.measures').text());
+
+			// insert result extract
+			var resultimg = $(this).find('.image').val();
+			doc.addImage(resultimg, "JPEG", 15, 80);
+		});
+
+		// save doc
+		doc.save("search_results.pdf");
 	},
 
 	initCanvasResults = function() {
@@ -31,6 +132,7 @@ MusicXMLAnalyzer.ResultView = function(){
 			var canvas = document.getElementById('canvas' + index);
 			var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
 			var context = renderer.getContext();
+
 			var stave = new Vex.Flow.Stave(10, 0, 700);
 			stave.addClef("treble").setContext(context).draw();
 
@@ -57,6 +159,10 @@ MusicXMLAnalyzer.ResultView = function(){
 
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
+
+		context.fillStyle = '#EEEEEE';
+		context.fillRect(0, 0, canvas.width, canvas.height);
+		context.fillStyle = '#000000';
 		
 		// stave.setContext(context).draw();
 
@@ -153,23 +259,20 @@ MusicXMLAnalyzer.ResultView = function(){
 			for (var j = 0; j < measures[i].notes.length; j++) {
 				if (measures[i].tuplets) {
 					// tuplets
-					if (measures[i].tuplets) {
-						if (measures[i].tuplets[j] != false) {
-							// console.log("slice", j, (j + parseInt(measures[i].tuplets[j])))
-							var tupletNotes = measures[i].notes.slice(j, (j + parseInt(measures[i].tuplets[j])));
-							var tupletLocation = tupletNotes[0].stem.stem_direction;
-							console.log("tupletNotes", tupletNotes);
-							// var beam = new Vex.Flow.Beam(tupletNotes, true);
-							// beams.push(beam);
-							var tuplet = new Vex.Flow.Tuplet(tupletNotes);
-							tuplet.setTupletLocation(tupletLocation);
-							tuplets.push(tuplet);
-							j = (j + parseInt(measures[i].tuplets[j])-1);
-						}
+					if (measures[i].tuplets[j] != false && measures[i].tuplets[j] != undefined) {
+						// console.log("slice", j, (j + parseInt(measures[i].tuplets[j])))
+						var tupletNotes = measures[i].notes.slice(j, (j + parseInt(measures[i].tuplets[j])));
+						var tupletLocation = tupletNotes[0].stem.stem_direction;
+						console.log("tupletNotes", tupletNotes);
+						// var beam = new Vex.Flow.Beam(tupletNotes, true);
+						// beams.push(beam);
+						var tuplet = new Vex.Flow.Tuplet(tupletNotes);
+						tuplet.setTupletLocation(tupletLocation);
+						tuplets.push(tuplet);
+						j = (j + parseInt(measures[i].tuplets[j])-1);
 					}
 				}
 			}
-
 
 			// draw measure bar line
 			staveBar.setContext(context).draw();
