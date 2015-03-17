@@ -129,6 +129,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		// 		]
 		// 	}
 		// ));
+		
 
 		setValuesForNoteElement();
 
@@ -156,7 +157,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					]
 				});
 			}else{
-				noteElements[0].notes.push({
+				noteElements.push({
 					
 						pitch: {
 							step: curName.toUpperCase(),
@@ -204,30 +205,34 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 			noteElements4VexFlow.push(note);
 
-			if (curRythSpec == "triplet") {
-				tripletCurrentAmount++;
-				console.log("tripletCurrentAmount: " + tripletCurrentAmount);
-				if (tripletCurrentAmount == 3) {
-					tripletCurrentAmount = 0;
-					//store all end positions of the triplets
-					tripletEndPositions.push(noteElements4VexFlow.length);
-					//create tuplet and beam and push it into corresponding array
-					var tuplet = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
-					var beam = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
-					tupletArray.push(tuplet);
-					beamArray.push(beam);
-					console.log("tripletEndPositions: ",tripletEndPositions)
-				}
-			} else {
-				if (tripletCurrentAmount > 0) {
-					noteElements4VexFlow = noteElements4VexFlow.slice(0, noteElements4VexFlow.length - tripletCurrentAmount);
-					noteElements = noteElements.slice(0, noteElements.length - tripletCurrentAmount);
-					tripletCurrentAmount = 0;
-				}
-				
-			}	
-
-		console.log("noteElements4Vexflow LENGTH: "	+ noteElements4VexFlow.length);
+		//check if triplet
+		if (curRythSpec == "triplet") {
+			tripletCurrentAmount++;
+			console.log("tripletCurrentAmount: " + tripletCurrentAmount);
+			if (tripletCurrentAmount == 3) {
+				tripletCurrentAmount = 0;
+				//store all end positions of the triplets
+				tripletEndPositions.push(noteElements4VexFlow.length);
+				//create tuplet and beam and push it into corresponding array
+				var tuplet = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+				var beam = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+				tupletArray.push(tuplet);
+				beamArray.push(beam);
+				console.log("tripletEndPositions: ",tripletEndPositions)
+			}
+		} else {
+			//when user changes from triplet into different rythSpec
+			//when there are already 1 or 2 triplets, they will be deleted and removed from the note and vexflow array
+			if (tripletCurrentAmount > 0) {
+				//splice -> (position in array, number of elements to be removed)
+				noteElements4VexFlow.splice(
+					// +1 because of array pos begins with 0
+					noteElements4VexFlow.length - (tripletCurrentAmount + 1), tripletCurrentAmount);
+				noteElements.slice(
+					noteElements.length - (tripletCurrentAmount + 1), tripletCurrentAmount);
+				tripletCurrentAmount = 0;
+			}
+		}
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
