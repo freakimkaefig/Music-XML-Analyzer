@@ -64,7 +64,7 @@ MusicXMLAnalyzer.PatternView = function(){
 				notes: [
 					{
 						type: "note",
-						ptich: {
+						pitch: {
 							type: "half",
 							dot: true,
 							beam: false
