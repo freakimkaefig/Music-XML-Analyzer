@@ -41,6 +41,19 @@ a:focus {
 	text-transform: uppercase;
 }
 
+.no-margin {
+	margin: 0;
+}
+.marto10 {
+	margin-top: 10px;
+}
+.marbo20 {
+	margin-bottom: 20px;
+}
+.marbo30 {
+	margin-bottom: 30px;
+}
+
 .dropdown.no-padding .dropdown-menu,
 .dropdown.no-padding li a.dropdown-toggle {
 	padding: 0;
@@ -97,14 +110,13 @@ ul.navbar-nav li a {
 
 /* === CONTENT === */
 #content {
-	margin-top: 120px;
-	margin-bottom: 120px;
+	margin-top: 100px;
+	margin-bottom: 25px;
 }
 
 h1 {
 	text-transform: uppercase;
 	margin-bottom: 45px;
-	margin-top: -20px;
 	letter-spacing: 2.5px;
 }
 
@@ -348,21 +360,4 @@ div#pie_meterDistribution {
 	overflow: hidden;
 	margin-bottom: 25px;
 	font-size: 16px;
-}
-
-/*PATTERN SEARCH*/
-.row-centered {
-    text-align:center;
-}
-.col-centered {
-    display:inline-block;
-    float:none;
-    /* reset the text-align */
-    text-align:left;
-    /* inline-block space fix */
-    margin-right:-4px;
-}
-.col-min {
-    /* custom min width */
-    min-width:0px;
 }

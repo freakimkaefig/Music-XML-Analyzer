@@ -1,14 +1,14 @@
 @extends('layout.main')
 @section('content')
-<div class="row row-centered">
+<div class="row text-center">
 	<div class="col-xs-12">
 		<h1 class="text-center">Create Your Pattern</h1>
 	</div>
 </div>
 
-<div class="row row-centered">
-	<div class="col-xs-3 col-centered" style="margin-bottom: 30px;">
-		<center><p style="margin:auto">Choose Mode: </p></center>
+<div class="row text-center">
+	<div class="col-xs-12 marbo30">
+		<center><p class="no-margin">Choose Mode: </p></center>
 		<div class="btn-group" data-toggle="buttons">
 			<label id="melody-mode-2" class="btn btn-mode btn-material-blue-grey-800 active" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":melody">melody
@@ -23,8 +23,8 @@
 	</div>
 </div>
 
-<div class="row row-centered">
-	<div class="col-xs-1 col-centered" style="display: inline;">
+<div class="row text-center">
+	<div class="col-xs-12">
 		<button id="playPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
 		<button id="stopPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
 	</div>
@@ -33,9 +33,9 @@
 <!-- HINT: if there is a column arround you get problems with mouse x and y-->
 <canvas class="center-block" id="myCanvas" width="700" height="120" style="border:1px solid #000000; margin:auto"></canvas>
 
-<div class="row row-centered">
-	<div class="col-xs-4 col-centered col-min" style="margin-bottom: 20px; margin-top: 10px;">
-		<h5 class="text-center"><strong>Hint: </strong>Search for patterns via direct input use the buttons below</h5>
+<div class="row text-center">
+	<div class="col-xs-12 marbo20 marto10">
+		<h5><strong>Hint: </strong>Search for patterns via direct input or use the buttons below</h5>
 	</div>
 </div>
 
@@ -45,9 +45,9 @@
 
 <div class="container">
 
-	<div class="row row-centered" style="margin-bottom: 20px;">
-		<div class="col-xs-8 col-centered col-min">
-			<p style="margin:auto">Special Ryth: </p>
+	<div class="row marbo20">
+		<div class="col-xs-8">
+			<p class="no-margin">Special Ryth: </p>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":none">None
@@ -60,8 +60,8 @@
 				</label>
 			</div>
 		</div>
-		<div class="col-xs-4 col-centered col-min">
-            <p style="margin:auto">Octave: </p>
+		<div class="col-xs-4">
+            <p class="no-margin">Octave: </p>
             <div class="btn-group" data-toggle="buttons">
                 <label id="2" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":2">2
@@ -82,9 +82,9 @@
 		</div>
 	</div>
 	
-	<div class="row row-centered" style="margin-bottom: 20px;">
-		<div class="col-xs-8 col-centered col-min">
-			<p style="margin:auto">Notes: </p>
+	<div class="row marbo20">
+		<div class="col-xs-8">
+			<p class="no-margin">Notes: </p>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="c" class="btn btn-note btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":c">C
@@ -112,8 +112,8 @@
                 </label>
 			</div>
 		</div>
-		<div class="col-xs-4 col-centered col-min">
-			<p style="margin:auto">Accidential: </p>
+		<div class="col-xs-4">
+			<p class="no-margin">Accidential: </p>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="none" class="btn btn-accidential btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":none">none
@@ -128,9 +128,9 @@
 		</div>
 	</div>
 
-	<div class="row row-centered" style="margin-bottom: 20px;">
-		<div class="col-xs-8 col-centered col-min">
-			<p style="margin:auto">Duration: </p>
+	<div class="row marbo20">
+		<div class="col-xs-8">
+			<p class="no-margin">Duration: </p>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="whole" class="btn btn-duration btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":whole">1/1
@@ -155,8 +155,8 @@
 				</label>
 			</div>
 		</div>
-		<div class="col-xs-4 col-centered col-min">
-			<p style="margin:auto">Clef: </p>
+		<div class="col-xs-4">
+			<p class="no-margin">Clef: </p>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="F" class="btn btn-clef btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":F">F
@@ -168,13 +168,13 @@
 		</div>
 	</div>
 
-	<div class="row row-centered">
-        <div class="col-xs-3 col-centered col-min">
+	<div class="row">
+        <div class="col-xs-3">
             <button id="btn-add-note" type="button" class="btn btn-material-green-400">Add</button>
             <button id="btn-remove-note" type="button" class="btn btn-material-red-400">Delete</button>
         </div>
 
-        <div class="col-xs-4 col-centered col-min pull-right">
+        <div class="col-xs-4 pull-right">
 			{{ Form::submit('Search', array('class' => 'btn btn-success')) }}
 			{{ Form::close() }}
 		</div>
