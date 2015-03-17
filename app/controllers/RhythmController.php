@@ -66,6 +66,7 @@ public function search($pattern) {
 
 		foreach($parts as $part){
 			self::$noteCounter = 0;
+			self::$once = true;
 			for($i = 0; $i < count($part->measure); $i++){
 // echo"<br><hr>part->measure[$i] : ";
 // var_dump($part->measure[$i]);
