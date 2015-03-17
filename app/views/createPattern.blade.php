@@ -13,12 +13,22 @@
 </div>
 <!-- HINT: if there is a column arround you get problems with mouse x and y-->
 <canvas class="center-block" id="myCanvas" width="700" height="120" style="border:1px solid #000000; margin:auto"></canvas>
+
+<div class="row row-centered">
+	<div class="col-xs-4 col-centered col-min" style="padding-left: 75px; margin-bottom: 20px;">
+		<h5><strong>Hint: </strong>Search for patterns via direct input of notes or use the buttons below</h5>
+	</div>
+</div>
+
+
 {{ Form::open(array('route' => 'patternSearch')) }}
 {{ Form::hidden('pattern', '', array('id' => 'patternValue')) }}
+
 <div class="container">
-	<div class="row row-centered">
+
+	<div class="row row-centered" style="margin-bottom: 30px;">
 		<div class="col-xs-8 col-centered col-min">
-			<p>Choose Mode: </p>
+			<h5>Choose Mode: </h5>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":melody">melody
@@ -32,8 +42,7 @@
 			</div>
 		</div>
 		<div class="col-xs-4 col-centered col-min">
-			<p></p>
-			<p>Special Ryth: </p>
+			<h5>Special Ryth: </h5>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":none">None
@@ -47,9 +56,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="row row-centered">
+	
+	<div class="row row-centered" style="margin-bottom: 30px;">
 		<div class="col-xs-8 col-centered col-min">
-			<p>Notes: </p>
+			<h5>Notes: </h5>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="c" class="btn btn-note btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":c">C
@@ -78,8 +88,7 @@
 			</div>
 		</div>
 		<div class="col-xs-4 col-centered col-min">
-			<p></p>
-			<p>Accidential: </p>
+			<h5>Accidential: </h5>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="none" class="btn btn-accidential btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":none">none
@@ -93,10 +102,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="row row-centered">
+
+	<div class="row row-centered" style="margin-bottom: 30px;">
 		<div class="col-xs-8 col-centered col-min">
-			<p></p>
-			<p>Duration: </p>
+			<h5>Duration: </h5>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="whole" class="btn btn-duration btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":whole">1/1
@@ -122,8 +131,7 @@
 			</div>
 		</div>
 		<div class="col-xs-4 col-centered col-min">
-			<p></p>
-			<p>Clef: </p>
+			<h5>Clef: </h5>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="F" class="btn btn-clef btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":F">F
@@ -134,10 +142,10 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="row row-centered">
 		<div class="col-xs-8 col-centered col-min">
-			<p></p>
-            <p>Octave: </p>
+            <h5>Octave: </h5>
             <div class="btn-group" data-toggle="buttons">
                 <label id="2" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":2">2
