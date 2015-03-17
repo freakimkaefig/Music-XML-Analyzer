@@ -84,7 +84,7 @@ MusicXMLAnalyzer.PatternView = function(){
 			[{
 				type: 2,
 				notes: [
-					{
+					/*{
 						type: "note",
 						pitch: {
 							step: "E",
@@ -116,22 +116,34 @@ MusicXMLAnalyzer.PatternView = function(){
 							dot: false,
 							beam: "end"	// Triole (3)
 						}
-					}/*,
+					},*/
 					{
 						type: "note",
 						pitch: {
-							step: "C",
+							step: "F",
 							type: "half",
 							alter: 0,
-							octave: 56,
-							dot: false,	// punktierte Note
+							octave: 1,
+							dot: true,	// punktierte Note
 							beam: false
 						}
 					},
 					{
-						type: "rest",	// Pause
-						duration: "whole"
-					}*/
+						type: "note",
+						pitch: {
+							step: "F",
+							type: "half",
+							alter: 0,
+							octave: 2,
+							dot: true,	// punktierte Note
+							beam: false
+						}
+					}
+					// ,
+					// {
+					// 	type: "rest",	// Pause
+					// 	duration: "whole"
+					// }
 					
 				]
 			}]

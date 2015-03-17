@@ -53,7 +53,7 @@
 						</ul>
 					</div>
 				</div>
-				<center><canvas id="canvas<?php echo $i; ?>" class="canvas" height="<?php echo round(count($resultNotes[$i]->measures) / 2) * 130; ?>" width="970"></canvas></center>
+				<center><canvas id="canvas<?php echo $i; ?>" class="canvas" height="<?php echo round(count($resultNotes[$i]->measures) / 2) * 190; ?>" width="970"></canvas></center>
 				{{ Form::hidden('resultNotes' . $i, json_encode($resultNotes[$i]), array('id' => 'notes' . $i, 'class' => 'notes')) }}
 			</div>
 		<?php endfor; ?>

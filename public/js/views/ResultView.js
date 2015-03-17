@@ -76,7 +76,7 @@ MusicXMLAnalyzer.ResultView = function(){
 			// calculate x & y coordinates and width of the current measure
 			var x, y, width;
 			width = 480;
-			height = 90;
+			height = 180;
 			padding = 5;
 			if (i%2 == 0) {
 				x = padding;
