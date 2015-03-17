@@ -64,11 +64,10 @@ MusicXMLAnalyzer.PatternView = function(){
 				notes: [
 					{
 						type: "note",
-						ptich: {
+						pitch: {
 							type: "half",
 							dot: true,
-							beam: false,
-							timeModification: false
+							beam: false
 						}
 					},
 					{
@@ -93,12 +92,7 @@ MusicXMLAnalyzer.PatternView = function(){
 							alter: -1,
 							octave: 5,
 							dot: false,
-							beam: "begin",	// Triole (1)
-							timeModification: {
-								actualNotes: 3,
-								normalNotes: 2,
-								normalType: "eight"
-							}
+							beam: "begin"	// Triole (1)
 						}
 					},
 					{
@@ -109,12 +103,7 @@ MusicXMLAnalyzer.PatternView = function(){
 							alter: 0,
 							octave: 5,
 							dot: false,
-							beam: "continue",	// Triole (2)
-							timeModification: {
-								actualNotes: 3,
-								normalNotes: 2,
-								normalType: "eight"
-							}
+							beam: "continue"	// Triole (2)
 						}
 					},
 					{
@@ -125,12 +114,7 @@ MusicXMLAnalyzer.PatternView = function(){
 							alter: 0,
 							octave: 5,
 							dot: false,
-							beam: "end",	// Triole (3)
-							timeModification: {
-								actualNotes: 3,
-								normalNotes: 2,
-								normalType: "eight"
-							}
+							beam: "end"	// Triole (3)
 						}
 					},
 					{
@@ -141,8 +125,7 @@ MusicXMLAnalyzer.PatternView = function(){
 							alter: 0,
 							octave: 5,
 							dot: true,	// punktierte Note
-							beam: false,
-							timeModification: false,
+							beam: false
 						}
 					}
 					{

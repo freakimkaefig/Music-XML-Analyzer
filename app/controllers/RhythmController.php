@@ -25,9 +25,9 @@ public function search($pattern) {
 	//get note intervals of pattern & fill patternArray
 	foreach ($p as $note) {
 		if($note->type == "note"){
-			$interval = PatternController::getInterval($note);
+			// $interval = PatternController::getInterval($note);
 			$obj = new stdClass();
-			$obj->interval = $interval;
+			// $obj->interval = $interval;
 			$obj->type = $note->pitch->type;
 			// if triplet
 			if(isset($note->pitch->beam)){
@@ -35,7 +35,9 @@ public function search($pattern) {
 			}
 			// else if dotted note
 			elseif(isset($note->pitch->dot)){
-				$obj->dot = (string)$note->pitch->dot;
+				if($note->pitch->dot == true){
+					$obj->dot = "1";
+				}
 			}
 			array_push(self::$patternArray, $obj);
 		}else{
@@ -43,8 +45,8 @@ public function search($pattern) {
 		}
 	}
 
-	echo"patternArray: ";
-	var_dump(self::$patternArray);
+	// echo"patternArray: ";
+	// var_dump(self::$patternArray);
 
 	//get user uploads & file_id's & file_url
 	$user = User::find(Cookie::get('user_id'));
@@ -66,6 +68,7 @@ public function search($pattern) {
 
 		foreach($parts as $part){
 			self::$noteCounter = 0;
+			self::$once = true;
 			for($i = 0; $i < count($part->measure); $i++){
 // echo"<br><hr>part->measure[$i] : ";
 // var_dump($part->measure[$i]);
@@ -98,23 +101,23 @@ public function search($pattern) {
 					if((int)$n->voice == (int)$lastVoice){
 		// echo"<br><hr>n: ";
 		// var_dump($n);
-						$pitch = new stdClass();
-						$pitch->step = $n->pitch->step;
-						$pitch->alter = $n->pitch->alter;
-						$pitch->octave = $n->pitch->octave;
+						// $pitch = new stdClass();
+						// $pitch->step = $n->pitch->step;
+						// $pitch->alter = $n->pitch->alter;
+						// $pitch->octave = $n->pitch->octave;
 
 
-						$note = new stdClass();
-						$note->pitch = $pitch;
-						$note->voice = $n->voice;
-						// $note->type = $n->type;
-						$note->position = self::$noteCounter;
+						// $note = new stdClass();
+						// $note->pitch = $pitch;
+						// $note->voice = $n->voice;
+						// // $note->type = $n->type;
+						// $note->position = self::$noteCounter;
 
 						// if note
 						if(!isset($n->rest)){
 							// get note intervals of xml file & fill xmlArray
 							$obj = new stdClass();
-							$obj->interval = PatternController::getInterval($note);
+							// $obj->interval = PatternController::getInterval($note);
 							$obj->type = (string)$n->type;
 		// echo"<br><hr>n->type: ";
 		// var_dump($n->type);
@@ -131,7 +134,7 @@ public function search($pattern) {
 							}
 
 							array_push(self::$xmlArray, $obj);
-							array_push(self::$xmlPositionArray, $note->position);
+							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
 		// echo"<br><br>xmlArray: ";
 		// var_dump(self::$xmlArray);
 
@@ -190,7 +193,7 @@ public function search($pattern) {
 							}
 							
 							array_push(self::$xmlArray, self::$restDuration);
-							array_push(self::$xmlPositionArray, $note->position);
+							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
 
 						} //end else if rest
 
@@ -215,7 +218,7 @@ public function search($pattern) {
 								$occ = new stdClass();
 								$occ->start = reset(self::$xmlPositionArray);
 								$occ->end = end(self::$xmlPositionArray);
-								$occ->voice = (int)$note->voice;
+								$occ->voice = (int)$n->voice/*$note->voice*/;
 								$occ->part_id = (string)$part['id'];
 
 								array_push(self::$result->occurences, $occ);

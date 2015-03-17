@@ -4,8 +4,6 @@ MusicXMLAnalyzer.ResultController = function(){
 
 	model = null,
 	view = null,
-	once = true,
-	once2 = true,
 	//combine Key as 'step'+'octave'+'alter' - where alters '#' = 1 & 'b' = 2;
 	// no alter (if alter = 0) results in 'step'+'octave'
 	megaKeyToNoteObject = {'A0': 21, 'B02': 22, 'B0': 23, 'C1': 24, 'D12': 25, 'C12': 25, 'A1': 33, 'A2': 45, 'A3': 57,
@@ -22,6 +20,8 @@ MusicXMLAnalyzer.ResultController = function(){
 						  'G7': 103, 'G12': 30, 'F11': 30, 'G22': 42, 'F21':42, 'G32': 54, 'F31': 54, 'G42': 66, 'F41': 66, 'G52': 78,
 						  'F51': 78, 'G62': 90, 'F61': 90, 'G72': 102, 'F71': 102},
 	keyToNote = "",
+	once = true,
+	once2 = true,
 	stop = false,
 
 	init = function(){
@@ -42,7 +42,6 @@ MusicXMLAnalyzer.ResultController = function(){
 
 
 		$playResult = $('#playResult');
-		// $pauseResult = $('#pauseResult');
 		$stopResult = $('#stopResult');
 
 		// disable stop button
@@ -51,12 +50,6 @@ MusicXMLAnalyzer.ResultController = function(){
 
 		$playResult.click(function(){
 			stop = false;
-			// $playResult.css('display','none');
-			// $pauseResult.css('display','inline');
-
-			// TODO:
-			// lautsärke setzen! (wenn stop)
-			// wann playing = true?
 			once2 = true;
 			once = true;
 			playResult();
@@ -64,29 +57,13 @@ MusicXMLAnalyzer.ResultController = function(){
 			$stopResult.prop('disabled', false);
 		});
 
-		// $pauseResult.click(function(){
-		// 	//  TODO:
-		// 	// implement functionality!
-		// 	// ´nich möglich?
-
-		// 	$playResult.css('display','inline');
-		// 	$pauseResult.css('display','none');
-
-		// });
-
 		$stopResult.click(function(){
-			//  TODO:
-			// implement functionality!
-			// laut stärke auf null
 			stop = true;
-			// $playResult.css('display','inline');
-			// $pauseResult.css('display','none');
 			$playResult.prop('disabled', false);
 			$stopResult.prop('disabled', true);
 
 		});
 	},
-
 
 	getDuration = function(type){
 		var duration;
@@ -111,7 +88,7 @@ MusicXMLAnalyzer.ResultController = function(){
 	},
 
 	playResult = function(){
-		console.log("MIDI: ",MIDI);
+		// console.log("MIDI: ",MIDI);
 		var notesToBePlayed = [];
 		// console.log("playResult keyToNote: ",MIDI.keyToNote['A0']); //<-- returns key for var note
 		// console.log("playResult keytonote: ",MIDI.noteToKey); // 21 => A0
@@ -119,7 +96,6 @@ MusicXMLAnalyzer.ResultController = function(){
 		// TODO:
 		// # set duration correctly if dotted note
 		// # determine velocity
-		// # implement stop, pause, resume
 
 
 		//get notes of current extract:
@@ -189,8 +165,6 @@ MusicXMLAnalyzer.ResultController = function(){
 						MIDI.setVolume(0, 127);
 						// delay --> https://stackoverflow.com/questions/21296450/midi-js-note-duration-does-not-change
 
-						// TODO:
-						// if chord use chordOn & chordOff
 						if(notesToBePlayed[i].chord == false && notesToBePlayed[i + 1].chord == true){
 							// var kCounter = 0;
 							do{
@@ -202,7 +176,7 @@ MusicXMLAnalyzer.ResultController = function(){
 							MIDI.chordOn(0, chorsToBePlayed, velocity, delay);
 							MIDI.chordOff(0, chorsToBePlayed, delay);
 							// TODO:
-							// adjust timeout for chords
+							// adjust timeout for chords?
 						}
 						// else:
 						else{

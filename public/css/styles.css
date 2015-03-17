@@ -145,7 +145,34 @@ h1 {
 	right: 60px;
 	text-align: center;
 }
+#uploadModal .preview {
+	background: #90a4ae;
+	margin: 15px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	box-shadow: 0 6px 10px rgba(0,0,0,.23),0 10px 30px rgba(0,0,0,.19);
+}
+#uploadModal .preview .image {
+	display: none;
+}
+#uploadModal .preview .details {
+	opacity: 1;
+	color: #fff;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+}
+#uploadModal .preview .progress {
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+#uploadModal .preview .progress .progress-bar-success {
+	-webkit-animation: none;
+	-o-animation: none;
+	animation: none;
+}
 #uploadDropzone {
+	padding: 15px;
 	border:none;
 	height: auto;
 	top: 0;
@@ -153,7 +180,6 @@ h1 {
 	left: 0;
 	right: 0;
 	position: absolute;
-	padding: 0;
 	border-radius: 12px;
 	background: rgba(81, 81, 81, 0.5);
 	text-align: center;
@@ -196,10 +222,10 @@ div#pie_meterDistribution {
 
 /* BAR-CHART */
 .bar {
-	fill: #337ab7;
+	fill: #64b5f6;
 }
 .bar:hover {
-	fill: #37474f ;
+	fill: #448aff;
 }
 /*.d3-tip {
 	line-height: 1;
