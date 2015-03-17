@@ -9,7 +9,7 @@
 			@yield('content')
 		</div>
 		
-		@include('layout.footer')
+		<!-- @include('layout.footer') -->
 
 		@include('layout.scripts')
 	</body>

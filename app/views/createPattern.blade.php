@@ -169,13 +169,12 @@
 	</div>
 
 	<div class="row row-centered">
-
         <div class="col-xs-3 col-centered col-min">
             <button id="btn-add-note" type="button" class="btn btn-material-green-400">Add</button>
             <button id="btn-remove-note" type="button" class="btn btn-material-red-400">Delete</button>
         </div>
 
-        <div class="col-xs-3 col-centered col-min">
+        <div class="col-xs-4 col-centered col-min pull-right">
 			{{ Form::submit('Search', array('class' => 'btn btn-success')) }}
 			{{ Form::close() }}
 		</div>

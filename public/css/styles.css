@@ -103,7 +103,8 @@ ul.navbar-nav li a {
 
 h1 {
 	text-transform: uppercase;
-	margin-bottom: 60px;
+	margin-bottom: 45px;
+	margin-top: -20px;
 	letter-spacing: 2.5px;
 }
 
