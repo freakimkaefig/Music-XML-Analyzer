@@ -171,7 +171,7 @@ MusicXMLAnalyzer.ResultController = function(){
 								chorsToBePlayed.push(notesToBePlayed[i].note);
 								i++;
 
-							}while(notesToBePlayed[i].chord == true)
+							}while(notesToBePlayed[i].chord == true && i < notesToBePlayed[i].length)
 							console.log("chorsToBePlayed :",chorsToBePlayed);
 							MIDI.chordOn(0, chorsToBePlayed, velocity, delay);
 							MIDI.chordOff(0, chorsToBePlayed, delay);

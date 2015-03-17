@@ -31,10 +31,12 @@ public function search($pattern) {
 			$obj->type = $note->pitch->type;
 			// if triplet
 			if(isset($note->pitch->beam)){
-				$obj->beam = (string)$note->pitch->beam;
-			}
-			// else if dotted note
-			elseif(isset($note->pitch->dot)){
+					if($note->pitch->beam != false){
+						$obj->beam = (string)$note->pitch->beam;
+					}
+				}
+				// else if dotted note
+			if(isset($note->pitch->dot)){
 				if($note->pitch->dot == true){
 					$obj->dot = "1";
 				}

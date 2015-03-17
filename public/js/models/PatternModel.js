@@ -21,7 +21,13 @@ MusicXMLAnalyzer.PatternModel = function(){
 	tupletArray = [],
 	beamArray = [],
 
+	// val for noteElements: -1,0,1
 	noteElementAccidential = 0,
+	// val for dot: true, false
+	isDot = false,
+	// val for beam: false, begin, continue, end
+	beamVal = false,
+
 
 	init = function(){
 
@@ -30,6 +36,22 @@ MusicXMLAnalyzer.PatternModel = function(){
 	setCurrentMode = function(mode) {
 		curMode = mode;
 		console.log("mode set to: " + curMode + " fkt missing");
+		//TODO add 3 trigger
+		switch(curMode) {
+		    //sound sequence
+		    case 0:
+		    console.log("TODO set sound sequence");
+		        break;
+	        //rhythm
+	        case 1:
+		    console.log("TODO set rhythm");
+		        break;
+		    //melody
+		    case 2:
+		    console.log("TODO melody");
+		    	break;
+		}
+
 	},
 
 	getCurrentMode = function() {
@@ -91,7 +113,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return curOctave;
 	},
 	
-	
+	/*
+	This method sets vals for accidentials, dots and beams
+	for noteElements-Array
+	*/
 	setValuesForNoteElement = function() {
 
 		//accidential
@@ -102,80 +127,97 @@ MusicXMLAnalyzer.PatternModel = function(){
 		} else {
 			noteElementAccidential = 0;
 		}
+
+		//dot
+		if(curRythSpec == "dotted") {
+			isDot = true;
+		} else {
+			isDot = false;
+		}
+
+		//beam
+		if(curRythSpec == "triplet") {
+			tripletCurrentAmount++;
+		}
+		
+		switch(tripletCurrentAmount) {
+		    case 1:
+		        beamVal = "begin";
+		        break;
+	        case 2:
+		        beamVal = "continue";
+		        break;
+		    case 3:
+		        beamVal = "end";
+		        break;
+		    default:
+		        beamVal = false;
+		}
+		beamVal = false;
 	},
 
-	addNoteElement = function() {
-		// completeDurationIn64th = 0;
-
-		// soundSequence pattern:
-		// $patternValue.val(JSON.stringify(
-		// 	{
-		// 		type: 0,
-		// 		notes: [
-		// 			{
-		// 				pitch: {
-		// 					step: "B",
-		// 					alter: 0,
-		// 					octave: 5
-		// 				}
-		// 			},
-		// 			{
-		// 				pitch: {
-		// 					step: "B",
-		// 					alter: 0,
-		// 					octave: 5
-		// 				}
-		// 			}
-		// 		]
-		// 	}
-		// ));
+	addNoteElement = function() {		
 
 		setValuesForNoteElement();
 
-
-		// 
-		// Adding Notes (doesn't work on rest or anything else)
-		// ToDo: differentiation between other ElementTypes (e.g. rests, or dotted notes, or triplets, ...)
-		// ToDo: needs more specific var's according to ElementType [see patterns!]
-		// 
 			if(first){
 				first = false;
-				noteElements.push({
+				if (curName != "break") {
+					noteElements.push({
 					//TODO 
 					//Mode für Dave im moment hart gecoded
-					type: 0,
-					notes:[{
-						pitch: {
-							step: curName.toUpperCase(),
-							alter: noteElementAccidential,
-							type: curDuration,
-							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
-							octave: curOctave
-						}
-					}
+					//meldoy modes
+					type: 2,
+						notes:[
+							{
+								type: "note",
+								pitch: {
+									step: curName.toUpperCase(),
+									alter: noteElementAccidential,
+									type: curDuration,
+									octave: curOctave,
+									dot: isDot,
+									beam: beamVal
+								}
+							}
 					]
-				});
-			}else{
-				noteElements[0].notes.push({
-					
-						pitch: {
-							step: curName.toUpperCase(),
-							alter: noteElementAccidential,
-							type: curDuration,
-							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
-							octave: curOctave
-						}
-					
-					
-				});
+					});
+				} else {
+					//break
+					noteElements.push(
+					{
+							type: "rest",	
+							duration: curDuration
+					});
+				}
+	
+			} else {
+				if (curName != "break") {
+					noteElements.push(
+					{
+							type: "note",	
+							pitch: {
+								step: curName.toUpperCase(),
+								alter: noteElementAccidential,
+								type: curDuration,
+								octave: curOctave,
+								dot: isDot,
+								beam: beamVal
+							}
+						
+						
+					});	
+				} else {
+					//break
+					noteElements.push(
+					{
+							type: "rest",	
+							duration: curDuration
+					});
+				}
 			}
-			
-			/*
-			for (var i = 0; i < noteElements.length; i++) {
-				//console.log("d64 of " + i + " " + getDurationIn64thNotes(noteElements[i].duration));
-				completeDurationIn64th += getDurationIn64thNotes(noteElements[i].duration);
-			}
-			*/
+
+			console.log("noteELements: ", noteElements);
 
 			//check if break or normal note or note with accidential
 			//then adapt values for vexflow an put them into an array
@@ -204,20 +246,33 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 			noteElements4VexFlow.push(note);
 
-			if (curRythSpec == "triplet") {
-				tripletCurrentAmount++;
-				if (tripletCurrentAmount == 3) {
-					tripletCurrentAmount = 0;
-					tripletEndPositions.push(noteElements4VexFlow.length);
-					var tuplet = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
-					var beam = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
-					tupletArray.push(tuplet);
-					beamArray.push(beam);
-					console.log("tep: ",tripletEndPositions)
-				}
-			} else {
+		//check if triplet
+		if (curRythSpec == "triplet") {
+			console.log("tripletCurrentAmount: " + tripletCurrentAmount);
+			if (tripletCurrentAmount == 3) {
 				tripletCurrentAmount = 0;
-			}	
+				//store all end positions of the triplets
+				tripletEndPositions.push(noteElements4VexFlow.length);
+				//create tuplet and beam and push it into corresponding array
+				var tuplet = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+				var beam = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+				tupletArray.push(tuplet);
+				beamArray.push(beam);
+				console.log("tripletEndPositions: ",tripletEndPositions)
+			}
+		} else {
+			//when user changes from triplet into different rythSpec
+			//when there are already 1 or 2 triplets, they will be deleted and removed from the note and vexflow array
+			if (tripletCurrentAmount > 0) {
+				//splice -> (position in array, number of elements to be removed)
+				noteElements4VexFlow.splice(
+					// +1 because of array pos begins with 0
+					noteElements4VexFlow.length - (tripletCurrentAmount + 1), tripletCurrentAmount);
+				noteElements.slice(
+					noteElements.length - (tripletCurrentAmount + 1), tripletCurrentAmount);
+				tripletCurrentAmount = 0;
+			}
+		}
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view

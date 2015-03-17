@@ -202,6 +202,16 @@ class ResultController extends BaseController {
 									$noteObject->pitch->chord = false;
 								}
 								$noteObject->counter = $noteCounter;
+
+								$timeModification = $note->getElementsByTagName('time-modification');
+								if ($timeModification->length) {
+									$actualNotes = $timeModification->item(0)->getElementsByTagName('actual-notes');
+									if ($actualNotes->length) {
+										$noteObject->pitch->tuplet = $actualNotes->item(0)->nodeValue;
+									}
+								} else {
+									$noteObject->pitch->tuplet = false;
+								}
 								
 							} else {
 								// it's a rest

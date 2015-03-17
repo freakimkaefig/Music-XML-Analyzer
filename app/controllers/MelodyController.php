@@ -30,10 +30,12 @@ class MelodyController {
 				$obj->interval = $interval;
 				$obj->type = $note->pitch->type;
 				if(isset($note->pitch->beam)){
-					$obj->beam = (string)$note->pitch->beam;
+					if($note->pitch->beam != false){
+						$obj->beam = (string)$note->pitch->beam;
+					}
 				}
 				// else if dotted note
-				elseif(isset($note->pitch->dot)){
+				if(isset($note->pitch->dot)){
 					if($note->pitch->dot == true){
 						$obj->dot = "1";
 					}
@@ -181,7 +183,15 @@ class MelodyController {
 
 							//check if Array-length equals Pattern-length already
 							if(count(self::$xmlArray) == count(self::$patternArray)){
-								
+
+		// echo"<br><br><hr>array_values: <br>xmlArray:<br>";
+		// var_dump(array_values(self::$xmlArray));
+		// echo"<br><br>patternArray:<br>";
+		// var_dump(array_values(self::$patternArray));
+		// echo"<br><br>xmlPositionArray:";
+		// var_dump(self::$xmlPositionArray);
+		// echo"<br><br>";
+
 								// compare arrays
 								if(array_values(self::$xmlArray) == array_values(self::$patternArray)){
 									// create result
