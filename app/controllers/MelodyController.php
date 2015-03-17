@@ -70,6 +70,7 @@ class MelodyController {
 
 			foreach($parts as $part){
 				self::$noteCounter = 0;
+				self::$once = true;
 				for($i = 0; $i < count($part->measure); $i++){
 					
 					if($i == 0){

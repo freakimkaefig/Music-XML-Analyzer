@@ -16,7 +16,7 @@ class SoundSequenzController {
 	}
 
 	public function search($pattern) {
-		Debugbar::info($pattern);
+		// Debugbar::info($pattern);
 		$p = $pattern[0]->notes;
 		// $exactMatch = $pattern->exact;
 		// 
@@ -58,12 +58,12 @@ class SoundSequenzController {
 
 			foreach($parts as $part){
 				self::$noteCounter = 0;
+				self::$once = true;
 
-// echo"<br><hr>part: ";
-// var_dump($part);
+				// echo"<br><hr>part: ";
 				//traverse §notes[]
-				for ($i = 0; $i < count($part->measure)-1; $i++) {
-					for($j = 0; $j < count($part->measure[$i]->note); $j++){
+				for ($i = 0; $i < count($part->measure); $i++) {	// war vorher "$i < count($part->measure)-1" Unsinn?
+					for($j = 0; $j < count($part->measure[$i]->note); $j++) {
 						self::$noteCounter++;
 
 						$n = $part->measure[$i]->note[$j];
@@ -168,6 +168,7 @@ class SoundSequenzController {
 								$lastVoice = $n->voice;
 							}
 							else{ //different voice incoming next; unset array; begin from scratch
+
 	// echo"<br><br>LASTVOICE: ";
 	// var_dump($lastVoice);
 	// echo"<br><br>NEXT VOICE: ";
@@ -192,14 +193,6 @@ class SoundSequenzController {
 
 		});
 		return self::$results;
-// echo "<br>";
-// 		var_dump(self::$results);
-// 		if(empty(self::$results)){
-
-// 		echo "result is empty!";
-// 		}
-// echo "<hr>";
-// 		bla;
 	}
 
 }
