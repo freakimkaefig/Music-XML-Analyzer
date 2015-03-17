@@ -141,6 +141,7 @@ MusicXMLAnalyzer.ResultController = function(){
 					var noteOctave = note.pitch.octave;
 					var noteAlter = note.pitch.alter;
 					var noteDuration = getDuration(note.pitch.type);
+					var chord = note.pitch.chord;
 
 					if(noteAlter != 0){
 						if(noteAlter == -1){
@@ -151,7 +152,7 @@ MusicXMLAnalyzer.ResultController = function(){
 						keyToNote = noteStep.concat(noteOctave);
 					}
 					// console.log("keyToNote: ", keyToNote, " - megaKeyToNoteObject{keyToNote}: ",megaKeyToNoteObject[keyToNote]);
-					notesToBePlayed.push({'note': megaKeyToNoteObject[keyToNote], 'noteDuration': noteDuration});
+					notesToBePlayed.push({'note': megaKeyToNoteObject[keyToNote], 'noteDuration': noteDuration, 'chord': chord});
 				}
 			}
 		}
@@ -159,7 +160,7 @@ MusicXMLAnalyzer.ResultController = function(){
 		var i = 0;
 		playTune = function(){
 
-			currentlyPlaying = true;
+			var chorsToBePlayed = [];
 
 			if(i < notesToBePlayed.length){						
 				console.log("notesToBePlayed: ",notesToBePlayed[i]);
@@ -168,6 +169,7 @@ MusicXMLAnalyzer.ResultController = function(){
 				var noteDuration = notesToBePlayed[i].noteDuration;
 				var velocity = 127; // how hard the note hits
 				var delay = notesToBePlayed[i].noteDuration  /*+ i*/ + 1;
+				// var chord = notesToBePlayed[i].chord;
 				var timeout = 0;
 				if(!once){
 					// timeout needs adjustment
@@ -186,10 +188,29 @@ MusicXMLAnalyzer.ResultController = function(){
 						console.log("STOP: ",stop);
 						MIDI.setVolume(0, 127);
 						// delay --> https://stackoverflow.com/questions/21296450/midi-js-note-duration-does-not-change
-						MIDI.noteOn(0, note, velocity, delay);
-						MIDI.noteOff(0, note, delay + noteDuration);
+
+						// TODO:
+						// if chord use chordOn & chordOff
+						if(notesToBePlayed[i].chord == false && notesToBePlayed[i + 1].chord == true){
+							// var kCounter = 0;
+							do{
+								chorsToBePlayed.push(notesToBePlayed[i].note);
+								i++;
+
+							}while(notesToBePlayed[i].chord == true)
+							console.log("chorsToBePlayed :",chorsToBePlayed);
+							MIDI.chordOn(0, chorsToBePlayed, velocity, delay);
+							MIDI.chordOff(0, chorsToBePlayed, delay);
+							// TODO:
+							// adjust timeout for chords
+						}
+						// else:
+						else{
+							MIDI.noteOn(0, note, velocity, delay);
+							MIDI.noteOff(0, note, delay + noteDuration);
+							i++;
+						}
 						MIDI.Player.stop();
-						i++;
 					}
 					// recursively call playTune()
 					playTune();
