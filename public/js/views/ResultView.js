@@ -104,25 +104,29 @@ MusicXMLAnalyzer.ResultView = function(){
 				staveBar.setEndBarType(Vex.Flow.Barline.type.END);	// set double measure bar line at last measure
 			}
 
+			
 			// creating ties and beams between notes
 			var beamBegin = null;
 			var beamEnd = null;
 			var beams = [];
 			for (var j = 0; j < measures[i].notes.length; j++) {
-				// beams
+
 				if (measures[i].beams) {
-					if (measures[i].beams[j] == "begin") {
-						beamBegin = j;
-					}
-					if (measures[i].beams[j] == "end") {
-						beamEnd = j;
-					}
-					if (beamBegin != null && beamEnd != null) {
-						var beamNotes = measures[i].notes.slice(beamBegin, beamEnd+1);
-						var beam = new Vex.Flow.Beam(beamNotes, true);
-						beams.push(beam);
-						beamBegin = null;
-						beamEnd = null;
+					// beams
+					if (measures[i].beams) {
+						if (measures[i].beams[j] == "begin") {
+							beamBegin = j;
+						}
+						if (measures[i].beams[j] == "end") {
+							beamEnd = j;
+						}
+						if (beamBegin != null && beamEnd != null) {
+							var beamNotes = measures[i].notes.slice(beamBegin, beamEnd+1);
+							var beam = new Vex.Flow.Beam(beamNotes, true);
+							beams.push(beam);
+							beamBegin = null;
+							beamEnd = null;
+						}
 					}
 				}
 
@@ -162,7 +166,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	},
 
 	generateVexflowNotes = function(pattern) {
-		// console.log("MusicXMLAnalyzer.ResultView.generateVexflowNotes" , "pattern", pattern);
+		console.log("MusicXMLAnalyzer.ResultView.generateVexflowNotes" , "pattern", pattern);
 		var measures = [];
 
 		switch (pattern.type) {
@@ -207,6 +211,7 @@ MusicXMLAnalyzer.ResultView = function(){
 							// determine note variables
 							var keys = ["b/4"];
 
+							// var noteTies = [false];//pattern.measures[i].notes[j].pitch.ties;
 							var type = pattern.measures[i].notes[j].pitch.type;
 							var durationType = 0;
 							if (pattern.measures[i].notes[j].pitch.dot) {
@@ -219,6 +224,7 @@ MusicXMLAnalyzer.ResultView = function(){
 							if (pattern.measures[i].notes[j].pitch.dot) {
 								note.addDotToAll();
 							}
+							// ties[j] = noteTies;
 							notes.push(note);
 						} else if (pattern.measures[i].notes[j].type == "rest") {
 							var durationType = 1; // rests type is 1
@@ -226,6 +232,7 @@ MusicXMLAnalyzer.ResultView = function(){
 
 							note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: duration });
 							duration += getDurationIn64th(pattern.measures[i].notes[j].duration);
+							// ties[j] = [false];
 							notes.push(note);
 						}
 					}
@@ -255,7 +262,10 @@ MusicXMLAnalyzer.ResultView = function(){
 								var alter = pattern.measures[i].notes[j].pitch.alter;
 								var keys = [getVexflowKey(step, octave, alter )];
 
-								var noteTies = pattern.measures[i].notes[j].pitch.ties;
+								var noteTies = [false];
+								if (pattern.measures[i].notes[j].pitch.ties) {
+									noteTies = pattern.measures[i].notes[j].pitch.ties;
+								}
 								var type = pattern.measures[i].notes[j].pitch.type;
 								var durationType = 0;
 								if (pattern.measures[i].notes[j].pitch.dot) {
