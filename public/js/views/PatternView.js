@@ -80,7 +80,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 
 		// melody pattern:
-		/*$('#patternValue').val(JSON.stringify(
+		$('#patternValue').val(JSON.stringify(
 			[{
 				type: 2,
 				notes: [
@@ -116,25 +116,26 @@ MusicXMLAnalyzer.PatternView = function(){
 							dot: false,
 							beam: "end"	// Triole (3)
 						}
-					},
+					}/*,
 					{
 						type: "note",
 						pitch: {
 							step: "C",
-							type: "eighth",
+							type: "half",
 							alter: 0,
-							octave: 5,
-							dot: true,	// punktierte Note
+							octave: 56,
+							dot: false,	// punktierte Note
 							beam: false
 						}
-					}
+					},
 					{
 						type: "rest",	// Pause
 						duration: "whole"
-					}
+					}*/
+					
 				]
 			}]
-		)); */
+		)); 
 	},
 
 	onModeButtonClick = function(event) {

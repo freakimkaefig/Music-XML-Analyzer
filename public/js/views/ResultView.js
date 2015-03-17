@@ -195,7 +195,7 @@ MusicXMLAnalyzer.ResultView = function(){
 
 			case 1:
 				// rhythm
-				for (var i = 0; i < pattern.measure.length; i++) {
+				for (var i = 0; i < pattern.measures.length; i++) {
 					var notes = [];
 					var duration = 0;
 					var time_signature = pattern.measures[i].time_signature;
