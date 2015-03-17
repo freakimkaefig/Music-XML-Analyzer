@@ -16,8 +16,15 @@
 		<h1>{{ ResultController::_getArtist($result->file_id) }} - {{ ResultController::_getTitle($result->file_id) }}</h1>
 	</div>
 </div>
+<div class="row">
+	<div class="col-xs-6">
+		<button id="playResult" type="submit" class="btn btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-play"></span> <span>Play Pattern</span></button>
+	</div>
+	<div class="col-xs-6">
+		<button id="stopResult" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop Pattern</span></button>
+	</div>
+</div>
 
-<input id="playResult" type="button" value="Play Result"/>
 <div id="extract-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
 	<!-- Indicators -->
