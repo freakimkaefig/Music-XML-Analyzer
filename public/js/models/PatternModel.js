@@ -21,7 +21,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 	tupletArray = [],
 	beamArray = [],
 
+	// val for noteElements: -1,0,1
 	noteElementAccidential = 0,
+	// val for dot: true, false
+	isDot = false,
+	// val for beam: false, begin, continue, end
+	beamVal = false,
 
 	init = function(){
 
@@ -91,7 +96,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return curOctave;
 	},
 	
-	
+	/*
+	This method sets vals for accidentials, dots and beams
+	for noteElements-Array
+	*/
 	setValuesForNoteElement = function() {
 
 		//accidential
@@ -102,74 +110,61 @@ MusicXMLAnalyzer.PatternModel = function(){
 		} else {
 			noteElementAccidential = 0;
 		}
+
+		//dot
+		if(rythSpec == "dotted") {
+			isDot = true;
+		} else {
+			isDot = false;
+		}
+
+		//beam
+		beamVal = false;
 	},
 
-	addNoteElement = function() {
-		// completeDurationIn64th = 0;
-
-		// soundSequence pattern:
-		// $patternValue.val(JSON.stringify(
-		// 	{
-		// 		type: 0,
-		// 		notes: [
-		// 			{
-		// 				pitch: {
-		// 					step: "B",
-		// 					alter: 0,
-		// 					octave: 5
-		// 				}
-		// 			},
-		// 			{
-		// 				pitch: {
-		// 					step: "B",
-		// 					alter: 0,
-		// 					octave: 5
-		// 				}
-		// 			}
-		// 		]
-		// 	}
-		// ));
-		
+	addNoteElement = function() {		
 
 		setValuesForNoteElement();
 
-
-		// 
-		// Adding Notes (doesn't work on rest or anything else)
-		// ToDo: differentiation between other ElementTypes (e.g. rests, or dotted notes, or triplets, ...)
-		// ToDo: needs more specific var's according to ElementType [see patterns!]
-		// 
 			if(first){
 				first = false;
 				noteElements.push({
 					//TODO 
 					//Mode für Dave im moment hart gecoded
-					type: 0,
-					notes:[{
+					//meldoy modes
+					type: 2,
+					notes:[
+					{
+						type: "note",
 						pitch: {
 							step: curName.toUpperCase(),
 							alter: noteElementAccidential,
 							type: curDuration,
-							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
-							octave: curOctave
+							octave: curOctave,
+							dot: isDot,
+							beam: beamVal
 						}
 					}
 					]
 				});
 			}else{
-				noteElements.push({
-					
+				noteElements.push(
+				{
+						type: "note",	
 						pitch: {
 							step: curName.toUpperCase(),
 							alter: noteElementAccidential,
 							type: curDuration,
-							rythSpecial: curRythSpec, //ToDo: change according to dummy pattern in patternView.js
-							octave: curOctave
+							octave: curOctave,
+							dot: isDot,
+							beam: beamVal
 						}
 					
 					
 				});
 			}
+
+			console.log("noteELements: " + noteElements);
 			
 			/*
 			for (var i = 0; i < noteElements.length; i++) {
