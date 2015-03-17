@@ -15,6 +15,8 @@ MusicXMLAnalyzer.NotationView = function(){
 	spaceBetweenLines = 0,
 
 	topValsNoteElements = null,
+
+	VEXFLOW_REST_SIGN = "r",
 	
 
 	init = function() {

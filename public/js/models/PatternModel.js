@@ -112,7 +112,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 
 		//dot
-		if(rythSpec == "dotted") {
+		if(curRythSpec == "dotted") {
 			isDot = true;
 		} else {
 			isDot = false;
@@ -133,6 +133,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					//Mode für Dave im moment hart gecoded
 					//meldoy modes
 					type: 2,
+
 					notes:[
 					{
 						type: "note",
