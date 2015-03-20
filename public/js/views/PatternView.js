@@ -188,17 +188,19 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	setToMelodyMode = function() {
-		//TODO
+		console.log("pattern view set melody");
 		// $playPattern.prop('disabled', true);
 		// $stopPattern.prop('disabled', false);
 	},
 
 	setToSoundSequenceMode = function() {
 		//TODO
+		console.log("pattern view set Sound sequence");
 	},
 
 	setToRhythmMode = function() {
 		//TODO
+		console.log("pattern view set rhythm");
 	},
 
 	onRemoveButtonClick = function(event) {
@@ -209,6 +211,9 @@ MusicXMLAnalyzer.PatternView = function(){
 	that.setPatternValue = setPatternValue;
 	that.setNoteNameActive = setNoteNameActive;
 	that.setOctaveActive = setOctaveActive;
+	that.setToSoundSequenceMode = setToSoundSequenceMode;
+	that.setToRhythmMode = setToRhythmMode;
+	that.setToMelodyMode = setToMelodyMode;
 
 	return that;
 }

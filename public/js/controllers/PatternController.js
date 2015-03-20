@@ -36,6 +36,8 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('changeSelectedNoteNameByClick', onNoteNameSelectionChange);
 		$(patternModel).on('changeSelectedOctaveByClick', onOctaveSelectionChange);
 
+		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
+
 		//init MIDI
 		MIDI.loadPlugin({
 			soundfontUrl: "../../libs/midijs/soundfont/",
@@ -246,6 +248,24 @@ MusicXMLAnalyzer.PatternController = function() {
 	onPatternChange = function(event, pattern) {
 		// console.log("Trigger patternChange: ",pattern);
 		patternView.setPatternValue(JSON.stringify(pattern));
+	},
+
+	onViewChangedToCurrentMode = function(event, mode) {
+		console.log("model mode" + mode);
+		switch(mode) {
+		    //sound sequence
+		    case "0":
+		    patternView.setToSoundSequenceMode();
+		        break;
+	        //rhythm
+	        case "1":
+	        patternView.setToRhythmMode();
+		        break;
+		    //melody
+		    case "2":
+		    patternView.setToMelodyMode();
+		    	break;
+		}
 	},
 
 	dispose = function() {
