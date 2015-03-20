@@ -183,7 +183,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setOctaveActive = function(octave) {
 		$(".btn-octave.active").removeClass("active");
-		$('btn-group-names label.active').removeClass('active');
+		// $('btn-group-names label.active').removeClass('active');
 		$("#" + octave + "").addClass("active");
 	},
 

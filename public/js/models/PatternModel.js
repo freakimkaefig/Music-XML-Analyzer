@@ -29,12 +29,27 @@ MusicXMLAnalyzer.PatternModel = function(){
 	beamVal = false,
 
 
-	init = function(){
+	init = function() {
 
 	},
 
 	setCurrentMode = function(mode) {
 		curMode = mode;
+		//set variables to default vals when there is mode 1 or 0
+		switch(curMode) {
+			//sound sequence
+			case 0:
+				setDefaultValsForSoundSequenceMode();
+				break;
+			//rhythm
+			case 1:
+				setDefaultValsForRhythmMode();
+				break;
+			case 2:
+				setDefaultValsForMelodyMode();
+				break;
+		}
+		//update view
 		$(that).trigger('changeViewToCurrentMode', curMode);
 	},
 
@@ -197,7 +212,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 				}
 			}
 		} else if (curMode == 1) {
-			
+		// rhythm mode
+
 			if(first){
 				first = false;
 				if (curName != "break") {
@@ -283,6 +299,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		var note;
 		var keyContent = getKeyContent4Vexflow(curName);
 		var durationContent = getDuration4Vexflow(curDuration);
+
 		//check if break or normal note or note with accidential
 		//then adapt values for vexflow an put them into an array
 		if (curName == "break") {
@@ -339,17 +356,42 @@ MusicXMLAnalyzer.PatternModel = function(){
 	
 	},
 
+	setDefaultValsForSoundSequenceMode = function() {
+		curDuration = "quarter";
+		curRythSpec = "none";
+	},
+
+	setDefaultValsForRhythmMode = function() {
+		curName = "b";
+		curOctave = "4";
+		curAccidential = "none";
+		curClef = "G";
+	},
+
+	setDefaultValsForMelodyMode = function() {
+		curMode = 2;
+		curName = "c";
+		curAccidential = "none";
+		curDuration = "quarter";
+		curClef = "G";
+		curRythSpec = "none";
+		curOctave = "4";
+
+		//TODO 
+		//update view to this default vals
+	},
+
 	getTripletEndPositions = function() {
 		return tripletEndPositions;
-	}
+	},
 
 	getTupletArray = function() {
 		return tupletArray;
-	}
+	},
 
 	getBeamArray = function() {
 		return beamArray;
-	}
+	},
 
 	getKeyContent4Vexflow = function(noteName) {
 		var keyContent = noteName;
