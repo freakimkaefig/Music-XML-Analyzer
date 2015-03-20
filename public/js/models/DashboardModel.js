@@ -235,19 +235,20 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			mergedArr.count_rests += parseFloat(resultsArr[i].value.count_rests);
 
 			//merge instruments
-			if (mergedArr.instruments.length > 0) {
-				for (var instrumentCounter = 0; instrumentCounter < mergedArr.instruments.length; instrumentCounter++) {
-					// check if instrument is already in array
-					// if yes: count position up
-					// else: add new position to array
-					if (mergedArr.instruments[instrumentCounter] == ''){
-						instrumentCounter += instrumentCounter;
-					}
-				}
-			} else {
-				// add all instruments in array to merged array
-				mergedArr.instruments = resultsArr[i].value.instruments;
-			}
+			mergedArr.instruments = mergedArr.instruments.concat(resultsArr[i].value.instruments);
+			// if (mergedArr.instruments.length > 0) {
+			// 	for (var instrumentCounter = 0; instrumentCounter < mergedArr.instruments.length; instrumentCounter++) {
+			// 		// check if instrument is already in array
+			// 		// if yes: count position up
+			// 		// else: add new position to array
+			// 		if (mergedArr.instruments[instrumentCounter] == '' || mergedArr.instruments[instrumentCounter] == ) {
+			// 			instrumentCounter++;
+			// 		}
+			// 	}
+			// } else {
+			// 	// add all instruments in array to merged array
+				// mergedArr.instruments = resultsArr[i].value.instruments;
+			// }
 
 			// merge counted intervals
 			for (var intervalCounter = 0; intervalCounter < resultsArr[i].value.intervals.length; intervalCounter++) {
