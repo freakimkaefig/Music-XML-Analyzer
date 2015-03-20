@@ -144,12 +144,14 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		setValuesForNoteElement();
 
+		if (curMode == 2) {
 			if(first){
 				first = false;
 				if (curName != "break") {
 					noteElements.push({
 					type: curMode,
-						notes:[
+						notes:
+						[
 							{
 								type: "note",
 								pitch: {
@@ -161,7 +163,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 									beam: beamVal
 								}
 							}
-					]
+						]
 					});
 				} else {
 					//break
@@ -171,7 +173,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 							duration: curDuration
 					});
 				}
-	
 			} else {
 				if (curName != "break") {
 					noteElements.push(
@@ -185,8 +186,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 								dot: isDot,
 								beam: beamVal
 							}
-						
-						
 					});	
 				} else {
 					//break
@@ -197,35 +196,114 @@ MusicXMLAnalyzer.PatternModel = function(){
 					});
 				}
 			}
-
-			console.log("noteELements: ", noteElements);
-
-			//check if break or normal note or note with accidential
-			//then adapt values for vexflow an put them into an array
-			var note;
-			var keyContent = getKeyContent4Vexflow(curName);
-			var durationContent = getDuration4Vexflow(curDuration);
-			//check if break or normal note or note with accidential
-			//then adapt values for vexflow an put them into an array
-			if (curName == "break") {
-				note = new Vex.Flow.StaveNote({ keys: ["b/4"],
-		    						duration: durationContent + VEXFLOW_REST_SIGN,
-		    						auto_stem: true });
+		} else if (curMode == 1) {
+			
+			if(first){
+				first = false;
+				if (curName != "break") {
+					noteElements.push({
+					type: curMode,
+						notes: [
+						{
+							type: "note",
+							ptich: {
+								type: curDuration,
+								dot: isDot,
+								beam: beamVal
+							}
+						}
+					]
+					});
+				} else {
+					//break
+					noteElements.push(
+					{
+							type: "rest",
+							duration: curDuration
+					});
+				}
 			} else {
-				note = new Vex.Flow.StaveNote({ keys: [keyContent + "/" + curOctave],
-		    						duration: durationContent,
-		    						auto_stem: true });	
+				if (curName != "break") {
+					noteElements.push(
+					{
+							type: "note",	
+							pitch: {
+								type: curDuration,
+								dot: isDot,
+								beam: beamVal
+							}
+					});	
+				} else {
+					//break
+					noteElements.push(
+					{
+							type: "rest",	
+							duration: curDuration
+					});
+				}
 			}
-
-			if (curAccidential == "#" || curAccidential == "b") {
-				note.addAccidental(0, new Vex.Flow.Accidental(curAccidential));
+		} else if (curMode == 0) {
+			if(first){
+				first = false;
+				if (curName != "break") {
+					noteElements.push({
+					type: curMode,
+						notes:
+						[
+							{
+								type: "note",
+								pitch: {
+									step: curName.toUpperCase(),
+									alter: noteElementAccidential,
+									octave: curOctave
+								}
+							}
+						]
+					});
+				}
+			} else {
+				if (curName != "break") {
+					noteElements.push(
+					{
+							type: "note",	
+							pitch: {
+								step: curName.toUpperCase(),
+								alter: noteElementAccidential,
+								octave: curOctave
+							}
+					});	
+				}
 			}
+		}
+			
+		console.log("noteELements: ", noteElements);
 
-			if (curRythSpec == "dotted") {
-				note.addDotToAll();	
-			}
+		//check if break or normal note or note with accidential
+		//then adapt values for vexflow an put them into an array
+		var note;
+		var keyContent = getKeyContent4Vexflow(curName);
+		var durationContent = getDuration4Vexflow(curDuration);
+		//check if break or normal note or note with accidential
+		//then adapt values for vexflow an put them into an array
+		if (curName == "break") {
+			note = new Vex.Flow.StaveNote({ keys: ["b/4"],
+	    						duration: durationContent + VEXFLOW_REST_SIGN,
+	    						auto_stem: true });
+		} else {
+			note = new Vex.Flow.StaveNote({ keys: [keyContent + "/" + curOctave],
+	    						duration: durationContent,
+	    						auto_stem: true });	
+		}
 
-			noteElements4VexFlow.push(note);
+		if (curAccidential == "#" || curAccidential == "b") {
+			note.addAccidental(0, new Vex.Flow.Accidental(curAccidential));
+		}
+
+		if (curRythSpec == "dotted") {
+			note.addDotToAll();	
+		}
+
+		noteElements4VexFlow.push(note);
 
 		//check if triplet
 		if (curRythSpec == "triplet") {
