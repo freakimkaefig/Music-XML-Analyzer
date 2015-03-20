@@ -251,7 +251,6 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	onViewChangedToCurrentMode = function(event, mode) {
-		console.log("model mode" + mode);
 		switch(mode) {
 		    //sound sequence
 		    case "0":

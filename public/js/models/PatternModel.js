@@ -35,7 +35,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	setCurrentMode = function(mode) {
 		curMode = mode;
-		console.log("mode set to: " + curMode + " fkt missing");
 		$(that).trigger('changeViewToCurrentMode', curMode);
 	},
 

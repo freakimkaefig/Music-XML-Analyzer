@@ -198,7 +198,6 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	setToSoundSequenceMode = function() {
-		//TODO
 		console.log("pattern view set Sound sequence");
 		$durationButtonClass.addClass('disabled');
 		$specialRythButtonClass.addClass('disabled');
@@ -210,7 +209,6 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	setToRhythmMode = function() {
-		//TODO
 		console.log("pattern view set rhythm");
 		$noteButtonClass.addClass('disabled');
 		$octaveButtonClass.addClass('disabled');
