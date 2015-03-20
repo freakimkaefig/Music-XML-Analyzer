@@ -4,7 +4,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	noteElements = [],
 	noteElements4VexFlow = [],
 
-	curMode = "2",
+	curMode = 2,
 	curName = "c",
 	curAccidential = "none",
 	curDuration = "quarter",
@@ -29,29 +29,28 @@ MusicXMLAnalyzer.PatternModel = function(){
 	beamVal = false,
 
 
-	init = function(){
+	init = function() {
 
 	},
 
 	setCurrentMode = function(mode) {
 		curMode = mode;
-		console.log("mode set to: " + curMode + " fkt missing");
-		//TODO add 3 trigger
+		//set variables to default vals when there is mode 1 or 0
 		switch(curMode) {
-		    //sound sequence
-		    case 0:
-		    console.log("TODO set sound sequence");
-		        break;
-	        //rhythm
-	        case 1:
-		    console.log("TODO set rhythm");
-		        break;
-		    //melody
-		    case 2:
-		    console.log("TODO melody");
-		    	break;
+			//sound sequence
+			case 0:
+				setDefaultValsForSoundSequenceMode();
+				break;
+			//rhythm
+			case 1:
+				setDefaultValsForRhythmMode();
+				break;
+			case 2:
+				setDefaultValsForMelodyMode();
+				break;
 		}
-
+		//update view
+		$(that).trigger('changeViewToCurrentMode', [curMode]);
 	},
 
 	getCurrentMode = function() {
@@ -160,15 +159,14 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		setValuesForNoteElement();
 
+		if (curMode == 2) {
 			if(first){
 				first = false;
 				if (curName != "break") {
 					noteElements.push({
-					//TODO 
-					//Mode für Dave im moment hart gecoded
-					//meldoy modes
-					type: 2,
-						notes:[
+					type: curMode,
+						notes:
+						[
 							{
 								type: "note",
 								pitch: {
@@ -180,7 +178,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 									beam: beamVal
 								}
 							}
-					]
+						]
 					});
 				} else {
 					//break
@@ -190,7 +188,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 							duration: curDuration
 					});
 				}
-	
 			} else {
 				if (curName != "break") {
 					noteElements.push(
@@ -204,8 +201,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 								dot: isDot,
 								beam: beamVal
 							}
-						
-						
 					});	
 				} else {
 					//break
@@ -216,35 +211,116 @@ MusicXMLAnalyzer.PatternModel = function(){
 					});
 				}
 			}
+		} else if (curMode == 1) {
+		// rhythm mode
 
-			console.log("noteELements: ", noteElements);
-
-			//check if break or normal note or note with accidential
-			//then adapt values for vexflow an put them into an array
-			var note;
-			var keyContent = getKeyContent4Vexflow(curName);
-			var durationContent = getDuration4Vexflow(curDuration);
-			//check if break or normal note or note with accidential
-			//then adapt values for vexflow an put them into an array
-			if (curName == "break") {
-				note = new Vex.Flow.StaveNote({ keys: ["b/4"],
-		    						duration: durationContent + VEXFLOW_REST_SIGN,
-		    						auto_stem: true });
+			if(first){
+				first = false;
+				if (curName != "break") {
+					noteElements.push({
+					type: curMode,
+						notes: [
+						{
+							type: "note",
+							ptich: {
+								type: curDuration,
+								dot: isDot,
+								beam: beamVal
+							}
+						}
+					]
+					});
+				} else {
+					//break
+					noteElements.push(
+					{
+							type: "rest",
+							duration: curDuration
+					});
+				}
 			} else {
-				note = new Vex.Flow.StaveNote({ keys: [keyContent + "/" + curOctave],
-		    						duration: durationContent,
-		    						auto_stem: true });	
+				if (curName != "break") {
+					noteElements.push(
+					{
+							type: "note",	
+							pitch: {
+								type: curDuration,
+								dot: isDot,
+								beam: beamVal
+							}
+					});	
+				} else {
+					//break
+					noteElements.push(
+					{
+							type: "rest",	
+							duration: curDuration
+					});
+				}
 			}
-
-			if (curAccidential == "#" || curAccidential == "b") {
-				note.addAccidental(0, new Vex.Flow.Accidental(curAccidential));
+		} else if (curMode == 0) {
+			if(first){
+				first = false;
+				if (curName != "break") {
+					noteElements.push({
+					type: curMode,
+						notes:
+						[
+							{
+								type: "note",
+								pitch: {
+									step: curName.toUpperCase(),
+									alter: noteElementAccidential,
+									octave: curOctave
+								}
+							}
+						]
+					});
+				}
+			} else {
+				if (curName != "break") {
+					noteElements.push(
+					{
+							type: "note",	
+							pitch: {
+								step: curName.toUpperCase(),
+								alter: noteElementAccidential,
+								octave: curOctave
+							}
+					});	
+				}
 			}
+		}
+			
+		console.log("noteELements: ", noteElements);
 
-			if (curRythSpec == "dotted") {
-				note.addDotToAll();	
-			}
+		//check if break or normal note or note with accidential
+		//then adapt values for vexflow an put them into an array
+		var note;
+		var keyContent = getKeyContent4Vexflow(curName);
+		var durationContent = getDuration4Vexflow(curDuration);
 
-			noteElements4VexFlow.push(note);
+		//check if break or normal note or note with accidential
+		//then adapt values for vexflow an put them into an array
+		if (curName == "break") {
+			note = new Vex.Flow.StaveNote({ keys: ["b/4"],
+	    						duration: durationContent + VEXFLOW_REST_SIGN,
+	    						auto_stem: true });
+		} else {
+			note = new Vex.Flow.StaveNote({ keys: [keyContent + "/" + curOctave],
+	    						duration: durationContent,
+	    						auto_stem: true });	
+		}
+
+		if (curAccidential == "#" || curAccidential == "b") {
+			note.addAccidental(0, new Vex.Flow.Accidental(curAccidential));
+		}
+
+		if (curRythSpec == "dotted") {
+			note.addDotToAll();	
+		}
+
+		noteElements4VexFlow.push(note);
 
 		//check if triplet
 		if (curRythSpec == "triplet") {
@@ -280,17 +356,49 @@ MusicXMLAnalyzer.PatternModel = function(){
 	
 	},
 
+	setDefaultValsForSoundSequenceMode = function() {
+		curDuration = "quarter";
+		curRythSpec = "none";
+	},
+
+	setDefaultValsForRhythmMode = function() {
+		curName = "b";
+		curOctave = "4";
+		curAccidential = "none";
+		curClef = "G";
+	},
+
+	setDefaultValsForMelodyMode = function() {
+		curMode = 2;
+		curName = "c";
+		curOctave = "4";
+		curAccidential = "none";
+		curDuration = "quarter";
+		curClef = "G";
+		curRythSpec = "none";
+		
+
+		//TODO 
+		//update view to this default vals
+		$(that).trigger('changeSelectedNoteName', "c");
+		$(that).trigger('changeSelectedOctave', "4");
+		$(that).trigger('changeSelectedAccidential', "none");
+		$(that).trigger('changeSelectedDuration', "quarter");
+		$(that).trigger('changeSelectedClef', "G");
+		$(that).trigger('changeSelectedSpecRyth', "none");
+	},
+
 	getTripletEndPositions = function() {
 		return tripletEndPositions;
-	}
+	},
 
 	getTupletArray = function() {
 		return tupletArray;
-	}
+	},
 
 	getBeamArray = function() {
 		return beamArray;
-	}
+	},
 
 	getKeyContent4Vexflow = function(noteName) {
 		var keyContent = noteName;
@@ -348,8 +456,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curOctave = noteContainer[1];
 
 		// updates selected btns for note name and view in pattern view
-		$(that).trigger('changeSelectedNoteNameByClick', [curName]);
-		$(that).trigger('changeSelectedOctaveByClick', [curOctave]);
+		$(that).trigger('changeSelectedNoteName', [curName]);
+		$(that).trigger('changeSelectedOctave', [curOctave]);
 		
 		addNoteElement();
 

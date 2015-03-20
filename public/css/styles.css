@@ -86,8 +86,9 @@ a:focus {
 	display: inline;
 }
 
-.btn-group {
-	margin-top: 5px;
+.disabled input {
+	cursor: not-allowed;
+
 }
 
 /* === LOGS === */
