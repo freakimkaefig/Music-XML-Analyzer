@@ -253,15 +253,15 @@ MusicXMLAnalyzer.PatternController = function() {
 	onViewChangedToCurrentMode = function(event, mode) {
 		switch(mode) {
 		    //sound sequence
-		    case "0":
+		    case 0:
 		    patternView.setToSoundSequenceMode();
 		        break;
 	        //rhythm
-	        case "1":
+	        case 1:
 	        patternView.setToRhythmMode();
 		        break;
 		    //melody
-		    case "2":
+		    case 2:
 		    patternView.setToMelodyMode();
 		    	break;
 		}

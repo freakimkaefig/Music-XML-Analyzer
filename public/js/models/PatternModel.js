@@ -4,7 +4,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	noteElements = [],
 	noteElements4VexFlow = [],
 
-	curMode = "2",
+	curMode = 2,
 	curName = "c",
 	curAccidential = "none",
 	curDuration = "quarter",
@@ -148,10 +148,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 				first = false;
 				if (curName != "break") {
 					noteElements.push({
-					//TODO 
-					//Mode für Dave im moment hart gecoded
-					//meldoy modes
-					type: 2,
+					type: curMode,
 						notes:[
 							{
 								type: "note",

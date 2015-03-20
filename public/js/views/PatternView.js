@@ -140,7 +140,7 @@ MusicXMLAnalyzer.PatternView = function(){
 	onModeButtonClick = function(event) {
 		var modeButtonId = event.target.id;
 		// slice -1 gets the last char of the mode id
-		patternController.changeMode(modeButtonId.slice(-1));
+		patternController.changeMode(parseInt(modeButtonId.slice(-1)));
 	},
 
 	onNoteButtonClick = function(event) {
