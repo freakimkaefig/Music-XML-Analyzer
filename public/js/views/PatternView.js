@@ -187,6 +187,26 @@ MusicXMLAnalyzer.PatternView = function(){
 		$("#" + octave + "").addClass("active");
 	},
 
+	setAccidentialActive = function(accidential) {
+		$(".btn-accidential.active").removeClass("active");
+		$("#" + accidential + "").addClass("active");
+	},
+
+	setDurationActive = function(duration) {
+		$(".btn-duration.active").removeClass("active");
+		$("#" + duration + "").addClass("active");
+	},
+
+	setClefActive = function(clef) {
+		$(".btn-clef.active").removeClass("active");
+		$("#" + clef + "").addClass("active");
+	},
+
+	setSpecRythActive = function(specRyth) {
+		$(".btn-special-ryth.active").removeClass("active");
+		$("#" + specRyth + "").addClass("active");
+	},
+
 	setToMelodyMode = function() {
 		console.log("pattern view set melody");
 		$noteButtonClass.removeClass("disabled");
@@ -227,6 +247,10 @@ MusicXMLAnalyzer.PatternView = function(){
 	that.setPatternValue = setPatternValue;
 	that.setNoteNameActive = setNoteNameActive;
 	that.setOctaveActive = setOctaveActive;
+	that.setAccidentialActive = setAccidentialActive;
+	that.setDurationActive = setDurationActive;
+	that.setClefActive = setClefActive;
+	that.setSpecRythActive = setSpecRythActive;
 	that.setToSoundSequenceMode = setToSoundSequenceMode;
 	that.setToRhythmMode = setToRhythmMode;
 	that.setToMelodyMode = setToMelodyMode;

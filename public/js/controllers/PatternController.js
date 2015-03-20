@@ -33,8 +33,13 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternModel.init();
 		$(patternModel).on('patternChange', onPatternChange);
 		$(patternModel).on('updateNotationView', onNotationViewUpdate);
-		$(patternModel).on('changeSelectedNoteNameByClick', onNoteNameSelectionChange);
-		$(patternModel).on('changeSelectedOctaveByClick', onOctaveSelectionChange);
+
+		$(patternModel).on('changeSelectedNoteName', onNoteNameSelectionChange);
+		$(patternModel).on('changeSelectedOctave', onOctaveSelectionChange);
+		$(patternModel).on('changeSelectedAccidential', onAccidentialSelectionChange);
+		$(patternModel).on('changeSelectedDuration', onDurationSelectionChange);
+		$(patternModel).on('changeSelectedClef', onClefSelectionChange);
+		$(patternModel).on('changeSelectedSpecRyth', onSpecRythSelectionChange);
 
 		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
 
@@ -197,13 +202,29 @@ MusicXMLAnalyzer.PatternController = function() {
 		notationView.renderNotes(vexflowNotes);
 	},
 
-	onNoteNameSelectionChange = function(event, selectedNoteNameByClick) {
-		patternView.setNoteNameActive(selectedNoteNameByClick);
+	onNoteNameSelectionChange = function(event, selectedNoteName) {
+		patternView.setNoteNameActive(selectedNoteName);
 	},
 
-	onOctaveSelectionChange = function(event, selectedOctaveByClick) {
-		patternView.setOctaveActive(selectedOctaveByClick);
+	onOctaveSelectionChange = function(event, selectedOctave) {
+		patternView.setOctaveActive(selectedOctave);
 	},
+
+	onAccidentialSelectionChange = function(event, selectedAcc) {
+		patternView.setAccidentialActive(selectedAcc);
+	},
+
+	onDurationSelectionChange = function(event, selectedDur) {
+		patternView.setDurationActive(selectedDur);
+	},
+
+	onClefSelectionChange = function(event, selectedClef) {
+		patternView.setClefActive(selectedClef);
+	},
+
+	onSpecRythSelectionChange = function(event, selectedSpecRyth) {
+		patternView.setSpecRythActive(selectedSpecRyth);
+	},	
 
 	changeMode = function(val) {
 		patternModel.setCurrentMode(val);

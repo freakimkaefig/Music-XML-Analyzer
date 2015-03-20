@@ -50,7 +50,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 				break;
 		}
 		//update view
-		$(that).trigger('changeViewToCurrentMode', curMode);
+		$(that).trigger('changeViewToCurrentMode', [curMode]);
 	},
 
 	getCurrentMode = function() {
@@ -371,14 +371,21 @@ MusicXMLAnalyzer.PatternModel = function(){
 	setDefaultValsForMelodyMode = function() {
 		curMode = 2;
 		curName = "c";
+		curOctave = "4";
 		curAccidential = "none";
 		curDuration = "quarter";
 		curClef = "G";
 		curRythSpec = "none";
-		curOctave = "4";
+		
 
 		//TODO 
 		//update view to this default vals
+		$(that).trigger('changeSelectedNoteName', "c");
+		$(that).trigger('changeSelectedOctave', "4");
+		$(that).trigger('changeSelectedAccidential', "none");
+		$(that).trigger('changeSelectedDuration', "quarter");
+		$(that).trigger('changeSelectedClef', "G");
+		$(that).trigger('changeSelectedSpecRyth', "none");
 	},
 
 	getTripletEndPositions = function() {
@@ -449,8 +456,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curOctave = noteContainer[1];
 
 		// updates selected btns for note name and view in pattern view
-		$(that).trigger('changeSelectedNoteNameByClick', [curName]);
-		$(that).trigger('changeSelectedOctaveByClick', [curOctave]);
+		$(that).trigger('changeSelectedNoteName', [curName]);
+		$(that).trigger('changeSelectedOctave', [curOctave]);
 		
 		addNoteElement();
 
