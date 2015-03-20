@@ -66,7 +66,7 @@ MusicXMLAnalyzer.ResultView = function(){
             var dataURI = canvas.toDataURL("image/jpeg", 1.0);
 
             // return dataURI;
-        	console.log(dataURI);
+        	// console.log(dataURI);
         	addImageToDOM(index, dataURI);
         };
 
@@ -100,25 +100,32 @@ MusicXMLAnalyzer.ResultView = function(){
 
 		doc.setFontSize(14);
 		doc.text(15, 240, "created with MusicXMLAnalyzer");
-		doc.text(15, 250, "http://mydomain.de");
+		doc.text(15, 250, "http://musicxmlanalyzer.de");
 
-		console.log(doc);
+		// console.log(doc);
+		var pageHeader = $artist.text() + " - " + $title.text();
 
 		// add page for each result
 		$('.item').each(function(index) {
 			doc.addPage();
+			var pageNumber = "" + (index + 2);
+
+			// insert page number
+			doc.setFontSize(10);
+			doc.text(15, 20, pageHeader);
+			doc.text(190, 20, pageNumber);
 
 			// insert facts
 			doc.setFontSize(14);
-			doc.text(15, 20, $(this).find('.partName').text());
-			doc.text(15, 30, $(this).find('.partId').text());
-			doc.text(15, 40, $(this).find('.voice').text());
-			doc.text(15, 50, $(this).find('.key').text());
-			doc.text(15, 60, $(this).find('.measures').text());
+			doc.text(15, 40, $(this).find('.partName').text());
+			doc.text(15, 50, $(this).find('.partId').text());
+			doc.text(15, 60, $(this).find('.voice').text());
+			doc.text(15, 70, $(this).find('.key').text());
+			doc.text(15, 80, $(this).find('.measures').text());
 
 			// insert result extract
 			var resultimg = $(this).find('.image').val();
-			doc.addImage(resultimg, "JPEG", 15, 80);
+			doc.addImage(resultimg, "JPEG", 15, 100);
 		});
 
 		// save doc
@@ -155,7 +162,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	},
 
 	renderNotes = function(measures, canvas, renderer, context, stave) {
-		console.log("before", measures);
+		// console.log("before", measures);
 
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -296,11 +303,11 @@ MusicXMLAnalyzer.ResultView = function(){
 			ties[t].setContext(context).draw();
 		}
 
-		console.log("after", measures);
+		// console.log("after", measures);
 	},
 
 	generateVexflowNotes = function(pattern, result) {
-		console.log("MusicXMLAnalyzer.ResultView.generateVexflowNotes" , "pattern", pattern);
+		// console.log("MusicXMLAnalyzer.ResultView.generateVexflowNotes" , "pattern", pattern);
 
 		// prepare pattern if no result from ResultController.php
 		if (!result) {

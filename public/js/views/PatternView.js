@@ -34,7 +34,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 
 		// soundSequence pattern:
-		/*$('#patternValue').val(JSON.stringify(
+		$('#patternValue').val(JSON.stringify(
 			[{
 				type: 0,
 				notes: [
@@ -54,7 +54,7 @@ MusicXMLAnalyzer.PatternView = function(){
 					}
 				]
 			}]
-		));*/
+		));
 
 
 		// rhythm pattern:
@@ -80,11 +80,11 @@ MusicXMLAnalyzer.PatternView = function(){
 
 
 		// melody pattern:
-		$('#patternValue').val(JSON.stringify(
+		/*$('#patternValue').val(JSON.stringify(
 			[{
 				type: 2,
 				notes: [
-					/*{
+					{
 						type: "note",
 						pitch: {
 							step: "E",
@@ -116,7 +116,7 @@ MusicXMLAnalyzer.PatternView = function(){
 							dot: false,
 							beam: "end"	// Triole (3)
 						}
-					},*/
+					},
 					{
 						type: "note",
 						pitch: {
@@ -147,7 +147,7 @@ MusicXMLAnalyzer.PatternView = function(){
 					
 				]
 			}]
-		)); 
+		));*/
 	},
 
 	onModeButtonClick = function(event) {

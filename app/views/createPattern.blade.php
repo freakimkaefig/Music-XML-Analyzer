@@ -2,7 +2,7 @@
 @section('content')
 <div class="row text-center">
 	<div class="col-xs-12">
-		<h1 class="text-center">Create Your Pattern</h1>
+		<h1 class="text-center">Search</h1>
 	</div>
 </div>
 
@@ -34,8 +34,8 @@
 <canvas class="center-block" id="myCanvas" width="700" height="120" style="border:1px solid #000000; margin:auto"></canvas>
 
 <div class="row text-center">
-	<div class="col-xs-12 marbo20 marto10">
-		<h5><strong>Hint: </strong>Search for patterns via direct input or use the buttons below</h5>
+	<div class="col-xs-6 col-xs-offset-3 marbo20 marto10">
+		<h5><strong>Hint: </strong>Search for patterns in your uploaded files. You can input the notes directly by clicking on the above stave or by using the buttons below.</h5>
 	</div>
 </div>
 
