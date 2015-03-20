@@ -11,13 +11,13 @@ The user should be able to search for specific patterns in his corpus. The searc
 - [x] Setup Laravel Framework
 - [x] Setup IA
 - [x] Sketch the GUI
-- [ ] Implement functionality
+- [x] Implement functionality
   - [x] Upload
   - [x] Analyse
   - [x] Dashboard
   - [x] Pattern search
-  - [ ] Playing search results
+  - [x] Playing search results
   - [x] Export of analysis results
-  - [ ] Export of pattern search results
+  - [x] Export of pattern search results
 - [ ] Bug fixing
 - [ ] Document the project
