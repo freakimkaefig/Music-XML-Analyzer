@@ -263,14 +263,16 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			if (!mergedArr.meter.length) {
 				mergedArr.meter.push({ label: resultsArr[i].value.meter, value: 1 });
 			} else {
+				var found = false;
 				for (var meterCounter = 0; meterCounter < mergedArr.meter.length; meterCounter++) {
-					if (mergedArr.meter[meterCounter].label === resultsArr[i].value.meter) {
-						mergedArr.meter[meterCounter].value += 1;
-						break;
-					} else {
-						mergedArr.meter.push({ label: resultsArr[i].value.meter, value: 1 });
+					if (mergedArr.meter[meterCounter].label == resultsArr[i].value.meter) {
+						found = true;
+						mergedArr.meter[meterCounter].value++;
 						break;
 					}
+				}
+				if (!found) {
+					mergedArr.meter.push({ label: resultsArr[i].value.meter, value: 1 });
 				}
 			}
 

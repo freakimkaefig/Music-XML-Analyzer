@@ -123,7 +123,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	onFileSelectorChange = function(event) {
-		console.info('MusicXMLAnalyzer.DashboardView.onFileSelectorChange', $fileSelector.find('select').val());
+		// console.info('MusicXMLAnalyzer.DashboardView.onFileSelectorChange', $fileSelector.find('select').val());
 		$(that).trigger('onFileSelectorChange', [ $fileSelector.find('select').val() ]);
 	},
 
