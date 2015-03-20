@@ -73,6 +73,11 @@ a:focus {
 	display: inline;
 }
 
+.disabled input {
+	cursor: not-allowed;
+
+}
+
 /* === LOGS === */
 .logBox {
 	display: none;

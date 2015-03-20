@@ -189,18 +189,36 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setToMelodyMode = function() {
 		console.log("pattern view set melody");
-		// $playPattern.prop('disabled', true);
-		// $stopPattern.prop('disabled', false);
+		$noteButtonClass.removeClass("disabled");
+		$accidentialButtonClass.removeClass("disabled");
+		$durationButtonClass.removeClass("disabled");
+		$clefButtonClass.removeClass("disabled");
+		$specialRythButtonClass.removeClass("disabled");
+		$octaveButtonClass.removeClass("disabled");
 	},
 
 	setToSoundSequenceMode = function() {
 		//TODO
 		console.log("pattern view set Sound sequence");
+		$durationButtonClass.addClass('disabled');
+		$specialRythButtonClass.addClass('disabled');
+
+		$noteButtonClass.removeClass('disabled');
+		$octaveButtonClass.removeClass('disabled');
+		$clefButtonClass.removeClass('disabled');
+		$accidentialButtonClass.removeClass('disabled');
 	},
 
 	setToRhythmMode = function() {
 		//TODO
 		console.log("pattern view set rhythm");
+		$noteButtonClass.addClass('disabled');
+		$octaveButtonClass.addClass('disabled');
+		$clefButtonClass.addClass('disabled');
+		$accidentialButtonClass.addClass('disabled');
+
+		$durationButtonClass.removeClass('disabled');
+		$specialRythButtonClass.removeClass('disabled');
 	},
 
 	onRemoveButtonClick = function(event) {
