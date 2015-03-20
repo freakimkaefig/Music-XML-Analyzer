@@ -10,29 +10,32 @@ class SearchController extends BaseController {
 		$user = User::find(Cookie::get('user_id'));
 		$user->uploads->each(function($upload) {
 			if (!$upload->result) {
-				$xml = simplexml_load_file($upload->url);
-
-				$resultObject = new stdClass();
-				$resultObject->file_url = $upload->url;
-				$resultObject->artist = array((string) $this->_determineArtist($xml));
-				$resultObject->title = array((string) $this->_determineTitle($xml));
-				$resultObject->clef = $this->_determineClef($xml);
-				$resultObject->key = $this->_determineKey($xml);
-				$resultObject->meter = $this->_determineMeter($xml);
-				$resultObject->instruments = $this->_determineInstruments($xml);
-				$resultObject->count_measures = $this->_countMeasures($xml);
-				$resultObject->count_notes = (int)$this->_countNotes($xml) - (int)$this->_countRests($xml);
-				$resultObject->note_distribution = $this->_countNoteValues($xml);
-				$resultObject->note_types = $this->_countNoteTypes($xml);
-				$resultObject->count_rests = $this->_countRests($xml);
-				$resultObject->most_frequent_note = $this->_determineMostFrequentNote($xml);
-				$resultObject->intervals = $this->_countIntervals($xml);
-
+				// if no result for upload exists, create a new result
 				$result = new Result;
-				$result->value = json_encode($resultObject);
 				$result->upload()->associate($upload);
-				$result->save();
+			} else {
+				// if a result for upload already exists, get result and overwrite value
+				$result = $upload->result;
 			}
+			$xml = simplexml_load_file($upload->url);
+			$resultObject = new stdClass();
+			$resultObject->file_url = $upload->url;
+			$resultObject->artist = array((string) $this->_determineArtist($xml));
+			$resultObject->title = array((string) $this->_determineTitle($xml));
+			$resultObject->clef = $this->_determineClef($xml);
+			$resultObject->key = $this->_determineKey($xml);
+			$resultObject->meter = $this->_determineMeter($xml);
+			$resultObject->instruments = $this->_determineInstruments($xml);
+			$resultObject->count_measures = $this->_countMeasures($xml);
+			$resultObject->count_notes = (int)$this->_countNotes($xml) - (int)$this->_countRests($xml);
+			$resultObject->note_distribution = $this->_countNoteValues($xml);
+			$resultObject->note_types = $this->_countNoteTypes($xml);
+			$resultObject->count_rests = $this->_countRests($xml);
+			$resultObject->most_frequent_note = $this->_determineMostFrequentNote($xml);
+			$resultObject->intervals = $this->_countIntervals($xml);
+
+			$result->value = json_encode($resultObject);
+			$result->save();
 		});
 
 		return Redirect::route('dashboard');
@@ -711,8 +714,17 @@ class SearchController extends BaseController {
 		//häufigkeiten der Noten zählen
 		$countedNotes = $this->_countNoteValues($xml);
 
+		usort($countedNotes, function($a, $b) {
+			if ($a->value == $b->value) {
+				return 0;
+			}
+
+			return $a->value < $b->value ? -1 : 1;
+		});
+		$highest = array_slice($countedNotes, -1, 1);
+
 	    //häufigste note ausgeben
-	    return array_search(max($countedNotes), $countedNotes);
+	    return $highest[0]->label;
 
 	}
 
