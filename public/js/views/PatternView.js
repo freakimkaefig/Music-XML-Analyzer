@@ -148,7 +148,11 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onAccidentialButtonClick = function(event) {
-		patternController.changeAccidential(event.target.id);
+		// var accidential = event.target.id;
+		var acc = event.target.id;
+		acc = acc.substring(acc.indexOf("-") + 1, acc.length)
+		console.log("pattern view: " + acc);
+		patternController.changeAccidential(acc);
 	},
 
 	onDurationButtonClick = function(event) {
@@ -187,9 +191,9 @@ MusicXMLAnalyzer.PatternView = function(){
 		$("#" + octave + "").addClass("active");
 	},
 
-	setAccidentialActive = function(accidential) {
+	setAccidentialActive = function(acc) {
 		$(".btn-accidential.active").removeClass("active");
-		$("#" + accidential + "").addClass("active");
+		$("#accidential-" + acc + "").addClass("active");
 	},
 
 	setDurationActive = function(duration) {

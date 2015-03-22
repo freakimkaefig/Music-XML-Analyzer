@@ -81,13 +81,13 @@
 			<p></p>
 			<p>Accidential: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label id="none" class="btn btn-accidential btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+				<label id="accidential-none" class="btn btn-accidential btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":none">none
 				</label>
-				<label id="#" class="btn btn-accidential btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+				<label id="accidential-#" class="btn btn-accidential btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":#">#
 				</label>
-				<label id="b" class="btn btn-accidential btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+				<label id="accidential-b" class="btn btn-accidential btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":b">b
 				</label>
 			</div>
