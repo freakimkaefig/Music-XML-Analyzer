@@ -162,6 +162,7 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onSpecialRythButtonClick = function(event) {
+		//get the and of the specRyth String after the -
 		var specRyth = event.target.id;
 		specRyth = specRyth.substring(specRyth.indexOf("-") + 1, specRyth.length)
 		patternController.changeSpecialRyth(specRyth);
@@ -208,7 +209,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setSpecRythActive = function(specRyth) {
 		$(".btn-special-ryth.active").removeClass("active");
-		$("#spec-ryth-" + specRyth + "").addClass("active");
+		$("#spec-" + specRyth + "").addClass("active");
 	},
 
 	setToMelodyMode = function() {
