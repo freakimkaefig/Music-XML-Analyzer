@@ -148,10 +148,8 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onAccidentialButtonClick = function(event) {
-		// var accidential = event.target.id;
 		var acc = event.target.id;
 		acc = acc.substring(acc.indexOf("-") + 1, acc.length)
-		console.log("pattern view: " + acc);
 		patternController.changeAccidential(acc);
 	},
 
@@ -164,7 +162,9 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onSpecialRythButtonClick = function(event) {
-		patternController.changeSpecialRyth(event.target.id);
+		var specRyth = event.target.id;
+		specRyth = specRyth.substring(specRyth.indexOf("-") + 1, specRyth.length)
+		patternController.changeSpecialRyth(specRyth);
 	},
 
 	onOctaveButtonClick = function(event) {
@@ -208,7 +208,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setSpecRythActive = function(specRyth) {
 		$(".btn-special-ryth.active").removeClass("active");
-		$("#" + specRyth + "").addClass("active");
+		$("#spec-ryth-" + specRyth + "").addClass("active");
 	},
 
 	setToMelodyMode = function() {
