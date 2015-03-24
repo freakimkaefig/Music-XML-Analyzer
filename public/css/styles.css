@@ -75,7 +75,6 @@ a:focus {
 }
 
 .btn.active:not(.disabled) {
-	/*opacity: 0.8;*/
 	background-color: #37474f !important;
 }
 
@@ -85,11 +84,6 @@ a:focus {
 
 .inline-list li {
 	display: inline;
-}
-
-.disabled input {
-	cursor: not-allowed;
-
 }
 
 /* === LOGS === */
