@@ -352,8 +352,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 
 		noteElements4VexFlow.push(note);
-		console.log("curDuration " + curDuration);
-		console.log("last " + lastDurationForTriplet);
 		//check if triplet
 		if (curRythSpec == "triplet" && curDuration == lastDurationForTriplet) {
 			console.log("if");
@@ -377,20 +375,23 @@ MusicXMLAnalyzer.PatternModel = function(){
 			//when there are already 1 or 2 triplets, they will be deleted and removed from the note and vexflow array
 			if (tripletCurrentAmount > 0) {
 				//splice -> (position in array, number of elements to be removed)
+				//position in array -> starts with 0
 
 				noteElements4VexFlow.splice(
-					// +1 because of array pos begins with 0
+					// +1 because you should remove the last 3
 					noteElements4VexFlow.length - (tripletCurrentAmount + 1), tripletCurrentAmount + 1);
 
 				noteElements.slice(
+					// +1 because you should remove the last 3
 					noteElements.length - (tripletCurrentAmount + 1), tripletCurrentAmount + 1);
 
 				tripletCurrentAmount = 0;
 			}
 		}
 
-		console.log("tripletCurrentAmount: AFTER " + tripletCurrentAmount);
-		console.log("vexNotes: AFTER ", noteElements4VexFlow);
+		if(noteElements.length == 0) {
+			first = true;
+		}
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
@@ -536,9 +537,21 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	removeLastNoteElement = function() {
-		//ToDo: do "first = true;"" if LastNoteElement equals first note element
-		//and remove this element
-	    console.log("model: remove last note button; function missing");
+
+	    if(noteElements[noteElements.length-1].notes[0].pitch.beam != false) {
+	    	tripletCurrentAmount--;
+	    }
+
+	    noteElements.pop();
+	    noteElements4VexFlow.pop();
+
+	    if(noteElements.length == 0) {
+	    	first = true;
+	    }
+	        
+	    $(that).trigger('patternChange', [noteElements]);
+		// send vexflow note elements to controller and then back to view
+		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
 	    //console.log(noteElements4VexFlow);
 	},
 
