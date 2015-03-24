@@ -144,7 +144,7 @@ MusicXMLAnalyzer.ResultView = function(){
 			stave.addClef("treble").setContext(context).draw();
 
 			// console.log(index, notes);
-			renderNotes(measures, canvas, renderer, context, stave);
+			renderNotes(measures, canvas, renderer, context, stave, false);
 		});
 	},
 
@@ -158,10 +158,10 @@ MusicXMLAnalyzer.ResultView = function(){
 		var stave = new Vex.Flow.Stave(10, 0, 700);
 		stave.addClef("treble").setContext(context).draw();
 		
-		renderNotes(vexflowNotes, patternCanvas, renderer, context, stave);
+		renderNotes(vexflowNotes, patternCanvas, renderer, context, stave, true);
 	},
 
-	renderNotes = function(measures, canvas, renderer, context, stave) {
+	renderNotes = function(measures, canvas, renderer, context, stave, pattern) {
 		// console.log("before", measures);
 
 		// delete canvas
@@ -199,7 +199,7 @@ MusicXMLAnalyzer.ResultView = function(){
 				y = (i - 1) * (height / 2);
 			}
 
-			if (measures[i].pattern.type < 2) {
+			if (pattern) {
 				width = 690;
 				height = 120;
 			}
