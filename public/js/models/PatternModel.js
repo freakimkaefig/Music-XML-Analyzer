@@ -354,8 +354,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		noteElements4VexFlow.push(note);
 		//check if triplet
 		if (curRythSpec == "triplet" && curDuration == lastDurationForTriplet) {
-			console.log("if");
-			console.log("tripletCurrentAmount: " + tripletCurrentAmount);
 			if (tripletCurrentAmount == 3) {
 				tripletCurrentAmount = 0;
 				//store all end positions of the triplets
@@ -370,7 +368,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 			lastDurationForTriplet = curDuration;
 			console.log("last dur set to: " + lastDurationForTriplet);
 		} else {
-			console.log("else");
 			//when user changes from triplet into different rythSpec
 			//when there are already 1 or 2 triplets, they will be deleted and removed from the note and vexflow array
 			if (tripletCurrentAmount > 0) {
@@ -381,7 +378,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					// +1 because you should remove the last 3
 					noteElements4VexFlow.length - (tripletCurrentAmount + 1), tripletCurrentAmount + 1);
 
-				noteElements.slice(
+				noteElements.splice(
 					// +1 because you should remove the last 3
 					noteElements.length - (tripletCurrentAmount + 1), tripletCurrentAmount + 1);
 
@@ -392,6 +389,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 		if(noteElements.length == 0) {
 			first = true;
 		}
+
+		console.log("noteELements: ", noteElements);
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
@@ -538,12 +537,29 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	removeLastNoteElement = function() {
 
-	    if(noteElements[noteElements.length-1].notes[0].pitch.beam != false) {
-	    	tripletCurrentAmount--;
-	    }
+		console.log("noteElements removeBegin: ", noteElements)
+		//check if element you want to delete is triplet
 
-	    noteElements.pop();
-	    noteElements4VexFlow.pop();
+	    if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
+	    	tripletCurrentAmount = 0;
+	    	noteElements[0].notes.pop();
+	    	noteElements4VexFlow.pop();
+	    	if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
+	    		if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
+	    			noteElements[0].notes.pop();
+	    			noteElements4VexFlow.pop();
+	    			if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
+	    				if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
+		    			noteElements[0].notes.pop();
+		    			noteElements4VexFlow.pop();
+		    			}
+	    			}
+	    		}
+	    	}
+	    } else {
+	    	noteElements[0].notes.pop();
+	    	noteElements4VexFlow.pop();	
+	    }
 
 	    if(noteElements.length == 0) {
 	    	first = true;
