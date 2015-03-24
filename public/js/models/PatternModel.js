@@ -34,7 +34,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentMode = function(mode) {
+		if (curMode != mode) {
+			emptyNoteArrays();
+		}
+
 		curMode = mode;
+
 		//set variables to default vals when there is mode 1 or 0
 		switch(curMode) {
 			//sound sequence
@@ -52,6 +57,16 @@ MusicXMLAnalyzer.PatternModel = function(){
 		//update view
 		$(that).trigger('changeViewToCurrentMode', [curMode]);
 	},
+
+	/*
+	This method empties the notes arrays and sets the val
+	first to true.
+	*/
+	emptyNoteArrays = function() {
+		noteElements = [];
+		noteElements4VexFlow = [];
+		first = true;
+	}
 
 	getCurrentMode = function() {
 		return curMode;
