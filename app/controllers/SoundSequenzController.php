@@ -76,7 +76,7 @@ class SoundSequenzController {
 							$lastVoice = $part->measure[$i]->note[$j]->voice;
 						}
 						
-						if(!isset($n->rest)){
+						if(!isset($n->rest)){ //exclude rests (only looking for note patterns)
 
 							$pitch = new stdClass();
 							$pitch->step = $n->pitch->step;

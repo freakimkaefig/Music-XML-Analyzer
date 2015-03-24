@@ -25,7 +25,6 @@
 			</div>
 		</div>
 	</div>
-	<hr>
 	<div class="tbody">
 			@foreach($results as $result)
 				@include('results.item', array('result' => $result))

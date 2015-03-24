@@ -52,7 +52,7 @@
 		<div id="bar_intervalDistribution" class="bar-chart col-xs-12"></div>
 	</div>
 
-	<div class="row row-centered">
+	<div class="row text-center">
 		{{-- <h3 class="text-center">Key Distribution</h3> --}}
 		<div id="pie_keyDistribution" class="pie col-xs-4"></div>
 

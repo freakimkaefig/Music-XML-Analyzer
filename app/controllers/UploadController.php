@@ -46,7 +46,7 @@ class UploadController extends BaseController {
 		$timewise = $simpleXml->xpath("//score-timewise");
 		if ($timewise) {
 			$xslDoc = new DOMDocument();
-			$xslDoc->load(URL::to("timewise_to_partwise.xsl"));
+			$xslDoc->load(URL::to("libs/timewise_to_partwise.xsl"));
 
 			$xmlDoc = new DOMDocument();
 			$xmlDoc->load($url);

@@ -64,7 +64,7 @@ MusicXMLAnalyzer.PatternView = function(){
 				notes: [
 					{
 						type: "note",
-						ptich: {
+						pitch: {
 							type: "half",
 							dot: true,
 							beam: false
@@ -120,21 +120,34 @@ MusicXMLAnalyzer.PatternView = function(){
 					{
 						type: "note",
 						pitch: {
-							step: "C",
-							type: "eighth",
+							step: "F",
+							type: "half",
 							alter: 0,
-							octave: 5,
+							octave: 1,
+							dot: true,	// punktierte Note
+							beam: false
+						}
+					},
+					{
+						type: "note",
+						pitch: {
+							step: "F",
+							type: "half",
+							alter: 0,
+							octave: 2,
 							dot: true,	// punktierte Note
 							beam: false
 						}
 					}
-					{
-						type: "rest",	// Pause
-						duration: "whole"
-					}
+					// ,
+					// {
+					// 	type: "rest",	// Pause
+					// 	duration: "whole"
+					// }
+					
 				]
 			}]
-		)); */
+		));*/
 	},
 
 	onModeButtonClick = function(event) {

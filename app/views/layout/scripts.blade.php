@@ -36,8 +36,10 @@
 {{-- {{ HTML::script('libs/inc/jasmid/synth.js') }} --}}
 {{-- {{ HTML::script('libs/inc/jasmid/audio.js') }} --}}
 {{ HTML::script('libs/midijs/inc/jasmid/replayer.js') }}
- <!-- midi.js css -->
-{{-- {{ HTML::script('libs/midijs/css/MIDIPlayer.css') }} --}}
+
+<!-- jsPdf -->
+{{ HTML::script('libs/jsPDF-0.9.0rc2/dist/jspdf.min.js') }}
+
 
  <!-- others -->
 {{ HTML::script('js/helpers/Route.js') }}

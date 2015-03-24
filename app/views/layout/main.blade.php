@@ -9,8 +9,6 @@
 			@yield('content')
 		</div>
 		
-		@include('layout.footer')
-
 		@include('layout.scripts')
 	</body>
 </html>

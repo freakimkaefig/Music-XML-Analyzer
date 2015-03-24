@@ -17,23 +17,6 @@ class MelodyController {
 	}
 
 	public function search($pattern) {
-// dummy melody pattern:
-// melody: [
-// 	{
-// 		type: "note",
-//		pitch :
-//			{
-//				step: "C",
-//				type: "half",
-//				alter: 0,
-//				octave: 3
-//			}
-// 	},
-// 	{ 
-// 		type: "rest",
-// 		duration: "16th"
-// 	}
-// ]
 	
 		$p = $pattern[0]->notes;
 		self::$patternArray = array();
@@ -46,6 +29,17 @@ class MelodyController {
 				$obj = new stdClass();
 				$obj->interval = $interval;
 				$obj->type = $note->pitch->type;
+				if(isset($note->pitch->beam)){
+					if($note->pitch->beam != false){
+						$obj->beam = (string)$note->pitch->beam;
+					}
+				}
+				// else if dotted note
+				if(isset($note->pitch->dot)){
+					if($note->pitch->dot == true){
+						$obj->dot = "1";
+					}
+				}
 				array_push(self::$patternArray, $obj);
 			}else{
 				array_push(self::$patternArray, $note->duration);
@@ -117,6 +111,15 @@ class MelodyController {
 								$obj->interval = PatternController::getInterval($note);
 								$obj->type = $n->type;
 
+								if(isset($n->{'time-modification'})){
+									$obj->beam = (string)$n->beam[0];
+								}
+								// else if dotted note
+								//check with "!isnull" because n->dot === object(SimpleXMLElement)#226 (0) { } 
+								elseif(!is_null($n->dot)){
+									$obj->dot = "1";
+								}
+
 								array_push(self::$xmlArray, $obj);
 								array_push(self::$xmlPositionArray, $note->position);
 
@@ -135,21 +138,37 @@ class MelodyController {
 
 	// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
 								// determine 'type'
-								if($restDurationFloat == 1){
-									self::$restDuration = "whole";
-								}elseif($restDurationFloat == 0.5){
-									self::$restDuration = "half";
-								}elseif($restDurationFloat == 0.25){
-									self::$restDuration = "quarter";
-								}elseif($restDurationFloat == 0.125){
-									self::$restDuration = "eighth";
-								}elseif($restDurationFloat == 0.0625){
-									self::$restDuration = "16th";
-								}elseif($restDurationFloat == 0.03125){
-									self::$restDuration = "32nd";
-								}elseif($restDurationFloat == 0.015625){
-									self::$restDuration = "64th";
-								}else{
+								if ($restDurationFloat == 1){
+									$restDuration = "whole";
+								} elseif ($restDurationFloat == 0.75) {
+									$restDuration = "whole";
+								} elseif ($restDurationFloat == 0.5) {
+									$restDuration = "half";
+								} elseif ($restDurationFloat == 0.375) {
+									$restDuration = "half";
+								} elseif ($restDurationFloat == 0.25) {
+									$restDuration = "quarter";
+								} elseif ($restDurationFloat == 0.1875) {
+									$restDuration = "quarter";
+								} elseif ($restDurationFloat == 0.125) {
+									$restDuration = "eighth";
+								} elseif ($restDurationFloat == 0.09375) {
+									$restDuration = "eighth";
+								} elseif ($restDurationFloat == 0.0625) {
+									$restDuration = "16th";
+								} elseif ($restDurationFloat == 0.046875) {
+									$restDuration = "16th";
+								} elseif ($restDurationFloat == 0.03125) {
+									$restDuration = "32nd";
+								} elseif ($restDurationFloat == 0.0234375) {
+									$restDuration = "32nd";
+								} elseif ($restDurationFloat == 0.015625) {
+									$restDuration = "64th";
+								} elseif ($restDurationFloat == 0.01171875) {
+									$restDuration = "64th";
+								} else {
+									// catch strange values (FALLBACK)
+									$restDuration = "64th";	// set to lowest possible value
 									// 
 									// ERROR mit "0,75" -> punktierte halbe?
 									// 
@@ -164,7 +183,15 @@ class MelodyController {
 
 							//check if Array-length equals Pattern-length already
 							if(count(self::$xmlArray) == count(self::$patternArray)){
-								
+
+		// echo"<br><br><hr>array_values: <br>xmlArray:<br>";
+		// var_dump(array_values(self::$xmlArray));
+		// echo"<br><br>patternArray:<br>";
+		// var_dump(array_values(self::$patternArray));
+		// echo"<br><br>xmlPositionArray:";
+		// var_dump(self::$xmlPositionArray);
+		// echo"<br><br>";
+
 								// compare arrays
 								if(array_values(self::$xmlArray) == array_values(self::$patternArray)){
 									// create result

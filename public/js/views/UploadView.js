@@ -28,6 +28,11 @@ MusicXMLAnalyzer.UploadView = function(){
 		$uploadClose.on('click', onUploadClose);
 		setUploadSubmit(false);
 
+		var previewNode = document.querySelector('#template');
+		previewNode.id = '';
+		var previewTemplate = previewNode.parentNode.innerHTML;
+		previewNode.parentNode.removeChild(previewNode);
+
 		Dropzone.options.uploadDropzone = {
 			acceptedFiles: '.xml',
 			maxFiles: null,
@@ -36,7 +41,8 @@ MusicXMLAnalyzer.UploadView = function(){
 			// addedfile: onAddedFile,
 			error: onError,
 			success: onSuccess,
-			queuecomplete: onQueueComplete
+			queuecomplete: onQueueComplete,
+			previewTemplate: previewTemplate
 		};
 
 		gotValidFile = false;
@@ -112,6 +118,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	initLogMessages = function() {
+		console.info("initLogMessage");
 		uploadMessageCounter = 0;
 		$logMessages.show();
 		$logMessages.animate({
@@ -133,8 +140,8 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	addLogMessage = function(msg) {
-		console.info("addLogMessage", msg);
-		if (uploadCounter == 0) {
+		console.info("addLogMessage", msg, uploadCounter);
+		if (uploadCounter == 1) {
 			initLogMessages();
 		}
 		$('#log' + (uploadMessageCounter - 3)).animate({
