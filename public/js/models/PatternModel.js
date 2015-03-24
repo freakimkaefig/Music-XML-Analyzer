@@ -388,6 +388,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		if(noteElements.length == 0) {
 			first = true;
+			noteElements = [];
 		}
 
 		console.log("noteELements: ", noteElements);
@@ -537,9 +538,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	removeLastNoteElement = function() {
 
-		console.log("noteElements removeBegin: ", noteElements)
 		//check if element you want to delete is triplet
-
 	    if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
 	    	tripletCurrentAmount = 0;
 	    	noteElements[0].notes.pop();
@@ -552,6 +551,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	    				if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
 		    			noteElements[0].notes.pop();
 		    			noteElements4VexFlow.pop();
+		    			beamArray.pop();
+		    			tupletArray.pop();
 		    			}
 	    			}
 	    		}
@@ -563,6 +564,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	    if(noteElements.length == 0) {
 	    	first = true;
+	    	noteElements = [];
 	    }
 	        
 	    $(that).trigger('patternChange', [noteElements]);
