@@ -117,6 +117,10 @@ MusicXMLAnalyzer.ResultController = function(){
 					var noteOctave = note.pitch.octave;
 					var noteAlter = note.pitch.alter;
 					var noteDuration = getDuration(note.pitch.type);
+					if(typeof noteDuration === 'undefined'){
+						console.log("noteduration is undefined");
+						noteDuration = 0.25;
+					}
 					var chord = note.pitch.chord;
 
 					if(noteAlter != 0){
