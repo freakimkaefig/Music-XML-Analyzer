@@ -34,7 +34,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentMode = function(mode) {
+		if (curMode != mode) {
+			emptyNoteArrays();
+		}
+
 		curMode = mode;
+
 		//set variables to default vals when there is mode 1 or 0
 		switch(curMode) {
 			//sound sequence
@@ -52,6 +57,16 @@ MusicXMLAnalyzer.PatternModel = function(){
 		//update view
 		$(that).trigger('changeViewToCurrentMode', [curMode]);
 	},
+
+	/*
+	This method empties the notes arrays and sets the val
+	first to true.
+	*/
+	emptyNoteArrays = function() {
+		noteElements = [];
+		noteElements4VexFlow = [];
+		first = true;
+	}
 
 	getCurrentMode = function() {
 		return curMode;
@@ -253,29 +268,21 @@ MusicXMLAnalyzer.PatternModel = function(){
 				if (curName != "break") {
 					noteElements[0].notes.push(
 					{
-						notes:
-						[
-							{
-								type: "note",	
-								pitch: {
-									type: curDuration,
-									dot: isDot,
-									beam: beamVal
-								}	
-							}
-						]	
+							
+						type: "note",	
+						pitch: {
+							type: curDuration,
+							dot: isDot,
+							beam: beamVal
+						}	
+							
 					});	
 				} else {
 					//break
 					noteElements[0].notes.push(
 					{
-						notes:
-						[
-							{
-								type: "rest",	
-								duration: curDuration
-							}
-						]
+						type: "rest",	
+						duration: curDuration
 					});
 				}
 			}
@@ -303,17 +310,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 				if (curName != "break") {
 					noteElements[0].notes.push(
 					{
-						notes:
-						[
-							{
-								type: "note",	
-								pitch: {
-									step: curName.toUpperCase(),
-									alter: noteElementAccidential,
-									octave: curOctave
-								}	
-							}
-						]	
+						type: "note",	
+						pitch: {
+							step: curName.toUpperCase(),
+							alter: noteElementAccidential,
+							octave: curOctave
+						}	
 					});	
 				}
 			}
@@ -384,15 +386,15 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setDefaultValsForSoundSequenceMode = function() {
-		curDuration = "quarter";
-		curRythSpec = "none";
-	},
-
-	setDefaultValsForRhythmMode = function() {
 		curName = "b";
 		curOctave = "4";
 		curAccidential = "none";
 		curClef = "G";
+	},
+
+	setDefaultValsForRhythmMode = function() {
+		curDuration = "quarter";
+		curRythSpec = "none";
 	},
 
 	setDefaultValsForMelodyMode = function() {
