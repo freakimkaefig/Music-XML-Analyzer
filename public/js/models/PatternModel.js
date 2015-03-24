@@ -152,7 +152,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		    default:
 		        beamVal = false;
 		}
-		beamVal = false;
 	},
 
 	addNoteElement = function() {		
