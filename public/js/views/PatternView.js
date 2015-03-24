@@ -161,7 +161,9 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onAccidentialButtonClick = function(event) {
-		patternController.changeAccidential(event.target.id);
+		var acc = event.target.id;
+		acc = acc.substring(acc.indexOf("-") + 1, acc.length)
+		patternController.changeAccidential(acc);
 	},
 
 	onDurationButtonClick = function(event) {
@@ -173,7 +175,10 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onSpecialRythButtonClick = function(event) {
-		patternController.changeSpecialRyth(event.target.id);
+		//get the and of the specRyth String after the -
+		var specRyth = event.target.id;
+		specRyth = specRyth.substring(specRyth.indexOf("-") + 1, specRyth.length)
+		patternController.changeSpecialRyth(specRyth);
 	},
 
 	onOctaveButtonClick = function(event) {
@@ -200,9 +205,9 @@ MusicXMLAnalyzer.PatternView = function(){
 		$("#" + octave + "").addClass("active");
 	},
 
-	setAccidentialActive = function(accidential) {
+	setAccidentialActive = function(acc) {
 		$(".btn-accidential.active").removeClass("active");
-		$("#" + accidential + "").addClass("active");
+		$("#accidential-" + acc + "").addClass("active");
 	},
 
 	setDurationActive = function(duration) {
@@ -217,7 +222,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setSpecRythActive = function(specRyth) {
 		$(".btn-special-ryth.active").removeClass("active");
-		$("#" + specRyth + "").addClass("active");
+		$("#spec-" + specRyth + "").addClass("active");
 	},
 
 	setToMelodyMode = function() {

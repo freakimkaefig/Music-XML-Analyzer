@@ -49,13 +49,13 @@
 		<div class="col-xs-8">
 			<p class="no-margin">Special Ryth: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label id="none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+				<label id="spec-none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":none">None
                 </label>
-                <label id="triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+                <label id="spec-triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":triplet">Triplet
 				</label>
-				<label id="dotted" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+				<label id="spec-dotted" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":dotted">Dotted
 				</label>
 			</div>
@@ -115,13 +115,13 @@
 		<div class="col-xs-4">
 			<p class="no-margin">Accidential: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label id="none" class="btn btn-accidential btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+				<label id="accidential-none" class="btn btn-accidential btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":none">none
 				</label>
-				<label id="#" class="btn btn-accidential btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+				<label id="accidential-#" class="btn btn-accidential btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":#">#
 				</label>
-				<label id="b" class="btn btn-accidential btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+				<label id="accidential-b" class="btn btn-accidential btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":b">b
 				</label>
 			</div>

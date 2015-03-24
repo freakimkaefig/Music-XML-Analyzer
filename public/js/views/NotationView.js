@@ -148,7 +148,6 @@ MusicXMLAnalyzer.NotationView = function(){
 
   			if (typeof vexflowNotes[i].modifiers[0] !== 'undefined') {
   				vexflowNotes[i].modifiers[0].dot_shiftY = 0;
-  				console.log("removedy: " + i);
   			}	
   		}
   		
