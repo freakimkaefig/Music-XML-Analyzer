@@ -240,8 +240,9 @@ MusicXMLAnalyzer.DashboardModel = function(){
 
 
 
-
-			tempInstruments.push(resultsArr[i].value.instruments);
+			for(var x = 0; x < resultsArr[i].value.instruments.length; x++){
+				tempInstruments.push(resultsArr[i].value.instruments[x]);
+			}
 
 
 
@@ -316,16 +317,17 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	    for(var i = 0; i < len; i++) {
 		    var item = tempInstruments[i];
 	        if(seen[item] !== 1) {
-	               seen[item] = 1;
-	               console.log("items in if: " + item);
-	               out[j++] = item;
-	               console.log("out in if: " + out);
-	        	}	
+               seen[item] = 1;
+               // console.log("items in if: " + item);
+               out[j++] = item;
+               // console.log("out in if: " + out);
+        	}	
+        	// console.log("seen: ",seen," item: ",item," seen[item]: ",seen[item]," out: ",out," j: ",j);
 	    } 
-	    console.log("var len: " +len)
-	    console.log("tempinstruments after for: " + tempInstruments);
-	    console.log("items after for:" + item);
-	    console.log("out after for: " + out);
+	    // console.log("var len: " +len)
+	    // console.log("tempinstruments after for: " + tempInstruments);
+	    // console.log("items after for:" + item);
+	    // console.log("out after for: " + out);
 	    
 		
 	    for(var i = 0; i < out.length; i++){
