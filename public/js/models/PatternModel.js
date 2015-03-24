@@ -152,7 +152,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		    default:
 		        beamVal = false;
 		}
-		beamVal = false;
 	},
 
 	addNoteElement = function() {		
@@ -196,11 +195,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 				}
 			} else {
 				if (curName != "break") {
-					noteElements.push(
+					noteElements[0].notes.push(
 					{
-						notes:
-						[
-							{
 								type: "note",	
 								pitch: {
 									step: curName.toUpperCase(),
@@ -210,21 +206,13 @@ MusicXMLAnalyzer.PatternModel = function(){
 									dot: isDot,
 									beam: beamVal
 								}
-							}
-						]
-							
 					});	
 				} else {
 					//break
-					noteElements.push(
+					noteElements[0].notes.push(
 					{
-						notes: 
-						[
-							{
-								type: "rest",	
-								duration: curDuration	
-							}
-						]
+						type: "rest",	
+						duration: curDuration							
 					});
 				}
 			}
@@ -263,7 +251,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 				}
 			} else {
 				if (curName != "break") {
-					noteElements.push(
+					noteElements[0].notes.push(
 					{
 						notes:
 						[
@@ -279,7 +267,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					});	
 				} else {
 					//break
-					noteElements.push(
+					noteElements[0].notes.push(
 					{
 						notes:
 						[
@@ -313,7 +301,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 				}
 			} else {
 				if (curName != "break") {
-					noteElements.push(
+					noteElements[0].notes.push(
 					{
 						notes:
 						[
