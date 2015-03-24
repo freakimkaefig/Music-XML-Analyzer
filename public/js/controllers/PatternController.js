@@ -108,8 +108,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		// TODO:
 		// # set duration correctly if dotted note
 		// # determine velocity
-		// # play C4 only if mode is set to rhythm#
-		// #
+		// # anschlags pausen bei notenlängen wechsel entfernen!
 
 		//get notes of current extract:
 		var currentPatternNotes = patternModel.getAllNoteElements();
@@ -126,19 +125,21 @@ MusicXMLAnalyzer.PatternController = function() {
 
 				}else if(currentPatternNotes[i].notes[j].type == 'note'){
 					var note = currentPatternNotes[i].notes[j];
-					
 					var noteDuration = getDuration(note.pitch.type);
 					if(typeof noteDuration === 'undefined'){
-						console.log("noteduration is undefined");
+						// console.log("noteduration is undefined");
 						noteDuration = 0.25;
 					}
 
 					var noteStep = note.pitch.step;
 					if(typeof noteStep === 'undefined'){
-						console.log("noteStep is undefined");
+						// console.log("noteStep is undefined");
 						noteStep = 0.25;
 						keyToNote = 'C4';
 					}else{
+						if(note.pitch.dot){
+							noteDuration += 0.5*noteDuration;
+						}
 						var noteOctave = note.pitch.octave;
 						var noteAlter = note.pitch.alter;
 

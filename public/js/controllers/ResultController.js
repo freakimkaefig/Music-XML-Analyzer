@@ -96,6 +96,7 @@ MusicXMLAnalyzer.ResultController = function(){
 		// TODO:
 		// # set duration correctly if dotted note
 		// # determine velocity
+		// # anschlags pausen bei notenlängen wechsel entfernen!
 
 
 		//get notes of current extract:
@@ -120,6 +121,9 @@ MusicXMLAnalyzer.ResultController = function(){
 					if(typeof noteDuration === 'undefined'){
 						console.log("noteduration is undefined");
 						noteDuration = 0.25;
+					}
+					if(note.pitch.dot){
+						noteDuration += 0.5*noteDuration;
 					}
 					var chord = note.pitch.chord;
 
