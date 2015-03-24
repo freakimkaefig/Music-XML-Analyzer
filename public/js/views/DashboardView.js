@@ -45,7 +45,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 		"#263238",	// blue-grey-900
 	],
 
-
 	init = function(){
 		console.info('MusicXMLAnalyzer.DashboardView.init');
 
