@@ -86,6 +86,13 @@ a:focus {
 	display: inline;
 }
 
+::selection {
+  background: transparent; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: transparent; /* Gecko Browsers */
+}
+
 /* === LOGS === */
 .logBox {
 	display: none;
