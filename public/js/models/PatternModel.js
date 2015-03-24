@@ -21,6 +21,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	tupletArray = [],
 	beamArray = [],
 
+	lastDurationForTriplet = null,
+
 	// val for noteElements: -1,0,1
 	noteElementAccidential = 0,
 	// val for dot: true, false
@@ -30,7 +32,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 
 	init = function() {
-
+		lastDurationForTriplet = curDuration;
 	},
 
 	setCurrentMode = function(mode) {
@@ -150,7 +152,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 
 		//beam
-		if(curRythSpec == "triplet") {
+		if(curRythSpec == "triplet" && lastDurationForTriplet == curDuration) {
 			tripletCurrentAmount++;
 		}
 		
@@ -321,7 +323,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 			}
 		}
 			
-		console.log("noteELements: ", noteElements);
+		// console.log("noteELements: ", noteElements);
 
 		//check if break or normal note or note with accidential
 		//then adapt values for vexflow an put them into an array
@@ -350,9 +352,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 
 		noteElements4VexFlow.push(note);
-
+		console.log("curDuration " + curDuration);
+		console.log("last " + lastDurationForTriplet);
 		//check if triplet
-		if (curRythSpec == "triplet") {
+		if (curRythSpec == "triplet" && curDuration == lastDurationForTriplet) {
+			console.log("if");
 			console.log("tripletCurrentAmount: " + tripletCurrentAmount);
 			if (tripletCurrentAmount == 3) {
 				tripletCurrentAmount = 0;
@@ -365,19 +369,28 @@ MusicXMLAnalyzer.PatternModel = function(){
 				beamArray.push(beam);
 				console.log("tripletEndPositions: ",tripletEndPositions)
 			}
+			lastDurationForTriplet = curDuration;
+			console.log("last dur set to: " + lastDurationForTriplet);
 		} else {
+			console.log("else");
 			//when user changes from triplet into different rythSpec
 			//when there are already 1 or 2 triplets, they will be deleted and removed from the note and vexflow array
 			if (tripletCurrentAmount > 0) {
 				//splice -> (position in array, number of elements to be removed)
+
 				noteElements4VexFlow.splice(
 					// +1 because of array pos begins with 0
-					noteElements4VexFlow.length - (tripletCurrentAmount + 1), tripletCurrentAmount);
+					noteElements4VexFlow.length - (tripletCurrentAmount + 1), tripletCurrentAmount + 1);
+
 				noteElements.slice(
-					noteElements.length - (tripletCurrentAmount + 1), tripletCurrentAmount);
+					noteElements.length - (tripletCurrentAmount + 1), tripletCurrentAmount + 1);
+
 				tripletCurrentAmount = 0;
 			}
 		}
+
+		console.log("tripletCurrentAmount: AFTER " + tripletCurrentAmount);
+		console.log("vexNotes: AFTER ", noteElements4VexFlow);
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
@@ -391,6 +404,15 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curAccidential = "none";
 		curClef = "G";
 
+		lastDurationForTriplet = curDuration;
+		tripletCurrentAmount = 0;
+		tripletEndPositions = [],
+		tupletArray = [],
+		beamArray = [],
+		beamVal = false;
+		isDot = false;
+
+
 		$(that).trigger('changeSelectedNoteName', curName);
 		$(that).trigger('changeSelectedOctave', curOctave);
 		$(that).trigger('changeSelectedAccidential', curAccidential);
@@ -400,6 +422,14 @@ MusicXMLAnalyzer.PatternModel = function(){
 	setDefaultValsForRhythmMode = function() {
 		curDuration = "quarter";
 		curRythSpec = "none";
+
+		lastDurationForTriplet = curDuration;
+		tripletCurrentAmount = 0;
+		tripletEndPositions = [],
+		tupletArray = [],
+		beamArray = [],
+		beamVal = false;
+		isDot = false;
 
 		$(that).trigger('changeSelectedDuration', curDuration);
 		$(that).trigger('changeSelectedSpecRyth', curRythSpec);
@@ -413,6 +443,14 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curDuration = "quarter";
 		curClef = "G";
 		curRythSpec = "none";
+
+		lastDurationForTriplet = curDuration;
+		tripletCurrentAmount = 0;
+		tripletEndPositions = [],
+		tupletArray = [],
+		beamArray = [],
+		beamVal = false;
+		isDot = false;
 		
 		$(that).trigger('changeSelectedNoteName', curName);
 		$(that).trigger('changeSelectedOctave', curOctave);
@@ -501,7 +539,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		//ToDo: do "first = true;"" if LastNoteElement equals first note element
 		//and remove this element
 	    console.log("model: remove last note button; function missing");
-	    console.log(noteElements4VexFlow);
+	    //console.log(noteElements4VexFlow);
 	},
 
 
