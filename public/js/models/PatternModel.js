@@ -386,15 +386,23 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setDefaultValsForSoundSequenceMode = function() {
-		curName = "b";
+		curName = "c";
 		curOctave = "4";
 		curAccidential = "none";
 		curClef = "G";
+
+		$(that).trigger('changeSelectedNoteName', curName);
+		$(that).trigger('changeSelectedOctave', curOctave);
+		$(that).trigger('changeSelectedAccidential', curAccidential);
+		$(that).trigger('changeSelectedClef', curDuration);
 	},
 
 	setDefaultValsForRhythmMode = function() {
 		curDuration = "quarter";
 		curRythSpec = "none";
+
+		$(that).trigger('changeSelectedDuration', curDuration);
+		$(that).trigger('changeSelectedSpecRyth', curRythSpec);
 	},
 
 	setDefaultValsForMelodyMode = function() {
@@ -406,15 +414,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curClef = "G";
 		curRythSpec = "none";
 		
-
-		//TODO 
-		//update view to this default vals
-		$(that).trigger('changeSelectedNoteName', "c");
-		$(that).trigger('changeSelectedOctave', "4");
-		$(that).trigger('changeSelectedAccidential', "none");
-		$(that).trigger('changeSelectedDuration', "quarter");
-		$(that).trigger('changeSelectedClef', "G");
-		$(that).trigger('changeSelectedSpecRyth', "none");
+		$(that).trigger('changeSelectedNoteName', curName);
+		$(that).trigger('changeSelectedOctave', curOctave);
+		$(that).trigger('changeSelectedAccidential', curAccidential);
+		$(that).trigger('changeSelectedDuration', curDuration);
+		$(that).trigger('changeSelectedClef', curDuration);
+		$(that).trigger('changeSelectedSpecRyth', curRythSpec);
 	},
 
 	getTripletEndPositions = function() {
