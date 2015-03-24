@@ -10,13 +10,13 @@
 	<div class="col-xs-12 marbo30">
 		<center><p class="no-margin">Choose Mode: </p></center>
 		<div class="btn-group" data-toggle="buttons">
-			<label id="melody-mode-2" class="btn btn-mode btn-material-blue-grey-800 active" data-toggle="tooltip" data-placement="top">
+			<label id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":melody">melody
 			</label>
-			<label id="sound-sequence-mode-0" class="btn btn-mode btn-material-blue-grey-800 " data-toggle="tooltip" data-placement="top">
+			<label id="sound-sequence-mode-0" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":sound sequence">sound sequence
 			</label>
-			<label id="rhythm-mode-1" class="btn btn-mode btn-material-blue-grey-800 " data-toggle="tooltip" data-placement="top">
+			<label id="rhythm-mode-1" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":rhythm">rhythm
 			</label>
 		</div>
