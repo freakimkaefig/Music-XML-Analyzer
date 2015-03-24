@@ -38,7 +38,6 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('changeSelectedOctave', onOctaveSelectionChange);
 		$(patternModel).on('changeSelectedAccidential', onAccidentialSelectionChange);
 		$(patternModel).on('changeSelectedDuration', onDurationSelectionChange);
-		$(patternModel).on('changeSelectedClef', onClefSelectionChange);
 		$(patternModel).on('changeSelectedSpecRyth', onSpecRythSelectionChange);
 
 		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
@@ -218,10 +217,6 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternView.setDurationActive(selectedDur);
 	},
 
-	onClefSelectionChange = function(event, selectedClef) {
-		patternView.setClefActive(selectedClef);
-	},
-
 	onSpecRythSelectionChange = function(event, selectedSpecRyth) {
 		patternView.setSpecRythActive(selectedSpecRyth);
 	},	
@@ -240,10 +235,6 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	changeDuration = function(val) {
 		patternModel.setCurrentNoteDuration(val);
-	},
-
-	changeClef = function(val) {
-		patternModel.setCurrentClef(val);
 	},
 
 	changeSpecialRyth = function(val) {
@@ -298,7 +289,6 @@ MusicXMLAnalyzer.PatternController = function() {
 	that.changeNote = changeNote;
 	that.changeAccidential = changeAccidential;
 	that.changeDuration = changeDuration;
-	that.changeClef = changeClef;
 	that.changeSpecialRyth = changeSpecialRyth;
 	that.changeOctave = changeOctave;
 	that.addNote = addNote;

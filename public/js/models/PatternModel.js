@@ -8,7 +8,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	curName = "c",
 	curAccidential = "none",
 	curDuration = "quarter",
-	curClef = "G",
 	curRythSpec = "none",
 	curOctave = "4",
 	VEXFLOW_REST_SIGN = "r",
@@ -100,15 +99,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	//duration like written on button
 	getCurrentNoteDuration = function() {
 		return curDuration;
-	},
-
-	setCurrentClef = function(clef) {
-		console.log("model " + clef);
-		curClef = clef;
-	},
-
-	getCurrentClef = function() {
-		return curClef;
 	},
 
 	setCurrentNoteRythSpecial = function(rythSpec) {
@@ -403,7 +393,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curName = "c";
 		curOctave = "4";
 		curAccidential = "none";
-		curClef = "G";
 
 		lastDurationForTriplet = curDuration;
 		tripletCurrentAmount = 0;
@@ -417,7 +406,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		$(that).trigger('changeSelectedNoteName', curName);
 		$(that).trigger('changeSelectedOctave', curOctave);
 		$(that).trigger('changeSelectedAccidential', curAccidential);
-		$(that).trigger('changeSelectedClef', curDuration);
 	},
 
 	setDefaultValsForRhythmMode = function() {
@@ -442,7 +430,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curOctave = "4";
 		curAccidential = "none";
 		curDuration = "quarter";
-		curClef = "G";
 		curRythSpec = "none";
 
 		lastDurationForTriplet = curDuration;
@@ -457,7 +444,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		$(that).trigger('changeSelectedOctave', curOctave);
 		$(that).trigger('changeSelectedAccidential', curAccidential);
 		$(that).trigger('changeSelectedDuration', curDuration);
-		$(that).trigger('changeSelectedClef', curDuration);
 		$(that).trigger('changeSelectedSpecRyth', curRythSpec);
 	},
 
@@ -539,6 +525,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	removeLastNoteElement = function() {
 
 		//check if element you want to delete is triplet
+		//and check if there are triplets before
 	    if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
 	    	tripletCurrentAmount = 0;
 	    	noteElements[0].notes.pop();
@@ -549,10 +536,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 	    			noteElements4VexFlow.pop();
 	    			if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
 	    				if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
-		    			noteElements[0].notes.pop();
-		    			noteElements4VexFlow.pop();
-		    			beamArray.pop();
-		    			tupletArray.pop();
+			    			noteElements[0].notes.pop();
+			    			noteElements4VexFlow.pop();
+			    			beamArray.pop();
+			    			tupletArray.pop();
 		    			}
 	    			}
 	    		}
@@ -587,14 +574,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.getCurrentNoteName = getCurrentNoteName;
 	that.getCurrentAccidential = getCurrentAccidential;
 	that.getCurrentNoteDuration = getCurrentNoteDuration;
-	that.getCurrentClef = getCurrentClef;
 	that.getCurrentNoteRythSpecial = getCurrentNoteRythSpecial;
 	that.getCurrentOctave = getCurrentOctave;
 	that.setCurrentMode = setCurrentMode;
 	that.setCurrentNoteName = setCurrentNoteName;
 	that.setCurrentAccidential = setCurrentAccidential;
 	that.setCurrentNoteDuration = setCurrentNoteDuration;
-	that.setCurrentClef = setCurrentClef;
 	that.setCurrentNoteRythSpecial = setCurrentNoteRythSpecial;
 	that.setCurrentOctave = setCurrentOctave;
 	that.addNoteElement = addNoteElement;

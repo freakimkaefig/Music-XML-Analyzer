@@ -6,7 +6,6 @@ MusicXMLAnalyzer.PatternView = function(){
 	$noteButtonClass = $(".btn-note"),
 	$accidentialButtonClass = $(".btn-accidential"),
 	$durationButtonClass = $(".btn-duration"),
-	$clefButtonClass = $(".btn-clef"),
 	$specialRythButtonClass = $(".btn-special-ryth"),
 	$octaveButtonClass = $(".btn-octave"),
 
@@ -26,7 +25,6 @@ MusicXMLAnalyzer.PatternView = function(){
 		$noteButtonClass.on("click", onNoteButtonClick);
 		$accidentialButtonClass.on("click", onAccidentialButtonClick);
 		$durationButtonClass.on("click", onDurationButtonClick);
-		$clefButtonClass.on("click", onClefButtonClick);
 		$specialRythButtonClass.on("click", onSpecialRythButtonClick);
 		$octaveButtonClass.on("click", onOctaveButtonClick);
 		$addNoteButton.on("click", onAddButtonClick);
@@ -170,10 +168,6 @@ MusicXMLAnalyzer.PatternView = function(){
 		patternController.changeDuration(event.target.id);
 	},
 
-	onClefButtonClick = function(event) {
-		patternController.changeClef(event.target.id);
-	},
-
 	onSpecialRythButtonClick = function(event) {
 		//get the and of the specRyth String after the -
 		var specRyth = event.target.id;
@@ -215,11 +209,6 @@ MusicXMLAnalyzer.PatternView = function(){
 		$("#" + duration + "").addClass("active");
 	},
 
-	setClefActive = function(clef) {
-		$(".btn-clef.active").removeClass("active");
-		$("#" + clef + "").addClass("active");
-	},
-
 	setSpecRythActive = function(specRyth) {
 		$(".btn-special-ryth.active").removeClass("active");
 		$("#spec-" + specRyth + "").addClass("active");
@@ -231,7 +220,6 @@ MusicXMLAnalyzer.PatternView = function(){
 		$noteButtonClass.removeClass("disabled");
 		$accidentialButtonClass.removeClass("disabled");
 		$durationButtonClass.removeClass("disabled");
-		$clefButtonClass.removeClass("disabled");
 		$specialRythButtonClass.removeClass("disabled");
 		$octaveButtonClass.removeClass("disabled");
 	},
@@ -246,7 +234,6 @@ MusicXMLAnalyzer.PatternView = function(){
 		$("#break").addClass('disabled');
 		
 		$octaveButtonClass.removeClass('disabled');
-		$clefButtonClass.removeClass('disabled');
 		$accidentialButtonClass.removeClass('disabled');
 	},
 
@@ -254,7 +241,6 @@ MusicXMLAnalyzer.PatternView = function(){
 		console.log("pattern view set rhythm");
 		$noteButtonClass.addClass('disabled');
 		$octaveButtonClass.addClass('disabled');
-		$clefButtonClass.addClass('disabled');
 		$accidentialButtonClass.addClass('disabled');
 
 		$durationButtonClass.removeClass('disabled');
@@ -271,7 +257,6 @@ MusicXMLAnalyzer.PatternView = function(){
 	that.setOctaveActive = setOctaveActive;
 	that.setAccidentialActive = setAccidentialActive;
 	that.setDurationActive = setDurationActive;
-	that.setClefActive = setClefActive;
 	that.setSpecRythActive = setSpecRythActive;
 	that.setToSoundSequenceMode = setToSoundSequenceMode;
 	that.setToRhythmMode = setToRhythmMode;
