@@ -227,6 +227,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setToMelodyMode = function() {
 		console.log("pattern view set melody");
+		
 		$noteButtonClass.removeClass("disabled");
 		$accidentialButtonClass.removeClass("disabled");
 		$durationButtonClass.removeClass("disabled");
@@ -241,6 +242,9 @@ MusicXMLAnalyzer.PatternView = function(){
 		$specialRythButtonClass.addClass('disabled');
 
 		$noteButtonClass.removeClass('disabled');
+		//disable only break button from notes class
+		$("#break").addClass('disabled');
+		
 		$octaveButtonClass.removeClass('disabled');
 		$clefButtonClass.removeClass('disabled');
 		$accidentialButtonClass.removeClass('disabled');
