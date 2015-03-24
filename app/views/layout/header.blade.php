@@ -1,7 +1,7 @@
 <nav class="navbar navbar-material-blue-grey-800 navbar-fixed-top">
 
     <div class="navbar-header">
-        <a class="navbar-brand" href="{{ URL::route('home') }}">LOGO</a>
+        <a class="navbar-brand" href="{{ URL::route('home') }}">Music XML Analyzer</a>
     </div>
 	<div class="container-fluid">
 

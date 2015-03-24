@@ -155,17 +155,6 @@
 				</label>
 			</div>
 		</div>
-		<div class="col-xs-4">
-			<p class="no-margin">Clef: </p>
-			<div class="btn-group" data-toggle="buttons">
-				<label id="F" class="btn btn-clef btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-					<input type="radio" value=":F">F
-				</label>
-				<label id="G" class="btn btn-clef btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
-					<input type="radio" value=":G">G
-				</label>
-			</div>
-		</div>
 	</div>
 
 	<div class="row">
