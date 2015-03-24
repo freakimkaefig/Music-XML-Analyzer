@@ -118,6 +118,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	initLogMessages = function() {
+		console.info("initLogMessage");
 		uploadMessageCounter = 0;
 		$logMessages.show();
 		$logMessages.animate({
@@ -139,8 +140,8 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	addLogMessage = function(msg) {
-		console.info("addLogMessage", msg);
-		if (uploadCounter == 0) {
+		console.info("addLogMessage", msg, uploadCounter);
+		if (uploadCounter == 1) {
 			initLogMessages();
 		}
 		$('#log' + (uploadMessageCounter - 3)).animate({
