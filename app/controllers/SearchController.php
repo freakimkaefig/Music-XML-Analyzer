@@ -118,15 +118,15 @@ class SearchController extends BaseController {
 			(object)array("label" => "Minor fourteenth", "value" => 0 ),
 			(object)array("label" => "Major fourteenth", "value" => 0 ),
 			(object)array("label" => "Double octave", "value" => 0 ),
-			(object)array("label" => "Double octaven + Minor second", "value" => 0 ),
-			(object)array("label" => "Double octave + Major second", "value" => 0 ),
-			(object)array("label" => "Double octave + Minor third", "value" => 0 ),
-			(object)array("label" => "Double octave + Major third", "value" => 0 ),
-			(object)array("label" => "Double octave + Perfect fourth", "value" => 0 ),
-			(object)array("label" => "Double octave + Tritone", "value" => 0 ),
-			(object)array("label" => "Double octave + Perfect fifth", "value" => 0 ),
-			(object)array("label" => "Double octave + Minor sixth", "value" => 0 ),
-			(object)array("label" => "Double octave + Major sixth", "value" => 0 )
+			(object)array("label" => "Dbl. oct. + Min. 2nd", "value" => 0 ),
+			(object)array("label" => "Dbl. oct. + Maj. 2nd", "value" => 0 ),
+			(object)array("label" => "Dbl. oct. + Min. 3rd", "value" => 0 ),
+			(object)array("label" => "Dbl. oct. + Maj. 3rd", "value" => 0 ),
+			(object)array("label" => "Dbl. oct. + Perfect 4th", "value" => 0 ),
+			(object)array("label" => "Dbl. oct. + Tritone", "value" => 0 ),
+			(object)array("label" => "Dbl. oct. + Perfect 5th", "value" => 0 ),
+			(object)array("label" => "Dbl. oct. + Min. 6th", "value" => 0 ),
+			(object)array("label" => "Dbl. oct. + Maj. 6th", "value" => 0 )
 			);
 
 		for($i = 0; $i < count($notesArray) - 1;$i++){
