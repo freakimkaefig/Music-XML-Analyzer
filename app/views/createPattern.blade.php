@@ -113,7 +113,7 @@
 			</div>
 		</div>
 		<div class="col-xs-4">
-			<p class="no-margin">Accidential: </p>
+			<p class="no-margin">Accidental: </p>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="accidential-none" class="btn btn-accidential btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":none">none
