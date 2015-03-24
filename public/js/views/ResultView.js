@@ -226,9 +226,9 @@ MusicXMLAnalyzer.ResultView = function(){
 			var beams = [];
 			for (var j = 0; j < measures[i].notes.length; j++) {
 
+				// beams
 				if (measures[i].beams) {
-					// beams
-					if (measures[i].beams) {
+					if (measures[i].beams[j] != false && measures[i].beams[j] != undefined) {
 						if (measures[i].beams[j] == "begin") {
 							beamBegin = j;
 						}
@@ -247,25 +247,27 @@ MusicXMLAnalyzer.ResultView = function(){
 
 				// ties
 				if (measures[i].ties) {
-					if (measures[i].ties[j].indexOf("stop") > -1) {
-						tieStop = measures[i].notes[j];
-						if (tieStart != null) {
-							var tie = new Vex.Flow.StaveTie({ first_note: tieStart, last_note: tieStop, first_indices: [0], last_indices: [0] });
-							ties.push(tie);
-							tieStart = null;
-							tieStop = null;
+					if (measures[i].ties[j] != false && measures[i].ties[j] != undefined) {
+						if (measures[i].ties[j].indexOf("stop") > -1) {
+							tieStop = measures[i].notes[j];
+							if (tieStart != null) {
+								var tie = new Vex.Flow.StaveTie({ first_note: tieStart, last_note: tieStop, first_indices: [0], last_indices: [0] });
+								ties.push(tie);
+								tieStart = null;
+								tieStop = null;
+							}
 						}
-					}
-					if (measures[i].ties[j].indexOf("start") > -1) {
-						tieStart = measures[i].notes[j];
+						if (measures[i].ties[j].indexOf("start") > -1) {
+							tieStart = measures[i].notes[j];
+						}
 					}
 				}
 			}
 
+			// tuplets
 			var tuplets = [];
 			for (var j = 0; j < measures[i].notes.length; j++) {
 				if (measures[i].tuplets) {
-					// tuplets
 					if (measures[i].tuplets[j] != false && measures[i].tuplets[j] != undefined) {
 						// console.log("slice", j, (j + parseInt(measures[i].tuplets[j])))
 						var tupletNotes = measures[i].notes.slice(j, (j + parseInt(measures[i].tuplets[j])));
