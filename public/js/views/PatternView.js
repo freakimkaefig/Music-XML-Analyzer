@@ -172,6 +172,18 @@ MusicXMLAnalyzer.PatternView = function(){
 		//get the and of the specRyth String after the -
 		var specRyth = event.target.id;
 		specRyth = specRyth.substring(specRyth.indexOf("-") + 1, specRyth.length)
+		//prevent adding break triplets by disabling the break button
+		if(specRyth == "triplet") {
+			// check if break button was active
+			// if true then set selected note to c
+			if($("#break").hasClass("active") == true) {
+				patternController.changeNote("c");
+				setNoteNameActive("c");	
+			}
+			$("#break").addClass("disabled");
+		} else {
+			$("#break").removeClass("disabled");
+		}
 		patternController.changeSpecialRyth(specRyth);
 	},
 
