@@ -175,7 +175,7 @@
         </div>
 
         <div class="col-xs-4 pull-right">
-			{{ Form::submit('Search', array('class' => 'btn btn-success')) }}
+			{{ Form::submit('Search', array('id' => 'searchPatternButton', 'class' => 'btn btn-success')) }}
 			{{ Form::close() }}
 		</div>
 	</div>
