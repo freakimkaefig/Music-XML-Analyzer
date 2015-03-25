@@ -41,7 +41,6 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('changeSelectedSpecRyth', onSpecRythSelectionChange);
 
 		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
-		$(patternModel).on('clearCanvas', onCanvasClear);
 
 		//init MIDI
 		MIDI.loadPlugin({
@@ -261,19 +260,21 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	addNote = function() {
-		patternModel.addNoteElement();
+		if(patternModel.getPatternLength() < 12){
+			// console.log("getPatternLength: ",patternModel.getPatternLength());
+			patternModel.addNoteElement();
+		}
 	},
 
 	addNoteByCanvasClick = function(note) {
-		patternModel.addNoteElementByCanvasClick(note);
+		if(patternModel.getPatternLength() < 12){
+			// console.log("getPatternLength: ",patternModel.getPatternLength());
+			patternModel.addNoteElementByCanvasClick(note);
+		}
 	},
 
 	removeLastNote = function() {
 		patternModel.removeLastNoteElement();
-	},
-
-	onCanvasClear = function() {
-		notationView.clearCanvas();
 	},
 
 	onPatternChange = function(event, pattern) {
@@ -284,22 +285,13 @@ MusicXMLAnalyzer.PatternController = function() {
 			// enable search button
 			$searchPatternButton.prop('disabled', false);
 
-			// disable functionality to add further notes
-
-
 		}else if(pattern[0].notes.length >= 2 && pattern[0].notes.length < 12){
 			// enable search button
 			$searchPatternButton.prop('disabled', false);
 
-			// enable functionality to add further notes
-
-
 		}else if(pattern[0].notes.length < 2){
 			// disable search button
 			$searchPatternButton.prop('disabled', true);
-
-			// enable functionality to add further notes
-
 		}
 
 	},

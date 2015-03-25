@@ -35,7 +35,7 @@
 
 <div class="row text-center">
 	<div class="col-xs-6 col-xs-offset-3 marbo20 marto10">
-		<h5><strong>Hint: </strong>Search for patterns in your uploaded files. You can create your patterns directly by clicking on the above stave or by using the buttons below.</h5>
+		<h5><u>Hint:</u> Search for patterns in your uploaded files. You can create your patterns directly by clicking on the above stave or by using the buttons below. <br><strong >Patterns must contain min. 2 notes, max. 12 notes.</strong></h5>
 	</div>
 </div>
 

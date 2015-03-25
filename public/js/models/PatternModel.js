@@ -382,13 +382,22 @@ MusicXMLAnalyzer.PatternModel = function(){
 			noteElements = [];
 		}
 
-		console.log("noteELements: ", noteElements);
+		// console.log("noteELements: ", noteElements);
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
 	
 	},
+
+	getPatternLength = function(){
+		if(noteElements.length > 0){
+
+			return noteElements[0].notes.length;
+		}else{
+			return 0;
+		}
+	}
 
 	setDefaultValsForSoundSequenceMode = function() {
 		curName = "c";
@@ -592,6 +601,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	that.getDuration4Vexflow = getDuration4Vexflow;
 	that.getTupletArray = getTupletArray;
 	that.getBeamArray = getBeamArray;
+	that.getPatternLength = getPatternLength;
 
 	return that;
 }
