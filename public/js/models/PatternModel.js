@@ -535,36 +535,37 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	removeLastNoteElement = function() {
-
-		//check if element you want to delete is triplet
-		//and check if there are triplets before
-	    if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
-	    	tripletCurrentAmount = 0;
-	    	noteElements[0].notes.pop();
-	    	noteElements4VexFlow.pop();
-	    	if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
-	    		if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
-	    			noteElements[0].notes.pop();
-	    			noteElements4VexFlow.pop();
-	    			if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
-	    				if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
-			    			noteElements[0].notes.pop();
-			    			noteElements4VexFlow.pop();
-			    			beamArray.pop();
-			    			tupletArray.pop();
-		    			}
-	    			}
-	    		}
-	    	}
-	    } else {
-	    	noteElements[0].notes.pop();
-	    	noteElements4VexFlow.pop();	
-	    }
-
-	    if(noteElements.length == 0) {
+		if(noteElements.length == 0) {
 	    	first = true;
 	    	noteElements = [];
-	    }
+	    }else if(noteElements[0].notes.length != 0){
+			//check if element you want to delete is triplet
+			//and check if there are triplets before
+		    if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
+		    	tripletCurrentAmount = 0;
+		    	noteElements[0].notes.pop();
+		    	noteElements4VexFlow.pop();
+		    	if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
+		    		if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
+		    			noteElements[0].notes.pop();
+		    			noteElements4VexFlow.pop();
+		    			if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
+		    				if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
+				    			noteElements[0].notes.pop();
+				    			noteElements4VexFlow.pop();
+				    			beamArray.pop();
+				    			tupletArray.pop();
+			    			}
+		    			}
+		    		}
+		    	}
+		    } else {
+		    	noteElements[0].notes.pop();
+		    	noteElements4VexFlow.pop();	
+		    }
+		}
+
+	    
 	        
 	    $(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
