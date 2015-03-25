@@ -284,22 +284,22 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	onPatternChange = function(event, pattern) {
-		console.log("Trigger pattern length: ",pattern[0].notes.length);
+		console.log("Trigger pattern: ",pattern);
 		patternView.setPatternValue(JSON.stringify(pattern));
+		if(pattern.length != 0){
+			if(pattern[0].notes.length >= 12){
+				// enable search button
+				$searchPatternButton.prop('disabled', false);
 
-		if(pattern[0].notes.length >= 12){
-			// enable search button
-			$searchPatternButton.prop('disabled', false);
+			}else if(pattern[0].notes.length >= 2 && pattern[0].notes.length < 12){
+				// enable search button
+				$searchPatternButton.prop('disabled', false);
 
-		}else if(pattern[0].notes.length >= 2 && pattern[0].notes.length < 12){
-			// enable search button
-			$searchPatternButton.prop('disabled', false);
-
-		}else if(pattern[0].notes.length < 2){
-			// disable search button
-			$searchPatternButton.prop('disabled', true);
+			}else if(pattern[0].notes.length < 2){
+				// disable search button
+				$searchPatternButton.prop('disabled', true);
+			}
 		}
-
 	},
 
 	onViewChangedToCurrentMode = function(event, mode) {
