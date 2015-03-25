@@ -347,6 +347,8 @@ class SearchController extends BaseController {
 		if(count($beat)>0 && count($beatType)>0){
 			$meter = $beat[0] ."/". $beatType[0];
 			return $meter;
+		}else{
+			return "N/A";
 		}
 	}
 
