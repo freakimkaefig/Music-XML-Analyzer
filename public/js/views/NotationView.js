@@ -364,6 +364,7 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	clearCanvas = function() {
 		// clear canvas and redraw staves
+		console.log("CLEAR CANVAS");
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave.setContext(context).draw();
 	};
