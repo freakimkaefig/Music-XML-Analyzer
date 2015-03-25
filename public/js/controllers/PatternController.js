@@ -50,7 +50,8 @@ MusicXMLAnalyzer.PatternController = function() {
 			}
 		});
 
-
+		$searchPatternButton = $('#searchPatternButton');
+		$searchPatternButton.prop('disabled', true);
 		$playPattern = $('#playPattern');
 		$stopPattern = $('#stopPattern');
 
@@ -258,8 +259,16 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	onPatternChange = function(event, pattern) {
-		// console.log("Trigger patternChange: ",pattern);
+		console.log("Trigger pattern length: ",pattern[0].notes.length);
 		patternView.setPatternValue(JSON.stringify(pattern));
+		if(pattern[0].notes.length >= 2){
+			// enable search button
+			$searchPatternButton.prop('disabled', false);
+		}else{
+			// disable search button
+			$searchPatternButton.prop('disabled', true);
+		}
+
 	},
 
 	onViewChangedToCurrentMode = function(event, mode) {

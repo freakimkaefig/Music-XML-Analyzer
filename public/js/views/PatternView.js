@@ -234,6 +234,10 @@ MusicXMLAnalyzer.PatternView = function(){
 		$durationButtonClass.removeClass("disabled");
 		$specialRythButtonClass.removeClass("disabled");
 		$octaveButtonClass.removeClass("disabled");
+		// disable search button
+		// (will get enabled after two notes are created)
+		$searchPatternButton = $('#searchPatternButton');
+		$searchPatternButton.prop('disabled', true);
 	},
 
 	setToSoundSequenceMode = function() {
@@ -247,6 +251,10 @@ MusicXMLAnalyzer.PatternView = function(){
 		
 		$octaveButtonClass.removeClass('disabled');
 		$accidentialButtonClass.removeClass('disabled');
+		// disable search button
+		// (will get enabled after two notes are created)
+		$searchPatternButton = $('#searchPatternButton');
+		$searchPatternButton.prop('disabled', true);
 	},
 
 	setToRhythmMode = function() {
@@ -257,6 +265,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 		$durationButtonClass.removeClass('disabled');
 		$specialRythButtonClass.removeClass('disabled');
+		// disable search button
+		// (will get enabled after two notes are created)
+		$searchPatternButton = $('#searchPatternButton');
+		$searchPatternButton.prop('disabled', true);
 	},
 
 	onRemoveButtonClick = function(event) {
