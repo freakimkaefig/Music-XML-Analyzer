@@ -37,6 +37,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	setCurrentMode = function(mode) {
 		if (curMode != mode) {
 			emptyNoteArrays();
+			$(that).trigger('clearCanvas');
 		}
 
 		curMode = mode;
@@ -55,7 +56,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 				setDefaultValsForMelodyMode();
 				break;
 		}
-		//update view
+		//pattern update view
 		$(that).trigger('changeViewToCurrentMode', [curMode]);
 	},
 
