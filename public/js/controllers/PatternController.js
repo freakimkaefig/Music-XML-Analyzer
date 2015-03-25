@@ -41,6 +41,8 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('changeSelectedSpecRyth', onSpecRythSelectionChange);
 
 		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
+		
+		$(patternModel).on('clearCanvas', onCanvasClear);
 
 		//init MIDI
 		MIDI.loadPlugin({
@@ -271,6 +273,10 @@ MusicXMLAnalyzer.PatternController = function() {
 			// console.log("getPatternLength: ",patternModel.getPatternLength());
 			patternModel.addNoteElementByCanvasClick(note);
 		}
+	},
+
+	onCanvasClear = function() {
+		notationView.clearCanvas();
 	},
 
 	removeLastNote = function() {

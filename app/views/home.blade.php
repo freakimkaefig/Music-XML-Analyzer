@@ -33,4 +33,28 @@
 		</div>
 	</div>
 </div>
+{{-- Coders @ bottom --}}
+<div class="coder col-xs-8 col-xs-offset-2">
+	<div class="row">
+		<h5 class="col-xs-1 col-xs-offset-1">Coded by: </h5>
+		<address class="col-xs-2">
+			<strong>Lukas Lamm</strong><br>
+			<small><a href="mailto:#">lukas.lamm89@gmail.com</a></small>
+		</address>
+		<address class="col-xs-2">
+			<strong>David Lechler</strong><br>
+			<small><a href="mailto:#">davidlechler@outlook.de</a></small>
+		</address>
+		<address class="col-xs-2">
+			<strong>Tobias Semmelmann</strong><br>
+			<small><a href="mailto:#">semmler1988@gmail.com</a></small>
+		</address>
+		<address class="col-xs-2">
+			<strong>Matthias Schneider</strong><br>
+			<small><a href="mailto:#">matthias.schneider89@gmail.com</a></small>
+		</address>
+		
+		{{-- <div class="col-xs-2"></div> --}}
+	</div>
+</div>
 @stop
