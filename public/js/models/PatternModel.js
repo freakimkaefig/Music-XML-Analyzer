@@ -145,6 +145,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		//beam
 		if(curRythSpec == "triplet" && lastDurationForTriplet == curDuration) {
 			tripletCurrentAmount++;
+			console.log("triplet amount: " + tripletCurrentAmount)
 		}
 		
 		switch(tripletCurrentAmount) {
@@ -521,6 +522,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		//and saves it into array noteContainer
 		var noteContainer = note.split("/");
 		
+		//current vals are being updated after note adding with click
 		curName = noteContainer[0];
 		curOctave = noteContainer[1];
 
