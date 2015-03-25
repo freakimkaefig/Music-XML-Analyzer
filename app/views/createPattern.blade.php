@@ -35,7 +35,7 @@
 
 <div class="row text-center">
 	<div class="col-xs-6 col-xs-offset-3 marbo20 marto10">
-		<h5><strong>Hint: </strong>Search for patterns in your uploaded files. You can input the notes directly by clicking on the above stave or by using the buttons below.</h5>
+		<h5><strong>Hint: </strong>Search for patterns in your uploaded files. You can create your patterns directly by clicking on the above stave or by using the buttons below.</h5>
 	</div>
 </div>
 
@@ -113,7 +113,7 @@
 			</div>
 		</div>
 		<div class="col-xs-4">
-			<p class="no-margin">Accidential: </p>
+			<p class="no-margin">Accidental: </p>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="accidential-none" class="btn btn-accidential btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":none">none
@@ -152,17 +152,6 @@
 				</label>
 				<label id="64th" class="btn btn-duration btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":64th">1/64
-				</label>
-			</div>
-		</div>
-		<div class="col-xs-4">
-			<p class="no-margin">Clef: </p>
-			<div class="btn-group" data-toggle="buttons">
-				<label id="F" class="btn btn-clef btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-					<input type="radio" value=":F">F
-				</label>
-				<label id="G" class="btn btn-clef btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
-					<input type="radio" value=":G">G
 				</label>
 			</div>
 		</div>

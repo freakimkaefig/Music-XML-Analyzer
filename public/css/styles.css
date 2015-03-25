@@ -30,6 +30,12 @@ a:focus {
 	outline: none;
 }
 
+.navbar .navbar-brand {
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 22px;
+}
+
 /* === HELPER CLASSES === */
 .img-center {
 	margin: 0 auto;
@@ -75,7 +81,6 @@ a:focus {
 }
 
 .btn.active:not(.disabled) {
-	/*opacity: 0.8;*/
 	background-color: #37474f !important;
 }
 
@@ -87,9 +92,11 @@ a:focus {
 	display: inline;
 }
 
-.disabled input {
-	cursor: not-allowed;
-
+::selection {
+  background: transparent; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: transparent; /* Gecko Browsers */
 }
 
 /* === LOGS === */

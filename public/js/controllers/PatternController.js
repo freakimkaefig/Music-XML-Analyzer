@@ -108,12 +108,11 @@ MusicXMLAnalyzer.PatternController = function() {
 		// TODO:
 		// # set duration correctly if dotted note
 		// # determine velocity
-		// # WAIT UNTIL PATTERN IS CORRECTLY CREATED
-		// ## currently missing 'type' property within notes
+		// # anschlags pausen bei notenlängen wechsel entfernen!
 
 		//get notes of current extract:
 		var currentPatternNotes = patternModel.getAllNoteElements();
-		console.log("currentPatternNotes: ",currentPatternNotes, currentPatternNotes[0].notes);
+		// console.log("currentPatternNotes: ",currentPatternNotes, currentPatternNotes[0].notes);
 
 		//determine MIDI values for currentPatternNotes
 		for(var i = 0; i < currentPatternNotes.length; i++){
@@ -126,18 +125,32 @@ MusicXMLAnalyzer.PatternController = function() {
 
 				}else if(currentPatternNotes[i].notes[j].type == 'note'){
 					var note = currentPatternNotes[i].notes[j];
-					var noteStep = note.pitch.step;
-					var noteOctave = note.pitch.octave;
-					var noteAlter = note.pitch.alter;
 					var noteDuration = getDuration(note.pitch.type);
+					if(typeof noteDuration === 'undefined'){
+						// console.log("noteduration is undefined");
+						noteDuration = 0.25;
+					}
 
-					if(noteAlter != 0){
-						if(noteAlter == -1){
-							noteAlter = 2;
-						}
-						keyToNote = noteStep.concat(noteOctave, noteAlter);
+					var noteStep = note.pitch.step;
+					if(typeof noteStep === 'undefined'){
+						// console.log("noteStep is undefined");
+						noteStep = 0.25;
+						keyToNote = 'C4';
 					}else{
-						keyToNote = noteStep.concat(noteOctave);
+						if(note.pitch.dot){
+							noteDuration += 0.5*noteDuration;
+						}
+						var noteOctave = note.pitch.octave;
+						var noteAlter = note.pitch.alter;
+
+						if(noteAlter != 0){
+							if(noteAlter == -1){
+								noteAlter = 2;
+							}
+							keyToNote = noteStep.concat(noteOctave, noteAlter);
+						}else{
+							keyToNote = noteStep.concat(noteOctave);
+						}
 					}
 					console.log("keyToNote: ", keyToNote, " - megaKeyToNoteObject{keyToNote}: ",megaKeyToNoteObject[keyToNote]);
 					notesToBePlayed.push({'note': megaKeyToNoteObject[keyToNote], 'noteDuration': noteDuration});
