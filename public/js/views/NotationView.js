@@ -357,11 +357,18 @@ MusicXMLAnalyzer.NotationView = function(){
 		}
 		return hoveredNote;
 
+	},
+
+	clearCanvas = function() {
+		// clear canvas and redraw staves
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		stave.setContext(context).draw();
 	};
 	
 	
 	that.init = init;
 	that.renderNotes = renderNotes;
+	that.clearCanvas = clearCanvas;
 
 	return that;
 }

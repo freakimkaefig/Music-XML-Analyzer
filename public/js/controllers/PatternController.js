@@ -41,6 +41,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('changeSelectedSpecRyth', onSpecRythSelectionChange);
 
 		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
+		$(patternModel).on('clearCanvas', onCanvasClear);
 
 		//init MIDI
 		MIDI.loadPlugin({
@@ -269,6 +270,10 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	removeLastNote = function() {
 		patternModel.removeLastNoteElement();
+	},
+
+	onCanvasClear = function() {
+		notationView.clearCanvas();
 	},
 
 	onPatternChange = function(event, pattern) {
