@@ -9,6 +9,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	uploadIds = null,
 	resultIds = null,
 	results = null,
+	tempInstruments = [],
 
 	init = function(){
 		console.info('MusicXMLAnalyzer.DashboardModel.init');
@@ -137,16 +138,16 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				{ label: "Major thirteenth", value: 0 },
 				{ label: "Minor fourteenth", value: 0 },
 				{ label: "Major fourteenth", value: 0 },
-				{ label: "2* oct.", value: 0 },
-				{ label: "2* oct. + Min. second", value: 0 },
-				{ label: "2* oct. + Maj. second", value: 0 },
-				{ label: "2* oct. + Min. third", value: 0 },
-				{ label: "2* oct. + Maj. third", value: 0 },
-				{ label: "2* oct. + Perfect 4th", value: 0 },
-				{ label: "2* oct. + Tritone", value: 0 },
-				{ label: "2* oct. + Perfect 5th", value: 0 },
-				{ label: "2* oct. + Min. sixth", value: 0 },
-				{ label: "2* oct. + Maj. sixth", value: 0 }
+				{ label: "Double octave", value: 0 },
+				{ label: "Dbl. oct. + Min. 2nd", value: 0 },
+				{ label: "Dbl. oct. + Maj. 2nd", value: 0 },
+				{ label: "Dbl. oct. + Min. 3rd", value: 0 },
+				{ label: "Dbl. oct. + Maj. 3rd", value: 0 },
+				{ label: "Dbl. oct. + Perfect 4th", value: 0 },
+				{ label: "Dbl. oct. + Tritone", value: 0 },
+				{ label: "Dbl. oct. + Perfect 5th", value: 0 },
+				{ label: "Dbl. oct. + Min. 6th", value: 0 },
+				{ label: "Dbl. oct. + Maj. 6th", value: 0 }
 			],
 			key: [
 				{ label: "C major", value: 0 },
@@ -235,7 +236,17 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			mergedArr.count_rests += parseFloat(resultsArr[i].value.count_rests);
 
 			//merge instruments
-			mergedArr.instruments = mergedArr.instruments.concat(resultsArr[i].value.instruments);
+			//mergedArr.instruments = mergedArr.instruments.concat(resultsArr[i].value.instruments);
+
+
+
+			for(var x = 0; x < resultsArr[i].value.instruments.length; x++){
+				tempInstruments.push(resultsArr[i].value.instruments[x]);
+			}
+
+
+
+
 			// if (mergedArr.instruments.length > 0) {
 			// 	for (var instrumentCounter = 0; instrumentCounter < mergedArr.instruments.length; instrumentCounter++) {
 			// 		// check if instrument is already in array
@@ -290,6 +301,56 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			// merge titles
 			mergedArr.title.push(resultsArr[i].value.title[0]);
 		}
+
+		// filter duplicate instruments
+		// var uniqueInstruments = [];
+		// $.each(tempInstruments, function(i, el){
+		//     if($.inArray(el, uniqueInstruments) === -1) uniqueInstruments.push(el);
+		// });
+
+
+
+		var seen = {};
+	    var out = [];
+	    var len = tempInstruments.length;
+	    var j = 0;
+	    for(var i = 0; i < len; i++) {
+		    var item = tempInstruments[i];
+	        if(seen[item] !== 1) {
+               seen[item] = 1;
+               // console.log("items in if: " + item);
+               out[j++] = item;
+               // console.log("out in if: " + out);
+        	}	
+        	// console.log("seen: ",seen," item: ",item," seen[item]: ",seen[item]," out: ",out," j: ",j);
+	    } 
+	    // console.log("var len: " +len)
+	    // console.log("tempinstruments after for: " + tempInstruments);
+	    // console.log("items after for:" + item);
+	    // console.log("out after for: " + out);
+	    
+		
+	    for(var i = 0; i < out.length; i++){
+			mergedArr.instruments = mergedArr.instruments.concat(out[i]);
+		};
+
+		// var a = tempInstruments;
+		// var b = {};
+		// for (var i = 0; i < a.length; i++) {
+		//     b[a[i]] = a[i];
+		// };
+		// var c = [];
+		// for (var key in b) {
+		//     c.push(key);
+		// };
+		// console.log("c array: " +c);
+
+		// for(var i = 0; i < c.length; i++){
+		// 	   mergedArr.instruments = mergedArr.instruments.concat(c[i]);
+		// };
+
+
+
 
 		// calculate most frequent note
 		mostFrequentNoteIndex = -1;

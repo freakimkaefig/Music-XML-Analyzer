@@ -23,6 +23,7 @@ MusicXMLAnalyzer.ResultController = function(){
 	once = true,
 	once2 = true,
 	stop = false,
+	tooLong = false,
 
 	init = function(){
 		console.info('MusicXMLAnalyzer.ResultController.init');
@@ -96,6 +97,7 @@ MusicXMLAnalyzer.ResultController = function(){
 		// TODO:
 		// # set duration correctly if dotted note
 		// # determine velocity
+		// # anschlags pausen bei notenlängen wechsel entfernen!
 
 
 		//get notes of current extract:
@@ -117,6 +119,13 @@ MusicXMLAnalyzer.ResultController = function(){
 					var noteOctave = note.pitch.octave;
 					var noteAlter = note.pitch.alter;
 					var noteDuration = getDuration(note.pitch.type);
+					if(typeof noteDuration === 'undefined'){
+						console.log("noteduration is undefined");
+						noteDuration = 0.25;
+					}
+					if(note.pitch.dot){
+						noteDuration += 0.5*noteDuration;
+					}
 					var chord = note.pitch.chord;
 
 					if(noteAlter != 0){
@@ -127,19 +136,20 @@ MusicXMLAnalyzer.ResultController = function(){
 					}else{
 						keyToNote = noteStep.concat(noteOctave);
 					}
-					// console.log("keyToNote: ", keyToNote, " - megaKeyToNoteObject{keyToNote}: ",megaKeyToNoteObject[keyToNote]);
 					notesToBePlayed.push({'note': megaKeyToNoteObject[keyToNote], 'noteDuration': noteDuration, 'chord': chord});
 				}
 			}
 		}
 		
+		// console.log("notesToBePlayed: ",notesToBePlayed);
+
 		var i = 0;
 		playTune = function(){
 
-			var chorsToBePlayed = [];
+			var chordsToBePlayed = [];
 
 			if(i < notesToBePlayed.length){						
-				console.log("notesToBePlayed: ",notesToBePlayed[i]);
+				// console.log("notesToBePlayed: ",notesToBePlayed[i]);
 				// console.log("pause: ", pause);
 				var note = notesToBePlayed[i].note;
 				var noteDuration = notesToBePlayed[i].noteDuration;
@@ -153,28 +163,36 @@ MusicXMLAnalyzer.ResultController = function(){
 					timeout = ((delay *2) /*+ noteDuration*/)*300;
 				}
 				once = false;
-				console.log("delay till note is played: ",timeout);
+				// console.log("delay till note is played: ",timeout);
 
 				setTimeout(function(){ 
 					if(stop){
-						console.log("STOP: ",stop);
+						// console.log("STOP: ",stop);
 						MIDI.setVolume(0, 0);
 						i = notesToBePlayed.length;
 					}else{
-						console.log("STOP: ",stop);
+						// console.log("STOP: ",stop);
 						MIDI.setVolume(0, 127);
 						// delay --> https://stackoverflow.com/questions/21296450/midi-js-note-duration-does-not-change
 
-						if(notesToBePlayed[i].chord == false && notesToBePlayed[i + 1].chord == true){
+						if(i + 1 < notesToBePlayed.length){
+							tooLong = false;
+						}else{
+							tooLong = true;
+						}
+
+						// console.log("tooLong? ",tooLong);
+
+						if(!tooLong && notesToBePlayed[i].chord == false && notesToBePlayed[i + 1].chord == true){
 							// var kCounter = 0;
 							do{
-								chorsToBePlayed.push(notesToBePlayed[i].note);
+								chordsToBePlayed.push(notesToBePlayed[i].note);
 								i++;
-
-							}while(notesToBePlayed[i].chord == true && i < notesToBePlayed[i].length)
-							console.log("chorsToBePlayed :",chorsToBePlayed);
-							MIDI.chordOn(0, chorsToBePlayed, velocity, delay);
-							MIDI.chordOff(0, chorsToBePlayed, delay);
+								// console.log("notesToBePlayed[i].chord: ",notesToBePlayed[i].chord," i: ",i," notesToBePlayed.length: ",notesToBePlayed.length);
+							}while(notesToBePlayed[i].chord == true && i < notesToBePlayed.length)
+							// console.log("chordsToBePlayed	: ",chordsToBePlayed);
+							MIDI.chordOn(0, chordsToBePlayed, velocity, delay);
+							MIDI.chordOff(0, chordsToBePlayed, delay);
 							// TODO:
 							// adjust timeout for chords?
 						}

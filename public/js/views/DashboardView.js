@@ -45,7 +45,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 		"#263238",	// blue-grey-900
 	],
 
-
 	init = function(){
 		console.info('MusicXMLAnalyzer.DashboardView.init');
 
@@ -155,16 +154,15 @@ MusicXMLAnalyzer.DashboardView = function(){
 	initInstruments = function(results) {
 		$plainFacts3.empty();
 		$plainFacts3.append('<li><strong>Instruments:  </strong></li>');
-		for(var i = 0; i < results.length; i++){
-			if(results.length == 1){
-				$plainFacts3.append('<li>' + results[i] + '</li>');
-			}else if(results[i] == results[results.length-1]){
-				$plainFacts3.append('<li>' + results[i] + '</li>');
-			}
-			else{
-				$plainFacts3.append('<li>' + results[i] + ', ' + '</li>');
-			}
-		}
+		$plainFacts3.append("<li>" + results.join(", ") + "</li>");
+		// for(var i = 0; i < results.length; i++){
+		// 	if(results.length == 1 || results[i] == results[results.length-1]){
+		// 		$plainFacts3.append('<li>' + results[i] + '</li>');
+		// 	}
+		// 	else{
+		// 		$plainFacts3.append('<li>' + results[i] + ', ' + '</li>');
+		// 	}
+		// }
 	},
 
 
