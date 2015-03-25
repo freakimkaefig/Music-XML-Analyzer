@@ -182,6 +182,9 @@ MusicXMLAnalyzer.NotationView = function(){
 			previewNote.addDot(0);
 		}
 
+		// set color of preview note
+		previewNote.color = "#8B8B8B";
+
   		vexflowNotes.push(previewNote);
 		  		  	
 		var voice = new Vex.Flow.Voice({
