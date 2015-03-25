@@ -134,7 +134,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 	*/
 
-	renderVexFlowNotePreview = function(noteName) {
+	renderVexFlowNotePreview = function() {
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave.setContext(context).draw();
@@ -151,10 +151,11 @@ MusicXMLAnalyzer.NotationView = function(){
   			}	
   		}
   		
-  		// console.log("vexflow notes: ", vexflowNotes);
   		var previewNote = null;
 		var key = hoveredNote;
   		var durationContent = patternModel.getDuration4Vexflow(patternModel.getCurrentNoteDuration());
+  		// to check if break is selected or not
+  		// when break is selected: only key "b/4"
   		var noteName = patternModel.getCurrentNoteName();
   		var accidental = patternModel.getCurrentAccidential();
   		var rythSpec = patternModel.getCurrentNoteRythSpecial();
@@ -268,9 +269,17 @@ MusicXMLAnalyzer.NotationView = function(){
 
     	//check if cursor is hover a existing note position
     	//if yes the method returns val and not null
-    	if (checkHorizontalArea(y)) {		
+    	
+    	//when rhythm mode -> just note b/4 is displayed when hovering
+    	if (patternModel.getCurrentMode() == 1) {
+    		console.log("curMode: " + patternModel.getCurrentMode());
+    		hoveredOctave = "4";
+    		hoveredNote = "b";
+    		renderVexFlowNotePreview("b");
+    	}
+    	else if (checkHorizontalArea(y)) {		
     		// call method to render note preview with given noteName
-    		renderVexFlowNotePreview(checkHorizontalArea(y));
+    		renderVexFlowNotePreview();
 
     	}
 
@@ -358,13 +367,12 @@ MusicXMLAnalyzer.NotationView = function(){
 			hoveredNote = "e";
 			hoveredOctave = "3";
 		}
-		return hoveredNote;
 
+		return hoveredNote;
 	},
 
 	clearCanvas = function() {
 		// clear canvas and redraw staves
-		console.log("CLEAR CANVAS");
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave.setContext(context).draw();
 	};
