@@ -274,12 +274,27 @@ MusicXMLAnalyzer.PatternController = function() {
 	onPatternChange = function(event, pattern) {
 		console.log("Trigger pattern length: ",pattern[0].notes.length);
 		patternView.setPatternValue(JSON.stringify(pattern));
-		if(pattern[0].notes.length >= 2){
+
+		if(pattern[0].notes.length >= 12){
 			// enable search button
 			$searchPatternButton.prop('disabled', false);
-		}else{
+
+			// disable functionality to add further notes
+
+
+		}else if(pattern[0].notes.length >= 2 && pattern[0].notes.length < 12){
+			// enable search button
+			$searchPatternButton.prop('disabled', false);
+
+			// enable functionality to add further notes
+
+
+		}else if(pattern[0].notes.length < 2){
 			// disable search button
 			$searchPatternButton.prop('disabled', true);
+
+			// enable functionality to add further notes
+
 		}
 
 	},
