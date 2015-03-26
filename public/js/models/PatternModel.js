@@ -145,9 +145,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		//beam
 		// if( ( foo || bar ) && !( foo && bar ) )
 		//if(curRythSpec == "triplet" && lastDurationForTriplet == curDuration) {
-		console.log("lastDur: " + lastDurationForTriplet);
-		console.log("curDur: " + curDuration);
-		console.log("tripletCurrentAmount: " + tripletCurrentAmount);
 		if(curRythSpec == "triplet") {
 			if(lastDurationForTriplet == curDuration || tripletCurrentAmount == 0) {
 				tripletCurrentAmount++;
@@ -354,9 +351,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		noteElements4VexFlow.push(note);
 
-		console.log("lastDur DOWN: " + lastDurationForTriplet);
-		console.log("curDur DOWN: " + curDuration);
-		console.log("tripletCurrentAmount DOWN: " + tripletCurrentAmount);
 		//check if triplet
 		if (curRythSpec == "triplet") {
 			if (curDuration == lastDurationForTriplet || tripletCurrentAmount == 1) {
