@@ -143,10 +143,19 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 
 		//beam
-		if(curRythSpec == "triplet" && lastDurationForTriplet == curDuration) {
-			tripletCurrentAmount++;
-			console.log("triplet amount: " + tripletCurrentAmount)
+		// if( ( foo || bar ) && !( foo && bar ) )
+		//if(curRythSpec == "triplet" && lastDurationForTriplet == curDuration) {
+		console.log("lastDur: " + lastDurationForTriplet);
+		console.log("curDur: " + curDuration);
+		console.log("tripletCurrentAmount: " + tripletCurrentAmount);
+		if(curRythSpec == "triplet") {
+			if(lastDurationForTriplet == curDuration || tripletCurrentAmount == 0) {
+				tripletCurrentAmount++;
+				console.log("triplet amount: " + tripletCurrentAmount)	
+			}
 		}
+			
+		//}
 		
 		switch(tripletCurrentAmount) {
 		    case 1:
@@ -344,21 +353,28 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 
 		noteElements4VexFlow.push(note);
+
+		console.log("lastDur DOWN: " + lastDurationForTriplet);
+		console.log("curDur DOWN: " + curDuration);
+		console.log("tripletCurrentAmount DOWN: " + tripletCurrentAmount);
 		//check if triplet
-		if (curRythSpec == "triplet" && curDuration == lastDurationForTriplet) {
-			if (tripletCurrentAmount == 3) {
-				tripletCurrentAmount = 0;
-				//store all end positions of the triplets
-				tripletEndPositions.push(noteElements4VexFlow.length);
-				//create tuplet and beam and push it into corresponding array
-				var tuplet = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
-				var beam = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
-				tupletArray.push(tuplet);
-				beamArray.push(beam);
-				console.log("tripletEndPositions: ",tripletEndPositions)
+		if (curRythSpec == "triplet") {
+			if (curDuration == lastDurationForTriplet || tripletCurrentAmount == 1) {
+				console.log("INSIDE");
+				if (tripletCurrentAmount == 3) {
+					tripletCurrentAmount = 0;
+					//store all end positions of the triplets
+					tripletEndPositions.push(noteElements4VexFlow.length);
+					//create tuplet and beam and push it into corresponding array
+					var tuplet = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+					var beam = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
+					tupletArray.push(tuplet);
+					beamArray.push(beam);
+					// console.log("tripletEndPositions: ",tripletEndPositions)
+				}
+				lastDurationForTriplet = curDuration;
+				// console.log("last dur set to: " + lastDurationForTriplet);
 			}
-			lastDurationForTriplet = curDuration;
-			console.log("last dur set to: " + lastDurationForTriplet);
 		} else {
 			//when user changes from triplet into different rythSpec
 			//when there are already 1 or 2 triplets, they will be deleted and removed from the note and vexflow array
