@@ -143,9 +143,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 
 		//beam
-		// if( ( foo || bar ) && !( foo && bar ) )
 		//if(curRythSpec == "triplet" && lastDurationForTriplet == curDuration) {
-		if(curRythSpec == "triplet") {
+		if(curRythSpec == "triplet") {			
 			if(lastDurationForTriplet == curDuration || tripletCurrentAmount == 0) {
 				tripletCurrentAmount++;
 				console.log("triplet amount: " + tripletCurrentAmount)	
