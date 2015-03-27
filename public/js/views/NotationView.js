@@ -232,33 +232,8 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/* this methods calcs the position of the notes */
 	setTopNoteValues = function() {
-		spaceBetweenLines = (canvas.height/14);
+		spaceBetweenLines = (canvas.height/16);
 
-		topValsNoteElements = {
-	    	f3: spaceBetweenLines * 1.5,
-	    	e3: spaceBetweenLines * 2,
-	    	d3: spaceBetweenLines * 2.5,
-	    	c3: spaceBetweenLines * 3,
-	    	h2: spaceBetweenLines * 3.5,
-	    	a2: spaceBetweenLines * 4,
-	    	g2: spaceBetweenLines * 4.5,
-	    	f2: spaceBetweenLines * 5,
-	    	e2: spaceBetweenLines * 5.5,
-	    	d2: spaceBetweenLines * 6,
-	    	c2: spaceBetweenLines * 6.5,
-	    	h1: spaceBetweenLines * 7,
-	    	a1: spaceBetweenLines * 7.5,
-	    	g1: spaceBetweenLines * 8,
-	    	f1: spaceBetweenLines * 8.5,
-	    	e1: spaceBetweenLines * 9,
-	    	d1: spaceBetweenLines * 9.5,
-	    	c1: spaceBetweenLines * 10,
-	    	h: spaceBetweenLines * 10.5,
-	    	a: spaceBetweenLines * 11,
-	    	g: spaceBetweenLines * 11.5,
-	    	f: spaceBetweenLines * 12,
-	    	e: spaceBetweenLines * 12.5
-		};
 	},
 
 	/* This method handels the mouseover event of canvas */
@@ -307,74 +282,89 @@ MusicXMLAnalyzer.NotationView = function(){
 	checkHorizontalArea = function(y) {
 
 		if (y > spaceBetweenLines * 1.25 && y <= spaceBetweenLines * 1.75) {
-			hoveredNote = "f";
+			hoveredNote = "b";
 			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 1.75 && y <= spaceBetweenLines * 2.25) {
-			hoveredNote = "e";
+			hoveredNote = "a";
 			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 2.25 && y <= spaceBetweenLines * 2.75) {
-			hoveredNote = "d";
+			hoveredNote = "g";
 			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 2.75 && y <= spaceBetweenLines * 3.25) {
-			hoveredNote = "c";
+			hoveredNote = "f";
 			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 3.25 && y <= spaceBetweenLines * 3.75) {
-			hoveredNote = "b";
-			hoveredOctave = "5";
+			hoveredNote = "e";
+			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 3.75 && y <= spaceBetweenLines * 4.25) {
-			hoveredNote = "a";
-			hoveredOctave = "5";
+			hoveredNote = "d";
+			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 4.25 && y <= spaceBetweenLines * 4.75) {
-			hoveredNote = "g";
-			hoveredOctave = "5";
+			hoveredNote = "c";
+			hoveredOctave = "6";
 		} else if (y > spaceBetweenLines * 4.75 && y <= spaceBetweenLines * 5.25) {
-			hoveredNote = "f";
+			hoveredNote = "b";
 			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 5.25 && y <= spaceBetweenLines * 5.75) {
-			hoveredNote = "e";
+			hoveredNote = "a";
 			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 5.75 && y <= spaceBetweenLines * 6.25) {
-			hoveredNote = "d";
+			hoveredNote = "g";
 			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 6.25 && y <= spaceBetweenLines * 6.75) {
-			hoveredNote = "c";
+			hoveredNote = "f";
 			hoveredOctave = "5";
 		} else if (y > spaceBetweenLines * 6.75 && y <= spaceBetweenLines * 7.25) {
+			hoveredNote = "e";
+			hoveredOctave = "5";
+		} else if (y > spaceBetweenLines * 7.25 && y <= spaceBetweenLines * 7.75) {
+			hoveredNote = "d";
+			hoveredOctave = "5";
+		} else if (y > spaceBetweenLines * 7.75 && y <= spaceBetweenLines * 8.25) {
+			hoveredNote = "c";
+			hoveredOctave = "5";
+		} else if (y > spaceBetweenLines * 8.25 && y <= spaceBetweenLines * 8.75) {
 			hoveredNote = "b";
 			hoveredOctave = "4";
-		} else if (y > spaceBetweenLines * 7.25 && y <= spaceBetweenLines * 7.75) {
+		} else if (y > spaceBetweenLines * 8.75 && y <= spaceBetweenLines * 9.25) {
 			hoveredNote = "a";
 			hoveredOctave = "4";
-		} else if (y > spaceBetweenLines * 7.75 && y <= spaceBetweenLines * 8.25) {
-			hoveredNote = "g";
-			hoveredOctave = "4";
-		} else if (y > spaceBetweenLines * 8.25 && y <= spaceBetweenLines * 8.75) {
-			hoveredNote = "f";
-			hoveredOctave = "4";
-		} else if (y > spaceBetweenLines * 8.75 && y <= spaceBetweenLines * 9.25) {
-			hoveredNote = "e";
-			hoveredOctave = "4";
 		} else if (y > spaceBetweenLines * 9.25 && y <= spaceBetweenLines * 9.75) {
-			hoveredNote = "d";
+			hoveredNote = "g";
 			hoveredOctave = "4";
 		} else if (y > spaceBetweenLines * 9.75 && y <= spaceBetweenLines * 10.25) {
 			// c1
-			hoveredNote = "c";
+			hoveredNote = "f";
 			hoveredOctave = "4";
 		} else if (y > spaceBetweenLines * 10.25 && y <= spaceBetweenLines * 10.75) {
+			hoveredNote = "e";
+			hoveredOctave = "4";
+		} else if (y > spaceBetweenLines * 10.75 && y <= spaceBetweenLines * 11.25) {
+			hoveredNote = "d";
+			hoveredOctave = "4";
+		} else if (y > spaceBetweenLines * 11.25 && y <= spaceBetweenLines * 11.75) {
+			hoveredNote = "c";
+			hoveredOctave = "4";
+		} else if (y > spaceBetweenLines * 11.75 && y <= spaceBetweenLines * 12.25) {
 			hoveredNote = "b";
 			hoveredOctave = "3";
-		} else if (y > spaceBetweenLines * 10.75 && y <= spaceBetweenLines * 11.25) {
+		} else if (y > spaceBetweenLines * 12.25 && y <= spaceBetweenLines * 12.75) {
 			hoveredNote = "a";
 			hoveredOctave = "3";
-		} else if (y > spaceBetweenLines * 11.25 && y <= spaceBetweenLines * 11.75) {
+		} else if (y > spaceBetweenLines * 12.75 && y <= spaceBetweenLines * 13.25) {
 			hoveredNote = "g";
 			hoveredOctave = "3";
-		} else if (y > spaceBetweenLines * 11.75 && y <= spaceBetweenLines * 12.25) {
+		} else if (y > spaceBetweenLines * 13.25 && y <= spaceBetweenLines * 13.75) {
 			hoveredNote = "f";
 			hoveredOctave = "3";
-		} else if (y > spaceBetweenLines * 12.25 && y <= spaceBetweenLines * 12.75) {
+		} else if (y > spaceBetweenLines * 13.75 && y <= spaceBetweenLines * 14.25) {
 			hoveredNote = "e";
+			hoveredOctave = "3";
+		} else if (y > spaceBetweenLines * 14.25 && y <= spaceBetweenLines * 14.75) {
+			hoveredNote = "d";
+			hoveredOctave = "3";
+		} else if (y > spaceBetweenLines * 14.75 && y <= spaceBetweenLines * 15.25) {
+			hoveredNote = "c";
 			hoveredOctave = "3";
 		}
 
