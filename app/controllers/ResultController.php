@@ -43,6 +43,7 @@ class ResultController extends BaseController {
 			$resultNotes = array();
 			for ($i = 0; $i < count($result->occurences); $i++) {
 
+				Debugbar::info($result->occurences[$i]);
 				// setting up result object for current occurence
 				$resultObject = new stdClass();
 				$resultObject->type = 2;
@@ -149,6 +150,7 @@ class ResultController extends BaseController {
 						$resultNotes[$i]->measures[$measureCounter] = $measureObject;
 
 						// loop over each note in measure
+						// Debugbar::info($measureNotes);
 						foreach ($measureNotes as $note) {
 							// create note object
 							$noteObject = new stdClass();
