@@ -120,7 +120,7 @@ class ResultController extends BaseController {
 
 						// append measure object to results
 						$resultNotes[$i]->measures[$measureCounter] = $measureObject;
-						
+
 						// loop over each note in measure
 						foreach ($measureNotes as $note) {
 							// create note object
@@ -212,7 +212,7 @@ class ResultController extends BaseController {
 								} else {
 									$noteObject->pitch->tuplet = false;
 								}
-								
+
 							} else {
 								// it's a rest
 								$noteObject->type = "rest";
@@ -305,7 +305,7 @@ class ResultController extends BaseController {
 
 		$fifths = $key->fifths;
 		$mode = (string)$key->mode;
-		
+
 		if($fifths != null && $mode === "major"){
 			switch($fifths) {
 				case "0": return "C major"; break;
