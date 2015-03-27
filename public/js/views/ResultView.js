@@ -589,7 +589,12 @@ MusicXMLAnalyzer.ResultView = function(){
 				}
 				break;
 			default:
-				return false; break;
+				switch (type) {
+					case 0: return "128"; break;
+					case 1: return "128r"; break;
+					case 2: return "128d"; break;
+				}
+				break;
 		}
 	},
 
