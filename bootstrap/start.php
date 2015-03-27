@@ -24,21 +24,10 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(function() {
-
-	$_stratohost = 'tim';
-	$_localhosts = array('Luitenant-XPS', 'mat-PC', 'DL-XMG-PC', 'Tobias-PC');
-
-	if (isset($_SERVER['LARAVEL_ENV'])) {
-		return $_SERVER['LARAVEL_ENV'];
-	} elseif (gethostname() === $_stratohost) {
-		return 'strato';
-	} elseif (in_array(gethostname(), $_localhosts)) {
-		return 'local';
-	} else {
-		return 'strato';
-	}
-});
+$env = $app->detectEnvironment(array(
+	'local' => array('Luitenant-XPS', 'mat-PC', 'DL-XMG-PC', 'Tobias-PC'),
+	'heroku' => array('*.herokuapp.com'),
+));
 
 /*
 |--------------------------------------------------------------------------
