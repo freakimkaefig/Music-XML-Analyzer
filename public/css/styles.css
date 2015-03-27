@@ -55,8 +55,17 @@ a:focus {
 	margin: 0;
 }
 
+#playResult,
+#stopResult {
+	position: relative;
+	z-index: 10;
+}
+
 .marto10 {
 	margin-top: 10px;
+}
+.martop30 {
+	margin-top: 30px;
 }
 .marbo20 {
 	margin-bottom: 20px;
@@ -68,7 +77,9 @@ a:focus {
 .martop40 {
 	margin-top: 40px;
 }
-
+.martop85 {
+	margin-top: 85px;
+}
 .dropdown.no-padding .dropdown-menu,
 .dropdown.no-padding li a.dropdown-toggle {
 	padding: 0;
@@ -339,6 +350,11 @@ div#pie_meterDistribution {
 	display: block;
 	margin: 0 auto;
 }
+.carousel-indicators {
+	position: relative;
+	bottom: 0;
+	margin-bottom: 0;
+}
 .carousel-indicators li {
 	background-color: #000;
 }
@@ -346,11 +362,17 @@ div#pie_meterDistribution {
 	background-color: #666;
 	
 }
+.carousel-controls{
+	position:relative; 
+  	width:300px;
+  	margin:0 auto;
+  	top: 0px;
+  	z-index: 99;
+}
 .carousel-control.right,
 .carousel-control.left {
 	background: transparent;
 	color: #000;
-	position: absolute;
 }
 
 /*RESULT DETAIL*/
