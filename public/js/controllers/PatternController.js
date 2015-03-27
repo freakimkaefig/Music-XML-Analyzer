@@ -117,9 +117,15 @@ MusicXMLAnalyzer.PatternController = function() {
 
 		//get notes of current extract:
 		var currentPatternNotes = patternModel.getAllNoteElements();
-		// push rest at end of pattern for noteOff of last note
-		// currentPatternNotes[0].notes.push({'type':'rest','duration':'half'});
+
+
+
+		// push empty note at end of pattern for noteOff of last pattern-note
+		// Todo: ONCE!
+		// currentPatternNotes[0].notes.push({'type':'note', 'pitch': { 'type': undefined, 'step': undefined }});
 		console.log("currentPatternNotes: ",currentPatternNotes);
+
+
 
 		//determine MIDI values for currentPatternNotes
 		for(var i = 0; i < currentPatternNotes.length; i++){
@@ -178,9 +184,15 @@ MusicXMLAnalyzer.PatternController = function() {
 				var delay = notesToBePlayed[i].noteDuration /**2 + i + 1*/;
 				var timeout = 0;
 				if(!once){
-					// timeout needs adjustment
-					// currently trial&error values
-					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*3000;
+
+						// Laut Michl Standard bzw oft vorkommendes Metronom-'tempo' = 120
+						//  d.h. 120 schläge pro minute
+						// beats per minute ausgehend von 1/4 noten
+						// -> 120 viertel pro minute
+						// --> 30 ganze pro minute
+						// ---> 1 ganze = 2 sek.
+						// ----> timeout = (vorheriges) delay ( = notenlänge) * 2000, da delay einer ganzen = 1 (siehe getDuration())
+					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*2000;
 				}
 				once = false;
 				console.log("noten abklang: ",delay);
@@ -193,20 +205,21 @@ MusicXMLAnalyzer.PatternController = function() {
 						i = notesToBePlayed.length;
 					}else{
 						console.log("STOP: ",stop);
-						// delay --> https://stackoverflow.com/questions/21296450/midi-js-note-duration-does-not-change
-
-						MIDI.setVolume(0, 127);
-						MIDI.noteOn(0, note, velocity, delay);
 
 						if(i == notesToBePlayed.length -1){
-							// console.log("i: ",i," notesToBePlayed.length -1: ",notesToBePlayed.length -1," delay*3000: ",delay*3000)
 							var timeout2 = delay*3000;
-							setTimeout(function(){ 
-								console.log("setTimeout2 with timeout2:",delay*3000)
-								// MIDI.noteOff(0, note, delay*3000);
-								// MIDI.setVolume(0, 0);
-								MIDI.stopAllNotes();
-							}, timeout2);
+							// setTimeout(function(){ 
+								console.log("last note - delay: ",delay," delay*3: ",delay*3);
+								// console.log("lastnote: ",note, delay);
+								MIDI.setVolume(0, 127);
+								MIDI.noteOn(0, note, velocity, delay);
+								MIDI.noteOff(0, note, delay*3);
+								// MIDI.stopAllNotes();
+							// }, timeout2);
+						}else{
+							MIDI.setVolume(0, 127);
+							MIDI.noteOn(0, note, velocity, delay);
+
 						}
 
 						i++;
