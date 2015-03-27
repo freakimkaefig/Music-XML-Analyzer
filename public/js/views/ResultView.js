@@ -51,7 +51,7 @@ MusicXMLAnalyzer.ResultView = function(){
         var img = document.createElement('img');
 
         // When the event "onload" is triggered we can resize the image.
-        img.onload = function() {        
+        img.onload = function() {
             // We create a canvas and get its context.
             var canvas = document.createElement('canvas');
             var ctx = canvas.getContext('2d');
@@ -151,13 +151,13 @@ MusicXMLAnalyzer.ResultView = function(){
 	initPatternCanvas = function(pattern) {
 		// console.info('MusicXMLAnalyzer.ResultView.initPatternCanvas');
 		patternCanvas = document.getElementById('patternCanvas');
-		
+
 		var vexflowNotes = generateVexflowNotes({ measures: [{ notes: pattern.notes }], type: pattern.type }, false);
 		var renderer = new Vex.Flow.Renderer(patternCanvas, Vex.Flow.Renderer.Backends.CANVAS);
 		var context = renderer.getContext();
 		var stave = new Vex.Flow.Stave(10, 0, 700);
 		stave.addClef("treble").setContext(context).draw();
-		
+
 		renderNotes(vexflowNotes, patternCanvas, renderer, context, stave, true);
 	},
 
@@ -170,7 +170,7 @@ MusicXMLAnalyzer.ResultView = function(){
 		context.fillStyle = '#EEEEEE';
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		context.fillStyle = '#000000';
-		
+
 		// stave.setContext(context).draw();
 
 		var voice = new Vex.Flow.Voice({
@@ -222,7 +222,7 @@ MusicXMLAnalyzer.ResultView = function(){
 				staveBar.setEndBarType(Vex.Flow.Barline.type.END);	// set double measure bar line at last measure
 			}
 
-			
+
 			// creating ties and beams between notes
 			var beamBegin = null;
 			var beamEnd = null;
@@ -288,7 +288,7 @@ MusicXMLAnalyzer.ResultView = function(){
 
 			// draw measure bar line
 			staveBar.setContext(context).draw();
-			
+
 			// draw measure with notes
 			Vex.Flow.Formatter.FormatAndDraw(context, staveBar, measures[i].notes);
 
@@ -449,7 +449,7 @@ MusicXMLAnalyzer.ResultView = function(){
 									case "-2": note.addAccidental(0, new Vex.Flow.Accidental("bb")); break;
 									case "-1": note.addAccidental(0, new Vex.Flow.Accidental("b")); break;
 									case "1": note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
-									case "2": note.addAccidental(0, new Vex.Flow.Accidental("#")); break;		
+									case "2": note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
 								}
 
 								if (pattern.measures[i].notes[j].pitch.dot) {
@@ -475,7 +475,7 @@ MusicXMLAnalyzer.ResultView = function(){
 				}
 				break;
 		}
-		
+
 		// console.log(measures);
 		return measures;
 	},
@@ -503,7 +503,7 @@ MusicXMLAnalyzer.ResultView = function(){
 				newNote.color = "#FF0000";
 			} else {
 				newNote.color = note.color;
-			}		
+			}
 		}
 		return newNote;
 	},

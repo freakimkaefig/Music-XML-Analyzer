@@ -81,7 +81,7 @@
             </div>
 		</div>
 	</div>
-	
+
 	<div class="row marbo20">
 		<div class="col-xs-8">
 			<p class="no-margin">Notes: </p>
@@ -169,8 +169,8 @@
 		</div>
 	</div>
 
-	
-		
-	
+
+
+
 </div>
 @stop

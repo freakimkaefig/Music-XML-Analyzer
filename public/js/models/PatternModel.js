@@ -20,7 +20,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 	tupletArray = [],
 	beamArray = [],
 
-	lastDurationForTriplet = null,
+	tripletEnterMode = false;
+
+	// lastDurationForTriplet = null,
 
 	// val for noteElements: -1,0,1
 	noteElementAccidential = 0,
@@ -31,7 +33,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 
 	init = function() {
-		lastDurationForTriplet = curDuration;
+		// lastDurationForTriplet = curDuration;
+		// sound sequence as default
+		setDefaultValsForSoundSequenceMode();
 	},
 
 	setCurrentMode = function(mode) {
@@ -145,10 +149,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 		//beam
 		//if(curRythSpec == "triplet" && lastDurationForTriplet == curDuration) {
 		if(curRythSpec == "triplet") {			
-			if(lastDurationForTriplet == curDuration || tripletCurrentAmount == 0) {
+			// if(lastDurationForTriplet == curDuration || tripletCurrentAmount == 0) {
 				tripletCurrentAmount++;
-				console.log("triplet amount: " + tripletCurrentAmount)	
-			}
+				console.log("triplet amount ++ -> " + tripletCurrentAmount)	
+			// }
 		}
 			
 		//}
@@ -352,9 +356,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		//check if triplet
 		if (curRythSpec == "triplet") {
-			if (curDuration == lastDurationForTriplet || tripletCurrentAmount == 1) {
-				console.log("INSIDE");
+			// if (curDuration == lastDurationForTriplet || tripletCurrentAmount == 1) {
 				if (tripletCurrentAmount == 3) {
+					$(that).trigger('endTripletEnterMode');
+					tripletEnterMode = false;
 					tripletCurrentAmount = 0;
 					//store all end positions of the triplets
 					tripletEndPositions.push(noteElements4VexFlow.length);
@@ -363,14 +368,16 @@ MusicXMLAnalyzer.PatternModel = function(){
 					var beam = new Vex.Flow.Tuplet(noteElements4VexFlow.slice(noteElements4VexFlow.length-3, noteElements4VexFlow.length))
 					tupletArray.push(tuplet);
 					beamArray.push(beam);
-					// console.log("tripletEndPositions: ",tripletEndPositions)
+				} else if (tripletCurrentAmount == 1) {
+					 tripletEnterMode = true;
+					 $(that).trigger('startTripletEnterMode');
 				}
-				lastDurationForTriplet = curDuration;
-				// console.log("last dur set to: " + lastDurationForTriplet);
-			}
+				// lastDurationForTriplet = curDuration;
+			// }
 		} else {
 			//when user changes from triplet into different rythSpec
 			//when there are already 1 or 2 triplets, they will be deleted and removed from the note and vexflow array
+			/*
 			if (tripletCurrentAmount > 0) {
 				//splice -> (position in array, number of elements to be removed)
 				//position in array -> starts with 0
@@ -385,6 +392,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 				tripletCurrentAmount = 0;
 			}
+			*/
 		}
 
 		if(noteElements.length == 0) {
@@ -414,7 +422,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curOctave = "4";
 		curAccidential = "none";
 
-		lastDurationForTriplet = curDuration;
+		// lastDurationForTriplet = curDuration;
 		tripletCurrentAmount = 0;
 		tripletEndPositions = [],
 		tupletArray = [],
@@ -432,7 +440,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curDuration = "quarter";
 		curRythSpec = "none";
 
-		lastDurationForTriplet = curDuration;
+		// lastDurationForTriplet = curDuration;
 		tripletCurrentAmount = 0;
 		tripletEndPositions = [],
 		tupletArray = [],
@@ -452,7 +460,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curDuration = "quarter";
 		curRythSpec = "none";
 
-		lastDurationForTriplet = curDuration;
+		// lastDurationForTriplet = curDuration;
 		tripletCurrentAmount = 0;
 		tripletEndPositions = [],
 		tupletArray = [],
@@ -547,27 +555,32 @@ MusicXMLAnalyzer.PatternModel = function(){
 		if(noteElements.length == 0) {
 	    	first = true;
 	    	noteElements = [];
-	    }else if(noteElements[0].notes.length != 0){
+	    }else if(noteElements[0].notes.length != 0) {
 			//check if element you want to delete is triplet
 			//and check if there are triplets before
 		    if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
-		    	tripletCurrentAmount = 0;
+		    	noteElements[0].notes.pop();
+		    	noteElements[0].notes.pop();
 		    	noteElements[0].notes.pop();
 		    	noteElements4VexFlow.pop();
-		    	if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
-		    		if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
-		    			noteElements[0].notes.pop();
-		    			noteElements4VexFlow.pop();
-		    			if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
-		    				if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
-				    			noteElements[0].notes.pop();
-				    			noteElements4VexFlow.pop();
-				    			beamArray.pop();
-				    			tupletArray.pop();
-			    			}
-		    			}
-		    		}
-		    	}
+		    	noteElements4VexFlow.pop();
+		    	noteElements4VexFlow.pop();
+		    	beamArray.pop();
+				tupletArray.pop();
+		    	// if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
+		    	// 	if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
+		    	// 		noteElements[0].notes.pop();
+		    	// 		noteElements4VexFlow.pop();
+		    	// 		if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
+		    	// 			if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
+				   //  			noteElements[0].notes.pop();
+				   //  			noteElements4VexFlow.pop();
+				   //  			beamArray.pop();
+				   //  			tupletArray.pop();
+			    // 			}
+		    	// 		}
+		    	// 	}
+		    	// }
 		    } else {
 		    	noteElements[0].notes.pop();
 		    	noteElements4VexFlow.pop();	

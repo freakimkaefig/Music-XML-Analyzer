@@ -40,6 +40,9 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('changeSelectedDuration', onDurationSelectionChange);
 		$(patternModel).on('changeSelectedSpecRyth', onSpecRythSelectionChange);
 
+		$(patternModel).on('startTripletEnterMode', onTripletEnterModeStart);
+		$(patternModel).on('endTripletEnterMode', onTripletEnterModeEnd);
+
 		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
 		
 		$(patternModel).on('clearCanvas', onCanvasClear);
@@ -281,6 +284,14 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	removeLastNote = function() {
 		patternModel.removeLastNoteElement();
+	},
+
+	onTripletEnterModeStart = function() {
+		patternView.startTripletEnterMode();
+	},
+
+	onTripletEnterModeEnd = function() {
+		patternView.endTripletEnterMode();
 	},
 
 	onPatternChange = function(event, pattern) {
