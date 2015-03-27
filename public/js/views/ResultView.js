@@ -494,6 +494,8 @@ MusicXMLAnalyzer.ResultView = function(){
 					newKeys.push(getVexflowKey(step, octave, alter));
 					newNote = new Vex.Flow.StaveNote({ keys: newKeys, duration: note.duration, auto_stem: true });
 					note = checkNextNotes(pattern, note, i, j);
+				} else {
+					return note;
 				}
 			}
 
