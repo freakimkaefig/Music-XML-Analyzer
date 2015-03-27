@@ -263,6 +263,8 @@ MusicXMLAnalyzer.NotationView = function(){
 	/* This method handels the mouseover event of canvas */
 	onMouseClickCanvas = function(event) {
 
+		console.log(event);
+
 		var noteName = patternModel.getCurrentNoteName();
 		var hoveredArea = null;
 
