@@ -62,9 +62,36 @@ class ResultController extends BaseController {
 				$resultObject->part_name = $part_name;
 
 				// calculating measure number, where the first and last note is in
-				$startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
-				$endMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($end)->parentNode->getAttribute('number');
-				
+				$part = $xPath->query('//part[@id="' . $part_id . '"]');
+				if ($part) {
+					$part = $part->item(0);
+					if ($part) {
+						$notes = $part->getElementsByTagName('note');
+						if ($notes) {
+							$note = $notes->item($start);
+							if ($note) {
+								Debugbar::info("StartNote: " . $note->getElementsByTagName('pitch')->item(0)->getElementsByTagName('step')->item(0)->nodeValue . "/" . $note->getElementsByTagName('pitch')->item(0)->getElementsByTagName('octave')->item(0)->nodeValue);
+								$startMeasureNumber = $note->parentNode->getAttribute('number');
+							}
+						}
+					}
+				}
+				$part = $xPath->query('//part[@id="' . $part_id . '"]');
+				if ($part) {
+					$part = $part->item(0);
+					if ($part) {
+						$notes = $part->getElementsByTagName('note');
+						if ($notes) {
+							$note = $notes->item($end);
+							if ($note) {
+								$endMeasureNumber = $note->parentNode->getAttribute('number');
+							}
+						}
+					}
+				}
+				// $startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
+				// $endMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($end)->parentNode->getAttribute('number');
+
 				$noteCounter = 0;
 				$startExtract = $startMeasureNumber;
 				if ($startMeasureNumber > 1) {
