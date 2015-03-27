@@ -17,7 +17,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	topValsNoteElements = null,
 
 	VEXFLOW_REST_SIGN = "r",
-	
+
 
 	init = function() {
 		console.log("notation view");
@@ -49,7 +49,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		$("#myCanvas").on("click", onMouseClickCanvas);
 	},
 
-	
+
 	// display note elements on the canvas and get them from model
 	// via controller
 	renderNotes = function(vexflowNotes) {
@@ -65,7 +65,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		    resolution: Vex.Flow.RESOLUTION
 		});
 
-		
+
 		//easiest way to disable time-checking
 		voice.setStrict(false);
 
@@ -91,10 +91,10 @@ MusicXMLAnalyzer.NotationView = function(){
 		for(var i=0; i < beams.length; i++) {
 			for(var j=0; j < beams[i].length; j++) {
 				beams[i][j].setContext(context).draw();
-			}	
+			}
 		}
 
-		
+
 
 	},
 
@@ -124,13 +124,13 @@ MusicXMLAnalyzer.NotationView = function(){
 		    joinVoices([voice]).format([voice], 700);
 
 		// Render voice
-		stave.setContext(context).draw();  
+		stave.setContext(context).draw();
 		voice.draw(context, stave);
 		tuplet1.setContext(context).draw();
 
 		for(var i = 0; i < beams1.length; i++){
         	beams1[i].setContext(context).draw();
-    	} 
+    	}
 	},
 	*/
 
@@ -139,7 +139,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave.setContext(context).draw();
 
-		// get all vexflow note elements from model which already exist 
+		// get all vexflow note elements from model which already exist
   		var vexflowNotes = patternModel.getAllVexFlowNoteElements();
 
   		//bugprevention: vexflow changes the position of dots
@@ -148,9 +148,9 @@ MusicXMLAnalyzer.NotationView = function(){
 
   			if (typeof vexflowNotes[i].modifiers[0] !== 'undefined') {
   				vexflowNotes[i].modifiers[0].dot_shiftY = 0;
-  			}	
+  			}
   		}
-  		
+
   		var previewNote = null;
 		var key = hoveredNote;
   		var durationContent = patternModel.getDuration4Vexflow(patternModel.getCurrentNoteDuration());
@@ -172,7 +172,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		} else {
 			previewNote = new Vex.Flow.StaveNote({ keys: [key + "/" + hoveredOctave],
 	    						duration: durationContent,
-	    						auto_stem: true });	
+	    						auto_stem: true });
 		}
 
 		if (accidental == "#" || accidental == "b") {
@@ -187,7 +187,7 @@ MusicXMLAnalyzer.NotationView = function(){
 		previewNote.color = "#8B8B8B";
 
   		vexflowNotes.push(previewNote);
-		  		  	
+
 		var voice = new Vex.Flow.Voice({
 		    resolution: Vex.Flow.RESOLUTION
 		});
@@ -217,11 +217,11 @@ MusicXMLAnalyzer.NotationView = function(){
 		for(var i=0; i < beams.length; i++) {
 			for(var j=0; j < beams[i].length; j++) {
 				beams[i][j].setContext(context).draw();
-			}	
+			}
 		}
 
 		//delete last array entry
-		vexflowNotes.pop();		
+		vexflowNotes.pop();
 
 	},
 
@@ -269,7 +269,7 @@ MusicXMLAnalyzer.NotationView = function(){
 
     	//check if cursor is hover a existing note position
     	//if yes the method returns val and not null
-    	
+
     	//when rhythm mode -> just note b/4 is displayed when hovering
     	if (patternModel.getCurrentMode() == 1) {
     		console.log("curMode: " + patternModel.getCurrentMode());
@@ -277,7 +277,7 @@ MusicXMLAnalyzer.NotationView = function(){
     		hoveredNote = "b";
     		renderVexFlowNotePreview("b");
     	}
-    	else if (checkHorizontalArea(y)) {		
+    	else if (checkHorizontalArea(y)) {
     		// call method to render note preview with given noteName
     		renderVexFlowNotePreview();
 
@@ -299,7 +299,7 @@ MusicXMLAnalyzer.NotationView = function(){
 			patternController.addNoteByCanvasClick(hoveredArea);
 		}
 
-		
+
 
 	},
 
@@ -386,8 +386,8 @@ MusicXMLAnalyzer.NotationView = function(){
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave.setContext(context).draw();
 	};
-	
-	
+
+
 	that.init = init;
 	that.renderNotes = renderNotes;
 	that.clearCanvas = clearCanvas;

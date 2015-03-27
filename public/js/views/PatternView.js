@@ -143,7 +143,7 @@ MusicXMLAnalyzer.PatternView = function(){
 					// 	type: "rest",	// Pause
 					// 	duration: "whole"
 					// }
-					
+
 				]
 			}]
 		));*/
@@ -179,7 +179,7 @@ MusicXMLAnalyzer.PatternView = function(){
 			// if true then set selected note to c
 			if($("#break").hasClass("active") == true) {
 				patternController.changeNote("c");
-				setNoteNameActive("c");	
+				setNoteNameActive("c");
 			}
 			$("#break").addClass("disabled");
 		} else {
@@ -229,7 +229,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setToMelodyMode = function() {
 		console.log("pattern view set melody");
-		
+
 		$noteButtonClass.removeClass("disabled");
 		$accidentialButtonClass.removeClass("disabled");
 		$durationButtonClass.removeClass("disabled");
@@ -248,7 +248,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		$noteButtonClass.removeClass('disabled');
 		//disable only break button from notes class
 		$("#break").addClass('disabled');
-		
+
 		$octaveButtonClass.removeClass('disabled');
 		$accidentialButtonClass.removeClass('disabled');
 		// disable search button

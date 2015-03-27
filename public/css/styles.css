@@ -206,18 +206,28 @@ h1 {
 	-o-animation: none;
 	animation: none;
 }
-#uploadDropzone {
-	padding: 15px;
-	border:none;
+#uploadModal .dropzone-background {
 	height: auto;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	position: absolute;
-	border-radius: 12px;
 	background: rgba(81, 81, 81, 0.5);
+}
+#uploadDropzone {
+	padding: 15px;
+	border:none;
+	height: auto;
+	top: 0;
+	bottom: 175px;
+	left: 0;
+	right: 0;
+	position: absolute;
+	border-radius: 12px;
 	text-align: center;
+	background: transparent;
+	overflow-y: auto;
 }
 .dz-image{
 	width: 350px !important;
