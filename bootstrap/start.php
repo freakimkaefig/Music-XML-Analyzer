@@ -24,10 +24,16 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-$env = $app->detectEnvironment(array(
-	'local' => array('Luitenant-XPS', 'mat-PC', 'DL-XMG-PC', 'Tobias-PC'),
-	'heroku' => array('801051aa-0487-4df2-88ce-e54d19f2cbf7'),
-));
+$env = $app->detectEnvironment(function() {
+	$_localhosts = array('Luitenant-XPS', 'mat-PC', 'DL-XMG-PC', 'Tobias-PC');
+	if (isset($_SERVER['LARAVEL_ENV'])) {
+		return $_SERVER['LARAVEL_ENV'];
+	} elseif (in_array(gethostname(), $_localhosts)) {
+		return 'local';
+	} else {
+		return 'production';
+	}
+});
 
 /*
 |--------------------------------------------------------------------------
