@@ -117,7 +117,15 @@ MusicXMLAnalyzer.PatternController = function() {
 
 		//get notes of current extract:
 		var currentPatternNotes = patternModel.getAllNoteElements();
-		// console.log("currentPatternNotes: ",currentPatternNotes, currentPatternNotes[0].notes);
+
+
+
+		// push empty note at end of pattern for noteOff of last pattern-note
+		// Todo: ONCE!
+		// currentPatternNotes[0].notes.push({'type':'note', 'pitch': { 'type': undefined, 'step': undefined }});
+		console.log("currentPatternNotes: ",currentPatternNotes);
+
+
 
 		//determine MIDI values for currentPatternNotes
 		for(var i = 0; i < currentPatternNotes.length; i++){
@@ -171,17 +179,24 @@ MusicXMLAnalyzer.PatternController = function() {
 				console.log("notesToBePlayed: ",notesToBePlayed[i]);
 				// console.log("pause: ", pause);
 				var note = notesToBePlayed[i].note;
-				var noteDuration = notesToBePlayed[i].noteDuration;
+				// var noteDuration = notesToBePlayed[i].noteDuration;
 				var velocity = 127; // how hard the note hits
-				var delay = notesToBePlayed[i].noteDuration  /*+ i*/ + 1;
+				var delay = notesToBePlayed[i].noteDuration /**2 + i + 1*/;
 				var timeout = 0;
 				if(!once){
-					// timeout needs adjustment
-					// currently trial&error values
-					timeout = ((delay *2) /*+ noteDuration*/)*300;
+
+						// Laut Michl Standard bzw oft vorkommendes Metronom-'tempo' = 120
+						//  d.h. 120 schläge pro minute
+						// beats per minute ausgehend von 1/4 noten
+						// -> 120 viertel pro minute
+						// --> 30 ganze pro minute
+						// ---> 1 ganze = 2 sek.
+						// ----> timeout = (vorheriges) delay ( = notenlänge) * 2000, da delay einer ganzen = 1 (siehe getDuration())
+					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*2000;
 				}
 				once = false;
-				console.log("delay till note is played: ",timeout);
+				console.log("noten abklang: ",delay);
+				console.log("timeout till note is played: ",timeout);
 
 				setTimeout(function(){ 
 					if(stop){
@@ -190,13 +205,25 @@ MusicXMLAnalyzer.PatternController = function() {
 						i = notesToBePlayed.length;
 					}else{
 						console.log("STOP: ",stop);
-						MIDI.setVolume(0, 127);
-						// delay --> https://stackoverflow.com/questions/21296450/midi-js-note-duration-does-not-change
 
-						MIDI.noteOn(0, note, velocity, delay);
-						MIDI.noteOff(0, note, delay + noteDuration);
+						if(i == notesToBePlayed.length -1){
+							var timeout2 = delay*3000;
+							// setTimeout(function(){ 
+								console.log("last note - delay: ",delay," delay*3: ",delay*3);
+								// console.log("lastnote: ",note, delay);
+								MIDI.setVolume(0, 127);
+								MIDI.noteOn(0, note, velocity, delay);
+								MIDI.noteOff(0, note, delay*3);
+								// MIDI.stopAllNotes();
+							// }, timeout2);
+						}else{
+							MIDI.setVolume(0, 127);
+							MIDI.noteOn(0, note, velocity, delay);
+
+						}
+
 						i++;
-						MIDI.Player.stop();
+						// MIDI.Player.stop();
 					}
 					// recursively call playTune()
 					playTune();
@@ -205,6 +232,7 @@ MusicXMLAnalyzer.PatternController = function() {
 			// else when finished - reset play&stop buttons after 1.5 sec
 			else{
 				setTimeout(function(){
+
 					$playPattern.prop('disabled', false);
 					$stopPattern.prop('disabled', true);
 				}, 1500);
