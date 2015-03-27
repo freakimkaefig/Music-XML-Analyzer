@@ -271,6 +271,26 @@ MusicXMLAnalyzer.PatternView = function(){
 		$searchPatternButton.prop('disabled', true);
 	},
 
+	startTripletEnterMode = function() {
+		//disable search btn
+		$searchPatternButton = $('#searchPatternButton');
+		$searchPatternButton.addClass('disabled');
+		//disable spec ryth
+		$specialRythButtonClass.addClass('disabled');
+		//diable duration
+		$durationButtonClass.addClass('disabled');
+	},
+
+	endTripletEnterMode = function() {
+		//enable search btn
+		$searchPatternButton = $('#searchPatternButton');
+		$searchPatternButton.removeClass('disabled');
+		//enable spec ryth
+		$specialRythButtonClass.removeClass('disabled');
+		//enable duration
+		$durationButtonClass.removeClass('disabled');
+	},
+
 	onRemoveButtonClick = function(event) {
 		patternController.removeLastNote();
 	};
@@ -285,6 +305,8 @@ MusicXMLAnalyzer.PatternView = function(){
 	that.setToSoundSequenceMode = setToSoundSequenceMode;
 	that.setToRhythmMode = setToRhythmMode;
 	that.setToMelodyMode = setToMelodyMode;
+	that.startTripletEnterMode = startTripletEnterMode;
+	that.endTripletEnterMode = endTripletEnterMode;
 
 	return that;
 }
