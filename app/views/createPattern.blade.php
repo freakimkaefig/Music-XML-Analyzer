@@ -31,7 +31,7 @@
 </div>
 
 <!-- HINT: if there is a column arround you get problems with mouse x and y-->
-<canvas class="center-block" id="myCanvas" width="700" height="180" style="border:1px solid #000000; margin:auto"></canvas>
+<canvas class="center-block" id="myCanvas" width="720" height="180" style="border:1px solid #000000; margin:auto"></canvas>
 
 <div class="row text-center">
 	<div class="col-xs-6 col-xs-offset-3 marbo20 marto10">
