@@ -53,16 +53,16 @@
 <a id="projektbeschreibung" class="anchor" href="#projektbeschreibung" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projektbeschreibung</h2>
 
 <p>Das System lässt sich grob in drei Teilbereiche unterteilen, die in den folgenden Abschnitten näher erläutert werden. Zur besseren Übersichtlichkeit werden die Teilbereiche entsprechend dem Workflow des Nutzers aufgeteilt. Im ersten Schritt erfolgt der Upload von Dateien und daraufhin die automatische, statistische Auswertung. Den letzten Schritt stellt die Suche nach Mustern in den hochgeladenen Dateien dar.<br>
-Auf der Startseite der Anwendung bekommt der Nutzer einen kleinen Überblick über die Funktionen und kann per Klick auf den Button “START UPLOADING NOW!” in Abb. XX mit der Arbeit beginnen.</p>
-
-<p>Abb. XX: Startseite (Screenshot)</p>
+Auf der Startseite der Anwendung bekommt der Nutzer einen kleinen Überblick über die Funktionen und kann per Klick auf den Button “START UPLOADING NOW!” in Abb. 1 mit der Arbeit beginnen.
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/home.png" alt="Startseite">
+Abb. 1: Startseite (Screenshot)</p>
 
 <h3>
 <a id="upload" class="anchor" href="#upload" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upload</h3>
 
-<p>Um dem Anwender die Möglichkeit der statistischen Analyse von Musikstücken zu bieten, müssen zunächst Dateien im MusicXML-Format hochgeladen werden. Das im XML-Standard realisierte, offene Austauschformat MusicXML wird von vielen Notensatzprogrammen unterstützt und löst das vorangehende Notation Interchange File Format (NIFF) ab (<a href="http://de.wikipedia.org/wiki/MusicXML">http://de.wikipedia.org/wiki/MusicXML</a>). Zudem bieten einige Portale, wie zum Beispiel Musescore (<a href="https://musescore.org/de">https://musescore.org/de</a>) den kostenlosen Download von Partituren im MusicXML-Format an, wodurch eine Vielzahl von Musikstücken bereits verfügbar ist. Auf der Homepage von Musescore sind die Partituren in verschiedenen Formaten verfügbar und können nach kostenloser Registrierung heruntergeladen werden. Mit Hilfe der ebenfalls kostenlosen Software können die Partituren in andere Formate (mscx, mscz, xml, mid, ogg, wav oder pdf) umgewandelt werden.</p>
-
-<p>Abb. XX: Upload (Screenshot)</p>
+<p>Um dem Anwender die Möglichkeit der statistischen Analyse von Musikstücken zu bieten, müssen zunächst Dateien im MusicXML-Format hochgeladen werden. Das im XML-Standard realisierte, offene Austauschformat MusicXML wird von vielen Notensatzprogrammen unterstützt und löst das vorangehende Notation Interchange File Format (NIFF) ab (<a href="http://de.wikipedia.org/wiki/MusicXML">http://de.wikipedia.org/wiki/MusicXML</a>). Zudem bieten einige Portale, wie zum Beispiel Musescore (<a href="https://musescore.org/de">https://musescore.org/de</a>) den kostenlosen Download von Partituren im MusicXML-Format an, wodurch eine Vielzahl von Musikstücken bereits verfügbar ist. Auf der Homepage von Musescore sind die Partituren in verschiedenen Formaten verfügbar und können nach kostenloser Registrierung heruntergeladen werden. Mit Hilfe der ebenfalls kostenlosen Software können die Partituren in andere Formate (mscx, mscz, xml, mid, ogg, wav oder pdf) umgewandelt werden.
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/upload.png" alt="Upload">
+Abb. 2: Upload (Screenshot)</p>
 
 <h3>
 <a id="statistische-analyse" class="anchor" href="#statistische-analyse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Statistische Analyse</h3>
@@ -73,27 +73,27 @@ Paar Infos zu Funktionsweise (XPath, etc)</p>
 <h3>
 <a id="dashboard" class="anchor" href="#dashboard" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dashboard</h3>
 
-<p>Im Dashboard erhält der Nutzer einen Überblick über die wichtigsten Fakten und Statistiken zu den einzelnen Musikstücken oder über den gesamten hochgeladenen Korpus. Dabei werden die Noten- und Intervallverteilung in einem Balkendiagramm, die Distribution der Tonarten, Notenlängen und Taktarten in einem Kreisdiagramm dargestellt. Daneben werden noch weitere Informationen zur Anzahl und zum Auftreten der Takte, Noten, Pausen und Instrumente angegeben.</p>
-
-<p>Abb. XX: Dashboard (Screenshot)</p>
+<p>Im Dashboard erhält der Nutzer einen Überblick über die wichtigsten Fakten und Statistiken zu den einzelnen Musikstücken oder über den gesamten hochgeladenen Korpus. Dabei werden die Noten- und Intervallverteilung in einem Balkendiagramm, die Distribution der Tonarten, Notenlängen und Taktarten in einem Kreisdiagramm dargestellt. Daneben werden noch weitere Informationen zur Anzahl und zum Auftreten der Takte, Noten, Pausen und Instrumente angegeben.
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/dashboard.png" alt="Dashboard">
+Abb. 3: Dashboard (Screenshot)</p>
 
 <h3>
 <a id="suche-nach-patterns" class="anchor" href="#suche-nach-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Suche nach Patterns</h3>
 
-<p>Vom Dashboard aus gelangt der User durch einen Klick auf den Button SEARCH FOR PATTERNS oder im Header via SEARCH zur Patternsuche. Die verschiedenen Möglichkeiten, die der Benutzer hat, um seine Musikstücke zu durchsuchen werden im folgenden kurz erläutert und sind in Abbildung XX dargestellt. Als ersten Schritt muss zwischen MELODY, SOUND SEQUENCE oder RHYTHM unterschieden werden, wobei MELODY hier voreingestellt ist. Darauf hin kann der Benutzer entweder per Maus, direkt auf den Notenzeilen, oder mit Hilfe der Buttons die gewünschten Noten eingeben. Werden die Buttons zur Noteneingabe verwendet, muss jede Note mit einem Klick auf ADD hinzugefügt werden. Durch Klick auf DELETE wird die zuletzt eingegebene Note wieder gelöscht. Alle Noten werden in der angezeigten Notenzeile dargestellt und können jederzeit abgespielt werden. Standartnoten, Triolen oder punktierte Noten müssen mit Hilfe der Buttons eingegeben werden. Alle Noten der dritten bis sechsten Oktave mit einer Dauer von einer Ganzen Note bis zur 64tel Note können ausgewählt werden. Auch Noten mit Kreuz- oder B-Vorzeichen können hinzugefügt werden.</p>
-
-<p>Abb. XX: Search (Screenshot)</p>
+<p>Vom Dashboard aus gelangt der User durch einen Klick auf den Button SEARCH FOR PATTERNS oder im Header via SEARCH zur Patternsuche. Die verschiedenen Möglichkeiten, die der Benutzer hat, um seine Musikstücke zu durchsuchen werden im folgenden kurz erläutert und sind in Abbildung 4 dargestellt. Als ersten Schritt muss zwischen MELODY, SOUND SEQUENCE oder RHYTHM unterschieden werden, wobei MELODY hier voreingestellt ist. Darauf hin kann der Benutzer entweder per Maus, direkt auf den Notenzeilen, oder mit Hilfe der Buttons die gewünschten Noten eingeben. Werden die Buttons zur Noteneingabe verwendet, muss jede Note mit einem Klick auf ADD hinzugefügt werden. Durch Klick auf DELETE wird die zuletzt eingegebene Note wieder gelöscht. Alle Noten werden in der angezeigten Notenzeile dargestellt und können jederzeit abgespielt werden. Standartnoten, Triolen oder punktierte Noten müssen mit Hilfe der Buttons eingegeben werden. Alle Noten der dritten bis sechsten Oktave mit einer Dauer von einer Ganzen Note bis zur 64tel Note können ausgewählt werden. Auch Noten mit Kreuz- oder B-Vorzeichen können hinzugefügt werden.
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/search.png" alt="Search for Patterns">
+Abb. 4: Search (Screenshot)</p>
 
 <h3>
 <a id="suchergebnisse" class="anchor" href="#suchergebnisse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Suchergebnisse</h3>
 
-<p>Ist der Benutzer mit seiner Noteneingabe zufrieden, werden durch einen Klick auf SEARCH alle hochgeladenen Musikstücke nach dem erstellten Pattern durchsucht. Abbildung XX zeigt die Ergebnisseite der Suche. Hier wird im oberen Bereich das gesuchte Pattern noch einmal dargestellt und darunter die Musikstücke , welche das Pattern enthalten, samt jeweiliger Häufigkeit der Treffer.</p>
+<p>Ist der Benutzer mit seiner Noteneingabe zufrieden, werden durch einen Klick auf SEARCH alle hochgeladenen Musikstücke nach dem erstellten Pattern durchsucht. Abbildung 5 zeigt die Ergebnisseite der Suche. Hier wird im oberen Bereich das gesuchte Pattern noch einmal dargestellt und darunter die Musikstücke , welche das Pattern enthalten, samt jeweiliger Häufigkeit der Treffer.
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/result_list.png" alt="Result list">
+Abb. 5: Searchresults (Screenshot)</p>
 
-<p>Abb. XX: Searchresults (Screenshot)</p>
-
-<p>Klickt der User auf einen Treffer, so wird eine Detailansicht aufgerufen, wie in Abbildung XX zu erkennen ist. Hier werden neben dem Titel des Stücks die jeweiligen Trefferstellen in einem Carousel dargestellt und farblich hervorgehoben. Mit Hilfe der Pfeile kann zwischen den Treffern hin und her gewechselt werden. Auch Informationen, in welcher Stimme und in welchem Takt das Pattern gefunden wurde, werden dargestellt. Ein Klick auf PLAY spielt einen Auszug, der das Pattern enthält, ab. Der Nutzer hat außerdem die Möglichkeit, alle visualisierten Treffer als PDF-Dokument zu exportieren, was mit einem Klick auf den Button EXPORT AS PDF erreicht werden kann.</p>
-
-<p>Abb. XX: Searchresult Details (Screenshot)</p>
+<p>Klickt der User auf einen Treffer, so wird eine Detailansicht aufgerufen, wie in Abbildung 6 zu erkennen ist. Hier werden neben dem Titel des Stücks die jeweiligen Trefferstellen in einem Carousel dargestellt und farblich hervorgehoben. Mit Hilfe der Pfeile kann zwischen den Treffern hin und her gewechselt werden. Auch Informationen, in welcher Stimme und in welchem Takt das Pattern gefunden wurde, werden dargestellt. Ein Klick auf PLAY spielt einen Auszug, der das Pattern enthält, ab. Der Nutzer hat außerdem die Möglichkeit, alle visualisierten Treffer als PDF-Dokument zu exportieren, was mit einem Klick auf den Button EXPORT AS PDF erreicht werden kann.
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/result.png" alt="Search result detail">
+Abb. 6: Searchresult Details (Screenshot)</p>
 
 <h2>
 <a id="architektur-und-implementierung" class="anchor" href="#architektur-und-implementierung" aria-hidden="true"><span class="octicon octicon-link"></span></a>Architektur und Implementierung</h2>
@@ -101,7 +101,7 @@ Paar Infos zu Funktionsweise (XPath, etc)</p>
 <h3>
 <a id="projektablauf" class="anchor" href="#projektablauf" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projektablauf</h3>
 
-<p>Die Projektanforderungen wurden zunächst in Form von User Stories erfasst, welche im digitalen Anhang XX einzusehen sind. Um den Projektablauf zu organisieren, wurde das Issue-System von Github benutzt. Hierbei repräsentierten die Meilensteine jeweils eine User Story. Diesen wurden anschließend kleinere Teilaufgaben, die Issues, zugewiesen. Eine zusätzliche Erweiterung für Google Chrome namens ZenHub (<a href="http://zenhub.io">http://zenhub.io</a>) erlaubte die Anordnung der Issues in Form eines Boards mit verschiedenen Pipelines. Das verwendete Board wurde, angelehnt an das Projektmanagement-Framework Kanban, in “Backlog”, “Nice to have”, “To Do”, “In Progress” und “Closed” unterteilt.
+<p>Die Projektanforderungen wurden zunächst in Form von User Stories erfasst. Um den Projektablauf zu organisieren, wurde das Issue-System von Github benutzt. Hierbei repräsentierten die Meilensteine jeweils eine User Story. Diesen wurden anschließend kleinere Teilaufgaben, die Issues, zugewiesen. Eine zusätzliche Erweiterung für Google Chrome namens ZenHub (<a href="http://zenhub.io">http://zenhub.io</a>) erlaubte die Anordnung der Issues in Form eines Boards mit verschiedenen Pipelines. Das verwendete Board wurde, angelehnt an das Projektmanagement-Framework Kanban, in “Backlog”, “Nice to have”, “To Do”, “In Progress” und “Closed” unterteilt.
 Zu Beginn des Projekts konnten die Zuständigkeiten relativ klar aufgeteilt werden. Während Lukas Lamm für die Implementierung des verwendeten Frameworks Laravel und die daran gebundene Datenbankarchitektur zuständig war, kümmerte sich Tobias Semmelmann um die Frontend-Seite des Systems. David Lechler wurde mit der Traversierung, Analyse und Entwicklung der Suchalgorithmen für die MusicXML-Dateien betraut. Matthias Schneider kümmerte sich um die Eingabe der Suchpatterns.
 In späteren Projektphasen verwischten die Grenzen der Zuständigkeiten immer häufiger. Dadurch griff Lukas Lamm auch die Darstellung der Suchergebnisse in Form von Takten und Noten unterstützend ein und kümmerte sich um die beiden Export-Funktionen. David Lechler übernahm schließlich die Wiedergabe der Ergebnisse mit Midi.js.</p>
 
@@ -114,9 +114,10 @@ Zur Realisation interaktiver Funktionen und Vereinfachung von Javascript-Code wu
 <h3>
 <a id="systemarchitektur" class="anchor" href="#systemarchitektur" aria-hidden="true"><span class="octicon octicon-link"></span></a>Systemarchitektur</h3>
 
-<p>Abb. XX: Systemarchitektur</p>
-
-<p>Abb. XX: Datenbankschema</p>
+<p><img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/system_architektur.png" alt="Systemarchitektur">
+Abb. 7: Systemarchitektur
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/database_schema.png" alt="Datenbankschema">
+Abb. 8: Datenbankschema</p>
 
 <h2>
 <a id="ausblick" class="anchor" href="#ausblick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ausblick</h2>
