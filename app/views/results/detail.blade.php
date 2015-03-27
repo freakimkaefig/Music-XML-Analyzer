@@ -14,7 +14,7 @@
 		</div>
 		<div class="col-xs-8">
 			{{ Form::hidden('pattern', json_encode(Cache::get('pattern')[0]), array('id' => 'patternValue')) }}
-			<canvas id="patternCanvas" width="700" height="186"></canvas>
+			<canvas id="patternCanvas" width="700" height="180"></canvas>
 		</div>
 	</div>
 </div>

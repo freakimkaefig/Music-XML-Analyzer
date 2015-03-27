@@ -204,6 +204,9 @@ MusicXMLAnalyzer.ResultView = function(){
 				height = 120;
 			}
 
+			// Add offset from top to center vertical
+			y += 45;
+
 			staveBar = new Vex.Flow.Stave(x, y, width);	// generate new stave for measure
 
 			if (i%2 == 0) {
