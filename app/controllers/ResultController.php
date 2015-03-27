@@ -43,6 +43,7 @@ class ResultController extends BaseController {
 			$resultNotes = array();
 			for ($i = 0; $i < count($result->occurences); $i++) {
 
+				Debugbar::info($result->occurences[$i]);
 				// setting up result object for current occurence
 				$resultObject = new stdClass();
 				$resultObject->type = 2;
@@ -62,9 +63,36 @@ class ResultController extends BaseController {
 				$resultObject->part_name = $part_name;
 
 				// calculating measure number, where the first and last note is in
-				$startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
-				$endMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($end)->parentNode->getAttribute('number');
-				
+				$part = $xPath->query('//part[@id="' . $part_id . '"]');
+				if ($part) {
+					$part = $part->item(0);
+					if ($part) {
+						$notes = $part->getElementsByTagName('note');
+						if ($notes) {
+							$note = $notes->item($start);
+							if ($note) {
+								Debugbar::info("StartNote: " . $note->getElementsByTagName('pitch')->item(0)->getElementsByTagName('step')->item(0)->nodeValue . "/" . $note->getElementsByTagName('pitch')->item(0)->getElementsByTagName('octave')->item(0)->nodeValue);
+								$startMeasureNumber = $note->parentNode->getAttribute('number');
+							}
+						}
+					}
+				}
+				$part = $xPath->query('//part[@id="' . $part_id . '"]');
+				if ($part) {
+					$part = $part->item(0);
+					if ($part) {
+						$notes = $part->getElementsByTagName('note');
+						if ($notes) {
+							$note = $notes->item($end);
+							if ($note) {
+								$endMeasureNumber = $note->parentNode->getAttribute('number');
+							}
+						}
+					}
+				}
+				// $startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
+				// $endMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($end)->parentNode->getAttribute('number');
+
 				$noteCounter = 0;
 				$startExtract = $startMeasureNumber;
 				if ($startMeasureNumber > 1) {
@@ -120,8 +148,9 @@ class ResultController extends BaseController {
 
 						// append measure object to results
 						$resultNotes[$i]->measures[$measureCounter] = $measureObject;
-						
+
 						// loop over each note in measure
+						// Debugbar::info($measureNotes);
 						foreach ($measureNotes as $note) {
 							// create note object
 							$noteObject = new stdClass();
@@ -169,12 +198,12 @@ class ResultController extends BaseController {
 								}
 
 								// determine beam type
-								$beam = $note->getElementsByTagName('beam');
-								if ($beam->length) {
-									$noteObject->pitch->beam = $beam->item(0)->nodeValue;
-								} else {
-									$noteObject->pitch->beam = false;
-								}
+								// $beam = $note->getElementsByTagName('beam');
+								// if ($beam->length) {
+								// 	$noteObject->pitch->beam = $beam->item(0)->nodeValue;
+								// } else {
+								// 	$noteObject->pitch->beam = false;
+								// }
 
 								// determine dot
 								$dot = $note->getElementsByTagName('dot');
@@ -212,7 +241,7 @@ class ResultController extends BaseController {
 								} else {
 									$noteObject->pitch->tuplet = false;
 								}
-								
+
 							} else {
 								// it's a rest
 								$noteObject->type = "rest";
@@ -305,7 +334,7 @@ class ResultController extends BaseController {
 
 		$fifths = $key->fifths;
 		$mode = (string)$key->mode;
-		
+
 		if($fifths != null && $mode === "major"){
 			switch($fifths) {
 				case "0": return "C major"; break;

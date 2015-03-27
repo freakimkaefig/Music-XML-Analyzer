@@ -31,7 +31,7 @@
 </div>
 
 <!-- HINT: if there is a column arround you get problems with mouse x and y-->
-<canvas class="center-block" id="myCanvas" width="700" height="120" style="border:1px solid #000000; margin:auto"></canvas>
+<canvas class="center-block" id="myCanvas" width="700" height="180" style="border:1px solid #000000; margin:auto"></canvas>
 
 <div class="row text-center">
 	<div class="col-xs-6 col-xs-offset-3 marbo20 marto10">
@@ -63,9 +63,6 @@
 		<div class="col-xs-4">
             <p class="no-margin">Octave: </p>
             <div class="btn-group" data-toggle="buttons">
-                <label id="2" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-                    <input type="radio" value=":2">2
-                </label>
                 <label id="3" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":3">3
                 </label>
@@ -81,7 +78,7 @@
             </div>
 		</div>
 	</div>
-	
+
 	<div class="row marbo20">
 		<div class="col-xs-8">
 			<p class="no-margin">Notes: </p>
@@ -169,8 +166,8 @@
 		</div>
 	</div>
 
-	
-		
-	
+
+
+
 </div>
 @stop

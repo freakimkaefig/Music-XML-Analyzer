@@ -11,6 +11,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	$addNoteButton = $("#btn-add-note"),
 	$removeNoteButton = $("#btn-remove-note"),
+	$searchPatternButton = $("#searchPatternButton"),
 
 	$patternValue = $('#patternValue'),
 
@@ -142,7 +143,7 @@ MusicXMLAnalyzer.PatternView = function(){
 					// 	type: "rest",	// Pause
 					// 	duration: "whole"
 					// }
-					
+
 				]
 			}]
 		));*/
@@ -178,7 +179,7 @@ MusicXMLAnalyzer.PatternView = function(){
 			// if true then set selected note to c
 			if($("#break").hasClass("active") == true) {
 				patternController.changeNote("c");
-				setNoteNameActive("c");	
+				setNoteNameActive("c");
 			}
 			$("#break").addClass("disabled");
 		} else {
@@ -228,7 +229,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setToMelodyMode = function() {
 		console.log("pattern view set melody");
-		
+
 		$noteButtonClass.removeClass("disabled");
 		$accidentialButtonClass.removeClass("disabled");
 		$durationButtonClass.removeClass("disabled");
@@ -236,7 +237,6 @@ MusicXMLAnalyzer.PatternView = function(){
 		$octaveButtonClass.removeClass("disabled");
 		// disable search button
 		// (will get enabled after two notes are created)
-		$searchPatternButton = $('#searchPatternButton');
 		$searchPatternButton.prop('disabled', true);
 	},
 
@@ -248,12 +248,11 @@ MusicXMLAnalyzer.PatternView = function(){
 		$noteButtonClass.removeClass('disabled');
 		//disable only break button from notes class
 		$("#break").addClass('disabled');
-		
+
 		$octaveButtonClass.removeClass('disabled');
 		$accidentialButtonClass.removeClass('disabled');
 		// disable search button
 		// (will get enabled after two notes are created)
-		$searchPatternButton = $('#searchPatternButton');
 		$searchPatternButton.prop('disabled', true);
 	},
 
@@ -267,8 +266,27 @@ MusicXMLAnalyzer.PatternView = function(){
 		$specialRythButtonClass.removeClass('disabled');
 		// disable search button
 		// (will get enabled after two notes are created)
-		$searchPatternButton = $('#searchPatternButton');
 		$searchPatternButton.prop('disabled', true);
+	},
+
+	startTripletEnterMode = function() {
+		//disable search and remove btn
+		$searchPatternButton.addClass('disabled');
+		$removeNoteButton.addClass('disabled');
+		//disable spec ryth
+		$specialRythButtonClass.addClass('disabled');
+		//diable duration
+		$durationButtonClass.addClass('disabled');
+	},
+
+	endTripletEnterMode = function() {
+		//enable search and remove btn
+		$searchPatternButton.removeClass('disabled');
+		$removeNoteButton.removeClass('disabled');
+		//enable spec ryth
+		$specialRythButtonClass.removeClass('disabled');
+		//enable duration
+		$durationButtonClass.removeClass('disabled');
 	},
 
 	onRemoveButtonClick = function(event) {
@@ -285,6 +303,8 @@ MusicXMLAnalyzer.PatternView = function(){
 	that.setToSoundSequenceMode = setToSoundSequenceMode;
 	that.setToRhythmMode = setToRhythmMode;
 	that.setToMelodyMode = setToMelodyMode;
+	that.startTripletEnterMode = startTripletEnterMode;
+	that.endTripletEnterMode = endTripletEnterMode;
 
 	return that;
 }

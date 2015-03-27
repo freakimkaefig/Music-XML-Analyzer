@@ -4,7 +4,7 @@ class SoundSequenzController {
 
 	static $patternIntervalArray;
 	static $result;
-	static $xmlIntervalArray; 
+	static $xmlIntervalArray;
 	static $xmlPositionArray;
 	static $results;
 	static $exactMatch;
@@ -12,24 +12,24 @@ class SoundSequenzController {
 	static $noteCounter;
 
 	function __construct() {
-	
+
 	}
 
 	public function search($pattern) {
 		// Debugbar::info($pattern);
 		$p = $pattern[0]->notes;
 		// $exactMatch = $pattern->exact;
-		// 
-		// NICE TO HAVE: 
-		// if !exactMatch: 
+		//
+		// NICE TO HAVE:
+		// if !exactMatch:
 		// #intervall differenzen aus pattern berechnen
-		// #differenzen vergleichen mit 
-		// 
+		// #differenzen vergleichen mit
+		//
 		self::$patternIntervalArray = array();
 		self::$results = array();
 
 		foreach ($p as $note) {
-			
+
 			//get note intervals of pattern
 			$interval = PatternController::getInterval($note);
 			array_push(self::$patternIntervalArray, $interval);
@@ -45,7 +45,7 @@ class SoundSequenzController {
 			$file_url = $upload->url;
 
 			self::$once = true;
-			self::$xmlIntervalArray = array(); 
+			self::$xmlIntervalArray = array();
 			self::$xmlPositionArray = array();
 			self::$result = new stdClass();
 			self::$result->occurences = array();
@@ -75,7 +75,7 @@ class SoundSequenzController {
 							self::$once = false;
 							$lastVoice = $part->measure[$i]->note[$j]->voice;
 						}
-						
+
 						if(!isset($n->rest)){ //exclude rests (only looking for note patterns)
 
 							$pitch = new stdClass();
@@ -102,7 +102,7 @@ class SoundSequenzController {
 // var_dump(self::$xmlIntervalArray);
 								//check if Array-length equals Pattern-length already
 								if(count(self::$xmlIntervalArray) == count(self::$patternIntervalArray)){
-							
+
 		// echo"<br><br><hr>array_values: <br>";
 		// var_dump(array_values(self::$xmlIntervalArray));
 		// echo"<br><br>";
@@ -111,7 +111,7 @@ class SoundSequenzController {
 		// var_dump(self::$xmlPositionArray);
 		// echo "<br>PART_ID:";
 		// var_dump((string)$part['id']);
-		// echo"<br><br>";		
+		// echo"<br><br>";
 									// compare arrays
 									if(array_values(self::$xmlIntervalArray) == array_values(self::$patternIntervalArray)){
 										// create result
@@ -162,7 +162,7 @@ class SoundSequenzController {
 
 									}
 
-								} //if array lengths aren't equal yet, continue	
+								} //if array lengths aren't equal yet, continue
 
 								// save current voice for comparison with next note
 								$lastVoice = $n->voice;
@@ -175,7 +175,7 @@ class SoundSequenzController {
 	// var_dump($part->measure[$i]->note[$j]->voice);
 								$lastVoice = $part->measure[$i]->note[$j]->voice;
 								$j--;
-								self::$xmlIntervalArray = array(); 
+								self::$xmlIntervalArray = array();
 								self::$xmlPositionArray = array();
 	// echo"<br><br>xmlIntervalArray AFTER VOICE CHANGED: ";
 	// var_dump(self::$xmlIntervalArray);
