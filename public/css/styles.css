@@ -54,6 +54,7 @@ a:focus {
 .no-margin {
 	margin: 0;
 }
+
 .marto10 {
 	margin-top: 10px;
 }
@@ -62,6 +63,10 @@ a:focus {
 }
 .marbo30 {
 	margin-bottom: 30px;
+}
+
+.martop40 {
+	margin-top: 40px;
 }
 
 .dropdown.no-padding .dropdown-menu,

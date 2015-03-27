@@ -3,8 +3,16 @@
 @section('content')
 
 <div class="container">
+{{-- <div class="row text-center">
+	<div class="col-xs-12">
+		<h3>Your pattern:</h3>
+	</div>
+</div> --}}
 	<div class="row">
-		<div class="col-xs-12">
+		<div class="col-xs-2 col-xs-offset-1 martop40">
+			<h4>Your pattern:</h4>
+		</div>
+		<div class="col-xs-8">
 			{{ Form::hidden('pattern', json_encode(Cache::get('pattern')[0]), array('id' => 'patternValue')) }}
 			<canvas id="patternCanvas" width="700" height="186"></canvas>
 		</div>
@@ -13,11 +21,11 @@
 
 <div class="row text-center">
 	<div class="col-xs-12">
-		<h1><span id="artist">{{ ResultController::_getArtist($result->file_id) }}</span> - <span id="title">{{ ResultController::_getTitle($result->file_id) }}</span></h1>
+		<h2><span id="artist">{{ ResultController::_getArtist($result->file_id) }}</span> - <span id="title">{{ ResultController::_getTitle($result->file_id) }}</span></h2>
 	</div>
 </div>
 
-<div class="row marbo20">
+{{-- <div class="row marbo20">
 	<div class="col-xs-6">
 		<button id="playResult" type="button" class="btn btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
 	</div>
@@ -27,7 +35,7 @@
 	<div class="col-xs-3">
 		<button id="exportButton" type="button" class="btn btn-lg btn-success pull-right"><span class="glyphicon glyphicon-file"></span> <span>Export as PDF</span></button>
 	</div>
-</div>
+</div> --}}
 
 <div id="extract-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
@@ -43,18 +51,28 @@
 		<?php for ($i = 0; $i < count($resultNotes); $i++): ?>
 			<div class="item<?php if ($i==0) echo ' active'; ?>">
 				<div class="facts-list">
-					<div class="col-xs-4 col-xs-offset-2">
+					<div class="col-xs-1 col-xs-offset-1">
+						<button id="playResult" type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
+						<button id="stopResult" type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
+					</div>
+					<div class="col-xs-2 col-xs-offset-1 martop40">
+						<h4>About the finding:</h4>
+					</div>
+					<div class="col-xs-3 martop40">
 						<ul class="no-list">
 							<li class="partName"><strong>Part name (Instrument):</strong> {{ $resultNotes[$i]->part_name }}</li>
 							<li class="partId"><strong>Part ID:</strong> {{ $resultNotes[$i]->part_id }}</li>
 							<li class="voice"><strong>Voice:</strong> {{ $resultNotes[$i]->voice }}</li>
-							<li class="key"><strong>Key:</strong> {{ ResultController::_getKey($result->file_id) }}</li>
 						</ul>
 					</div>
-					<div class="col-xs-4">
+					<div class="col-xs-3 martop40">
 						<ul class="no-list">
-							<li class="measures"><strong>Measures: </strong><br>{{ $resultNotes[$i]->startExtract }} - {{ $resultNotes[$i]->endExtract }}</li>
+							<li class="key"><strong>Key:</strong> {{ ResultController::_getKey($result->file_id) }}</li>
+							<li class="measures"><strong>Measures: </strong>{{ $resultNotes[$i]->startExtract }} - {{ $resultNotes[$i]->endExtract }}</li>
 						</ul>
+					</div>
+					<div class="col-xs-1 pull-right martop40">
+						<button id="exportButton" type="button" class="btn btn-lg btn-success pull-right"><span class="glyphicon glyphicon-file"></span> <span>Export as PDF</span></button>
 					</div>
 				</div>
 				<center><canvas id="canvas<?php echo $i; ?>" class="canvas" height="<?php echo round(count($resultNotes[$i]->measures) / 2) * 190; ?>" width="970"></canvas></center>
