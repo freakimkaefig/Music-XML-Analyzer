@@ -224,29 +224,29 @@ MusicXMLAnalyzer.ResultView = function(){
 
 
 			// creating ties and beams between notes
-			var beamBegin = null;
-			var beamEnd = null;
-			var beams = [];
+			// var beamBegin = null;
+			// var beamEnd = null;
+			// var beams = [];
 			for (var j = 0; j < measures[i].notes.length; j++) {
 
 				// beams
-				if (measures[i].beams) {
-					if (measures[i].beams[j] != false && measures[i].beams[j] != undefined) {
-						if (measures[i].beams[j] == "begin") {
-							beamBegin = j;
-						}
-						if (measures[i].beams[j] == "end") {
-							beamEnd = j;
-						}
-						if (beamBegin != null && beamEnd != null) {
-							var beamNotes = measures[i].notes.slice(beamBegin, beamEnd+1);
-							var beam = new Vex.Flow.Beam(beamNotes, true);
-							beams.push(beam);
-							beamBegin = null;
-							beamEnd = null;
-						}
-					}
-				}
+				// if (measures[i].beams) {
+				// 	if (measures[i].beams[j] != false && measures[i].beams[j] != undefined) {
+				// 		if (measures[i].beams[j] == "begin") {
+				// 			beamBegin = j;
+				// 		}
+				// 		if (measures[i].beams[j] == "end") {
+				// 			beamEnd = j;
+				// 		}
+				// 		if (beamBegin != null && beamEnd != null) {
+				// 			var beamNotes = measures[i].notes.slice(beamBegin, beamEnd+1);
+				// 			var beam = new Vex.Flow.Beam(beamNotes, true);
+				// 			beams.push(beam);
+				// 			beamBegin = null;
+				// 			beamEnd = null;
+				// 		}
+				// 	}
+				// }
 
 				// ties
 				if (measures[i].ties) {
@@ -290,7 +290,11 @@ MusicXMLAnalyzer.ResultView = function(){
 			staveBar.setContext(context).draw();
 
 			// draw measure with notes
+			var beams = Vex.Flow.Beam.generateBeams(measures[i].notes);
 			Vex.Flow.Formatter.FormatAndDraw(context, staveBar, measures[i].notes);
+			beams.forEach(function(beam) {
+				beam.setContext(context).draw();
+			});
 
 			// draw tuplets
 			for (var t = 0; t < tuplets.length; t++) {
@@ -298,9 +302,9 @@ MusicXMLAnalyzer.ResultView = function(){
 			}
 
 			// draw beams
-			for (var b = 0; b < beams.length; b++) {
-				beams[b].setContext(context).draw();
-			}
+			// for (var b = 0; b < beams.length; b++) {
+			// 	beams[b].setContext(context).draw();
+			// }
 
 		}
 
@@ -494,6 +498,8 @@ MusicXMLAnalyzer.ResultView = function(){
 					newKeys.push(getVexflowKey(step, octave, alter));
 					newNote = new Vex.Flow.StaveNote({ keys: newKeys, duration: note.duration, auto_stem: true });
 					note = checkNextNotes(pattern, note, i, j);
+				} else {
+					return note;
 				}
 			}
 
@@ -583,7 +589,12 @@ MusicXMLAnalyzer.ResultView = function(){
 				}
 				break;
 			default:
-				return false; break;
+				switch (type) {
+					case 0: return "128"; break;
+					case 1: return "128r"; break;
+					case 2: return "128d"; break;
+				}
+				break;
 		}
 	},
 
