@@ -39,7 +39,7 @@ MusicXMLAnalyzer.NotationView = function(){
   		renderer = new Vex.Flow.Renderer(canvas,Vex.Flow.Renderer.Backends.CANVAS);
 
   		context = renderer.getContext();
-  		stave = new Vex.Flow.Stave(10, 0, 700);
+  		stave = new Vex.Flow.Stave(10, 45, 700);
   		stave.addClef("treble").setContext(context).draw();
 
 	},
