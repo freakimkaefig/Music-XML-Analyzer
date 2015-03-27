@@ -169,12 +169,12 @@ class ResultController extends BaseController {
 								}
 
 								// determine beam type
-								$beam = $note->getElementsByTagName('beam');
-								if ($beam->length) {
-									$noteObject->pitch->beam = $beam->item(0)->nodeValue;
-								} else {
-									$noteObject->pitch->beam = false;
-								}
+								// $beam = $note->getElementsByTagName('beam');
+								// if ($beam->length) {
+								// 	$noteObject->pitch->beam = $beam->item(0)->nodeValue;
+								// } else {
+								// 	$noteObject->pitch->beam = false;
+								// }
 
 								// determine dot
 								$dot = $note->getElementsByTagName('dot');
