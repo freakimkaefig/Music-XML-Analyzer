@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 	'local' => array('Luitenant-XPS', 'mat-PC', 'DL-XMG-PC', 'Tobias-PC'),
-	'heroku' => array('*.herokuapp.com'),
+	'heroku' => array('801051aa-0487-4df2-88ce-e54d19f2cbf7'),
 ));
 
 /*
