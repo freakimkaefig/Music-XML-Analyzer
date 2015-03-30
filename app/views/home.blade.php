@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('content')
 <div class="row">
-	<div class="col-xs-8 col-xs-offset-2 text-center">
+	<div class="col-md-8 col-md-offset-2 text-center">
 		<h1>Music XML Analyzer</h1>
 		<h4 style="margin-bottom: 50px;">Looking for patterns? We'll find them.</h4>
 		<div id="start_row" class="row">
@@ -34,27 +34,25 @@
 	</div>
 </div>
 {{-- Coders @ bottom --}}
-<div class="coder col-xs-8 col-xs-offset-2">
+<div class="coder col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
 	<div class="row">
-		<h5 class="col-xs-1 col-xs-offset-1">Coded by: </h5>
-		<address class="col-xs-2">
+		<h5 class="col-lg-12 text-center">Coded by: </h5>
+		<address class="col-xs-6 col-sm-3">
 			<strong>Lukas Lamm</strong><br>
-			<small><a href="mailto:#">lukas.lamm89@gmail.com</a></small>
+			<small><a href="mailto:freak.im.kaefig@gmx.net">freak.im.kaefig@gmx.net</a></small>
 		</address>
-		<address class="col-xs-2">
+		<address class="col-xs-6 col-sm-3">
 			<strong>David Lechler</strong><br>
-			<small><a href="mailto:#">davidlechler@outlook.de</a></small>
+			<small><a href="mailto:davidlechler@outlook.de">davidlechler@outlook.de</a></small>
 		</address>
-		<address class="col-xs-2">
+		<address class="col-xs-6 col-sm-3">
 			<strong>Tobias Semmelmann</strong><br>
-			<small><a href="mailto:#">semmler1988@gmail.com</a></small>
+			<small><a href="mailto:semmler1988@gmail.com">semmler1988@gmail.com</a></small>
 		</address>
-		<address class="col-xs-2">
+		<address class="col-xs-6 col-sm-3">
 			<strong>Matthias Schneider</strong><br>
-			<small><a href="mailto:#">matthias.schneider89@gmail.com</a></small>
+			<small><a href="mailto:matthias.schneider89@gmail.com">matthias.schneider89@gmail.com</a></small>
 		</address>
-		
-		{{-- <div class="col-xs-2"></div> --}}
 	</div>
 </div>
 @stop
