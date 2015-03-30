@@ -82,23 +82,23 @@ Eine Erweiterungsmöglichkeit des Music-XML-Analyzer wäre, die Beschränkung au
 * Matthias Schneider (matthias.schneider89@gmail.com)
 
 ## Links
-[1] http://www.klemm-music.de/makemusic/finale/ 27.03.2015
-[2] https://musescore.org/de 27.03.2015
-[3] http://my.vexflow.com/ 27.03.2015
-[4] https://www.noteflight.com/ 27.03.2015
-[5] https://de.wikipedia.org/wiki/MusicXML 27.03.2015
-[6] https://musescore.org/de 27.03.2015
-[7] https://www.zenhub.io/ 27.03.2015
-[8] http://laravel.com/ 27.03.2015
-[9] https://jquery.com/ 27.03.2015
-[10] http://getbootstrap.com/ 27.03.2015
-[11] https://fezvrasta.github.io/bootstrap-material-design/ 27.03.2015
-[12] http://d3js.org/ 27.03.2015
-[13] http://www.vexflow.com/ 27.03.2015
-[14] http://www.mattboldt.com/demos/typed-js/ 27.03.2015
-[15] http://www.dropzonejs.com/ 27.03.2015
-[16] http://mudcu.be/midi-js/ 27.03.2015
-[17] https://parall.ax/products/jspdf 27.03.2015
+[1] http://www.klemm-music.de/makemusic/finale/ 27.03.2015  
+[2] https://musescore.org/de 27.03.2015  
+[3] http://my.vexflow.com/ 27.03.2015  
+[4] https://www.noteflight.com/ 27.03.2015  
+[5] https://de.wikipedia.org/wiki/MusicXML 27.03.2015  
+[6] https://musescore.org/de 27.03.2015  
+[7] https://www.zenhub.io/ 27.03.2015  
+[8] http://laravel.com/ 27.03.2015  
+[9] https://jquery.com/ 27.03.2015  
+[10] http://getbootstrap.com/ 27.03.2015  
+[11] https://fezvrasta.github.io/bootstrap-material-design/ 27.03.2015  
+[12] http://d3js.org/ 27.03.2015  
+[13] http://www.vexflow.com/ 27.03.2015  
+[14] http://www.mattboldt.com/demos/typed-js/ 27.03.2015  
+[15] http://www.dropzonejs.com/ 27.03.2015  
+[16] http://mudcu.be/midi-js/ 27.03.2015  
+[17] https://parall.ax/products/jspdf 27.03.2015  
 
 ## Hinweise
 Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von Dr. Manuel Burghardt im Wintersemester 2014/2015 an der Universität Regensburg durchgeführt.
