@@ -99,8 +99,10 @@ Route::filter('uploads', function() {
 		return Redirect::to('/');
 	} else {
 		$user = User::find(Cookie::get('user_id'));
-		if (!count($user->uploads)) {
-			return Redirect::to('/');
+		if ($user) {
+			if (!count($user->uploads)) {
+				return Redirect::to('/');
+			}
 		}
 	}
 });
