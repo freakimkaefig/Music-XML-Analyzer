@@ -115,6 +115,6 @@ Route::group(array('before' => 'user'), function()
 
 /* Route to clear database */
 Route::get('/clear', array(
-	'as' => 'postClear',
-	'uses' => 'HomeController@postClear'
+	'as' => 'getClear',
+	'uses' => 'HomeController@getClear'
 ));

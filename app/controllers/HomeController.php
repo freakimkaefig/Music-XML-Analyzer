@@ -78,11 +78,20 @@ class HomeController extends BaseController {
 		return View::make('imprint');
 	}
 
-	public function postClear()
+	public function getClear()
 	{
-		Result::truncate();
-		Upload::truncate();
-		User::truncate();
+		foreach (User::where('last_activity', '<', date('Y-m-d H:m:s', time() - 24*60*60*7))->get() as $user)
+	{
+	    $user->uploads->each(function($upload) {
+
+			if (count($upload->result)) {
+				$upload->result->delete();
+			}
+			$upload->delete();
+	    });
+
+	    $user->delete();
+	}
 	}
 
 }
