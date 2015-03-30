@@ -76,7 +76,7 @@ Eine Erweiterungsmöglichkeit des Music-XML-Analyzer wäre, die Beschränkung au
 
 
 ## Projektbeteiligte und Kontakt
-* Lukas Lamm (freak.im.kaefig@gmx.net)
+* Lukas Lamm (freak.im.kaefig@gmx.net, http://lukaslamm.de)
 * David Lechler (davidlechler@outlook.com)
 * Tobias Semmelmann (semmler1988@gmail.com)
 * Matthias Schneider (matthias.schneider89@gmail.com)
