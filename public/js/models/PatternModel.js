@@ -35,7 +35,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	init = function() {
 		// lastDurationForTriplet = curDuration;
 		// sound sequence as default
-		setDefaultValsForSoundSequenceMode();
+
 	},
 
 	setCurrentMode = function(mode) {
@@ -61,7 +61,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 				break;
 		}
 		//pattern update view
-		$(that).trigger('changeViewToCurrentMode', [curMode]);
+		$(that).trigger('changeViewToCurrentMode', curMode);
+		
 	},
 
 	/*
@@ -429,7 +430,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		beamArray = [],
 		beamVal = false;
 		isDot = false;
-
 
 		$(that).trigger('changeSelectedNoteName', curName);
 		$(that).trigger('changeSelectedOctave', curOctave);

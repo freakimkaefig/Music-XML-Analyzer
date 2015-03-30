@@ -44,6 +44,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('endTripletEnterMode', onTripletEnterModeEnd);
 
 		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
+		$(patternModel).on('testtest', test);
 		
 		$(patternModel).on('clearCanvas', onCanvasClear);
 
@@ -80,6 +81,10 @@ MusicXMLAnalyzer.PatternController = function() {
 
 		});
 
+	},
+
+	test = function(event, x) {
+		console.log("in test function");
 	},
 
 	getDuration = function(type){
@@ -125,7 +130,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		// currentPatternNotes[0].notes.push({'type':'note', 'pitch': { 'type': undefined, 'step': undefined }});
 		console.log("currentPatternNotes: ",currentPatternNotes);
 
-
+		MIDI.setVolume(0, 127);
 
 		//determine MIDI values for currentPatternNotes
 		for(var i = 0; i < currentPatternNotes.length; i++){
@@ -174,14 +179,18 @@ MusicXMLAnalyzer.PatternController = function() {
 		var i = 0;
 		playTune = function(){
 
-
+			console.log("notes to be played: " + notesToBePlayed.length);
 			if(i < notesToBePlayed.length){						
 				console.log("notesToBePlayed: ",notesToBePlayed[i]);
 				// console.log("pause: ", pause);
 				var note = notesToBePlayed[i].note;
 				// var noteDuration = notesToBePlayed[i].noteDuration;
-				var velocity = 127; // how hard the note hits
-				var delay = notesToBePlayed[i].noteDuration /**2 + i + 1*/;
+				var velocity = 100; // how hard the note hits
+				//var delay = notesToBePlayed[i].noteDuration /**2 + i + 1*/;
+				//EDIT Mat
+				// delay muss hier fester wert sein sonst 
+				// verzögert midi js aus irg einem grund manche noten
+				var delay = 0;
 				var timeout = 0;
 				if(!once){
 
@@ -195,31 +204,33 @@ MusicXMLAnalyzer.PatternController = function() {
 					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*2000;
 				}
 				once = false;
-				console.log("noten abklang: ",delay);
-				console.log("timeout till note is played: ",timeout);
+				// console.log("noten abklang: ",delay);
+				// console.log("timeout till note is played: ",timeout);
 
 				setTimeout(function(){ 
 					if(stop){
 						console.log("STOP: ",stop);
-						MIDI.setVolume(0, 0);
+						//MIDI.setVolume(0, 0);
 						i = notesToBePlayed.length;
 					}else{
 						console.log("STOP: ",stop);
 
 						if(i == notesToBePlayed.length -1){
-							var timeout2 = delay*3000;
+							//var timeout2 = delay*3000;
 							// setTimeout(function(){ 
-								console.log("last note - delay: ",delay," delay*3: ",delay*3);
+								// console.log("last note - delay: ",delay," delay*3: ",delay*3);
 								// console.log("lastnote: ",note, delay);
-								MIDI.setVolume(0, 127);
+								// MIDI.setVolume(0, 127);
 								MIDI.noteOn(0, note, velocity, delay);
-								MIDI.noteOff(0, note, delay*3);
+								//MIDI.noteOff(0, note, delay*3);
+								//EDIT Mat
+								MIDI.noteOff(0, note, delay + 0.75);
 								// MIDI.stopAllNotes();
 							// }, timeout2);
 						}else{
-							MIDI.setVolume(0, 127);
+							// MIDI.setVolume(0, 127);
 							MIDI.noteOn(0, note, velocity, delay);
-
+							MIDI.noteOff(0, note, delay + 0.75);
 						}
 
 						i++;
@@ -237,6 +248,7 @@ MusicXMLAnalyzer.PatternController = function() {
 					$stopPattern.prop('disabled', true);
 				}, 1500);
 			}
+
 		}	
 		if(once2){ 
 			once2 = false;
@@ -342,6 +354,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	onViewChangedToCurrentMode = function(event, mode) {
+		console.log("onViewChangedToCurrentMode");
 		switch(mode) {
 		    //sound sequence
 		    case 0:
