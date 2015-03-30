@@ -26,8 +26,9 @@
 				<?php if (Cookie::get('user_id')): ?>
 				<?php
 					$user = User::find(Cookie::get('user_id'));
-					if (count($user->uploads)) {
-						$user->uploads->each(function($upload) {
+					if ($user) {
+						if (count($user->uploads)) {
+							$user->uploads->each(function($upload) {
 				?>
 						<div class="preview col-xs-2">
 							<div class="image"><img data-dz-thumbnail=""></div>
@@ -40,7 +41,8 @@
 							</div>
 						</div>
 				<?php
-						});
+							});
+						}
 					}
 				?>
 				<?php endif; ?>
