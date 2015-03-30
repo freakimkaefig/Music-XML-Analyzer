@@ -80,18 +80,21 @@ class HomeController extends BaseController {
 
 	public function getClear()
 	{
-		foreach (User::where('last_activity', '<', date('Y-m-d H:m:s', time() - 24*60*60*7))->get() as $user)
-	{
-	    $user->uploads->each(function($upload) {
+		foreach (User::all() as $user)
+		{
+			echo "Checking uploads for User " . $user->id . ".<br>";
+		    $user->uploads->each(function($upload) {
+				if (count($upload->result)) {
+		    		echo "Deleting result " . $upload->result->id . ".<br>";
+					$upload->result->delete();
+				}
+	    		echo "Deleting result " . $upload->id . ".<br>";
+				$upload->delete();
+		    });
 
-			if (count($upload->result)) {
-				$upload->result->delete();
-			}
-			$upload->delete();
-	    });
-
-	    $user->delete();
-	}
+    		echo "Deleting user " . $user->id . ".<br>";
+		    $user->delete();
+		}
 	}
 
 }
