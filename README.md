@@ -75,7 +75,10 @@ Eine Funktion, die nicht mehr implementiert wurde ist das Abspielen einzelner, h
 Eine Erweiterungsmöglichkeit des Music-XML-Analyzer wäre, die Beschränkung auf das Format Music-XML aufzuheben, um so andere Dateitypen hochladen und analysieren zu können. 
 
 
-## Projektbeteiligte und Kontakt
+## Über das Projekt
+Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von Dr. Manuel Burghardt im Wintersemester 2014/2015 an der Universität Regensburg durchgeführt.  
+  
+**Kontakt:**
 * Lukas Lamm (freak.im.kaefig@gmx.net, http://lukaslamm.de)
 * David Lechler (davidlechler@outlook.com)
 * Tobias Semmelmann (semmler1988@gmail.com)
@@ -99,6 +102,3 @@ Eine Erweiterungsmöglichkeit des Music-XML-Analyzer wäre, die Beschränkung au
 [15] http://www.dropzonejs.com/ 27.03.2015  
 [16] http://mudcu.be/midi-js/ 27.03.2015  
 [17] https://parall.ax/products/jspdf 27.03.2015  
-
-## Hinweise
-Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von Dr. Manuel Burghardt im Wintersemester 2014/2015 an der Universität Regensburg durchgeführt.
