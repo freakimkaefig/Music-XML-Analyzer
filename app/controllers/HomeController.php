@@ -33,9 +33,9 @@ class HomeController extends BaseController {
 				}
 			}
 		}
-		
+
 		$this->_createNewUser();
-		
+
 		return View::make('home');
 	}
 
@@ -77,5 +77,12 @@ class HomeController extends BaseController {
 	{
 		return View::make('imprint');
 	}
-	
+
+	public function postClear()
+	{
+		Result::truncate();
+		Upload::truncate();
+		User::truncate();
+	}
+
 }
