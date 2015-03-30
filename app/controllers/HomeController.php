@@ -85,15 +85,16 @@ class HomeController extends BaseController {
 			echo "Checking uploads for User " . $user->id . ".<br>";
 		    $user->uploads->each(function($upload) {
 				if (count($upload->result)) {
-		    		echo "Deleting result " . $upload->result->id . ".<br>";
+		    		echo "Deleting result " . $upload->result->id . " for upload " . $upload->id . ".<br>";
 					$upload->result->delete();
 				}
-	    		echo "Deleting result " . $upload->id . ".<br>";
+	    		echo "Deleting result " . $upload->id . " (" . $upload->url . ").<br>";
 				$upload->delete();
 		    });
 
     		echo "Deleting user " . $user->id . ".<br>";
 		    $user->delete();
+		    echo "<hr>";
 		}
 	}
 
