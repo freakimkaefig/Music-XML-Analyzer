@@ -26,7 +26,10 @@
 		],
 		"post-update-cmd": [
 			"php artisan clear-compiled",
-			"php artisan optimize"
+			"php artisan optimize",
+			"heroku pg:reset HEROKU_POSTGRESQL_CRIMSON --confirm music-xml-analyzer",
+			"php artisan migrate",
+			"php artisan migrate --package=\"liebig/cron\""
 		],
 		"post-create-project-cmd": [
 			"php artisan key:generate"
