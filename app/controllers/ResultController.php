@@ -120,7 +120,7 @@ class ResultController extends BaseController {
 				// loop over measures included in result extract
 				for ($j = 1; $j <= $endExtract; $j++) {
 					$measure = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]')->item(0);
-					$measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note[voice="' . $voice . '"]');
+					$measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note');
 
 					if ($j < $startExtract) {
 						// add count of notes before extract starts to counter
