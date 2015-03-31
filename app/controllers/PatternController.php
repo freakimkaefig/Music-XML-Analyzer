@@ -39,17 +39,7 @@ class PatternController extends BaseController {
 				$results = $mConntroller->search($pattern);
 				break;
 		}
-
-		// $results = array(
-		// 	(object)array(
-		// 		"file_id" => 21,
-		// 		"file_url" => "http://music-xml-analyzer.local/uploads/133/ActorPreludeSample.xml",
-		// 		"occurences" => array(
-		// 			(object)array('start' => 7, 'end' => 8, 'voice' => 1, 'part_id' => "P1"),
-		// 			(object)array('start' => 7, 'end' => 10, 'voice' => 1, 'part_id' => "P1")
-		// 		)
-		// 	)
-		// );
+		
 
 		Cache::put('pattern', $pattern, $time);
 		Cache::put('results', $results, $time);
@@ -72,6 +62,7 @@ class PatternController extends BaseController {
 						"B" => 11);
 		$note = $n;
 		$obj_arr = (array)$note;
+		// var_dump($obj_arr);
 		if(!isset($obj_arr["rest"])){
 
 			$noteStep = $note->pitch->step;
@@ -87,11 +78,12 @@ class PatternController extends BaseController {
 
 				return $noteValue;
 			}
-			// if($noteValue){
-			// }
 			else{
+				
 				return null;
 			}
+		}else{
+				return null;
 		}
 
 	}

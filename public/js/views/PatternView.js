@@ -15,6 +15,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	$patternValue = $('#patternValue'),
 
+	$breakButton = $("#break"),
+
 
 	init = function() {
 		console.info('MusicXMLAnalyzer.PatternView.init');
@@ -30,6 +32,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		$octaveButtonClass.on("click", onOctaveButtonClick);
 		$addNoteButton.on("click", onAddButtonClick);
 		$removeNoteButton.on("click", onRemoveButtonClick);
+		$breakButton.on('click', onBreakButtonClick);
 
 
 		// soundSequence pattern:
@@ -149,6 +152,12 @@ MusicXMLAnalyzer.PatternView = function(){
 		));*/
 	},
 
+	onBreakButtonClick = function(event){
+		patternController.changeAccidential("none");
+		setAccidentialActive("none");
+		$accidentialButtonClass.addClass('disabled');
+	},
+
 	onModeButtonClick = function(event) {
 		var modeButtonId = event.target.id;
 		// slice -1 gets the last char of the mode id
@@ -157,6 +166,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	onNoteButtonClick = function(event) {
 		patternController.changeNote(event.target.id);
+		$accidentialButtonClass.removeClass('disabled');
 	},
 
 	onAccidentialButtonClick = function(event) {
@@ -177,13 +187,13 @@ MusicXMLAnalyzer.PatternView = function(){
 		if(specRyth == "triplet") {
 			// check if break button was active
 			// if true then set selected note to c
-			if($("#break").hasClass("active") == true) {
+			if($breakButton.hasClass("active") == true) {
 				patternController.changeNote("c");
 				setNoteNameActive("c");
 			}
-			$("#break").addClass("disabled");
+			$breakButton.addClass("disabled");
 		} else {
-			$("#break").removeClass("disabled");
+			$breakButton.removeClass("disabled");
 		}
 		patternController.changeSpecialRyth(specRyth);
 	},

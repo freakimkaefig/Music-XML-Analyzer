@@ -2,6 +2,10 @@
 
 class ResultController extends BaseController {
 
+	/**
+	 * Function handling get route 'searchResults' ('/results')
+	 *
+	 */
 	public function getSearchResults() {
 		$time = 60*24;
 
@@ -19,12 +23,13 @@ class ResultController extends BaseController {
 	}
 
 
+	/**
+	 * Function handling get route 'resultDetail' ('/results/detail/{file}')
+	 *
+	 */
 	public function getResultDetail($id) {
-
 		if (Cache::has('results') && Cache::has('pattern')) {
-
 			$results = Cache::get('results');
-			// Debugbar::info($results);
 			foreach ($results as $item) {
 				if ($item->file_id == $id) {
 					$result = $item;
@@ -32,281 +37,356 @@ class ResultController extends BaseController {
 			}
 
 			$pattern = Cache::get('pattern')[0];
-			$upload = Upload::find($id);
 
-			// initializing xpath wrapper
-			$doc = new DOMDocument();
-			$doc->load($upload->url);
-			$xPath = new DOMXPath($doc);
-
-			// getting extracts with start, end and measures between
-			$resultNotes = array();
-			for ($i = 0; $i < count($result->occurences); $i++) {
-
-				Debugbar::info($result->occurences[$i]);
-				// setting up result object for current occurence
-				$resultObject = new stdClass();
-				$resultObject->type = 2;
-				$resultObject->file_id = $result->file_id;
-				$resultNotes[$i] = $resultObject;
-
-				// setting variables from search results
-				$start = $result->occurences[$i]->start - 1;	// make start zero-based
-				$end = $result->occurences[$i]->end - 1;	// make end zero-based
-				$voice = $result->occurences[$i]->voice;
-				$part_id = $result->occurences[$i]->part_id;
-				$part_name = $xPath->query('//score-part[@id="' . $part_id . '"]/part-name')->item(0)->nodeValue;
+			return View::make('results.detail', array('result' => $result));
+		} else {
+			return Redirect::route('pattern');
+		}
+	}
 
 
-				$resultObject->voice = $voice;
-				$resultObject->part_id = $part_id;
-				$resultObject->part_name = $part_name;
+	/**
+	 * Function handling post route 'resultExtract' ('/result/extract')
+	 *
+	 */
+	public function postResultExtract() {
+		$file_id = Input::get('file_id');
+		$file_url = Input::get('file_url');
+		$part_id = Input::get('part_id');
+		$voice = Input::get('voice');
+		$start = Input::get('start') - 1;
+		$end = Input::get('end') - 1;
 
-				// calculating measure number, where the first and last note is in
-				$part = $xPath->query('//part[@id="' . $part_id . '"]');
-				if ($part) {
-					$part = $part->item(0);
-					if ($part) {
-						$notes = $part->getElementsByTagName('note');
-						if ($notes) {
-							$note = $notes->item($start);
-							if ($note) {
-								Debugbar::info("StartNote: " . $note->getElementsByTagName('pitch')->item(0)->getElementsByTagName('step')->item(0)->nodeValue . "/" . $note->getElementsByTagName('pitch')->item(0)->getElementsByTagName('octave')->item(0)->nodeValue);
-								$startMeasureNumber = $note->parentNode->getAttribute('number');
-							}
-						}
-					}
+		$resultExtract = $this->generateResultExtract($file_id, $part_id, $voice, $start, $end);
+
+		return json_encode($resultExtract);
+	}
+
+
+	/**
+	 * Function to generate result extracts
+	 *
+	 * @param 	int 		The uploads id
+	 * @param 	string 		The part id
+	 * @param 	int 		The start note inside given part
+	 * @param 	int 		The end note inside given part
+	 *
+	 * @return 	\stdClass 	A \stdClass object containing information to render staves with vexflow
+	 *
+	 */
+	private function generateResultExtract($upload_id, $part_id, $voice, $start, $end) {
+		set_time_limit(120);
+		$upload = Upload::find($upload_id);
+
+		$xml = simplexml_load_file($upload->url);
+
+		$doc = new DOMDocument();
+		$doc->load($upload->url);
+		$xPath = new DOMXPath($doc);
+
+		$part = $xPath->query('//part[@id="' . $part_id . '"]')->item(0);
+		$simple_part = $xml->xpath('//part[@id="' . $part_id . '"]')[0];
+
+		$resultObject = new stdClass();
+		$resultObject->type = 2;
+		$resultObject->part_id = $part_id;
+		$resultObject->start_extract = $this->calculateStartExtract($part, $start);
+		$resultObject->end_extract = $this->calculateEndExtract($part, $end);
+		$resultObject->measures = array();
+
+		// calculate beat type
+		$partBeats = $part->getElementsByTagName('beats')->item(0)->nodeValue;
+		$curBeats = $partBeats;
+		$partBeatType = $part->getElementsByTagName('beat-type')->item(0)->nodeValue;
+		$curBeatType = $partBeatType;
+
+		$measureCounter = 0;
+		$noteCounter = 0;
+
+		for ($j = 1; $j <= $resultObject->end_extract; $j++) {
+			$part_measures = $part->getElementsByTagName('measure');
+			foreach ($part_measures as $part_measure) {
+				if ($part_measure->getAttribute('number') == $j) {
+					$measure = $part_measure;
+					break;
 				}
-				$part = $xPath->query('//part[@id="' . $part_id . '"]');
-				if ($part) {
-					$part = $part->item(0);
-					if ($part) {
-						$notes = $part->getElementsByTagName('note');
-						if ($notes) {
-							$note = $notes->item($end);
-							if ($note) {
-								$endMeasureNumber = $note->parentNode->getAttribute('number');
-							}
-						}
-					}
-				}
-				// $startMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($start)->parentNode->getAttribute('number');
-				// $endMeasureNumber = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('note')->item($end)->parentNode->getAttribute('number');
+			}
+			$measureNotes = $measure->getElementsByTagName('note');
 
-				$noteCounter = 0;
+			// $measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note');
+
+			if ($j < $resultObject->start_extract) {
+				// add count of notes before extract starts to counter
+				$noteCounter += $measureNotes->length;
+			} else {
+				$measureObject = new stdClass();
+				$time_signature = false;	// no change in time signature
+
+				// set time signature on first measure
+				if ($measureCounter == 0) {
+					$time_signature = $curBeats . "/" . $curBeatType;
+				}
+
+				// decide if time signature changes
+				$beats = $measure->getElementsByTagName('beats');
+				$beat_type = $measure->getElementsByTagName('beat-type');
+				if (($beats->length && $beat_type->length)) {
+					$curBeats = $beats->item(0)->nodeValue;
+					$curBeatType = $beat_type->item(0)->nodeValue;
+					$time_signature = $curBeats . "/" . $curBeatType;
+				}
+
+				// set time signature in note object
+				$measureObject->time_signature = $time_signature;
+
+				// append measure object to results
+				$resultObject->measures[$measureCounter] = $measureObject;
+
+				// loop over each note in measure
+				// Debugbar::info($measureNotes);
+				foreach ($measureNotes as $note) {
+
+					if ($note->getElementsByTagName('voice')->item(0)->nodeValue == $voice) {
+						// create note object
+						$noteObject = new stdClass();
+
+						// set color
+						$currentColor = "#000000";
+						if ($noteCounter >= $start && $noteCounter <= $end) {
+							// set color to red if note is between start and end of result
+							$currentColor = "#FF0000";
+							// Debugbar::info("Counter: " . $noteCounter . " | " . $start . " | " . $end . " Part ID: " . $part_id);
+						}
+						$noteObject->color = $currentColor;
+
+						// decide if current element is a note or a rest (only notes have a pitch child)
+						$pitch = $note->getElementsByTagName('pitch');
+						if ($pitch->length) {
+							// it's a note
+							$noteObject->type = "note";
+							$noteObject->pitch = new stdClass();
+
+							// determine step
+							$step = $pitch->item(0)->getElementsByTagName('step');
+							if ($step->length) {
+								$noteObject->pitch->step = $step->item(0)->nodeValue;
+							}
+
+							// determine alter value
+							$alter = $pitch->item(0)->getElementsByTagName('alter');
+							if ($alter->length) {
+								$noteObject->pitch->alter = $alter->item(0)->nodeValue;
+							} else {
+								$noteObject->pitch->alter = 0;
+							}
+
+							// determine octave
+							$octave = $pitch->item(0)->getElementsByTagName('octave');
+							if ($octave->length) {
+								$noteObject->pitch->octave = $octave->item(0)->nodeValue;
+							}
+
+							// determine type / length
+							$type = $note->getElementsByTagName('type');
+							if ($type->length) {
+								$noteObject->pitch->type = $type->item(0)->nodeValue;
+							}
+
+							// determine beam type
+							// $beam = $note->getElementsByTagName('beam');
+							// if ($beam->length) {
+							// 	$noteObject->pitch->beam = $beam->item(0)->nodeValue;
+							// } else {
+							// 	$noteObject->pitch->beam = false;
+							// }
+
+							// determine dot
+							$dot = $note->getElementsByTagName('dot');
+							if ($dot->length) {
+								$noteObject->pitch->dot = true;
+							} else {
+								$noteObject->pitch->dot = false;
+							}
+
+							// determine ties
+							$ties = $note->getElementsByTagName('tie');
+							if ($ties->length) {
+								foreach ($ties as $tie) {
+									$noteObject->pitch->ties[] = $tie->getAttribute('type');
+								}
+							} else {
+								$noteObject->pitch->ties[] = false;
+							}
+
+							// determine chords
+							$chord = $note->getElementsByTagName('chord');
+							if ($chord->length) {
+								$noteObject->pitch->chord = true;
+							} else {
+								$noteObject->pitch->chord = false;
+							}
+							$noteObject->counter = $noteCounter;
+
+							$timeModification = $note->getElementsByTagName('time-modification');
+							if ($timeModification->length) {
+								$actualNotes = $timeModification->item(0)->getElementsByTagName('actual-notes');
+								if ($actualNotes->length) {
+									$noteObject->pitch->tuplet = $actualNotes->item(0)->nodeValue;
+								}
+							} else {
+								$noteObject->pitch->tuplet = false;
+							}
+
+						} else {
+							// it's a rest
+							$noteObject->type = "rest";
+							$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
+							$partDivision = $part->getElementsByTagName('divisions')->item(0)->nodeValue;
+							$restDurationFloat = (float)((int)$curDuration / (int)$partDivision / (int)$curBeatType);
+							if ($restDurationFloat == 1){
+								$restDuration = "whole";
+							} elseif ($restDurationFloat == 0.75) {
+								$restDuration = "whole";
+							} elseif ($restDurationFloat == 0.5) {
+								$restDuration = "half";
+							} elseif ($restDurationFloat == 0.375) {
+								$restDuration = "half";
+							} elseif ($restDurationFloat == 0.25) {
+								$restDuration = "quarter";
+							} elseif ($restDurationFloat == 0.1875) {
+								$restDuration = "quarter";
+							} elseif ($restDurationFloat == 0.125) {
+								$restDuration = "eighth";
+							} elseif ($restDurationFloat == 0.09375) {
+								$restDuration = "eighth";
+							} elseif ($restDurationFloat == 0.0625) {
+								$restDuration = "16th";
+							} elseif ($restDurationFloat == 0.046875) {
+								$restDuration = "16th";
+							} elseif ($restDurationFloat == 0.03125) {
+								$restDuration = "32nd";
+							} elseif ($restDurationFloat == 0.0234375) {
+								$restDuration = "32nd";
+							} elseif ($restDurationFloat == 0.015625) {
+								$restDuration = "64th";
+							} elseif ($restDurationFloat == 0.01171875) {
+								$restDuration = "64th";
+							} else {
+								// catch strange values (FALLBACK)
+								$restDuration = "64th";	// set to lowest possible value
+							}
+							$noteObject->duration = $restDuration;
+						} // END: if ($pitch->length)
+
+						// set color in note object
+						$noteObject->color = $currentColor;
+
+						// append note to results
+						$resultObject->measures[$measureCounter]->notes[] = $noteObject;
+						$noteCounter++;
+					} // END if ($note->getElementsByTagName('voice')->item(0) == $voice) {
+				} /* END: foreach ($measureNotes as $note) */
+				$measureCounter++;
+			} /* END: if ($j < $resultObject->start_extract) */
+		}
+
+		// Debugbar::info($resultObject);
+		return $resultObject;
+	}
+
+
+	/**
+	 * Helper function to calculate the starting measures number
+	 *
+	 * @param 	\DOMNode 	The \DOMNode element for the music xml part
+	 * @param 	int 	  	The start notes number (inside the part)
+	 *
+	 * @return 	int 		Number of the measure where the extract should start
+	 *
+	 */
+	private function calculateStartExtract($part, $start) {
+		// $noteCounter = 0;
+		// for ($i = 0; $i < count($part->measure); $i++) {
+		// 	for($j = 0; $j < count($part->measure[$i]->note); $j++) {
+		// 		$noteCounter++;
+		// 		if ($noteCounter == $start) {
+		// 			$startMeasureNumber = (int) $part->measure[$i]['number'];
+		// 			$startExtract = $startMeasureNumber;
+		// 			if ($startMeasureNumber > 1) {
+		// 				// Check if measure before can be included in extract
+		// 				$startExtract -= 1;
+		// 			}
+		// 			return $startExtract;
+		// 		}
+		// 	}
+		// }
+
+		$notes = $part->getElementsByTagName('note');
+		if ($notes) {
+			$note = $notes->item($start);
+			if ($note) {
+				$startMeasureNumber = $note->parentNode->getAttribute('number');
 				$startExtract = $startMeasureNumber;
 				if ($startMeasureNumber > 1) {
 					// Check if measure before can be included in extract
 					$startExtract -= 1;
 				}
-
-				$endExtract = $endMeasureNumber;
-				if ($endMeasureNumber < $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('measure')->length) {
-					// Check if measure after can be included in extract
-					$endExtract += 1;
-				}
-
-				$resultObject->startExtract = $startExtract;
-				$resultObject->endExtract = $endExtract;
-
-				$measureCounter = 0;
-
-				// save beat type from part
-				$partBeats = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('beats')->item(0)->nodeValue;
-				$curBeats = $partBeats;
-				$partBeatType = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('beat-type')->item(0)->nodeValue;
-				$curBeatType = $partBeatType;
-
-				// loop over measures included in result extract
-				for ($j = 1; $j <= $endExtract; $j++) {
-					$measure = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]')->item(0);
-					$measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note[voice="' . $voice . '"]');
-
-					if ($j < $startExtract) {
-						// add count of notes before extract starts to counter
-						$noteCounter += $measureNotes->length;
-					} else {
-						$measureObject = new stdClass();
-						$time_signature = false;	// no change in time signature
-
-						// set time signature on first measure
-						if ($measureCounter == 0) {
-							$time_signature = $curBeats . "/" . $curBeatType;
-						}
-
-						// decide if time signature changes
-						$beats = $measure->getElementsByTagName('beats');
-						$beat_type = $measure->getElementsByTagName('beat-type');
-						if (($beats->length && $beat_type->length)) {
-							$curBeats = $beats->item(0)->nodeValue;
-							$curBeatType = $beat_type->item(0)->nodeValue;
-							$time_signature = $curBeats . "/" . $curBeatType;
-						}
-
-						// set time signature in note object
-						$measureObject->time_signature = $time_signature;
-
-						// append measure object to results
-						$resultNotes[$i]->measures[$measureCounter] = $measureObject;
-
-						// loop over each note in measure
-						// Debugbar::info($measureNotes);
-						foreach ($measureNotes as $note) {
-							// create note object
-							$noteObject = new stdClass();
-
-							// set color
-							$currentColor = "#000000";
-							if ($noteCounter >= $start && $noteCounter <= $end) {
-								// set color to red if note is between start and end of result
-								$currentColor = "#FF0000";
-								// Debugbar::info("Counter: " . $noteCounter . " | " . $start . " | " . $end . " Part ID: " . $part_id);
-							}
-							$noteObject->color = $currentColor;
-
-							// decide if current element is a note or a rest (only notes have a pitch child)
-							$pitch = $note->getElementsByTagName('pitch');
-							if ($pitch->length) {
-								// it's a note
-								$noteObject->type = "note";
-								$noteObject->pitch = new stdClass();
-
-								// determine step
-								$step = $pitch->item(0)->getElementsByTagName('step');
-								if ($step->length) {
-									$noteObject->pitch->step = $step->item(0)->nodeValue;
-								}
-
-								// determine alter value
-								$alter = $pitch->item(0)->getElementsByTagName('alter');
-								if ($alter->length) {
-									$noteObject->pitch->alter = $alter->item(0)->nodeValue;
-								} else {
-									$noteObject->pitch->alter = 0;
-								}
-
-								// determine octave
-								$octave = $pitch->item(0)->getElementsByTagName('octave');
-								if ($octave->length) {
-									$noteObject->pitch->octave = $octave->item(0)->nodeValue;
-								}
-
-								// determine type / length
-								$type = $note->getElementsByTagName('type');
-								if ($type->length) {
-									$noteObject->pitch->type = $type->item(0)->nodeValue;
-								}
-
-								// determine beam type
-								// $beam = $note->getElementsByTagName('beam');
-								// if ($beam->length) {
-								// 	$noteObject->pitch->beam = $beam->item(0)->nodeValue;
-								// } else {
-								// 	$noteObject->pitch->beam = false;
-								// }
-
-								// determine dot
-								$dot = $note->getElementsByTagName('dot');
-								if ($dot->length) {
-									$noteObject->pitch->dot = true;
-								} else {
-									$noteObject->pitch->dot = false;
-								}
-
-								// determine ties
-								$ties = $note->getElementsByTagName('tie');
-								if ($ties->length) {
-									foreach ($ties as $tie) {
-										$noteObject->pitch->ties[] = $tie->getAttribute('type');
-									}
-								} else {
-									$noteObject->pitch->ties[] = false;
-								}
-
-								// determine chords
-								$chord = $note->getElementsByTagName('chord');
-								if ($chord->length) {
-									$noteObject->pitch->chord = true;
-								} else {
-									$noteObject->pitch->chord = false;
-								}
-								$noteObject->counter = $noteCounter;
-
-								$timeModification = $note->getElementsByTagName('time-modification');
-								if ($timeModification->length) {
-									$actualNotes = $timeModification->item(0)->getElementsByTagName('actual-notes');
-									if ($actualNotes->length) {
-										$noteObject->pitch->tuplet = $actualNotes->item(0)->nodeValue;
-									}
-								} else {
-									$noteObject->pitch->tuplet = false;
-								}
-
-							} else {
-								// it's a rest
-								$noteObject->type = "rest";
-								$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
-								$partDivision = $xPath->query('//part[@id="' . $part_id . '"]')->item(0)->getElementsByTagName('divisions')->item(0)->nodeValue;
-								$restDurationFloat = (float)((int)$curDuration / (int)$partDivision / (int)$curBeatType);
-								if ($restDurationFloat == 1){
-									$restDuration = "whole";
-								} elseif ($restDurationFloat == 0.75) {
-									$restDuration = "whole";
-								} elseif ($restDurationFloat == 0.5) {
-									$restDuration = "half";
-								} elseif ($restDurationFloat == 0.375) {
-									$restDuration = "half";
-								} elseif ($restDurationFloat == 0.25) {
-									$restDuration = "quarter";
-								} elseif ($restDurationFloat == 0.1875) {
-									$restDuration = "quarter";
-								} elseif ($restDurationFloat == 0.125) {
-									$restDuration = "eighth";
-								} elseif ($restDurationFloat == 0.09375) {
-									$restDuration = "eighth";
-								} elseif ($restDurationFloat == 0.0625) {
-									$restDuration = "16th";
-								} elseif ($restDurationFloat == 0.046875) {
-									$restDuration = "16th";
-								} elseif ($restDurationFloat == 0.03125) {
-									$restDuration = "32nd";
-								} elseif ($restDurationFloat == 0.0234375) {
-									$restDuration = "32nd";
-								} elseif ($restDurationFloat == 0.015625) {
-									$restDuration = "64th";
-								} elseif ($restDurationFloat == 0.01171875) {
-									$restDuration = "64th";
-								} else {
-									// catch strange values (FALLBACK)
-									$restDuration = "64th";	// set to lowest possible value
-								}
-								$noteObject->duration = $restDuration;
-							} // END: if ($pitch->length)
-
-							// set color in note object
-							$noteObject->color = $currentColor;
-
-							// append note to results
-							$resultNotes[$i]->measures[$measureCounter]->notes[] = $noteObject;
-
-							$noteCounter++;
-						} /* END: foreach ($measureNotes as $note) */
-						$measureCounter++;
-					} /* END: if ($j < $startExtract) */
-				}
+				return $startExtract;
 			}
-
-			return View::make('results.detail',
-				array(
-					'result' => $result,
-					'resultNotes' => $resultNotes
-				));
-		} else {
-			Redirect::route('pattern');
 		}
 	}
 
 
+	/**
+	 * Helper function to calculate the ending measures number
+	 *
+	 * @param 	\DOMNode 	The \DOMNode element for the music xml part
+	 * @param 	int 		The end notes number (inside the part)
+	 *
+	 * @return 	int 		Number of the measure where the extract should end
+	 *
+	 */
+	private function calculateEndExtract($part, $end) {
+		// $noteCounter = 0;
+		// for ($i = 0; $i < count($part->measure); $i++) {
+		// 	for($j = 0; $j < count($part->measure[$i]->note); $j++) {
+		// 		$noteCounter++;
+		// 		if ($noteCounter == $end) {
+		// 			$endMeasureNumber = (int) $part->measure[$i]['number'];
+		// 			$endExtract = $endMeasureNumber;
+		// 			if ($i+1 < count($part->measure)) {
+		// 				// Check if measure before can be included in extract
+		// 				$endExtract += 1;
+		// 			}
+		// 			return $endExtract;
+		// 		}
+		// 	}
+		// }
+
+		$notes = $part->getElementsByTagName('note');
+		if ($notes) {
+			$note = $notes->item($end);
+			if ($note) {
+				$endMeasureNumber = $note->parentNode->getAttribute('number');
+				$endExtract = $endMeasureNumber;
+				if ($endMeasureNumber < $part->getElementsByTagName('measure')->length) {
+					// Check if measure after can be included in extract
+					$endExtract += 1;
+				}
+				return $endExtract;
+			}
+		}
+	}
+
+
+	/**
+	 * Static helper function to retrieve the artist for a given upload id
+	 *
+	 * @param 	int 	the uploads id
+	 *
+	 * @return 	string 	The artist for given upload id
+	 *
+	 */
 	public static function _getArtist($id) {
 		$xml = simplexml_load_file(Upload::find($id)->url);
 		$artist = $xml->xpath("//credit[credit-type='composer']");
@@ -316,10 +396,19 @@ class ResultController extends BaseController {
 			return "Unknown Artist";
 		}
 	}
+
+
+	/**
+	 * Static helper function to retrieve the title for a given upload id
+	 *
+	 * @param 	int 	the uploads id
+	 *
+	 * @return 	string 	The title for given upload id
+	 *
+	 */
 	public static function _getTitle($id) {
 		$xml = simplexml_load_file(Upload::find($id)->url);
 		$title = $xml->xpath("//credit[credit-type='title']");
-		// Debugbar::info($title[0]->{'credit-words'});
 		if ($title) {
 			return $title[0]->{'credit-words'}->{0};
 		} else {
@@ -327,6 +416,35 @@ class ResultController extends BaseController {
 		}
 	}
 
+
+	/**
+	 * Static helper function to retrieve the part name for a given upload id and part_id
+	 *
+	 * @param 	int 	the uploads id
+	 * @param 	int 	the part id
+	 *
+	 * @return 	string 	The title for given upload id
+	 *
+	 */
+	public static function _getInstrument($id, $part_id) {
+		$xml = simplexml_load_file(Upload::find($id)->url);
+		$part = $xml->xpath('//score-part[@id="' . $part_id . '"]');
+		if ($part) {
+			return $part[0]->{'part-name'}->{0};
+		} else {
+			return "Unknown Instrument";
+		}
+	}
+
+
+	/**
+	 * Static helper function to retrieve the key for a given upload id
+	 *
+	 * @param 	int 	the uploads id
+	 *
+	 * @return 	string 	The key for given upload id
+	 *
+	 */
 	public static function _getKey($id){
 		$xml = simplexml_load_file(Upload::find($id)->url);
 		$keys = $xml->xpath("//key");

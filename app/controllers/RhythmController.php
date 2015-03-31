@@ -95,12 +95,12 @@ public function search($pattern) {
 		// echo"<br><hr>noteCounter: ";
 		// var_dump(self::$noteCounter);
 					$n = $part->measure[$i]->note[$j];
-					if(self::$once){
-						self::$once = false;
-						$lastVoice = $part->measure[$i]->note[$j]->voice;
-					}
+					// if(self::$once){
+					// 	self::$once = false;
+					// 	$lastVoice = $part->measure[$i]->note[$j]->voice;
+					// }
 
-					if((int)$n->voice == (int)$lastVoice){
+					// if((int)$n->voice == (int)$lastVoice){
 		// echo"<br><hr>n: ";
 		// var_dump($n);
 						// $pitch = new stdClass();
@@ -116,7 +116,7 @@ public function search($pattern) {
 						// $note->position = self::$noteCounter;
 
 						// if note
-						if(!isset($n->rest)){
+						if(!isset($n->rest) && !isset($n->chord)){
 							// get note intervals of xml file & fill xmlArray
 							$obj = new stdClass();
 							// $obj->interval = PatternController::getInterval($note);
@@ -246,17 +246,17 @@ public function search($pattern) {
 						} //if array lengths aren't equal yet, continue	
 
 					}	// end if same voice
-					else{ //different voice incoming next; unset array; begin from scratch
-							$lastVoice = $part->measure[$i]->note[$j]->voice;
-							$j--;
-							self::$xmlArray = array(); 
-							self::$xmlPositionArray = array();
-						}
+					// else{ //different voice incoming next; unset array; begin from scratch
+					// 		$lastVoice = $part->measure[$i]->note[$j]->voice;
+					// 		$j--;
+					// 		self::$xmlArray = array(); 
+					// 		self::$xmlPositionArray = array();
+					// 	}
 
 	// echo"<br><hr>foreach(part->measure[$i]->note as n : ";
 	// var_dump($n);
 				}
-			}
+			
 		}//end of foreach(parts as part)
 
 		// check if result->occ is empty

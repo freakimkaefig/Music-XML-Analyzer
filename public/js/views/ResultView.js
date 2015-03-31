@@ -12,6 +12,8 @@ MusicXMLAnalyzer.ResultView = function(){
 	$title = null,
 	$exportButton = null,
 
+	finishedLoading = false,
+
 
 	init = function(){
 		console.info('MusicXMLAnalyzer.ResultView.init');
@@ -23,15 +25,72 @@ MusicXMLAnalyzer.ResultView = function(){
 
 		if ($('#extract-carousel').length) {
 			$carousel = $('#extract-carousel');
-			initCanvasResults();
+			initResultItems();
+
+			// initCanvasResults();
 		}
 
 		$artist = $('#artist');
 		$title = $('#title');
-		$exportButton = $('#exportButton');
+		$exportButton = $('.exportButton');
 		$exportButton.on('click', generateExportPdf);
+		$exportButton.addClass('disabled');
 
+		// prepareExport();
+	},
+
+	setModelReady = function() {
+		console.log('MusicXMLAnalyzer.ResultView.setModelReady')
+		finishedLoading = true;
 		prepareExport();
+	},
+
+	initResultItems = function() {
+		$carousel.find('.item').each(function(index) {
+			var result = JSON.parse($(this).find('.resultItem').val());
+			$(that).trigger('addResultItem', [result]);
+		});
+	}
+
+	renderResultExtract = function(index, data) {
+		console.log('MusicXMLAnalyzer.ResultView.renderResultExtract', index, data);
+		var measuresText = '<strong>Measures: </strong>' + data.start_extract + ' - ' + data.end_extract;
+		$carousel.find('#item' + index).find('.facts-list').find('.measures').html(measuresText);
+
+		$carousel.find('#resultExtract' + index).val(JSON.stringify(data));
+
+		// initialize canvas
+		var canvas = document.createElement('canvas');
+		canvas.id = "canvas" + index;
+		canvas.className = "canvas";
+		canvas.width = 970;
+		canvas.height = (data.measures.length / 2) * 190;
+		document.getElementById('canvasContainer' + index).appendChild(canvas);
+
+		var measures = generateVexflowNotes(data, true);
+
+		var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
+		var context = renderer.getContext();
+		var stave = new Vex.Flow.Stave(10, 0, 700);
+		stave.addClef("treble").setContext(context).draw();
+		renderNotes(measures, canvas, renderer, context, stave, false);
+
+	},
+
+	initCanvasResults = function() {
+		console.info('MusicXMLAnalyzer.ResultView.initCanvasResults');
+		$carousel.find('.item').each(function(index, element) {
+			var measures = generateVexflowNotes(JSON.parse($(element).find('input.notes').val()), true);
+			var canvas = document.getElementById('canvas' + index);
+			var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
+			var context = renderer.getContext();
+
+			var stave = new Vex.Flow.Stave(10, 0, 700);
+			stave.addClef("treble").setContext(context).draw();
+
+			// console.log(index, notes);
+			renderNotes(measures, canvas, renderer, context, stave, false);
+		});
 	},
 
 	prepareExport = function() {
@@ -44,6 +103,8 @@ MusicXMLAnalyzer.ResultView = function(){
 			height = (width * origImg.height) / origImg.width;
 			resultImage = resizedataURL(canvasImg, width, height, index);
 		});
+
+		$exportButton.removeClass('disabled');
 	},
 
 	resizedataURL = function(datas, wantedWidth, wantedHeight, index) {
@@ -132,21 +193,6 @@ MusicXMLAnalyzer.ResultView = function(){
 		doc.save("search_results.pdf");
 	},
 
-	initCanvasResults = function() {
-		console.info('MusicXMLAnalyzer.ResultView.initCanvasResults');
-		$carousel.find('.item').each(function(index, element) {
-			var measures = generateVexflowNotes(JSON.parse($(element).find('input.notes').val()), true);
-			var canvas = document.getElementById('canvas' + index);
-			var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
-			var context = renderer.getContext();
-
-			var stave = new Vex.Flow.Stave(10, 0, 700);
-			stave.addClef("treble").setContext(context).draw();
-
-			// console.log(index, notes);
-			renderNotes(measures, canvas, renderer, context, stave, false);
-		});
-	},
 
 	initPatternCanvas = function(pattern) {
 		// console.info('MusicXMLAnalyzer.ResultView.initPatternCanvas');
@@ -618,6 +664,8 @@ MusicXMLAnalyzer.ResultView = function(){
 	};
 
 	that.init = init;
+	that.renderResultExtract = renderResultExtract;
+	that.setModelReady = setModelReady;
 
 	return that;
 }
