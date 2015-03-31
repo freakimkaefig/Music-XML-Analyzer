@@ -29,8 +29,11 @@ MusicXMLAnalyzer.ResultController = function(){
 		console.info('MusicXMLAnalyzer.ResultController.init');
 
 		model = MusicXMLAnalyzer.ResultModel();
+		$(model).on('resultExtractReceived', onResultExtractReceived);
 		model.init();
+
 		view = MusicXMLAnalyzer.ResultView();
+		$(view).on('addResultItem', onAddResultItem);
 		view.init();
 
 		//init MIDI
@@ -64,6 +67,21 @@ MusicXMLAnalyzer.ResultController = function(){
 			$stopResult.prop('disabled', true);
 
 		});
+
+		$(document).ajaxStop(onModelReady);
+
+	},
+
+	onAddResultItem = function(event, result) {
+		model.addResultItem(result);
+	},
+
+	onResultExtractReceived = function(event, index, data) {
+		view.renderResultExtract(index, data);
+	},
+
+	onModelReady = function(event) {
+		view.setModelReady();
 	},
 
 	getDuration = function(type){

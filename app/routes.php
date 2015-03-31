@@ -75,7 +75,6 @@ Route::group(array('before' => 'uploads'), function()
 		'as' => 'download',
 		'uses' => 'DownloadController@getResultsCSV'
 	));
-});
 
 	Route::get('/pattern', array(
 		'as' => 'pattern',
@@ -93,7 +92,12 @@ Route::group(array('before' => 'uploads'), function()
 		'as' =>'resultDetail',
 		'uses' => 'ResultController@getResultDetail'
 	));
+	Route::post('/result/extract', array(
+		'as' => 'resultExtract',
+		'uses' => 'ResultController@postResultExtract'
+	));
 
+});
 
 /*
 |--------------------------------------------------------------------------
