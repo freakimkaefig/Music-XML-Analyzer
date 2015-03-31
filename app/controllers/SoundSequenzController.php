@@ -78,7 +78,10 @@ class SoundSequenzController {
 // 						}
 
 						if(!isset($n->rest) && !isset($n->chord)){ //exclude rests & chords (only looking for note patterns)
-
+	// echo"<hr><br>CHORD?: <br>";
+	// var_dump(isset($n->chord));
+	// echo "<br><br>";
+	// var_dump($n);
 							$pitch = new stdClass();
 							$pitch->step = $n->pitch->step;
 							$pitch->alter = $n->pitch->alter;
