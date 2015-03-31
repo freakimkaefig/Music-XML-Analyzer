@@ -62,7 +62,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 		//pattern update view
 		$(that).trigger('changeViewToCurrentMode', curMode);
-		
+
 	},
 
 	/*
@@ -124,7 +124,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	getCurrentOctave = function() {
 		return curOctave;
 	},
-	
+
 	/*
 	This method sets vals for accidentials, dots and beams
 	for noteElements-Array
@@ -149,15 +149,15 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		//beam
 		//if(curRythSpec == "triplet" && lastDurationForTriplet == curDuration) {
-		if(curRythSpec == "triplet") {			
+		if(curRythSpec == "triplet") {
 			// if(lastDurationForTriplet == curDuration || tripletCurrentAmount == 0) {
 				tripletCurrentAmount++;
-				console.log("triplet amount ++ -> " + tripletCurrentAmount)	
+				console.log("triplet amount ++ -> " + tripletCurrentAmount)
 			// }
 		}
-			
+
 		//}
-		
+
 		switch(tripletCurrentAmount) {
 		    case 1:
 		        beamVal = "begin";
@@ -173,7 +173,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 	},
 
-	addNoteElement = function() {		
+	addNoteElement = function() {
 
 		setValuesForNoteElement();
 
@@ -206,7 +206,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 						notes:
 						[
 							{
-							type: "rest",	
+							type: "rest",
 							duration: curDuration
 							}
 						]
@@ -216,7 +216,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 				if (curName != "break") {
 					noteElements[0].notes.push(
 					{
-								type: "note",	
+								type: "note",
 								pitch: {
 									step: curName.toUpperCase(),
 									alter: noteElementAccidential,
@@ -225,13 +225,13 @@ MusicXMLAnalyzer.PatternModel = function(){
 									dot: isDot,
 									beam: beamVal
 								}
-					});	
+					});
 				} else {
 					//break
 					noteElements[0].notes.push(
 					{
-						type: "rest",	
-						duration: curDuration							
+						type: "rest",
+						duration: curDuration
 					});
 				}
 			}
@@ -243,7 +243,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					noteElements.push(
 					{
 					type: curMode,
-						notes: 
+						notes:
 						[
 							{
 								type: "note",
@@ -263,8 +263,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 						[
 							{
 								type: "rest",
-								duration: curDuration	
-							}	
+								duration: curDuration
+							}
 						]
 					});
 				}
@@ -272,20 +272,20 @@ MusicXMLAnalyzer.PatternModel = function(){
 				if (curName != "break") {
 					noteElements[0].notes.push(
 					{
-							
-						type: "note",	
+
+						type: "note",
 						pitch: {
 							type: curDuration,
 							dot: isDot,
 							beam: beamVal
-						}	
-							
-					});	
+						}
+
+					});
 				} else {
 					//break
 					noteElements[0].notes.push(
 					{
-						type: "rest",	
+						type: "rest",
 						duration: curDuration
 					});
 				}
@@ -314,17 +314,17 @@ MusicXMLAnalyzer.PatternModel = function(){
 				if (curName != "break") {
 					noteElements[0].notes.push(
 					{
-						type: "note",	
+						type: "note",
 						pitch: {
 							step: curName.toUpperCase(),
 							alter: noteElementAccidential,
 							octave: curOctave
-						}	
-					});	
+						}
+					});
 				}
 			}
 		}
-			
+
 		// console.log("noteELements: ", noteElements);
 
 		//check if break or normal note or note with accidential
@@ -342,7 +342,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		} else {
 			note = new Vex.Flow.StaveNote({ keys: [keyContent + "/" + curOctave],
 	    						duration: durationContent,
-	    						auto_stem: true });	
+	    						auto_stem: true });
 		}
 
 		if (curAccidential == "#" || curAccidential == "b") {
@@ -350,7 +350,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 
 		if (curRythSpec == "dotted") {
-			note.addDotToAll();	
+			note.addDotToAll();
 		}
 
 		noteElements4VexFlow.push(note);
@@ -406,7 +406,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
-	
+
 	},
 
 	getPatternLength = function(){
@@ -467,7 +467,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		beamArray = [],
 		beamVal = false;
 		isDot = false;
-		
+
 		$(that).trigger('changeSelectedNoteName', curName);
 		$(that).trigger('changeSelectedOctave', curOctave);
 		$(that).trigger('changeSelectedAccidential', curAccidential);
@@ -538,7 +538,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		//split string at "/" to get noteName and ovtave
 		//and saves it into array noteContainer
 		var noteContainer = note.split("/");
-		
+
 		//current vals are being updated after note adding with click
 		curName = noteContainer[0];
 		curOctave = noteContainer[1];
@@ -546,7 +546,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		// updates selected btns for note name and view in pattern view
 		$(that).trigger('changeSelectedNoteName', [curName]);
 		$(that).trigger('changeSelectedOctave', [curOctave]);
-		
+
 		addNoteElement();
 
 	},
@@ -583,12 +583,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 		    	// }
 		    } else {
 		    	noteElements[0].notes.pop();
-		    	noteElements4VexFlow.pop();	
+		    	noteElements4VexFlow.pop();
 		    }
 		}
 
-	    
-	        
+
+
 	    $(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);

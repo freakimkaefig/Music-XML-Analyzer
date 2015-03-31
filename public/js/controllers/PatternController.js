@@ -3,26 +3,12 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	once = true,
 	once2 = true,
-	stop = false,	
-	//combine Key as 'step'+'octave'+'alter' - where alters '#' = 1 & 'b' = 2;
-	// no alter (if alter = 0) results in 'step'+'octave'
-	megaKeyToNoteObject = {'A0': 21, 'B02': 22, 'B0': 23, 'C1': 24, 'D12': 25, 'C12': 25, 'A1': 33, 'A2': 45, 'A3': 57,
-						  'A4': 69, 'A5': 81, 'A6': 93, 'A7': 105, 'A12': 32, 'G11': 32, 'A22': 44, 'G21': 44, 'A32': 56, 'G31': 56,
-						  'A42': 68, 'G41': 68, 'A52': 80, 'G51': 32, 'A62': 80, 'G61': 92, 'A72': 92, 'G71': 104, 'B0': 104,
-						  'B1': 35, 'B2': 47, 'B3': 59, 'B4': 71, 'B5': 83, 'B6': 95, 'B7': 107, 'B12': 34, 'A11': 34, 'B22': 46, 'A21': 46,
-						  'B32': 58, 'A31': 58, 'B42': 70, 'A41': 70, 'B52': 82, 'A51': 82, 'B62': 94, 'A61': 94, 'B72': 106, 'A71': 106,
-						  'C1': 24, 'C2': 36, 'C3': 48, 'C4': 60, 'C5': 72, 'C6': 84, 'C7': 96, 'C8': 108, 'D1': 26, 'D2': 38, 'D3': 50,
-						  'D4': 62, 'D5': 74, 'D6': 86, 'D7': 98, 'C11': 25, 'D22': 37, 'C21': 37, 'D32': 49, 'C31': 49,
-						  'D42': 61, 'C41': 61, 'D52': 73, 'C51': 73, 'D62': 85, 'C61': 85, 'D72': 97, 'C71': 97, 'E1': 28, 'E2': 40,
-						  'E3': 52, 'E4': 64, 'E5': 76, 'E6': 88, 'E7': 100, 'E12': 27, 'D11': 27, 'E22': 39, 'D21': 39, 'E32': 51,
-						  'D31': 51, 'E42': 63, 'D41': 63, 'E52': 75, 'D51': 75, 'E62': 87, 'D61': 87, 'E72': 99, 'F1': 29, 'F2': 41, 
-						  'F3': 53, 'F4': 65, 'F5': 77, 'F6': 89, 'F7': 101, 'G1': 31, 'G2': 43, 'G3': 55, 'G4': 67, 'G5': 79, 'G6': 91,
-						  'G7': 103, 'G12': 30, 'F11': 30, 'G22': 42, 'F21':42, 'G32': 54, 'F31': 54, 'G42': 66, 'F41': 66, 'G52': 78,
-						  'F51': 78, 'G62': 90, 'F61': 90, 'G72': 102, 'F71': 102},
+	stop = false,
+	tonika = { 'C':0, 'D':2, 'E':4, 'F':5, 'G':7, 'A':9, 'B':11 },
 
 	init = function() {
-		console.log('MusicXMLAnalyzer.PatternController.init');
-		
+		console.info('MusicXMLAnalyzer.PatternController.init');
+
 		patternView = MusicXMLAnalyzer.PatternView();
 		patternView.init();
 
@@ -45,7 +31,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
 		$(patternModel).on('testtest', test);
-		
+
 		$(patternModel).on('clearCanvas', onCanvasClear);
 
 		//init MIDI
@@ -109,7 +95,11 @@ MusicXMLAnalyzer.PatternController = function() {
 		return duration;
 	},
 
-	playPattern = function(){
+	getMidiValue = function(step, octave, alter) {
+		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));
+	},
+
+	playPattern = function() {
 		// console.log("MIDI: ",MIDI);
 		var notesToBePlayed = [];
 		// console.log("playPattern keyToNote: ",MIDI.keyToNote['A0']); //<-- returns key for var note
@@ -141,46 +131,29 @@ MusicXMLAnalyzer.PatternController = function() {
 					var restDuration = getDuration(currentPatternNotes[i].notes[j].duration);
 					notesToBePlayed.push({'note': 0, 'noteDuration': restDuration});
 
-				}else if(currentPatternNotes[i].notes[j].type == 'note'){
+				} else if(currentPatternNotes[i].notes[j].type == 'note'){
 					var note = currentPatternNotes[i].notes[j];
-					var noteDuration = getDuration(note.pitch.type);
-					if(typeof noteDuration === 'undefined'){
-						// console.log("noteduration is undefined");
-						noteDuration = 0.25;
+					var noteDuration = (getDuration(note.pitch.type) != undefined ? getDuration(note.pitch.type) : 0.25);
+					var noteStep = (note.pitch.step != undefined ? note.pitch.step : 'C');
+					var noteOctave = (note.pitch.octave != undefined ? note.pitch.octave : 4);
+					var noteAlter = (note.pitch.alter != undefined ? note.pitch.alter : 0);
+
+					if (note.pitch.dot) {
+						noteDuration += 0.5 * noteDuration;
 					}
 
-					var noteStep = note.pitch.step;
-					if(typeof noteStep === 'undefined'){
-						// console.log("noteStep is undefined");
-						noteStep = 0.25;
-						keyToNote = 'C4';
-					}else{
-						if(note.pitch.dot){
-							noteDuration += 0.5*noteDuration;
-						}
-						var noteOctave = note.pitch.octave;
-						var noteAlter = note.pitch.alter;
-
-						if(noteAlter != 0){
-							if(noteAlter == -1){
-								noteAlter = 2;
-							}
-							keyToNote = noteStep.concat(noteOctave, noteAlter);
-						}else{
-							keyToNote = noteStep.concat(noteOctave);
-						}
-					}
-					console.log("keyToNote: ", keyToNote, " - megaKeyToNoteObject{keyToNote}: ",megaKeyToNoteObject[keyToNote]);
-					notesToBePlayed.push({'note': megaKeyToNoteObject[keyToNote], 'noteDuration': noteDuration});
+					var midiNote = getMidiValue(noteStep, noteOctave, noteAlter);
+					console.log(noteStep, noteOctave, noteAlter, noteDuration, "midiNote: ", midiNote);
+					notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration});
 				}
 			}
 		}
-		
+
 		var i = 0;
-		playTune = function(){
+		playTune = function() {
 
 			console.log("notes to be played: " + notesToBePlayed.length);
-			if(i < notesToBePlayed.length){						
+			if(i < notesToBePlayed.length){
 				console.log("notesToBePlayed: ",notesToBePlayed[i]);
 				// console.log("pause: ", pause);
 				var note = notesToBePlayed[i].note;
@@ -188,7 +161,7 @@ MusicXMLAnalyzer.PatternController = function() {
 				var velocity = 100; // how hard the note hits
 				//var delay = notesToBePlayed[i].noteDuration /**2 + i + 1*/;
 				//EDIT Mat
-				// delay muss hier fester wert sein sonst 
+				// delay muss hier fester wert sein sonst
 				// verzögert midi js aus irg einem grund manche noten
 				var delay = 0;
 				var timeout = 0;
@@ -207,7 +180,7 @@ MusicXMLAnalyzer.PatternController = function() {
 				// console.log("noten abklang: ",delay);
 				// console.log("timeout till note is played: ",timeout);
 
-				setTimeout(function(){ 
+				setTimeout(function(){
 					if(stop){
 						console.log("STOP: ",stop);
 						//MIDI.setVolume(0, 0);
@@ -217,7 +190,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 						if(i == notesToBePlayed.length -1){
 							//var timeout2 = delay*3000;
-							// setTimeout(function(){ 
+							// setTimeout(function(){
 								// console.log("last note - delay: ",delay," delay*3: ",delay*3);
 								// console.log("lastnote: ",note, delay);
 								// MIDI.setVolume(0, 127);
@@ -249,8 +222,8 @@ MusicXMLAnalyzer.PatternController = function() {
 				}, 1500);
 			}
 
-		}	
-		if(once2){ 
+		}
+		if(once2){
 			once2 = false;
 			playTune();
 		 }
@@ -278,7 +251,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	onSpecRythSelectionChange = function(event, selectedSpecRyth) {
 		patternView.setSpecRythActive(selectedSpecRyth);
-	},	
+	},
 
 	changeMode = function(val) {
 		patternModel.setCurrentMode(val);

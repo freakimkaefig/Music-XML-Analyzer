@@ -20,7 +20,7 @@ MusicXMLAnalyzer.NotationView = function(){
 
 
 	init = function() {
-		console.log("notation view");
+		console.info('MusicXMLAnalyzer.NotationView.init');
 		patternController = MusicXMLAnalyzer.PatternController();
 		patternModel = MusicXMLAnalyzer.PatternModel();
 
