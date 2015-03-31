@@ -17,7 +17,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 
 	init = function() {
-		console.log("pattern view");
+		console.info('MusicXMLAnalyzer.PatternView.init');
 
 		patternController = MusicXMLAnalyzer.PatternController();
 

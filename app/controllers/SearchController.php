@@ -327,10 +327,10 @@ class SearchController extends BaseController {
 						break;
 					case "32nd":
 						$noteTypesArray[5]->value = $noteTypesArray[5]->value + 1;
-						break;	
+						break;
 					case "64th":
 						$noteTypesArray[6]->value = $noteTypesArray[6]->value + 1;
-						break;				
+						break;
 				endswitch;
 			}
 	    }
@@ -391,7 +391,7 @@ class SearchController extends BaseController {
 		foreach($keys as $key) {
 			$fifths = $key->fifths;
 			$mode = (string)$key->mode;
-			
+
 			if($fifths != null && $mode === "major"){
 				switch($fifths):
 					case "0":
@@ -520,7 +520,7 @@ class SearchController extends BaseController {
 		foreach($clefs as $clef) {
 			$value = $clef->sign;
 			$line = $clef->line; //https://de.wikipedia.org/wiki/Notenschl%C3%BCssel#C-Schl.C3.BCssel
-			
+
 			if($value != null){
 				switch($value):
 					case "C":
