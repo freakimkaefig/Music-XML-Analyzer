@@ -91,7 +91,7 @@ class MelodyController {
 							$lastVoice = $part->measure[$i]->note[$j]->voice;
 						}
 
-						if((int)$n->voice == (int)$lastVoice){
+						// if((int)$n->voice == (int)$lastVoice){
 							$pitch = new stdClass();
 							$pitch->step = $n->pitch->step;
 							$pitch->alter = $n->pitch->alter;
@@ -105,7 +105,7 @@ class MelodyController {
 							$note->position = self::$noteCounter;
 
 							// if note
-							if(!$n->rest){
+							if(!$n->rest && !isset($n->chord)){
 
 								$obj = new stdClass();
 								$obj->interval = PatternController::getInterval($note);
@@ -226,12 +226,12 @@ class MelodyController {
 								} //if array lengths aren't equal yet, continue	
 
 						}
-						else{ //different voice incoming next; unset array; begin from scratch
-								$lastVoice = $part->measure[$i]->note[$j]->voice;
-								$j--;
-								self::$xmlArray = array(); 
-								self::$xmlPositionArray = array();
-							}
+						// else{ //different voice incoming next; unset array; begin from scratch
+						// 		$lastVoice = $part->measure[$i]->note[$j]->voice;
+						// 		$j--;
+						// 		self::$xmlArray = array(); 
+						// 		self::$xmlPositionArray = array();
+						// 	}
 					}
 				}
 			}//end of foreach(parts as part)
