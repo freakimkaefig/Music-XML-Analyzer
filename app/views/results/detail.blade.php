@@ -49,8 +49,8 @@
 			<div class="item<?php if ($i==0) echo ' active'; ?>">
 				<div class="facts-list martop30">
 					<div class="col-xs-1 col-xs-offset-1">
-						<button id="playResult" type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
-						<button id="stopResult" type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
+						<button id="playResult" type="button" class="playResult btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
+						<button id="stopResult" type="button" class="stopResult btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
 					</div>
 					<div class="col-xs-2 col-xs-offset-1 martop40">
 						<h4>About the finding:</h4>
