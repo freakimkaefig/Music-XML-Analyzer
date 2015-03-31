@@ -108,7 +108,7 @@ MusicXMLAnalyzer.ResultController = function(){
 
 
 		//get notes of current extract:
-		var currentResultNotes = JSON.parse($('#extract-carousel').find('div.carousel-inner').find('div.item.active').find('.notes')[0].value);
+		var currentResultNotes = JSON.parse($('#extract-carousel').find('div.carousel-inner').find('div.item.active').find('.resultExtract').val());
 		console.log("currentResultNotes: ",currentResultNotes);
 
 		//determine MIDI values for currentResultNotes
@@ -142,7 +142,7 @@ MusicXMLAnalyzer.ResultController = function(){
 				}
 			}
 		}
-		
+
 		// console.log("notesToBePlayed: ",notesToBePlayed);
 
 		var i = 0;
@@ -150,7 +150,7 @@ MusicXMLAnalyzer.ResultController = function(){
 
 			var chordsToBePlayed = [];
 
-			if(i < notesToBePlayed.length){						
+			if(i < notesToBePlayed.length) {
 				// console.log("notesToBePlayed: ",notesToBePlayed[i]);
 				// console.log("pause: ", pause);
 				var note = notesToBePlayed[i].note;
@@ -167,7 +167,7 @@ MusicXMLAnalyzer.ResultController = function(){
 				once = false;
 				// console.log("delay till note is played: ",timeout);
 
-				setTimeout(function(){ 
+				setTimeout(function() {
 					if(stop){
 						// console.log("STOP: ",stop);
 						MIDI.setVolume(0, 0);
@@ -177,7 +177,7 @@ MusicXMLAnalyzer.ResultController = function(){
 						MIDI.setVolume(0, 127);
 						// delay --> https://stackoverflow.com/questions/21296450/midi-js-note-duration-does-not-change
 
-						if(i + 1 < notesToBePlayed.length){
+						if(i + 1 < notesToBePlayed.length) {
 							tooLong = false;
 						}else{
 							tooLong = true;
@@ -185,7 +185,7 @@ MusicXMLAnalyzer.ResultController = function(){
 
 						// console.log("tooLong? ",tooLong);
 
-						if(!tooLong && notesToBePlayed[i].chord == false && notesToBePlayed[i + 1].chord == true){
+						if(!tooLong && notesToBePlayed[i].chord == false && notesToBePlayed[i + 1].chord == true) {
 							// var kCounter = 0;
 							do{
 								chordsToBePlayed.push(notesToBePlayed[i].note);
@@ -217,8 +217,8 @@ MusicXMLAnalyzer.ResultController = function(){
 					$stopResult.prop('disabled', true);
 				}, 1500);
 			}
-		}	
-		if(once2){ 
+		}
+		if(once2){
 			once2 = false;
 			playTune();
 		 }

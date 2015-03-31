@@ -75,7 +75,7 @@ class ResultController extends BaseController {
 	 *
 	 */
 	private function generateResultExtract($upload_id, $part_id, $voice, $start, $end) {
-		set_time_limit(120);
+		set_time_limit(300);
 		$upload = Upload::find($upload_id);
 
 		$xml = simplexml_load_file($upload->url);
@@ -416,6 +416,19 @@ class ResultController extends BaseController {
 		}
 	}
 
+
+	/**
+	 * Static helper function to retrieve the filename for a given upload id
+	 *
+	 * @param 	int 	the uploads id
+	 *
+	 * @return 	string 	The title for given upload id
+	 *
+	 */
+	public static function _getFilename($id) {
+		$upload =  Upload::find($id);
+		return $upload->name();
+	}
 
 	/**
 	 * Static helper function to retrieve the part name for a given upload id and part_id

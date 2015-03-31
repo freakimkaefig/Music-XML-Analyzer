@@ -26,6 +26,7 @@
 	<div class="col-xs-12">
 		<h4>found in:</h4>
 		<h2><span id="artist">{{ ResultController::_getArtist($result->file_id) }}</span> - <span id="title">{{ ResultController::_getTitle($result->file_id) }}</span></h2>
+		<h5>({{ ResultController::_getFilename($result->file_id) }})</h5>
 	</div>
 </div>
 

@@ -30,7 +30,7 @@ MusicXMLAnalyzer.ResultModel = function(){
 	},
 
 	_onLoadResultExtract = function(index, data, textStatus, jqXHR) {
-		console.log(data);
+		// console.log(data);
 		data = JSON.parse(data);
 		resultItems[index].extract = data;
 		$(that).trigger('resultExtractReceived', [index, data]);
