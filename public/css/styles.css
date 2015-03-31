@@ -4,6 +4,7 @@
     position: static;
     bottom: 0;
     margin-top: 150px;
+    text-align: center;
 }
 
 hr {
@@ -334,7 +335,7 @@ div#pie_meterDistribution {
 #chart text{
   fill: black;
   font: 10px sans-serif;
-  text-anchor: end; 
+  text-anchor: end;
 }
 
 .axis text{
@@ -371,10 +372,10 @@ div#pie_meterDistribution {
 }
 .carousel-indicators .active {
 	background-color: #666;
-	
+
 }
 .carousel-controls{
-	position:relative; 
+	position:relative;
   	width:300px;
   	margin:0 auto;
   	top: 0px;

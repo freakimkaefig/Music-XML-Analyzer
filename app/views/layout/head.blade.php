@@ -5,5 +5,6 @@
 {{ HTML::style('libs/dropzone-4.0.0/dist/min/dropzone.min.css'); }}
 
 {{ HTML::style('css/styles.css'); }}
-		
+{{ HTML::style('css/responsive.css'); }}
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
