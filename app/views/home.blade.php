@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="col-md-8 col-md-offset-2 text-center">
 		<h1>Music XML Analyzer</h1>
-		<h4 style="margin-bottom: 50px;">Looking for patterns? We'll find them.</h4>
+		<h4 style="margin-bottom: 50px;">Looking for patterns in music? We'll find them.</h4>
 		<div id="start_row" class="row">
 			<div class="col-sm-4">
 				<div class="col-xs-12">
