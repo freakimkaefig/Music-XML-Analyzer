@@ -40,6 +40,7 @@ class PatternController extends BaseController {
 				break;
 		}
 		
+
 		Cache::put('pattern', $pattern, $time);
 		Cache::put('results', $results, $time);
 

@@ -27,6 +27,9 @@ Route::get('/imprint', array(
 	'uses' => 'HomeController@getToImprint'
 ));
 
+Route::get('/hello', function() {
+	return View::make('hello');
+});
 
 /*
 |--------------------------------------------------------------------------

@@ -19,33 +19,35 @@ MusicXMLAnalyzer.ApplicationController = function() {
 		uploadController.init();
 
 		if (Route.check('/imprint')) {
-			console.log("Imprint");
+			console.info("Detected route '/imprint'");
 		}
 
 		if (Route.check('/dashboard')) {
+			console.info("Detected route '/dashboard'");
 			dashboardController = MusicXMLAnalyzer.DashboardController();
 			dashboardController.init();
 		}
 
 		if (Route.check('/pattern')) {
-			console.log("Pattern");
+			console.info("Detected route '/pattern'");
 			patternController = MusicXMLAnalyzer.PatternController();
 			patternController.init();
 		}
 
 		if (Route.check('/results')) {
+			console.info("Detected route '/results'");
 			resultController = MusicXMLAnalyzer.ResultController();
 			resultController.init();
 		}
 	},
-	
+
 	dispose = function() {
 		that = {};
 	};
 
 	that.init = init;
 	that.dispose = dispose;
-    
+
 	return that;
 
 };
