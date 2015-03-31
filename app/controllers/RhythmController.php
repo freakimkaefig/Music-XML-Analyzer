@@ -256,7 +256,7 @@ public function search($pattern) {
 	// echo"<br><hr>foreach(part->measure[$i]->note as n : ";
 	// var_dump($n);
 				}
-			}
+			
 		}//end of foreach(parts as part)
 
 		// check if result->occ is empty

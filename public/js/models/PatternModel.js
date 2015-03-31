@@ -558,7 +558,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	    }else if(noteElements[0].notes.length != 0) {
 			//check if element you want to delete is triplet
 			//and check if there are triplets before
-		    if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
+		    if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch && noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
 		    	noteElements[0].notes.pop();
 		    	noteElements[0].notes.pop();
 		    	noteElements[0].notes.pop();

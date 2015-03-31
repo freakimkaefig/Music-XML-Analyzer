@@ -233,7 +233,7 @@ class MelodyController {
 						// 		self::$xmlPositionArray = array();
 						// 	}
 					}
-				}
+				
 			}//end of foreach(parts as part)
 
 			// check if result->occ is empty

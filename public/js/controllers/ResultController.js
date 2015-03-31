@@ -4,26 +4,11 @@ MusicXMLAnalyzer.ResultController = function(){
 
 	model = null,
 	view = null,
-	//combine Key as 'step'+'octave'+'alter' - where alters '#' = 1 & 'b' = 2;
-	// no alter (if alter = 0) results in 'step'+'octave'
-	megaKeyToNoteObject = {'A0': 21, 'B02': 22, 'B0': 23, 'C1': 24, 'D12': 25, 'C12': 25, 'A1': 33, 'A2': 45, 'A3': 57,
-						  'A4': 69, 'A5': 81, 'A6': 93, 'A7': 105, 'A12': 32, 'G11': 32, 'A22': 44, 'G21': 44, 'A32': 56, 'G31': 56,
-						  'A42': 68, 'G41': 68, 'A52': 80, 'G51': 32, 'A62': 80, 'G61': 92, 'A72': 92, 'G71': 104, 'B0': 104,
-						  'B1': 35, 'B2': 47, 'B3': 59, 'B4': 71, 'B5': 83, 'B6': 95, 'B7': 107, 'B12': 34, 'A11': 34, 'B22': 46, 'A21': 46,
-						  'B32': 58, 'A31': 58, 'B42': 70, 'A41': 70, 'B52': 82, 'A51': 82, 'B62': 94, 'A61': 94, 'B72': 106, 'A71': 106,
-						  'C1': 24, 'C2': 36, 'C3': 48, 'C4': 60, 'C5': 72, 'C6': 84, 'C7': 96, 'C8': 108, 'D1': 26, 'D2': 38, 'D3': 50,
-						  'D4': 62, 'D5': 74, 'D6': 86, 'D7': 98, 'C11': 25, 'D22': 37, 'C21': 37, 'D32': 49, 'C31': 49,
-						  'D42': 61, 'C41': 61, 'D52': 73, 'C51': 73, 'D62': 85, 'C61': 85, 'D72': 97, 'C71': 97, 'E1': 28, 'E2': 40,
-						  'E3': 52, 'E4': 64, 'E5': 76, 'E6': 88, 'E7': 100, 'E12': 27, 'D11': 27, 'E22': 39, 'D21': 39, 'E32': 51,
-						  'D31': 51, 'E42': 63, 'D41': 63, 'E52': 75, 'D51': 75, 'E62': 87, 'D61': 87, 'E72': 99, 'F1': 29, 'F2': 41, 
-						  'F3': 53, 'F4': 65, 'F5': 77, 'F6': 89, 'F7': 101, 'G1': 31, 'G2': 43, 'G3': 55, 'G4': 67, 'G5': 79, 'G6': 91,
-						  'G7': 103, 'G12': 30, 'F11': 30, 'G22': 42, 'F21':42, 'G32': 54, 'F31': 54, 'G42': 66, 'F41': 66, 'G52': 78,
-						  'F51': 78, 'G62': 90, 'F61': 90, 'G72': 102, 'F71': 102},
-	keyToNote = "",
 	once = true,
 	once2 = true,
 	stop = false,
 	tooLong = false,
+	tonika = { 'C':0, 'D':2, 'E':4, 'F':5, 'G':7, 'A':9, 'B':11 },
 
 	init = function(){
 		console.info('MusicXMLAnalyzer.ResultController.init');
@@ -45,8 +30,8 @@ MusicXMLAnalyzer.ResultController = function(){
 		});
 
 
-		$playResult = $('#playResult');
-		$stopResult = $('#stopResult');
+		$playResult = $('.playResult');
+		$stopResult = $('.stopResult');
 
 		// disable stop button
 		$stopResult.prop('disabled', true);
@@ -106,8 +91,12 @@ MusicXMLAnalyzer.ResultController = function(){
 		return duration;
 	},
 
+	getMidiValue = function(step, octave, alter) {
+		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));
+	},
+
 	playResult = function(){
-		// console.log("MIDI: ",MIDI);
+		console.log("playResult: ");
 		var notesToBePlayed = [];
 		// console.log("playResult keyToNote: ",MIDI.keyToNote['A0']); //<-- returns key for var note
 		// console.log("playResult keytonote: ",MIDI.noteToKey); // 21 => A0
@@ -146,15 +135,10 @@ MusicXMLAnalyzer.ResultController = function(){
 					}
 					var chord = note.pitch.chord;
 
-					if(noteAlter != 0){
-						if(noteAlter == -1){
-							noteAlter = 2;
-						}
-						keyToNote = noteStep.concat(noteOctave, noteAlter);
-					}else{
-						keyToNote = noteStep.concat(noteOctave);
-					}
-					notesToBePlayed.push({'note': megaKeyToNoteObject[keyToNote], 'noteDuration': noteDuration, 'chord': chord});
+					var midiNote = getMidiValue(noteStep, noteOctave, noteAlter);
+					console.log(noteStep, noteOctave, noteAlter, noteDuration, "midiNote: ", midiNote);
+
+					notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration, 'chord': chord});
 				}
 			}
 		}
@@ -172,13 +156,13 @@ MusicXMLAnalyzer.ResultController = function(){
 				var note = notesToBePlayed[i].note;
 				var noteDuration = notesToBePlayed[i].noteDuration;
 				var velocity = 127; // how hard the note hits
-				var delay = notesToBePlayed[i].noteDuration  /*+ i*/ + 1;
+				var delay = 0;
 				// var chord = notesToBePlayed[i].chord;
 				var timeout = 0;
 				if(!once){
 					// timeout needs adjustment
 					// currently trial&error values
-					timeout = ((delay *2) /*+ noteDuration*/)*300;
+					timeout = notesToBePlayed[i-1].noteDuration*2000;
 				}
 				once = false;
 				// console.log("delay till note is played: ",timeout);
@@ -207,17 +191,17 @@ MusicXMLAnalyzer.ResultController = function(){
 								chordsToBePlayed.push(notesToBePlayed[i].note);
 								i++;
 								// console.log("notesToBePlayed[i].chord: ",notesToBePlayed[i].chord," i: ",i," notesToBePlayed.length: ",notesToBePlayed.length);
-							}while(notesToBePlayed[i].chord == true && i < notesToBePlayed.length)
+							}while(notesToBePlayed[i] && notesToBePlayed[i].chord == true && i < notesToBePlayed.length)
 							// console.log("chordsToBePlayed	: ",chordsToBePlayed);
 							MIDI.chordOn(0, chordsToBePlayed, velocity, delay);
-							MIDI.chordOff(0, chordsToBePlayed, delay);
+							MIDI.chordOff(0, chordsToBePlayed, delay + 0.75);
 							// TODO:
 							// adjust timeout for chords?
 						}
 						// else:
 						else{
 							MIDI.noteOn(0, note, velocity, delay);
-							MIDI.noteOff(0, note, delay + noteDuration);
+							MIDI.noteOff(0, note, delay + 0.75);
 							i++;
 						}
 						MIDI.Player.stop();
