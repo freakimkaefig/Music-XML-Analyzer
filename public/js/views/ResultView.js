@@ -65,7 +65,9 @@ MusicXMLAnalyzer.ResultView = function(){
 		canvas.className = "canvas";
 		canvas.width = 970;
 		canvas.height = (data.measures.length / 2) * 190;
-		document.getElementById('canvasContainer' + index).appendChild(canvas);
+		var canvasContainer = document.getElementById('canvasContainer' + index);
+		canvasContainer.innerHTML = "";
+		canvasContainer.appendChild(canvas);
 
 		var measures = generateVexflowNotes(data, true);
 

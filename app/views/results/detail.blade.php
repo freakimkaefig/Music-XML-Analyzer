@@ -64,7 +64,9 @@
 						<button type="button" class="exportButton btn btn-lg btn-success pull-right"><span class="glyphicon glyphicon-file"></span> <span>Export as PDF</span></button>
 					</div>
 				</div>
-				<center id="canvasContainer<?php echo $i; ?>"></center>
+				<center id="canvasContainer<?php echo $i; ?>">
+					<img class="loading-spinner" src="/img/ajax-loader.gif">
+				</center>
 				{{ Form::hidden('resultItem' . $i, json_encode($resultItem), array('id' => 'resultItem' . $i, 'class' => 'resultItem')) }}
 				{{ Form::hidden('resultExtract' . $i, '', array('id' => 'resultExtract' . $i, 'class' => 'resultExtract')) }}
 				{{ Form::hidden('base64Image' . $i, "", array('id' => 'image' . $i, 'class' => 'image')) }}
