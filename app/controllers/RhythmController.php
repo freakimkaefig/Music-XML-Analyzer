@@ -8,7 +8,7 @@ class RhythmController {
 	static $xmlArray;
 	static $xmlPositionArray;
 	static $once;
-	static $restDuration;
+	// static $restDuration;
 	static $noteCounter;
 
 	function __construct() {
@@ -47,8 +47,8 @@ public function search($pattern) {
 		}
 	}
 
-	// echo"patternArray: ";
-	// var_dump(self::$patternArray);
+// echo"patternArray: ";
+// var_dump(self::$patternArray);
 
 	//get user uploads & file_id's & file_url
 	$user = User::find(Cookie::get('user_id'));
@@ -90,19 +90,19 @@ public function search($pattern) {
 					}
 				}
 
+// echo"<br><hr>partDivision: <br> ";
+// var_dump($partDivision);
+// echo"<br>partBeatType: <br> ";
+// var_dump($partBeatType);
 				for($j = 0; $j < count($part->measure[$i]->note); $j++){
 					self::$noteCounter++;
-		// echo"<br><hr>noteCounter: ";
-		// var_dump(self::$noteCounter);
 					$n = $part->measure[$i]->note[$j];
-					// if(self::$once){
-					// 	self::$once = false;
-					// 	$lastVoice = $part->measure[$i]->note[$j]->voice;
-					// }
+					if(self::$once){
+						self::$once = false;
+						$lastVoice = $part->measure[$i]->note[$j]->voice;
+					}
 
-					// if((int)$n->voice == (int)$lastVoice){
-		// echo"<br><hr>n: ";
-		// var_dump($n);
+					if((int)$n->voice == (int)$lastVoice){
 						// $pitch = new stdClass();
 						// $pitch->step = $n->pitch->step;
 						// $pitch->alter = $n->pitch->alter;
@@ -112,48 +112,54 @@ public function search($pattern) {
 						// $note = new stdClass();
 						// $note->pitch = $pitch;
 						// $note->voice = $n->voice;
-						// // $note->type = $n->type;
+						// $note->type = $n->type;
 						// $note->position = self::$noteCounter;
 
 						// if note
-						if(!isset($n->rest) && !isset($n->chord)){
+						if(!isset($n->rest) /*&& !isset($n->chord)*/){
+// echo"<br><hr>n: <br>";
+// var_dump($n);
 							// get note intervals of xml file & fill xmlArray
 							$obj = new stdClass();
 							// $obj->interval = PatternController::getInterval($note);
 							$obj->type = (string)$n->type;
-		// echo"<br><hr>n->type: ";
-		// var_dump($n->type);
+// echo"<br><hr>n->type: ";
+// var_dump($n->type);
 							// if triplet
 							if(isset($n->{'time-modification'})){
 								$obj->beam = (string)$n->beam[0];
 							}
 							// else if dotted note
-							//check with "!isnull" because n->dot === object(SimpleXMLElement)#226 (0) { } 
-							elseif(!is_null($n->dot)){
-		// echo"<br><hr>n->dot: ";
-		// var_dump($n->dot);
+							elseif($n->dot){
+// echo"<br><hr>n: ";
+// var_dump($n);
 								$obj->dot = "1";
 							}
-
+// echo"<br><hr>obj: <br>";
+// var_dump($obj);
 							array_push(self::$xmlArray, $obj);
 							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
-		// echo"<br><br>xmlArray: ";
-		// var_dump(self::$xmlArray);
+// echo"<br><hr>xmlArray: ";
+// var_dump(self::$xmlArray);
 
 						}
 						// else if rest
 						else{
+// echo"<br><br>REST added!";
 							// calculate rest duration
 							try{
 								$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / (int)$partBeatType);
 							} catch (Exception $e) {
-							    // Debugbar::info($n->duration);
-							    // Debugbar::info($partDivision);
-							    // Debugbar::info($partBeatType);
-							    echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
+// echo"<br><hr>n->duration: <br>";
+// var_dump($n->duration);
+// echo"<br>partDivision: <br>";
+// var_dump($partDivision);
+// echo"<br>partBeatType: <br>";
+// var_dump($partBeatType);
+							    Log::info('Exception abgefangen: ',  $e->getMessage(), "\n");
 							}
 
-	// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
+							// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
 							// determine 'type'
 							if ($restDurationFloat == 1){
 								$restDuration = "whole";
@@ -186,32 +192,34 @@ public function search($pattern) {
 							} else {
 								// catch strange values (FALLBACK)
 								$restDuration = "64th";	// set to lowest possible value
-								// 
-								// ERROR mit "0,75" -> punktierte halbe?
-								// 
-								// Debugbar::info($restDurationFloat);
-								// echo 'Rest duration unclear: ',  $restDurationFloat, "<br>";
-								// echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
+// 
+// Debugbar::info($restDurationFloat);
+// echo 'Rest duration unclear: ',  $restDurationFloat, "<br>";
+// echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
 							}
 							
-							array_push(self::$xmlArray, self::$restDuration);
+							array_push(self::$xmlArray, $restDuration);
 							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
 
 						} //end else if rest
 
+// echo"<br><br><hr>restDurationFloat: <br>";
+// var_dump($restDurationFloat);
+// echo"<br><br><hr>restDuration: <br>";
+// // var_dump($restDuration);
+// echo"<br><br>xmlArray: <br>";
+// var_dump(self::$xmlArray);
+// echo"<br>patternArray: <br>";
+// var_dump(self::$patternArray);
+// // echo"<br><br>xmlPositionArray:";
+// var_dump(self::$xmlPositionArray);
+// echo"<br><br>";
 						//check if Array-length equals Pattern-length already
 						if(count(self::$xmlArray) == count(self::$patternArray)){
-							
-		// echo"<br><br><hr>array_values: <br>";
-		// var_dump(array_values(self::$xmlArray));
-		// echo"<br><br>";
-		// var_dump(array_values(self::$patternArray));
-		// echo"<br><br>xmlPositionArray:";
-		// var_dump(self::$xmlPositionArray);
-		// echo"<br><br>";
+// echo"<br><hr>same length xmlArray: ";
+// var_dump(self::$xmlArray);
 							// compare arrays
 							if(array_values(self::$xmlArray) == array_values(self::$patternArray)){
-
 								// create result
 								self::$result->file_id = $file_id;
 								self::$result->file_url = $file_url;
@@ -224,39 +232,46 @@ public function search($pattern) {
 								$occ->part_id = (string)$part['id'];
 
 								array_push(self::$result->occurences, $occ);
+// echo"<br><br>MATCH result: ";
+// var_dump(self::$result);
 
 								//reset arrays
 								self::$xmlArray = array();
 								self::$xmlPositionArray = array();
 
 							}else{
+// echo"<br><br>no match patternArray: ";
+// var_dump(self::$patternArray);
+
+// echo"<br><br>xmlArray BEFORE splice: ";
+// var_dump(self::$xmlArray);
 								self::$xmlArray = array_splice(self::$xmlArray, 1);
-		// echo"<br><br>xmlPositionArray BEFORE splice: ";
-		// var_dump(self::$xmlPositionArray);
 								self::$xmlPositionArray = array_splice(self::$xmlPositionArray, 1);
 
-		// echo"<br><br>xmlPositionArray AFTER splice: ";
-		// var_dump(self::$xmlPositionArray);
 								self::$xmlArray = array_values(self::$xmlArray);
-
 								self::$xmlPositionArray = array_values(self::$xmlPositionArray);
+// echo"<br><br>xmlArray AFTER splice: ";
+// var_dump(self::$xmlArray);
+
 
 							}
 
 						} //if array lengths aren't equal yet, continue	
 
 					}	// end if same voice
-					// else{ //different voice incoming next; unset array; begin from scratch
-					// 		$lastVoice = $part->measure[$i]->note[$j]->voice;
-					// 		$j--;
-					// 		self::$xmlArray = array(); 
-					// 		self::$xmlPositionArray = array();
-					// 	}
+					else{ //different voice incoming next; unset array; begin from scratch
+// echo"<br><br>VOICES DONT MATCH -> : ";
+// var_dump(self::$xmlPositionArray);
+							$lastVoice = $part->measure[$i]->note[$j]->voice;
+							$j--;
+							self::$xmlArray = array(); 
+							self::$xmlPositionArray = array();
+						}
 
-	// echo"<br><hr>foreach(part->measure[$i]->note as n : ";
-	// var_dump($n);
+// echo"<br><hr>foreach(part->measure[$i]->note as n : ";
+// var_dump($n);
 				}
-			
+			}
 		}//end of foreach(parts as part)
 
 		// check if result->occ is empty
@@ -271,15 +286,6 @@ public function search($pattern) {
 // Debugbar::info("results");
 // Debugbar::info(self::$results);
 return self::$results;
-
-// echo "<br>";
-// var_dump(self::$results);
-// 		if(empty(self::$results)){
-
-// 		echo "<br>result is empty!";
-// 		}
-// echo "<hr>";
-
 // bla();
 
 	}
