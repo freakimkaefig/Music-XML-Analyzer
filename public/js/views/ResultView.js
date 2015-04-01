@@ -70,7 +70,7 @@ MusicXMLAnalyzer.ResultView = function(){
 		canvas.id = "canvas" + index;
 		canvas.className = "canvas";
 		canvas.width = 970;
-		canvas.height = (data.measures.length / 2) * 230;
+		canvas.height = (data.measures.length / 2) * 250;
 		var canvasContainer = document.getElementById('canvasContainer' + index);
 		canvasContainer.innerHTML = "";
 		canvasContainer.appendChild(canvas);
