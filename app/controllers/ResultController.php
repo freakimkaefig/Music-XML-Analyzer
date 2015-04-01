@@ -242,44 +242,28 @@ class ResultController extends BaseController {
 							}
 
 						} else {
-							// it's a rest
-							$noteObject->type = "rest";
-							$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
-							$partDivision = $part->getElementsByTagName('divisions')->item(0)->nodeValue;
-							$restDurationFloat = (float)((int)$curDuration / (int)$partDivision / (int)$curBeatType);
-							if ($restDurationFloat == 1){
-								$restDuration = "whole";
-							} elseif ($restDurationFloat == 0.75) {
-								$restDuration = "whole";
-							} elseif ($restDurationFloat == 0.5) {
-								$restDuration = "half";
-							} elseif ($restDurationFloat == 0.375) {
-								$restDuration = "half";
-							} elseif ($restDurationFloat == 0.25) {
-								$restDuration = "quarter";
-							} elseif ($restDurationFloat == 0.1875) {
-								$restDuration = "quarter";
-							} elseif ($restDurationFloat == 0.125) {
-								$restDuration = "eighth";
-							} elseif ($restDurationFloat == 0.09375) {
-								$restDuration = "eighth";
-							} elseif ($restDurationFloat == 0.0625) {
-								$restDuration = "16th";
-							} elseif ($restDurationFloat == 0.046875) {
-								$restDuration = "16th";
-							} elseif ($restDurationFloat == 0.03125) {
-								$restDuration = "32nd";
-							} elseif ($restDurationFloat == 0.0234375) {
-								$restDuration = "32nd";
-							} elseif ($restDurationFloat == 0.015625) {
-								$restDuration = "64th";
-							} elseif ($restDurationFloat == 0.01171875) {
-								$restDuration = "64th";
-							} else {
-								// catch strange values (FALLBACK)
-								$restDuration = "64th";	// set to lowest possible value
+							$rest = $note->getElementsByTagName('rest');
+							$unpitched = $note->getElementsByTagName('unpitched');
+							if ($rest->length) {
+								// it's a rest
+								$noteObject->type = "rest";
+								$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
+								$partDivision = $part->getElementsByTagName('divisions')->item(0)->nodeValue;
+								$restDurationFloat = (float)((int)$curDuration / (int)$partDivision / (int)$curBeatType);
+								$restDuration = $this->getDurationType($restDurationFloat);
+								$noteObject->duration = $restDuration;
+							} elseif ($unpitched->length) {
+								$noteObject->type = "unpitched";
+								$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
+								$partDivision = $part->getElementsByTagName('divisions')->item(0)->nodeValue;
+								$noteDurationFloat = (float)((int)$curDuration / (int)$partDivision / (int)$curBeatType);
+								$noteDuration = $this->getDurationType($noteDurationFloat);
+								$noteObject->pitch = new stdClass();
+								$noteObject->pitch->type = $noteDuration;
+								$noteObject->pitch->step = $unpitched->item(0)->getElementsByTagName('display-step')->item(0)->nodeValue;
+								$noteObject->pitch->octave = $unpitched->item(0)->getElementsByTagName('display-octave')->item(0)->nodeValue;
+								$noteObject->pitch->alter = 0;
 							}
-							$noteObject->duration = $restDuration;
 						} // END: if ($pitch->length)
 
 						// set color in note object
@@ -298,6 +282,50 @@ class ResultController extends BaseController {
 		unset($doc);
 		// Log::info("Garbage collected", array("cycles" => gc_collect_cycles()));
 		return $resultObject;
+	}
+
+
+	/**
+	 * Helper function to calculate the duration from float to type
+	 *
+	 * @param 	float 	  	The duration as float
+	 *
+	 * @return 	string 		The duration as string type
+	 *
+	 */
+	private function getDurationType($durationFloat) {
+		if ($durationFloat == 1){
+			return "whole";
+		} elseif ($durationFloat == 0.75) {
+			return "whole";
+		} elseif ($durationFloat == 0.5) {
+			return "half";
+		} elseif ($durationFloat == 0.375) {
+			return "half";
+		} elseif ($durationFloat == 0.25) {
+			return "quarter";
+		} elseif ($durationFloat == 0.1875) {
+			return "quarter";
+		} elseif ($durationFloat == 0.125) {
+			return "eighth";
+		} elseif ($durationFloat == 0.09375) {
+			return "eighth";
+		} elseif ($durationFloat == 0.0625) {
+			return "16th";
+		} elseif ($durationFloat == 0.046875) {
+			return "16th";
+		} elseif ($durationFloat == 0.03125) {
+			return "32nd";
+		} elseif ($durationFloat == 0.0234375) {
+			return "32nd";
+		} elseif ($durationFloat == 0.015625) {
+			return "64th";
+		} elseif ($durationFloat == 0.01171875) {
+			return "64th";
+		} else {
+			// catch strange values (FALLBACK)
+			return "64th";	// set to lowest possible value
+		}
 	}
 
 

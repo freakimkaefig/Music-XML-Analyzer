@@ -182,7 +182,7 @@ MusicXMLAnalyzer.PatternView = function(){
 			}else if($rhythmBreakButton.hasClass('active')){
 				patternController.changeNote('c');
 			}
-		}else{	
+		}else{
 			patternController.changeNote(event.target.id);
 			$accidentialButtonClass.removeClass('disabled');
 		}
