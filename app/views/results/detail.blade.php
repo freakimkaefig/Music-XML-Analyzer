@@ -13,7 +13,7 @@
 		</div>
 	</div>
 
-	<pre><?php var_dump($result); ?></pre>
+	<!-- <pre><?php var_dump($result); ?></pre> -->
 
 	<div class="row">
 		<div class="col-xs-12">

@@ -412,10 +412,10 @@ h1 > small {
 	padding: 4px 8px;
 }
 .pager-row .pager-pages a {
-	margin-left: 2px;
-	margin-right: 2px;
+	margin: 6px 2px;
 	text-decoration: none;
 	border: 1px solid #009587;
+	display: inline-block;
 }
 .pager-row .pager-pages a.active,
 .pager-row .pager-pages a:hover {

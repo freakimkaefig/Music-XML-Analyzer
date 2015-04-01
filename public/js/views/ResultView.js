@@ -70,7 +70,7 @@ MusicXMLAnalyzer.ResultView = function(){
 		canvas.id = "canvas" + index;
 		canvas.className = "canvas";
 		canvas.width = 970;
-		canvas.height = (data.measures.length / 2) * 230;
+		canvas.height = (data.measures.length / 2) * 250;
 		var canvasContainer = document.getElementById('canvasContainer' + index);
 		canvasContainer.innerHTML = "";
 		canvasContainer.appendChild(canvas);
@@ -194,7 +194,6 @@ MusicXMLAnalyzer.ResultView = function(){
 		var renderer = new Vex.Flow.Renderer(patternCanvas, Vex.Flow.Renderer.Backends.CANVAS);
 		var context = renderer.getContext();
 		var stave = new Vex.Flow.Stave(10, 0, 700);
-		stave.addClef("treble").setContext(context).draw();
 
 		renderNotes(vexflowNotes, patternCanvas, renderer, context, stave, true);
 	},
@@ -247,7 +246,11 @@ MusicXMLAnalyzer.ResultView = function(){
 			staveBar = new Vex.Flow.Stave(x, y, width);	// generate new stave for measure
 
 			if (i%2 == 0) {
-				staveBar.addClef("treble");	// add clef to every measure starting in a new line
+				if (pattern && measures[i].pattern.type == 1) {
+					staveBar.addClef("percussion");
+				} else {
+					staveBar.addClef("treble");	// add clef to every measure starting in a new line
+				}
 			}
 			if (measures[i].time_signature) {
 				staveBar.addTimeSignature(measures[i].time_signature);	// add time signature if changed
@@ -479,6 +482,23 @@ MusicXMLAnalyzer.ResultView = function(){
 
 							note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: noteDuration });
 							note.color = color;
+							ties[noteCounter] = [false];
+							notes.push(note);
+							noteCounter++;
+						} else if (pattern.measures[i].notes[j].type == "unpitched") {
+							var step = pattern.measures[i].notes[j].pitch.step;
+							var octave = pattern.measures[i].notes[j].pitch.octave;
+							var alter = pattern.measures[i].notes[j].pitch.alter;
+							var keys = [getVexflowKey(step, octave, alter )];
+
+							var type = pattern.measures[i].notes[j].pitch.type;
+							var durationType = 0;
+							if (pattern.measures[i].notes[j].pitch.dot) {
+								durationType = 2;
+							}
+							var noteDuration = getVexflowDuration(type, durationType);
+							note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true});
+							note.color = '#006064';
 							ties[noteCounter] = [false];
 							notes.push(note);
 							noteCounter++;

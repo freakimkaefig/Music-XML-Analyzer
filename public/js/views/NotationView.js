@@ -40,13 +40,28 @@ MusicXMLAnalyzer.NotationView = function(){
 
   		context = renderer.getContext();
   		stave = new Vex.Flow.Stave(10, 45, 700);
-  		stave.addClef("treble").setContext(context).draw();
-
+  		addClef(patternModel.getCurrentMode());
 	},
+
+	onChangeMode = function(event, mode) {
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		stave = new Vex.Flow.Stave(10, 45, 700);
+  		addClef(patternModel.getCurrentMode());
+	},
+
+	addClef = function(mode) {
+		if (mode == 1) {
+  			stave.addClef("percussion").setContext(context).draw();
+  		} else {
+  			stave.addClef("treble").setContext(context).draw();
+  		}
+	}
 
 	registerListener = function() {
 		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
 		$("#myCanvas").on("click", onMouseClickCanvas);
+
+		$(patternController).on('changed_mode', onChangeMode);
 	},
 
 
