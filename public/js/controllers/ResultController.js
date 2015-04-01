@@ -129,7 +129,7 @@ MusicXMLAnalyzer.ResultController = function(){
 					var noteOctave = note.pitch.octave;
 					var noteAlter = note.pitch.alter;
 					var noteDuration = getDuration(note.pitch.type);
-					var noteBeam = note.pitch.beam;
+					var noteTuplet = note.pitch.tuplet;
 					if(typeof noteDuration === 'undefined'){
 						console.log("noteduration is undefined");
 						noteDuration = 0.25;
@@ -137,16 +137,16 @@ MusicXMLAnalyzer.ResultController = function(){
 					if(note.pitch.dot){
 						noteDuration += 0.5*noteDuration;
 					}
-					if(typeof noteBeam === 'undefined'){
+					if(typeof noteTuplet === 'undefined'){
 						console.log("beam is undefined");
-						noteBeam = false;
+						noteTuplet = false;
 					}
 					var chord = note.pitch.chord;
 
 					var midiNote = getMidiValue(noteStep, noteOctave, noteAlter);
 					console.log(noteStep, noteOctave, noteAlter, noteDuration, "midiNote: ", midiNote);
 
-					notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration, 'chord': chord, 'noteBeam' : noteBeam});
+					notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration, 'chord': chord, 'noteTuplet' : noteTuplet});
 				}
 			}
 		}
@@ -171,7 +171,8 @@ MusicXMLAnalyzer.ResultController = function(){
 					// timeout needs adjustment
 					// currently trial&error values
 					timeout = notesToBePlayed[i-1].noteDuration*2000;
-					if(notesToBePlayed[i-1].noteBeam != false) {
+					if(notesToBePlayed[i-1].noteTuplet == 3) {
+						
 						timeout = (timeout * 2) / 3;
 					}
 				}
