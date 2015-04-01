@@ -1,4 +1,4 @@
-<a href="{{ URL::route('resultDetail', array('id' => $result->file_id)) }}">
+<a href="{{ URL::route('resultDetail', array('id' => $result->file_id, 'page' => 0)) }}" class="list-item">
 	<div class="row tr">
 		<div class="col-xs-9 col-sm-10 text-left td">
 			<h4>{{ ResultController::_getArtist($result->file_id) }} - {{ ResultController::_getTitle($result->file_id) }}</h4>

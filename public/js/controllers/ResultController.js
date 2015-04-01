@@ -23,7 +23,7 @@ MusicXMLAnalyzer.ResultController = function(){
 
 		//init MIDI
 		MIDI.loadPlugin({
-			soundfontUrl: "../../libs/midijs/soundfont/",
+			soundfontUrl: "../../../libs/midijs/soundfont/",
 			instrument: "acoustic_grand_piano",
 			callback: function() {
 			}
