@@ -8,7 +8,7 @@ class MelodyController {
 	static $xmlArray;
 	static $xmlPositionArray;
 	static $once;
-	static $restDuration;
+	// static $restDuration;
 	static $noteCounter;
 
 	function __construct() {
@@ -91,7 +91,7 @@ class MelodyController {
 							$lastVoice = $part->measure[$i]->note[$j]->voice;
 						}
 
-						// if((int)$n->voice == (int)$lastVoice){
+						if((int)$n->voice == (int)$lastVoice){
 							$pitch = new stdClass();
 							$pitch->step = $n->pitch->step;
 							$pitch->alter = $n->pitch->alter;
@@ -130,13 +130,16 @@ class MelodyController {
 								try{
 									$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / (int)$partBeatType);
 								} catch (Exception $e) {
-								    // Debugbar::info($n->duration);
-								    // Debugbar::info($partDivision);
-								    // Debugbar::info($partBeatType);
+echo"<br><hr>n->duration: <br>";
+var_dump($n->duration);
+echo"<br>partDivision: <br>";
+var_dump($partDivision);
+echo"<br>partBeatType: <br>";
+var_dump($partBeatType);
 								    echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
 								}
 
-	// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
+								// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
 								// determine 'type'
 								if ($restDurationFloat == 1){
 									$restDuration = "whole";
@@ -169,14 +172,11 @@ class MelodyController {
 								} else {
 									// catch strange values (FALLBACK)
 									$restDuration = "64th";	// set to lowest possible value
-									// 
-									// ERROR mit "0,75" -> punktierte halbe?
-									// 
-									// Debugbar::info($restDurationFloat);
-									// echo 'Rest duration unclear: ',  $restDurationFloat, "<br>";
-									// echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
+// Debugbar::info($restDurationFloat);
+// echo 'Rest duration unclear: ',  $restDurationFloat, "<br>";
+// echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
 								}
-								array_push(self::$xmlArray, self::$restDuration);
+								array_push(self::$xmlArray, $restDuration);
 								array_push(self::$xmlPositionArray, $note->position);
 
 							}
@@ -184,13 +184,15 @@ class MelodyController {
 							//check if Array-length equals Pattern-length already
 							if(count(self::$xmlArray) == count(self::$patternArray)){
 
-		// echo"<br><br><hr>array_values: <br>xmlArray:<br>";
-		// var_dump(array_values(self::$xmlArray));
-		// echo"<br><br>patternArray:<br>";
-		// var_dump(array_values(self::$patternArray));
-		// echo"<br><br>xmlPositionArray:";
-		// var_dump(self::$xmlPositionArray);
-		// echo"<br><br>";
+echo"<br><br><hr>restDuration: <br>";
+var_dump($restDuration);
+echo"<br><br><hr>array_values: <br>xmlArray:<br>";
+var_dump(array_values(self::$xmlArray));
+echo"<br><br>patternArray:<br>";
+var_dump(array_values(self::$patternArray));
+echo"<br><br>xmlPositionArray:";
+var_dump(self::$xmlPositionArray);
+echo"<br><br>";
 
 								// compare arrays
 								if(array_values(self::$xmlArray) == array_values(self::$patternArray)){
@@ -226,14 +228,14 @@ class MelodyController {
 								} //if array lengths aren't equal yet, continue	
 
 						}
-						// else{ //different voice incoming next; unset array; begin from scratch
-						// 		$lastVoice = $part->measure[$i]->note[$j]->voice;
-						// 		$j--;
-						// 		self::$xmlArray = array(); 
-						// 		self::$xmlPositionArray = array();
-						// 	}
+						else{ //different voice incoming next; unset array; begin from scratch
+								$lastVoice = $part->measure[$i]->note[$j]->voice;
+								$j--;
+								self::$xmlArray = array(); 
+								self::$xmlPositionArray = array();
+							}
 					}
-				
+				}
 			}//end of foreach(parts as part)
 
 			// check if result->occ is empty
@@ -245,7 +247,7 @@ class MelodyController {
 		});
 
 
-return self::$results;
+// return self::$results;
 
 // echo "<br>";
 // var_dump(self::$results);
@@ -255,7 +257,7 @@ return self::$results;
 // 		}
 // echo "<hr>";
 
-// bla();
+bla();
 
 	}
 }
