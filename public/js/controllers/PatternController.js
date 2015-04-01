@@ -312,6 +312,10 @@ MusicXMLAnalyzer.PatternController = function() {
 		patternView.endTripletEnterMode();
 	},
 
+	getCurrentMode = function(){
+		return patternModel.getCurrentMode();
+	},
+
 	onPatternChange = function(event, pattern) {
 		console.log("Trigger pattern: ",pattern);
 		patternView.setPatternValue(JSON.stringify(pattern));
@@ -365,6 +369,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	that.addNoteByCanvasClick = addNoteByCanvasClick;
 	that.removeLastNote = removeLastNote;
 	that.dispose = dispose;
+	that.getCurrentMode = getCurrentMode;
 
 	return that;
 }
