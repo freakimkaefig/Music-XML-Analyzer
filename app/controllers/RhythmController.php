@@ -198,8 +198,8 @@ public function search($pattern) {
 // echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
 							}
 							
-							// array_push(self::$xmlArray, $restDuration);
-							// array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
+							array_push(self::$xmlArray, $restDuration);
+							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
 
 						} //end else if rest
 
