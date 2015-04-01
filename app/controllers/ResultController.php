@@ -29,7 +29,7 @@ class ResultController extends BaseController {
 	 * @return 	\Illuminate\View\View, \Illuminate\Support\Facades\Redirect 	A laravel view, when successful, or a redirect if fails
 	 *
 	 */
-	public function getResultDetail($id) {
+	public function getResultDetail($id, $page) {
 		if (Cache::has('results') && Cache::has('pattern')) {
 			$results = Cache::get('results');
 			foreach ($results as $item) {
@@ -38,11 +38,22 @@ class ResultController extends BaseController {
 				}
 			}
 
+			// foreach ($result->occurences as $index => $occ) {
+			// 	Log::info("results" . $index, array('occ' => $occ));
+			// }
+
 			$pattern = Cache::get('pattern')[0];
 
-			// Log::info("Results Detail for", array('result' => $result));
+			$itemsPerPage = 10;
+			$numResults = count($result->occurences);
+			$numPages = intval(ceil(count($result->occurences) / $itemsPerPage));
+			$startItem = $page * $itemsPerPage;
+			$endItem = $startItem + $itemsPerPage - 1;
+			$result->occurences = array_slice($result->occurences, $startItem, $itemsPerPage);
 
-			return View::make('results.detail', array('result' => $result));
+			// Log::info("Passing results", array('startItem' => $startItem, 'endItem' => $endItem, 'result' => $result));
+
+			return View::make('results.detail', array('result' => $result, 'itemsPerPage' => $itemsPerPage, 'numPages' => $numPages, 'page' => $page, 'numResults' => $numResults, 'startItem' => $startItem, 'endItem' => $endItem));
 		} else {
 			return Redirect::route('pattern');
 		}
@@ -61,6 +72,8 @@ class ResultController extends BaseController {
 		$voice = Input::get('voice');
 		$start = Input::get('start') - 1;
 		$end = Input::get('end') - 1;
+
+		// Log::info("postResultExtract", array('file_id' => $file_id, 'file_url' => $file_url, 'part_id' => $part_id, 'voice' => $voice, 'start' => $start, 'end' => $end));
 
 		$resultExtract = $this->generateResultExtract($file_id, $part_id, $voice, $start, $end);
 
@@ -283,7 +296,7 @@ class ResultController extends BaseController {
 
 		// Log::info("Generating result extract", get_object_vars($resultObject));
 		unset($doc);
-		Log::info("Garbage collected", array("cycles" => gc_collect_cycles()));
+		// Log::info("Garbage collected", array("cycles" => gc_collect_cycles()));
 		return $resultObject;
 	}
 
@@ -309,7 +322,11 @@ class ResultController extends BaseController {
 					$startExtract -= 1;
 				}
 				return $startExtract;
+			} else {
+				Log::error("ResultController.php:326 | Empty note!", array('notes' => $notes->length, 'start' => $start));
 			}
+		} else {
+			Log::error("ResultController.php:329 | Empty notes", array('part' => $part));
 		}
 	}
 
@@ -335,13 +352,17 @@ class ResultController extends BaseController {
 					$endExtract += 1;
 				}
 				return $endExtract;
+			} else {
+			Log::error("ResultController.php:356 | Empty note!", array('notes' => $notes->length, 'end' => $end));
 			}
+		} else {
+			Log::error("ResultController.php:359 | Empty notes", array('part' => $part));
 		}
 	}
 
 
 	/**
-	 * Static helper function to retrieve the artist for a given upload id
+	 * Static helper function |  to retrieve the artist for a given upload id
 	 *
 	 * @param 	int 	the uploads id
 	 *

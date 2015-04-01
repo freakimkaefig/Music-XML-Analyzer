@@ -14,6 +14,9 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	finishedLoading = false,
 
+	$logMessages = null,
+	resultMessageCounter = null,
+
 
 	init = function(){
 		console.info('MusicXMLAnalyzer.ResultView.init');
@@ -34,6 +37,10 @@ MusicXMLAnalyzer.ResultView = function(){
 		$exportButton.on('click', generateExportPdf);
 		$exportButton.addClass('disabled');
 
+		$('.list-item').on('click', onListItemClick);
+
+		$logMessages = $('#resultMessages');
+		resultMessageCounter = 0;
 	},
 
 	setModelReady = function() {
@@ -45,13 +52,14 @@ MusicXMLAnalyzer.ResultView = function(){
 	initResultItems = function() {
 		var numItems = $carousel.find('.item').length;
 		$carousel.find('.item').each(function(index) {
+			// console.log(index);
 			var result = JSON.parse($(this).find('.resultItem').val());
 			$(that).trigger('addResultItem', [numItems, result]);
 		});
 	}
 
 	renderResultExtract = function(index, data) {
-		// console.log('MusicXMLAnalyzer.ResultView.renderResultExtract', index, data);
+		// console.log('MusicXMLAnalyzer.ResultView.renderResultExtract', index);
 		var measuresText = '<strong>Measures: </strong>' + data.start_extract + ' - ' + data.end_extract;
 		$carousel.find('#item' + index).find('.facts-list').find('.measures').html(measuresText);
 
@@ -615,6 +623,63 @@ MusicXMLAnalyzer.ResultView = function(){
 		key += "/";
 		key += octave;
 		return key;
+	},
+
+	onListItemClick = function(event) {
+		initLogMessages();
+		addLogMessage("We're preparing your results.");
+		window.setTimeout(function() {
+			addLogMessage("We're working.");
+			window.setTimeout(function() {
+				addLogMessage("Please be patient.");
+				window.setTimeout(function() {
+					addLogMessage("Don't worry we didn't forget you.");
+					window.setTimeout(function() {
+						addLogMessage("Okay. We're ready soon. We promise.");
+						window.setTimeout(function() {
+							addLogMessage("Maybe a little coffee?");
+						}, 3000);
+					}, 3000);
+				}, 3000);
+			}, 3000);
+		}, 3000);
+
+	},
+
+	initLogMessages = function() {
+		resultMessageCounter = 0;
+		$logMessages.show();
+		$logMessages.animate({
+			height: 100
+		}, 500);
+	},
+
+	disposeLogMessages = function() {
+		window.setTimeout(function() {
+			$logMessages.animate({
+				height: 0
+			},
+			700,
+			function() {
+				$logMessages.hide();
+				$logMessages.empty();
+			});
+		}, 100);
+	},
+
+	addLogMessage = function(msg) {
+		$('#log' + (resultMessageCounter - 3)).animate({
+			"marginTop": "-30px"
+		}, 200);
+		$logMessages.append('<div id="log' + resultMessageCounter + '"></div>');
+		$('#log' + resultMessageCounter).typed({
+			strings: ['<p>' + msg + '</p>'],
+			backDelay: 100000000000000,
+			typeSpeed: 0,
+			backSpeed: 0,
+			loop: true,
+		});
+		resultMessageCounter++;
 	};
 
 	that.init = init;
