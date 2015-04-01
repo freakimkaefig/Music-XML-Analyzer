@@ -485,6 +485,23 @@ MusicXMLAnalyzer.ResultView = function(){
 							ties[noteCounter] = [false];
 							notes.push(note);
 							noteCounter++;
+						} else if (pattern.measures[i].notes[j].type == "unpitched") {
+							var step = pattern.measures[i].notes[j].pitch.step;
+							var octave = pattern.measures[i].notes[j].pitch.octave;
+							var alter = pattern.measures[i].notes[j].pitch.alter;
+							var keys = [getVexflowKey(step, octave, alter )];
+
+							var type = pattern.measures[i].notes[j].pitch.type;
+							var durationType = 0;
+							if (pattern.measures[i].notes[j].pitch.dot) {
+								durationType = 2;
+							}
+							var noteDuration = getVexflowDuration(type, durationType);
+							note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true});
+							note.color = '#006064';
+							ties[noteCounter] = [false];
+							notes.push(note);
+							noteCounter++;
 						}
 					}
 					measures.push({ notes: notes, ties: ties, tuplets: tuplets, time_signature: time_signature, pattern: pattern });
