@@ -1,5 +1,7 @@
 
 #Music XML Analyzer
+
+[![Code Climate](https://codeclimate.com/repos/5519aa9d69568002f2000d6c/badges/4b713fa4c132cc6c5fa7/gpa.svg)](https://codeclimate.com/repos/5519aa9d69568002f2000d6c/feed) [![Test Coverage](https://codeclimate.com/repos/5519aa9d69568002f2000d6c/badges/4b713fa4c132cc6c5fa7/coverage.svg)](https://codeclimate.com/repos/5519aa9d69568002f2000d6c/feed)
   
 http://freakimkaefig.github.io/Music-XML-Analyzer/  
   
