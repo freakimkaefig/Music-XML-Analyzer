@@ -112,6 +112,8 @@ MusicXMLAnalyzer.ResultController = function(){
 		var currentResultNotes = JSON.parse($('#extract-carousel').find('div.carousel-inner').find('div.item.active').find('.resultExtract').val());
 		console.log("currentResultNotes: ",currentResultNotes);
 
+		MIDI.setVolume(0, 127);
+
 		//determine MIDI values for currentResultNotes
 		for(var i = 0; i < currentResultNotes.measures.length; i++){
 			for(var j = 0; j < currentResultNotes.measures[i].notes.length; j++){
@@ -183,7 +185,7 @@ MusicXMLAnalyzer.ResultController = function(){
 						i = notesToBePlayed.length;
 					}else{
 						// console.log("STOP: ",stop);
-						MIDI.setVolume(0, 127);
+						// MIDI.setVolume(0, 127);
 						// delay --> https://stackoverflow.com/questions/21296450/midi-js-note-duration-does-not-change
 
 						if(i + 1 < notesToBePlayed.length) {
