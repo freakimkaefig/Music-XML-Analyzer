@@ -31,6 +31,9 @@
 				@include('results.item', array('result' => $result))
 			@endforeach
 	</div>
+	<div class="row">
+		<div id="resultMessages" class="logBox"></div>
+	</div>
 	@else
 		<p class="no-results text-center">No results found for your pattern!</p>
 	@endif

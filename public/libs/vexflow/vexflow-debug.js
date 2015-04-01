@@ -6822,7 +6822,7 @@ Vex.Flow.Accidental = (function(){
          // Iterate through all notes to get the displaced pixels
          for (var n = 0; n < note.keys.length; ++n) {
             props_tmp = note.getKeyProps()[n];
-            shiftL = (props_tmp.displaced ? note.getExtraLeftPx() : shiftL);
+            shiftL = (props_tmp.displaced ? note.getExtraLeftPx() : shiftL);  // Throws TypeError: Cannot read property 'displaced' of undefined ??? (keys[3], keyProps[1])
           }
           prev_note = note;
       }

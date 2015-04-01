@@ -26,8 +26,6 @@ MusicXMLAnalyzer.ResultView = function(){
 		if ($('#extract-carousel').length) {
 			$carousel = $('#extract-carousel');
 			initResultItems();
-
-			// initCanvasResults();
 		}
 
 		$artist = $('#artist');
@@ -36,7 +34,6 @@ MusicXMLAnalyzer.ResultView = function(){
 		$exportButton.on('click', generateExportPdf);
 		$exportButton.addClass('disabled');
 
-		// prepareExport();
 	},
 
 	setModelReady = function() {
@@ -46,9 +43,10 @@ MusicXMLAnalyzer.ResultView = function(){
 	},
 
 	initResultItems = function() {
+		var numItems = $carousel.find('.item').length;
 		$carousel.find('.item').each(function(index) {
 			var result = JSON.parse($(this).find('.resultItem').val());
-			$(that).trigger('addResultItem', [result]);
+			$(that).trigger('addResultItem', [numItems, result]);
 		});
 	}
 
@@ -77,22 +75,6 @@ MusicXMLAnalyzer.ResultView = function(){
 		stave.addClef("treble").setContext(context).draw();
 		renderNotes(measures, canvas, renderer, context, stave, false);
 
-	},
-
-	initCanvasResults = function() {
-		console.info('MusicXMLAnalyzer.ResultView.initCanvasResults');
-		$carousel.find('.item').each(function(index, element) {
-			var measures = generateVexflowNotes(JSON.parse($(element).find('input.notes').val()), true);
-			var canvas = document.getElementById('canvas' + index);
-			var renderer = new Vex.Flow.Renderer(canvas, Vex.Flow.Renderer.Backends.CANVAS);
-			var context = renderer.getContext();
-
-			var stave = new Vex.Flow.Stave(10, 0, 700);
-			stave.addClef("treble").setContext(context).draw();
-
-			// console.log(index, notes);
-			renderNotes(measures, canvas, renderer, context, stave, false);
-		});
 	},
 
 	prepareExport = function() {
@@ -428,6 +410,7 @@ MusicXMLAnalyzer.ResultView = function(){
 				// melody
 				for (var i = 0; i < pattern.measures.length; i++) {
 					var notes = [];
+					noteCounter = 0;
 					// var beams = [];
 					var ties = [];
 					var tuplets = [];
@@ -477,10 +460,10 @@ MusicXMLAnalyzer.ResultView = function(){
 									note.addDotToAll();
 								}
 
-								ties[j] = noteTies;
-								tuplets[j] = tuplet;
-								// console.log("note", note, noteTies, tuplet)
+								ties[noteCounter] = noteTies;
+								tuplets[noteCounter] = tuplet;
 								notes.push(note);
+								noteCounter++;
 							}
 						} else if (pattern.measures[i].notes[j].type == "rest") {
 							var durationType = 1; // rests type is 1
@@ -488,8 +471,9 @@ MusicXMLAnalyzer.ResultView = function(){
 
 							note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: noteDuration });
 							note.color = color;
-							ties[j] = [false];
+							ties[noteCounter] = [false];
 							notes.push(note);
+							noteCounter++;
 						}
 					}
 					measures.push({ notes: notes, ties: ties, tuplets: tuplets, time_signature: time_signature, pattern: pattern });
@@ -520,9 +504,9 @@ MusicXMLAnalyzer.ResultView = function(){
 			}
 
 			// console.log(note.color);
-			if (pattern.measures[i].notes[j].color == "#FF0000" || note.color == "#FF0000") {
+			if (pattern.measures[i].notes[j].color == "#b71c1c" || note.color == "#b71c1c") {
 				// console.log("red", i, j);
-				newNote.color = "#FF0000";
+				newNote.color = "#b71c1c";
 			} else {
 				newNote.color = note.color;
 			}

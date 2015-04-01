@@ -57,7 +57,8 @@ MusicXMLAnalyzer.ResultController = function(){
 
 	},
 
-	onAddResultItem = function(event, result) {
+	onAddResultItem = function(event, numItems, result) {
+		model.setNumItems(numItems);
 		model.addResultItem(result);
 	},
 
