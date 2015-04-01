@@ -156,7 +156,7 @@ public function search($pattern) {
 // var_dump($partDivision);
 // echo"<br>partBeatType: <br>";
 // var_dump($partBeatType);
-							    Log::info('Exception abgefangen: ',  $e->getMessage(), "\n");
+							    Log::info('Exception abgefangen: ', array('error' => $e->getMessage());
 							}
 
 							// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
@@ -264,6 +264,7 @@ public function search($pattern) {
 // var_dump(self::$xmlPositionArray);
 							$lastVoice = $part->measure[$i]->note[$j]->voice;
 							$j--;
+							self::$noteCounter--;
 							self::$xmlArray = array(); 
 							self::$xmlPositionArray = array();
 						}

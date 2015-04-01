@@ -14,6 +14,9 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	finishedLoading = false,
 
+	$logMessages = null,
+	resultMessageCounter = null,
+
 
 	init = function(){
 		console.info('MusicXMLAnalyzer.ResultView.init');
@@ -34,6 +37,10 @@ MusicXMLAnalyzer.ResultView = function(){
 		$exportButton.on('click', generateExportPdf);
 		$exportButton.addClass('disabled');
 
+		$('.list-item').on('click', onListItemClick);
+
+		$logMessages = $('#resultMessages');
+		resultMessageCounter = 0;
 	},
 
 	setModelReady = function() {
@@ -45,13 +52,14 @@ MusicXMLAnalyzer.ResultView = function(){
 	initResultItems = function() {
 		var numItems = $carousel.find('.item').length;
 		$carousel.find('.item').each(function(index) {
+			// console.log(index);
 			var result = JSON.parse($(this).find('.resultItem').val());
 			$(that).trigger('addResultItem', [numItems, result]);
 		});
 	}
 
 	renderResultExtract = function(index, data) {
-		// console.log('MusicXMLAnalyzer.ResultView.renderResultExtract', index, data);
+		// console.log('MusicXMLAnalyzer.ResultView.renderResultExtract', index);
 		var measuresText = '<strong>Measures: </strong>' + data.start_extract + ' - ' + data.end_extract;
 		$carousel.find('#item' + index).find('.facts-list').find('.measures').html(measuresText);
 
@@ -62,7 +70,7 @@ MusicXMLAnalyzer.ResultView = function(){
 		canvas.id = "canvas" + index;
 		canvas.className = "canvas";
 		canvas.width = 970;
-		canvas.height = (data.measures.length / 2) * 230;
+		canvas.height = (data.measures.length / 2) * 250;
 		var canvasContainer = document.getElementById('canvasContainer' + index);
 		canvasContainer.innerHTML = "";
 		canvasContainer.appendChild(canvas);
@@ -186,7 +194,6 @@ MusicXMLAnalyzer.ResultView = function(){
 		var renderer = new Vex.Flow.Renderer(patternCanvas, Vex.Flow.Renderer.Backends.CANVAS);
 		var context = renderer.getContext();
 		var stave = new Vex.Flow.Stave(10, 0, 700);
-		stave.addClef("treble").setContext(context).draw();
 
 		renderNotes(vexflowNotes, patternCanvas, renderer, context, stave, true);
 	},
@@ -239,7 +246,11 @@ MusicXMLAnalyzer.ResultView = function(){
 			staveBar = new Vex.Flow.Stave(x, y, width);	// generate new stave for measure
 
 			if (i%2 == 0) {
-				staveBar.addClef("treble");	// add clef to every measure starting in a new line
+				if (pattern && measures[i].pattern.type == 1) {
+					staveBar.addClef("percussion");
+				} else {
+					staveBar.addClef("treble");	// add clef to every measure starting in a new line
+				}
 			}
 			if (measures[i].time_signature) {
 				staveBar.addTimeSignature(measures[i].time_signature);	// add time signature if changed
@@ -319,9 +330,9 @@ MusicXMLAnalyzer.ResultView = function(){
 		if (!result) {
 			for (var i = 0; i < pattern.measures.length; i++) {
 				for (var j = 0; j < pattern.measures[i].notes.length; j++) {
-					if (pattern.measures[i].notes[j].pitch.beam) {
+					if (pattern.measures[i].notes[j].pitch && pattern.measures[i].notes[j].pitch.beam) {
 						pattern.measures[i].notes[j].pitch.tuplet = "3";
-					} else {
+					} else if(pattern.measures[i].notes[j].pitch) {
 						pattern.measures[i].notes[j].pitch.tuplet = false;
 					}
 				}
@@ -474,6 +485,23 @@ MusicXMLAnalyzer.ResultView = function(){
 							ties[noteCounter] = [false];
 							notes.push(note);
 							noteCounter++;
+						} else if (pattern.measures[i].notes[j].type == "unpitched") {
+							var step = pattern.measures[i].notes[j].pitch.step;
+							var octave = pattern.measures[i].notes[j].pitch.octave;
+							var alter = pattern.measures[i].notes[j].pitch.alter;
+							var keys = [getVexflowKey(step, octave, alter )];
+
+							var type = pattern.measures[i].notes[j].pitch.type;
+							var durationType = 0;
+							if (pattern.measures[i].notes[j].pitch.dot) {
+								durationType = 2;
+							}
+							var noteDuration = getVexflowDuration(type, durationType);
+							note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true});
+							note.color = '#006064';
+							ties[noteCounter] = [false];
+							notes.push(note);
+							noteCounter++;
 						}
 					}
 					measures.push({ notes: notes, ties: ties, tuplets: tuplets, time_signature: time_signature, pattern: pattern });
@@ -615,6 +643,63 @@ MusicXMLAnalyzer.ResultView = function(){
 		key += "/";
 		key += octave;
 		return key;
+	},
+
+	onListItemClick = function(event) {
+		initLogMessages();
+		addLogMessage("We're preparing your results.");
+		window.setTimeout(function() {
+			addLogMessage("We're working.");
+			window.setTimeout(function() {
+				addLogMessage("Please be patient.");
+				window.setTimeout(function() {
+					addLogMessage("Don't worry we didn't forget you.");
+					window.setTimeout(function() {
+						addLogMessage("Okay. We're ready soon. We promise.");
+						window.setTimeout(function() {
+							addLogMessage("Maybe a little coffee?");
+						}, 3000);
+					}, 3000);
+				}, 3000);
+			}, 3000);
+		}, 3000);
+
+	},
+
+	initLogMessages = function() {
+		resultMessageCounter = 0;
+		$logMessages.show();
+		$logMessages.animate({
+			height: 100
+		}, 500);
+	},
+
+	disposeLogMessages = function() {
+		window.setTimeout(function() {
+			$logMessages.animate({
+				height: 0
+			},
+			700,
+			function() {
+				$logMessages.hide();
+				$logMessages.empty();
+			});
+		}, 100);
+	},
+
+	addLogMessage = function(msg) {
+		$('#log' + (resultMessageCounter - 3)).animate({
+			"marginTop": "-30px"
+		}, 200);
+		$logMessages.append('<div id="log' + resultMessageCounter + '"></div>');
+		$('#log' + resultMessageCounter).typed({
+			strings: ['<p>' + msg + '</p>'],
+			backDelay: 100000000000000,
+			typeSpeed: 0,
+			backSpeed: 0,
+			loop: true,
+		});
+		resultMessageCounter++;
 	};
 
 	that.init = init;

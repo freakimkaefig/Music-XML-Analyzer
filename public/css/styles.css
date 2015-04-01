@@ -396,3 +396,29 @@ div#pie_meterDistribution {
 .loading-spinner {
 	margin: 100px 0;
 }
+h1 > small {
+	text-transform: none;
+	letter-spacing: 0px;
+	font-size: 16px;
+}
+.pager-row {
+	margin-top: 55px;
+	padding-top: 25px;
+	border-top: 2px solid #333;
+	font-size: 16px;
+	font-weight: bold;
+}
+.pager-row a {
+	padding: 4px 8px;
+}
+.pager-row .pager-pages a {
+	margin: 6px 2px;
+	text-decoration: none;
+	border: 1px solid #009587;
+	display: inline-block;
+}
+.pager-row .pager-pages a.active,
+.pager-row .pager-pages a:hover {
+	background: #009587;
+	color: #eee;
+}

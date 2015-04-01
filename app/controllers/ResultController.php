@@ -29,7 +29,7 @@ class ResultController extends BaseController {
 	 * @return 	\Illuminate\View\View, \Illuminate\Support\Facades\Redirect 	A laravel view, when successful, or a redirect if fails
 	 *
 	 */
-	public function getResultDetail($id) {
+	public function getResultDetail($id, $page) {
 		if (Cache::has('results') && Cache::has('pattern')) {
 			$results = Cache::get('results');
 			foreach ($results as $item) {
@@ -38,11 +38,22 @@ class ResultController extends BaseController {
 				}
 			}
 
+			// foreach ($result->occurences as $index => $occ) {
+			// 	Log::info("results" . $index, array('occ' => $occ));
+			// }
+
 			$pattern = Cache::get('pattern')[0];
 
-			// Log::info("Results Detail for", array('result' => $result));
+			$itemsPerPage = 10;
+			$numResults = count($result->occurences);
+			$numPages = intval(ceil(count($result->occurences) / $itemsPerPage));
+			$startItem = $page * $itemsPerPage;
+			$endItem = $startItem + $itemsPerPage - 1;
+			$result->occurences = array_slice($result->occurences, $startItem, $itemsPerPage);
 
-			return View::make('results.detail', array('result' => $result));
+			// Log::info("Passing results", array('startItem' => $startItem, 'endItem' => $endItem, 'result' => $result));
+
+			return View::make('results.detail', array('result' => $result, 'itemsPerPage' => $itemsPerPage, 'numPages' => $numPages, 'page' => $page, 'numResults' => $numResults, 'startItem' => $startItem, 'endItem' => $endItem));
 		} else {
 			return Redirect::route('pattern');
 		}
@@ -61,6 +72,8 @@ class ResultController extends BaseController {
 		$voice = Input::get('voice');
 		$start = Input::get('start') - 1;
 		$end = Input::get('end') - 1;
+
+		// Log::info("postResultExtract", array('file_id' => $file_id, 'file_url' => $file_url, 'part_id' => $part_id, 'voice' => $voice, 'start' => $start, 'end' => $end));
 
 		$resultExtract = $this->generateResultExtract($file_id, $part_id, $voice, $start, $end);
 
@@ -229,44 +242,28 @@ class ResultController extends BaseController {
 							}
 
 						} else {
-							// it's a rest
-							$noteObject->type = "rest";
-							$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
-							$partDivision = $part->getElementsByTagName('divisions')->item(0)->nodeValue;
-							$restDurationFloat = (float)((int)$curDuration / (int)$partDivision / (int)$curBeatType);
-							if ($restDurationFloat == 1){
-								$restDuration = "whole";
-							} elseif ($restDurationFloat == 0.75) {
-								$restDuration = "whole";
-							} elseif ($restDurationFloat == 0.5) {
-								$restDuration = "half";
-							} elseif ($restDurationFloat == 0.375) {
-								$restDuration = "half";
-							} elseif ($restDurationFloat == 0.25) {
-								$restDuration = "quarter";
-							} elseif ($restDurationFloat == 0.1875) {
-								$restDuration = "quarter";
-							} elseif ($restDurationFloat == 0.125) {
-								$restDuration = "eighth";
-							} elseif ($restDurationFloat == 0.09375) {
-								$restDuration = "eighth";
-							} elseif ($restDurationFloat == 0.0625) {
-								$restDuration = "16th";
-							} elseif ($restDurationFloat == 0.046875) {
-								$restDuration = "16th";
-							} elseif ($restDurationFloat == 0.03125) {
-								$restDuration = "32nd";
-							} elseif ($restDurationFloat == 0.0234375) {
-								$restDuration = "32nd";
-							} elseif ($restDurationFloat == 0.015625) {
-								$restDuration = "64th";
-							} elseif ($restDurationFloat == 0.01171875) {
-								$restDuration = "64th";
-							} else {
-								// catch strange values (FALLBACK)
-								$restDuration = "64th";	// set to lowest possible value
+							$rest = $note->getElementsByTagName('rest');
+							$unpitched = $note->getElementsByTagName('unpitched');
+							if ($rest->length) {
+								// it's a rest
+								$noteObject->type = "rest";
+								$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
+								$partDivision = $part->getElementsByTagName('divisions')->item(0)->nodeValue;
+								$restDurationFloat = (float)((int)$curDuration / (int)$partDivision / (int)$curBeatType);
+								$restDuration = $this->getDurationType($restDurationFloat);
+								$noteObject->duration = $restDuration;
+							} elseif ($unpitched->length) {
+								$noteObject->type = "unpitched";
+								$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
+								$partDivision = $part->getElementsByTagName('divisions')->item(0)->nodeValue;
+								$noteDurationFloat = (float)((int)$curDuration / (int)$partDivision / (int)$curBeatType);
+								$noteDuration = $this->getDurationType($noteDurationFloat);
+								$noteObject->pitch = new stdClass();
+								$noteObject->pitch->type = $noteDuration;
+								$noteObject->pitch->step = $unpitched->item(0)->getElementsByTagName('display-step')->item(0)->nodeValue;
+								$noteObject->pitch->octave = $unpitched->item(0)->getElementsByTagName('display-octave')->item(0)->nodeValue;
+								$noteObject->pitch->alter = 0;
 							}
-							$noteObject->duration = $restDuration;
 						} // END: if ($pitch->length)
 
 						// set color in note object
@@ -283,8 +280,52 @@ class ResultController extends BaseController {
 
 		// Log::info("Generating result extract", get_object_vars($resultObject));
 		unset($doc);
-		Log::info("Garbage collected", array("cycles" => gc_collect_cycles()));
+		// Log::info("Garbage collected", array("cycles" => gc_collect_cycles()));
 		return $resultObject;
+	}
+
+
+	/**
+	 * Helper function to calculate the duration from float to type
+	 *
+	 * @param 	float 	  	The duration as float
+	 *
+	 * @return 	string 		The duration as string type
+	 *
+	 */
+	private function getDurationType($durationFloat) {
+		if ($durationFloat == 1){
+			return "whole";
+		} elseif ($durationFloat == 0.75) {
+			return "whole";
+		} elseif ($durationFloat == 0.5) {
+			return "half";
+		} elseif ($durationFloat == 0.375) {
+			return "half";
+		} elseif ($durationFloat == 0.25) {
+			return "quarter";
+		} elseif ($durationFloat == 0.1875) {
+			return "quarter";
+		} elseif ($durationFloat == 0.125) {
+			return "eighth";
+		} elseif ($durationFloat == 0.09375) {
+			return "eighth";
+		} elseif ($durationFloat == 0.0625) {
+			return "16th";
+		} elseif ($durationFloat == 0.046875) {
+			return "16th";
+		} elseif ($durationFloat == 0.03125) {
+			return "32nd";
+		} elseif ($durationFloat == 0.0234375) {
+			return "32nd";
+		} elseif ($durationFloat == 0.015625) {
+			return "64th";
+		} elseif ($durationFloat == 0.01171875) {
+			return "64th";
+		} else {
+			// catch strange values (FALLBACK)
+			return "64th";	// set to lowest possible value
+		}
 	}
 
 
@@ -309,7 +350,11 @@ class ResultController extends BaseController {
 					$startExtract -= 1;
 				}
 				return $startExtract;
+			} else {
+				Log::error("ResultController.php:326 | Empty note!", array('notes' => $notes->length, 'start' => $start));
 			}
+		} else {
+			Log::error("ResultController.php:329 | Empty notes", array('part' => $part));
 		}
 	}
 
@@ -335,13 +380,17 @@ class ResultController extends BaseController {
 					$endExtract += 1;
 				}
 				return $endExtract;
+			} else {
+			Log::error("ResultController.php:356 | Empty note!", array('notes' => $notes->length, 'end' => $end));
 			}
+		} else {
+			Log::error("ResultController.php:359 | Empty notes", array('part' => $part));
 		}
 	}
 
 
 	/**
-	 * Static helper function to retrieve the artist for a given upload id
+	 * Static helper function |  to retrieve the artist for a given upload id
 	 *
 	 * @param 	int 	the uploads id
 	 *

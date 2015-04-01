@@ -16,6 +16,11 @@ MusicXMLAnalyzer.PatternView = function(){
 	$patternValue = $('#patternValue'),
 
 	$breakButton = $("#break"),
+	$rhythmBreakButton = $("#rhythmBreak"),
+
+	$rhythmNoteOrBreak = $('#rhythmNoteOrBreak'),
+	$noteOrBreak = $('#noteOrBreak'),
+	$rhythmNote = $('#rhythmNote'),
 
 
 	init = function() {
@@ -33,6 +38,11 @@ MusicXMLAnalyzer.PatternView = function(){
 		$addNoteButton.on("click", onAddButtonClick);
 		$removeNoteButton.on("click", onRemoveButtonClick);
 		$breakButton.on('click', onBreakButtonClick);
+		$rhythmNote.on('click', onRhythmNoteButtonClick);
+		$rhythmBreakButton.on('click', onRhythmBreakButtonClick);
+
+		$noteOrBreak.show();
+		$rhythmNoteOrBreak.hide();
 
 
 		// soundSequence pattern:
@@ -165,8 +175,31 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onNoteButtonClick = function(event) {
-		patternController.changeNote(event.target.id);
-		$accidentialButtonClass.removeClass('disabled');
+		// console.log("event.target.id: ",event.target.id);
+		if(patternController.getCurrentMode() == 1){
+			if($rhythmNote.hasClass('active')){
+				patternController.changeNote('break');
+			}else if($rhythmBreakButton.hasClass('active')){
+				patternController.changeNote('c');
+			}
+		}else{
+			patternController.changeNote(event.target.id);
+			$accidentialButtonClass.removeClass('disabled');
+		}
+	},
+
+	onRhythmNoteButtonClick = function(){
+		$rhythmBreakButton.removeClass('active');
+		// $rhythmBreakButton.addClass('disabled');
+		// $rhythmNote.removeClass('disabled');
+		$rhythmNote.addClass('active');
+	},
+
+	onRhythmBreakButtonClick = function(){
+		$rhythmNote.removeClass('active');
+		// $rhythmNote.addClass('disabled');
+		// $rhythmBreakButton.removeClass('disabled');
+		$rhythmBreakButton.addClass('active');
 	},
 
 	onAccidentialButtonClick = function(event) {
@@ -248,6 +281,9 @@ MusicXMLAnalyzer.PatternView = function(){
 		// disable search button
 		// (will get enabled after two notes are created)
 		$searchPatternButton.prop('disabled', true);
+
+		$noteOrBreak.show();
+		$rhythmNoteOrBreak.hide();
 	},
 
 	setToSoundSequenceMode = function() {
@@ -264,11 +300,17 @@ MusicXMLAnalyzer.PatternView = function(){
 		// disable search button
 		// (will get enabled after two notes are created)
 		$searchPatternButton.prop('disabled', true);
+
+		$noteOrBreak.show();
+		$rhythmNoteOrBreak.hide();
 	},
 
 	setToRhythmMode = function() {
 		console.log("pattern view set rhythm");
 		$noteButtonClass.addClass('disabled');
+		$rhythmBreakButton.removeClass('disabled');
+		$rhythmNote.removeClass('disabled');
+		$rhythmNote.addClass('active');
 		$octaveButtonClass.addClass('disabled');
 		$accidentialButtonClass.addClass('disabled');
 
@@ -277,6 +319,9 @@ MusicXMLAnalyzer.PatternView = function(){
 		// disable search button
 		// (will get enabled after two notes are created)
 		$searchPatternButton.prop('disabled', true);
+
+		$noteOrBreak.hide();
+		$rhythmNoteOrBreak.show();
 	},
 
 	startTripletEnterMode = function() {

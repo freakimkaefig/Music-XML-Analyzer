@@ -95,6 +95,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		return duration;
 	},
 
+
 	getMidiValue = function(step, octave, alter) {
 		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));
 	},
@@ -137,6 +138,7 @@ MusicXMLAnalyzer.PatternController = function() {
 					var noteStep = (note.pitch.step != undefined ? note.pitch.step : 'C');
 					var noteOctave = (note.pitch.octave != undefined ? note.pitch.octave : 4);
 					var noteAlter = (note.pitch.alter != undefined ? note.pitch.alter : 0);
+					var noteBeam = (note.pitch.beam != undefined ? note.pitch.beam : false);
 
 					if (note.pitch.dot) {
 						noteDuration += 0.5 * noteDuration;
@@ -144,7 +146,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 					var midiNote = getMidiValue(noteStep, noteOctave, noteAlter);
 					console.log(noteStep, noteOctave, noteAlter, noteDuration, "midiNote: ", midiNote);
-					notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration});
+					notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration, 'noteBeam' : noteBeam});
 				}
 			}
 		}
@@ -152,9 +154,8 @@ MusicXMLAnalyzer.PatternController = function() {
 		var i = 0;
 		playTune = function() {
 
-			console.log("notes to be played: " + notesToBePlayed.length);
+			// console.log("notes to be played: " + notesToBePlayed.length);
 			if(i < notesToBePlayed.length){
-				console.log("notesToBePlayed: ",notesToBePlayed[i]);
 				// console.log("pause: ", pause);
 				var note = notesToBePlayed[i].note;
 				// var noteDuration = notesToBePlayed[i].noteDuration;
@@ -162,11 +163,10 @@ MusicXMLAnalyzer.PatternController = function() {
 				//var delay = notesToBePlayed[i].noteDuration /**2 + i + 1*/;
 				//EDIT Mat
 				// delay muss hier fester wert sein sonst
-				// verzögert midi js aus irg einem grund manche noten
+				// verzögert midi js
 				var delay = 0;
 				var timeout = 0;
 				if(!once){
-
 						// Laut Michl Standard bzw oft vorkommendes Metronom-'tempo' = 120
 						//  d.h. 120 schläge pro minute
 						// beats per minute ausgehend von 1/4 noten
@@ -175,6 +175,9 @@ MusicXMLAnalyzer.PatternController = function() {
 						// ---> 1 ganze = 2 sek.
 						// ----> timeout = (vorheriges) delay ( = notenlänge) * 2000, da delay einer ganzen = 1 (siehe getDuration())
 					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*2000;
+					if(notesToBePlayed[i-1].noteBeam != false) {
+						timeout = (timeout * 2) / 3;
+					}
 				}
 				once = false;
 				// console.log("noten abklang: ",delay);
@@ -182,11 +185,11 @@ MusicXMLAnalyzer.PatternController = function() {
 
 				setTimeout(function(){
 					if(stop){
-						console.log("STOP: ",stop);
+						// console.log("STOP: ",stop);
 						//MIDI.setVolume(0, 0);
 						i = notesToBePlayed.length;
 					}else{
-						console.log("STOP: ",stop);
+						// console.log("STOP: ",stop);
 
 						if(i == notesToBePlayed.length -1){
 							//var timeout2 = delay*3000;
@@ -255,6 +258,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	changeMode = function(val) {
 		patternModel.setCurrentMode(val);
+		$(that).trigger('changed_mode', [val]);
 	},
 
 	changeNote = function(val) {
@@ -305,6 +309,10 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	onTripletEnterModeEnd = function() {
 		patternView.endTripletEnterMode();
+	},
+
+	getCurrentMode = function(){
+		return patternModel.getCurrentMode();
 	},
 
 	onPatternChange = function(event, pattern) {
@@ -360,6 +368,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	that.addNoteByCanvasClick = addNoteByCanvasClick;
 	that.removeLastNote = removeLastNote;
 	that.dispose = dispose;
+	that.getCurrentMode = getCurrentMode;
 
 	return that;
 }

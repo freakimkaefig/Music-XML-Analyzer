@@ -3,17 +3,18 @@
 @section('content')
 
 <div class="container">
-{{-- <div class="row text-center">
-	<div class="col-xs-12">
-		<h3>Your pattern:</h3>
-	</div>
-</div> --}}
 	<div class="row">
+		<div class="col-xs-6 text-left">
+			<a href="{{ URL::route('searchResults') }}">&laquo; Back to results</a>
+		</div>
 		<div class="col-xs-12 text-center">
 			<h1>Search results</h1>
 			<h4>for your pattern:</h4>
 		</div>
 	</div>
+
+	<!-- <pre><?php var_dump($result); ?></pre> -->
+
 	<div class="row">
 		<div class="col-xs-12">
 			{{ Form::hidden('pattern', json_encode(Cache::get('pattern')[0]), array('id' => 'patternValue')) }}
@@ -68,7 +69,6 @@
 				<center id="canvasContainer<?php echo $i; ?>">
 					<img class="loading-spinner" src="/img/ajax-loader.gif">
 				</center>
-				<pre><?php var_dump($resultItem); ?></pre>
 				{{ Form::hidden('resultItem' . $i, json_encode($resultItem), array('id' => 'resultItem' . $i, 'class' => 'resultItem')) }}
 				{{ Form::hidden('resultExtract' . $i, '', array('id' => 'resultExtract' . $i, 'class' => 'resultExtract')) }}
 				{{ Form::hidden('base64Image' . $i, "", array('id' => 'image' . $i, 'class' => 'image')) }}
@@ -96,9 +96,41 @@
 
 </div>
 
-<div class="row">
-	<div class="col-xs-12">
-		<a href="{{ URL::route('searchResults') }}">&laquo; Back to results</a>
+<?php
+	$previousPage = $page - 1;
+	$nextPage = $page + 1;
+
+	$previousRangeStart = ($startItem - $itemsPerPage) + 1;
+	$previousRangeEnd = ($endItem - $itemsPerPage) + 1;
+	$nextRangeStart = ($startItem + $itemsPerPage) + 1;
+	$nextRangeEnd = ($endItem + $itemsPerPage) + 1;
+	if ($nextRangeEnd > $numResults) {
+		$nextRangeEnd = $numResults;
+	}
+
+	$displayedEndItem = $endItem + 1;
+	if ($endItem > $numResults) {
+		$displayedEndItem = $numResults;
+	}
+?>
+<div class="row pager-row">
+	<div class="col-xs-12 text-center">
+		<p>Showing: {{ $startItem + 1 }} - {{ $displayedEndItem }} of {{ $numResults }}</p>
+	</div>
+	<div class="col-xs-2 text-left pager-previous">
+		@if ($previousPage > -1)
+			<a href="{{ URL::route('resultDetail', array('id' => $result->file_id, 'page' => $previousPage)) }}">&laquo; Previous Page ({{ $previousRangeStart }} - {{ $previousRangeEnd }})</a>
+		@endif
+	</div>
+	<div class="col-xs-8 text-center pager-pages">
+		<?php for ($j = 0; $j < $numPages; $j++): ?>
+			<a <?php if($j == $page): ?>class="active"<?php else: ?>href="{{ URL::route('resultDetail', array('id' => $result->file_id, 'page' => $j)) }}"<?php endif; ?>>{{ $j + 1 }}</a>
+		<?php endfor; ?>
+	</div>
+	<div class="col-xs-2 text-right pager-next">
+		@if ($nextPage < $numPages)
+			<a href="{{ URL::route('resultDetail', array('id' => $result->file_id, 'page' => $nextPage)) }}">Next Page ({{ $nextRangeStart }} - {{ $nextRangeEnd }}) &raquo;</a>
+		@endif
 	</div>
 </div>
 

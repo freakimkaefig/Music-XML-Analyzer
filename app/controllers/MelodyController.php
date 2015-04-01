@@ -130,13 +130,13 @@ class MelodyController {
 								try{
 									$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / (int)$partBeatType);
 								} catch (Exception $e) {
-echo"<br><hr>n->duration: <br>";
-var_dump($n->duration);
-echo"<br>partDivision: <br>";
-var_dump($partDivision);
-echo"<br>partBeatType: <br>";
-var_dump($partBeatType);
-								    echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
+// echo"<br><hr>n->duration: <br>";
+// var_dump($n->duration);
+// echo"<br>partDivision: <br>";
+// var_dump($partDivision);
+// echo"<br>partBeatType: <br>";
+// var_dump($partBeatType);
+								    Log::error('Exception abgefangen: ',  array('error' => $e->getMessage());
 								}
 
 								// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
@@ -184,15 +184,15 @@ var_dump($partBeatType);
 							//check if Array-length equals Pattern-length already
 							if(count(self::$xmlArray) == count(self::$patternArray)){
 
-echo"<br><br><hr>restDuration: <br>";
-var_dump($restDuration);
-echo"<br><br><hr>array_values: <br>xmlArray:<br>";
-var_dump(array_values(self::$xmlArray));
-echo"<br><br>patternArray:<br>";
-var_dump(array_values(self::$patternArray));
-echo"<br><br>xmlPositionArray:";
-var_dump(self::$xmlPositionArray);
-echo"<br><br>";
+// echo"<br><br><hr>restDuration: <br>";
+// var_dump($restDuration);
+// echo"<br><br><hr>array_values: <br>xmlArray:<br>";
+// var_dump(array_values(self::$xmlArray));
+// echo"<br><br>patternArray:<br>";
+// var_dump(array_values(self::$patternArray));
+// echo"<br><br>xmlPositionArray:";
+// var_dump(self::$xmlPositionArray);
+// echo"<br><br>";
 
 								// compare arrays
 								if(array_values(self::$xmlArray) == array_values(self::$patternArray)){
@@ -231,6 +231,7 @@ echo"<br><br>";
 						else{ //different voice incoming next; unset array; begin from scratch
 								$lastVoice = $part->measure[$i]->note[$j]->voice;
 								$j--;
+								self::$noteCounter--;
 								self::$xmlArray = array(); 
 								self::$xmlPositionArray = array();
 							}
@@ -247,17 +248,9 @@ echo"<br><br>";
 		});
 
 
-// return self::$results;
+return self::$results;
 
-// echo "<br>";
-// var_dump(self::$results);
-// 		if(empty(self::$results)){
-
-// 		echo "<br>result is empty!";
-// 		}
-// echo "<hr>";
-
-bla();
+// bla();
 
 	}
 }

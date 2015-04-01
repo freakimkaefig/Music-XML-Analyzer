@@ -31,6 +31,7 @@ MusicXMLAnalyzer.ResultModel = function() {
 	},
 
 	loadResultExtracts = function() {
+		// console.log(loadingCounter);
 		$.ajax({
 			url: URL_POST_RESULT_EXTRACT,
 			method: 'POST',
@@ -43,6 +44,7 @@ MusicXMLAnalyzer.ResultModel = function() {
 
 	_onLoadResultExtract = function(index, data, textStatus, jqXHR) {
 		data = JSON.parse(data);
+		// console.log(index, data);
 		resultItems[index].extract = data;
 		$(that).trigger('resultExtractReceived', [index, data]);
 		loadingCounter++;

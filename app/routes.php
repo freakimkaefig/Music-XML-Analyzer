@@ -88,7 +88,7 @@ Route::group(array('before' => 'uploads'), function()
 		'as' => 'searchResults',
 		'uses' => 'ResultController@getSearchResults'
 	));
-	Route::get('/results/detail/{file}', array(
+	Route::get('/results/detail/{file}/{page}', array(
 		'as' =>'resultDetail',
 		'uses' => 'ResultController@getResultDetail'
 	));
