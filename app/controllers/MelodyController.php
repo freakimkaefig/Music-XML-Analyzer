@@ -8,6 +8,7 @@ class MelodyController {
 	static $xmlArray;
 	static $xmlPositionArray;
 	static $once;
+	static $once2 = true;
 	// static $restDuration;
 	static $noteCounter;
 
@@ -65,30 +66,35 @@ class MelodyController {
 			foreach($parts as $part){
 				self::$noteCounter = 0;
 				self::$once = true;
-				for($i = 0; $i < count($part->measure); $i++){
+				self::$once2 = true;
+				// $countPartMeasure = count($part->measure);
+				// for($i = 0; $i < $countPartMeasure; $i++)
+				foreach($part->measure as $measure){
 					
-					if($i == 0){
+					if(self::$once2){
+						self::$once2 = false;
 						//get division for calculation of rest duration once
-						$partDivision = $part->measure[$i]->attributes->divisions;
+						$partDivision = $measure->attributes->divisions;
 						//get beat-type for calculation of rest duration once
-						$partBeatType = $part->measure[$i]->attributes->time->{'beat-type'};
+						$partBeatType = $measure->attributes->time->{'beat-type'};
 					}
 
 					//get beat-type changes within measures
-					if($i>0){ //no changes within first round
+					if(!self::$once2){ //no changes within first round
 						// if changes occure
-						if(isset($part->measure[$i]->attributes->time->{'beat-type'})){
+						if(isset($measure->attributes->time->{'beat-type'})){
 							// get changes
-							$partBeatType = $part->measure[$i]->attributes->time->{'beat-type'};
+							$partBeatType = $measure->attributes->time->{'beat-type'};
 						}
 					}
-					for($j = 0; $j < count($part->measure[$i]->note); $j++){
+					$countPartMeasureNote = count($measure->note);
+					for($j = 0; $j < $countPartMeasureNote; $j++){
 						self::$noteCounter++;
-						$n = $part->measure[$i]->note[$j];
+						$n = $measure->note[$j];
 
 						if(self::$once){
 							self::$once = false;
-							$lastVoice = $part->measure[$i]->note[$j]->voice;
+							$lastVoice = $measure->note[$j]->voice;
 						}
 
 						if((int)$n->voice == (int)$lastVoice){
@@ -229,7 +235,7 @@ class MelodyController {
 
 						}
 						else{ //different voice incoming next; unset array; begin from scratch
-								$lastVoice = $part->measure[$i]->note[$j]->voice;
+								$lastVoice = $measure->note[$j]->voice;
 								$j--;
 								self::$noteCounter--;
 								self::$xmlArray = array(); 
