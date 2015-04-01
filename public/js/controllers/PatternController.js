@@ -156,8 +156,6 @@ MusicXMLAnalyzer.PatternController = function() {
 
 			// console.log("notes to be played: " + notesToBePlayed.length);
 			if(i < notesToBePlayed.length){
-				console.log(i);
-				console.log("notesToBePlayed: ",notesToBePlayed[i]);
 				// console.log("pause: ", pause);
 				var note = notesToBePlayed[i].note;
 				// var noteDuration = notesToBePlayed[i].noteDuration;
