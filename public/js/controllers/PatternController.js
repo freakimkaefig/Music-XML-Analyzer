@@ -260,6 +260,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	changeMode = function(val) {
 		patternModel.setCurrentMode(val);
+		$(that).trigger('changed_mode', [val]);
 	},
 
 	changeNote = function(val) {

@@ -194,7 +194,6 @@ MusicXMLAnalyzer.ResultView = function(){
 		var renderer = new Vex.Flow.Renderer(patternCanvas, Vex.Flow.Renderer.Backends.CANVAS);
 		var context = renderer.getContext();
 		var stave = new Vex.Flow.Stave(10, 0, 700);
-		stave.addClef("treble").setContext(context).draw();
 
 		renderNotes(vexflowNotes, patternCanvas, renderer, context, stave, true);
 	},
@@ -247,7 +246,11 @@ MusicXMLAnalyzer.ResultView = function(){
 			staveBar = new Vex.Flow.Stave(x, y, width);	// generate new stave for measure
 
 			if (i%2 == 0) {
-				staveBar.addClef("treble");	// add clef to every measure starting in a new line
+				if (pattern && measures[i].pattern.type == 1) {
+					staveBar.addClef("percussion");
+				} else {
+					staveBar.addClef("treble");	// add clef to every measure starting in a new line
+				}
 			}
 			if (measures[i].time_signature) {
 				staveBar.addTimeSignature(measures[i].time_signature);	// add time signature if changed
