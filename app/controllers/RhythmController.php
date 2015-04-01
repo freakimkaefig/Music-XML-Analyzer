@@ -264,6 +264,7 @@ public function search($pattern) {
 // var_dump(self::$xmlPositionArray);
 							$lastVoice = $part->measure[$i]->note[$j]->voice;
 							$j--;
+							self::$noteCounter--;
 							self::$xmlArray = array(); 
 							self::$xmlPositionArray = array();
 						}
