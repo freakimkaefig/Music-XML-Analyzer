@@ -7,15 +7,13 @@ class ResultController extends BaseController {
 	 *
 	 */
 	public function getSearchResults() {
-		$time = 60*24;
-
 		if (!Cache::has('pattern')) {
-			Debugbar::error('No pattern in cache!');
+			Log::error('No pattern in cache!');
 			return Redirect::route('pattern');
 		}
 
 		if (!Cache::has('results')) {
-			Debugbar::error('No results in cache!');
+			Log::error('No results in cache!');
 			return Redirect::route('pattern');
 		}
 
@@ -25,6 +23,10 @@ class ResultController extends BaseController {
 
 	/**
 	 * Function handling get route 'resultDetail' ('/results/detail/{file}')
+	 *
+	 * @param 	int 	The upload id
+	 *
+	 * @return 	\Illuminate\View\View, \Illuminate\Support\Facades\Redirect 	A laravel view, when successful, or a redirect if fails
 	 *
 	 */
 	public function getResultDetail($id) {
@@ -38,6 +40,8 @@ class ResultController extends BaseController {
 
 			$pattern = Cache::get('pattern')[0];
 
+			// Log::info("Results Detail for", array('result' => $result));
+
 			return View::make('results.detail', array('result' => $result));
 		} else {
 			return Redirect::route('pattern');
@@ -48,6 +52,7 @@ class ResultController extends BaseController {
 	/**
 	 * Function handling post route 'resultExtract' ('/result/extract')
 	 *
+	 * @return 	string 	JSON string with the generated extract
 	 */
 	public function postResultExtract() {
 		$file_id = Input::get('file_id');
@@ -76,16 +81,14 @@ class ResultController extends BaseController {
 	 */
 	private function generateResultExtract($upload_id, $part_id, $voice, $start, $end) {
 		set_time_limit(300);
+		// Log::info("Generating result extract", array("upload_id" => $upload_id, "part_id" => $part_id, "voice" => $voice, "start" => $start, "end" => $end));
 		$upload = Upload::find($upload_id);
-
-		$xml = simplexml_load_file($upload->url);
 
 		$doc = new DOMDocument();
 		$doc->load($upload->url);
 		$xPath = new DOMXPath($doc);
 
 		$part = $xPath->query('//part[@id="' . $part_id . '"]')->item(0);
-		$simple_part = $xml->xpath('//part[@id="' . $part_id . '"]')[0];
 
 		$resultObject = new stdClass();
 		$resultObject->type = 2;
@@ -112,8 +115,6 @@ class ResultController extends BaseController {
 				}
 			}
 			$measureNotes = $measure->getElementsByTagName('note');
-
-			// $measureNotes = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]/note');
 
 			if ($j < $resultObject->start_extract) {
 				// add count of notes before extract starts to counter
@@ -143,7 +144,6 @@ class ResultController extends BaseController {
 				$resultObject->measures[$measureCounter] = $measureObject;
 
 				// loop over each note in measure
-				// Debugbar::info($measureNotes);
 				foreach ($measureNotes as $note) {
 
 					if ($note->getElementsByTagName('voice')->item(0)->nodeValue == $voice) {
@@ -154,8 +154,7 @@ class ResultController extends BaseController {
 						$currentColor = "#000000";
 						if ($noteCounter >= $start && $noteCounter <= $end) {
 							// set color to red if note is between start and end of result
-							$currentColor = "#FF0000";
-							// Debugbar::info("Counter: " . $noteCounter . " | " . $start . " | " . $end . " Part ID: " . $part_id);
+							$currentColor = "#b71c1c";
 						}
 						$noteObject->color = $currentColor;
 
@@ -191,14 +190,6 @@ class ResultController extends BaseController {
 							if ($type->length) {
 								$noteObject->pitch->type = $type->item(0)->nodeValue;
 							}
-
-							// determine beam type
-							// $beam = $note->getElementsByTagName('beam');
-							// if ($beam->length) {
-							// 	$noteObject->pitch->beam = $beam->item(0)->nodeValue;
-							// } else {
-							// 	$noteObject->pitch->beam = false;
-							// }
 
 							// determine dot
 							$dot = $note->getElementsByTagName('dot');
@@ -290,7 +281,9 @@ class ResultController extends BaseController {
 			} /* END: if ($j < $resultObject->start_extract) */
 		}
 
-		// Debugbar::info($resultObject);
+		// Log::info("Generating result extract", get_object_vars($resultObject));
+		unset($doc);
+		Log::info("Garbage collected", array("cycles" => gc_collect_cycles()));
 		return $resultObject;
 	}
 
@@ -305,22 +298,6 @@ class ResultController extends BaseController {
 	 *
 	 */
 	private function calculateStartExtract($part, $start) {
-		// $noteCounter = 0;
-		// for ($i = 0; $i < count($part->measure); $i++) {
-		// 	for($j = 0; $j < count($part->measure[$i]->note); $j++) {
-		// 		$noteCounter++;
-		// 		if ($noteCounter == $start) {
-		// 			$startMeasureNumber = (int) $part->measure[$i]['number'];
-		// 			$startExtract = $startMeasureNumber;
-		// 			if ($startMeasureNumber > 1) {
-		// 				// Check if measure before can be included in extract
-		// 				$startExtract -= 1;
-		// 			}
-		// 			return $startExtract;
-		// 		}
-		// 	}
-		// }
-
 		$notes = $part->getElementsByTagName('note');
 		if ($notes) {
 			$note = $notes->item($start);
@@ -347,22 +324,6 @@ class ResultController extends BaseController {
 	 *
 	 */
 	private function calculateEndExtract($part, $end) {
-		// $noteCounter = 0;
-		// for ($i = 0; $i < count($part->measure); $i++) {
-		// 	for($j = 0; $j < count($part->measure[$i]->note); $j++) {
-		// 		$noteCounter++;
-		// 		if ($noteCounter == $end) {
-		// 			$endMeasureNumber = (int) $part->measure[$i]['number'];
-		// 			$endExtract = $endMeasureNumber;
-		// 			if ($i+1 < count($part->measure)) {
-		// 				// Check if measure before can be included in extract
-		// 				$endExtract += 1;
-		// 			}
-		// 			return $endExtract;
-		// 		}
-		// 	}
-		// }
-
 		$notes = $part->getElementsByTagName('note');
 		if ($notes) {
 			$note = $notes->item($end);

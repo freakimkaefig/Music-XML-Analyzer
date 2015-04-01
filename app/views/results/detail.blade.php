@@ -68,6 +68,7 @@
 				<center id="canvasContainer<?php echo $i; ?>">
 					<img class="loading-spinner" src="/img/ajax-loader.gif">
 				</center>
+				<pre><?php var_dump($resultItem); ?></pre>
 				{{ Form::hidden('resultItem' . $i, json_encode($resultItem), array('id' => 'resultItem' . $i, 'class' => 'resultItem')) }}
 				{{ Form::hidden('resultExtract' . $i, '', array('id' => 'resultExtract' . $i, 'class' => 'resultExtract')) }}
 				{{ Form::hidden('base64Image' . $i, "", array('id' => 'image' . $i, 'class' => 'image')) }}
