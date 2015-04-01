@@ -80,8 +80,8 @@
 	</div>
 
 	<div class="row marbo20">
-		<div class="col-xs-8">
-			<p class="no-margin">Notes: </p>
+		<div id="noteOrBreak" class="col-xs-8">
+			<p class="no-margin">Notes/Breaks: </p>
 			<div class="btn-group" data-toggle="buttons">
 				<label id="c" class="btn btn-note btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":c">C
@@ -105,7 +105,18 @@
 					<input type="radio" value=":b">B
 				</label>
                 <label id="break" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
-                    <input type="radio" value=":break">Pause
+                    <input type="radio" value=":break">Rest
+                </label>
+			</div>
+		</div>
+		<div id="rhythmNoteOrBreak" class="col-xs-8">
+			<p class="no-margin">Notes/Breaks: </p>
+			<div class="btn-group" data-toggle="buttons">
+				<label id="rhythmNote" class="btn btn-note btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+					<input type="radio" value=":c">Note
+				</label>
+				<label id="rhythmBreak" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+                    <input type="radio" value=":break">Rest
                 </label>
 			</div>
 		</div>

@@ -327,9 +327,9 @@ MusicXMLAnalyzer.ResultView = function(){
 		if (!result) {
 			for (var i = 0; i < pattern.measures.length; i++) {
 				for (var j = 0; j < pattern.measures[i].notes.length; j++) {
-					if (pattern.measures[i].notes[j].pitch.beam) {
+					if (pattern.measures[i].notes[j].pitch && pattern.measures[i].notes[j].pitch.beam) {
 						pattern.measures[i].notes[j].pitch.tuplet = "3";
-					} else {
+					} else if(pattern.measures[i].notes[j].pitch) {
 						pattern.measures[i].notes[j].pitch.tuplet = false;
 					}
 				}

@@ -231,6 +231,7 @@ echo"<br><br>";
 						else{ //different voice incoming next; unset array; begin from scratch
 								$lastVoice = $part->measure[$i]->note[$j]->voice;
 								$j--;
+								self::$noteCounter--;
 								self::$xmlArray = array(); 
 								self::$xmlPositionArray = array();
 							}

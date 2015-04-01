@@ -9,7 +9,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	curAccidential = "none",
 	curDuration = "quarter",
 	curRythSpec = "none",
-	curOctave = "4",
+	curOctave = "5",
 	VEXFLOW_REST_SIGN = "r",
 	// completeDurationIn64th = 0,
 	first = true,
@@ -329,6 +329,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		//check if break or normal note or note with accidential
 		//then adapt values for vexflow an put them into an array
+		// console.log("curName: ",curName," curOctave: ",curOctave);
 		var note;
 		var keyContent = getKeyContent4Vexflow(curName);
 		var durationContent = getDuration4Vexflow(curDuration);

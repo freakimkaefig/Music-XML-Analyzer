@@ -198,8 +198,8 @@ public function search($pattern) {
 // echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
 							}
 							
-							// array_push(self::$xmlArray, $restDuration);
-							// array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
+							array_push(self::$xmlArray, $restDuration);
+							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
 
 						} //end else if rest
 
@@ -264,6 +264,7 @@ public function search($pattern) {
 // var_dump(self::$xmlPositionArray);
 							$lastVoice = $part->measure[$i]->note[$j]->voice;
 							$j--;
+							self::$noteCounter--;
 							self::$xmlArray = array(); 
 							self::$xmlPositionArray = array();
 						}

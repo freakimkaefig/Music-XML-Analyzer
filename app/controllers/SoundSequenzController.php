@@ -67,8 +67,8 @@ class SoundSequenzController {
 					for($j = 0; $j < count($part->measure[$i]->note); $j++) {
 						self::$noteCounter++;
 						$n = $part->measure[$i]->note[$j];
-// echo"<br><hr>NOTE: ";
-// var_dump($n);
+// echo"<br><hr>COUNTER: ";
+// var_dump(self::$noteCounter);
 						//set lastVoice at beginning of xml file
 						if(self::$once){
 // echo"<br><br>LASTVOICE SET ";
@@ -168,6 +168,7 @@ class SoundSequenzController {
 // var_dump($part->measure[$i]->note[$j]->voice);
 								$lastVoice = $part->measure[$i]->note[$j]->voice;
 								$j--;
+								self::$noteCounter--;
 								self::$xmlIntervalArray = array();
 								self::$xmlPositionArray = array();
 // echo"<br><br>xmlIntervalArray AFTER VOICE CHANGED: ";
