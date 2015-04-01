@@ -137,6 +137,7 @@ MusicXMLAnalyzer.PatternController = function() {
 					var noteStep = (note.pitch.step != undefined ? note.pitch.step : 'C');
 					var noteOctave = (note.pitch.octave != undefined ? note.pitch.octave : 4);
 					var noteAlter = (note.pitch.alter != undefined ? note.pitch.alter : 0);
+					var noteBeam = (note.pitch.beam != undefined ? note.pitch.beam : false);
 
 					if (note.pitch.dot) {
 						noteDuration += 0.5 * noteDuration;
@@ -144,7 +145,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 					var midiNote = getMidiValue(noteStep, noteOctave, noteAlter);
 					console.log(noteStep, noteOctave, noteAlter, noteDuration, "midiNote: ", midiNote);
-					notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration});
+					notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration, 'noteBeam' : noteBeam});
 				}
 			}
 		}
