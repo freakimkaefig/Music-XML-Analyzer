@@ -95,6 +95,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		return duration;
 	},
 
+
 	getMidiValue = function(step, octave, alter) {
 		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));
 	},
@@ -153,8 +154,9 @@ MusicXMLAnalyzer.PatternController = function() {
 		var i = 0;
 		playTune = function() {
 
-			console.log("notes to be played: " + notesToBePlayed.length);
+			// console.log("notes to be played: " + notesToBePlayed.length);
 			if(i < notesToBePlayed.length){
+				console.log(i);
 				console.log("notesToBePlayed: ",notesToBePlayed[i]);
 				// console.log("pause: ", pause);
 				var note = notesToBePlayed[i].note;
@@ -163,11 +165,10 @@ MusicXMLAnalyzer.PatternController = function() {
 				//var delay = notesToBePlayed[i].noteDuration /**2 + i + 1*/;
 				//EDIT Mat
 				// delay muss hier fester wert sein sonst
-				// verzögert midi js aus irg einem grund manche noten
+				// verzögert midi js
 				var delay = 0;
 				var timeout = 0;
 				if(!once){
-
 						// Laut Michl Standard bzw oft vorkommendes Metronom-'tempo' = 120
 						//  d.h. 120 schläge pro minute
 						// beats per minute ausgehend von 1/4 noten
@@ -176,6 +177,9 @@ MusicXMLAnalyzer.PatternController = function() {
 						// ---> 1 ganze = 2 sek.
 						// ----> timeout = (vorheriges) delay ( = notenlänge) * 2000, da delay einer ganzen = 1 (siehe getDuration())
 					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*2000;
+					if(notesToBePlayed[i-1].noteBeam != false) {
+						timeout = (timeout * 2) / 3;
+					}
 				}
 				once = false;
 				// console.log("noten abklang: ",delay);
@@ -183,11 +187,11 @@ MusicXMLAnalyzer.PatternController = function() {
 
 				setTimeout(function(){
 					if(stop){
-						console.log("STOP: ",stop);
+						// console.log("STOP: ",stop);
 						//MIDI.setVolume(0, 0);
 						i = notesToBePlayed.length;
 					}else{
-						console.log("STOP: ",stop);
+						// console.log("STOP: ",stop);
 
 						if(i == notesToBePlayed.length -1){
 							//var timeout2 = delay*3000;
