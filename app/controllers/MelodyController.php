@@ -136,7 +136,7 @@ class MelodyController {
 // var_dump($partDivision);
 // echo"<br>partBeatType: <br>";
 // var_dump($partBeatType);
-								    echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
+								    Log::error('Exception abgefangen: ',  array('error' => $e->getMessage());
 								}
 
 								// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
