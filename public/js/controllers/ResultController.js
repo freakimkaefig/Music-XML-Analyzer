@@ -159,8 +159,6 @@ MusicXMLAnalyzer.ResultController = function(){
 			var chordsToBePlayed = [];
 
 			if(i < notesToBePlayed.length) {
-				// console.log("notesToBePlayed: ",notesToBePlayed[i]);
-				// console.log("pause: ", pause);
 				var note = notesToBePlayed[i].note;
 				var noteDuration = notesToBePlayed[i].noteDuration;
 				var velocity = 127; // how hard the note hits
@@ -177,17 +175,11 @@ MusicXMLAnalyzer.ResultController = function(){
 					}
 				}
 				once = false;
-				// console.log("delay till note is played: ",timeout);
 
 				setTimeout(function() {
 					if(stop){
-						// console.log("STOP: ",stop);
-						// MIDI.setVolume(0, 0);
 						i = notesToBePlayed.length;
 					}else{
-						// console.log("STOP: ",stop);
-						// MIDI.setVolume(0, 127);
-						// delay --> https://stackoverflow.com/questions/21296450/midi-js-note-duration-does-not-change
 
 						if(i + 1 < notesToBePlayed.length) {
 							tooLong = false;
@@ -195,22 +187,17 @@ MusicXMLAnalyzer.ResultController = function(){
 							tooLong = true;
 						}
 
-						// console.log("tooLong? ",tooLong);
-
 						if(!tooLong && notesToBePlayed[i].chord == false && notesToBePlayed[i + 1].chord == true) {
 							// var kCounter = 0;
 							do{
 								chordsToBePlayed.push(notesToBePlayed[i].note);
 								i++;
-								// console.log("notesToBePlayed[i].chord: ",notesToBePlayed[i].chord," i: ",i," notesToBePlayed.length: ",notesToBePlayed.length);
 							}while(notesToBePlayed[i] && notesToBePlayed[i].chord == true && i < notesToBePlayed.length)
-							// console.log("chordsToBePlayed	: ",chordsToBePlayed);
 							MIDI.chordOn(0, chordsToBePlayed, velocity, delay);
 							MIDI.chordOff(0, chordsToBePlayed, delay + 0.75);
 							// TODO:
 							// adjust timeout for chords?
 						}
-						// else:
 						else{
 							MIDI.noteOn(0, note, velocity, delay);
 							MIDI.noteOff(0, note, delay + 0.75);

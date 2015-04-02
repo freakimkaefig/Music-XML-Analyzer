@@ -154,63 +154,37 @@ MusicXMLAnalyzer.PatternController = function() {
 		var i = 0;
 		playTune = function() {
 
-			// console.log("notes to be played: " + notesToBePlayed.length);
 			if(i < notesToBePlayed.length){
-				// console.log("pause: ", pause);
 				var note = notesToBePlayed[i].note;
 				// var noteDuration = notesToBePlayed[i].noteDuration;
-				var velocity = 100; // how hard the note hits
-				//var delay = notesToBePlayed[i].noteDuration /**2 + i + 1*/;
-				//EDIT Mat
-				// delay muss hier fester wert sein sonst
-				// verzögert midi js
+				// how hard the note gets hit
+				var velocity = 100; 
+				// delay is set to fix value
 				var delay = 0;
 				var timeout = 0;
 				if(!once){
-						// Laut Michl Standard bzw oft vorkommendes Metronom-'tempo' = 120
-						//  d.h. 120 schläge pro minute
-						// beats per minute ausgehend von 1/4 noten
-						// -> 120 viertel pro minute
-						// --> 30 ganze pro minute
-						// ---> 1 ganze = 2 sek.
-						// ----> timeout = (vorheriges) delay ( = notenlänge) * 2000, da delay einer ganzen = 1 (siehe getDuration())
+					
 					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*2000;
-					if(notesToBePlayed[i-1].noteBeam != false) {
+					if(notesToBePlayed[i-1].noteBeam == "begin" || notesToBePlayed[i-1].noteBeam == "continue" ||
+						notesToBePlayed[i-1].noteBeam == "end") {
 						timeout = (timeout * 2) / 3;
 					}
 				}
 				once = false;
-				// console.log("noten abklang: ",delay);
-				// console.log("timeout till note is played: ",timeout);
 
 				setTimeout(function(){
 					if(stop){
-						// console.log("STOP: ",stop);
-						//MIDI.setVolume(0, 0);
 						i = notesToBePlayed.length;
 					}else{
-						// console.log("STOP: ",stop);
-
 						if(i == notesToBePlayed.length -1){
-							//var timeout2 = delay*3000;
-							// setTimeout(function(){
-								// console.log("last note - delay: ",delay," delay*3: ",delay*3);
-								// console.log("lastnote: ",note, delay);
-								// MIDI.setVolume(0, 127);
 								MIDI.noteOn(0, note, velocity, delay);
-								//MIDI.noteOff(0, note, delay*3);
-								//EDIT Mat
 								MIDI.noteOff(0, note, delay + 0.75);
-								// MIDI.stopAllNotes();
-							// }, timeout2);
 						}else{
-							// MIDI.setVolume(0, 127);
 							MIDI.noteOn(0, note, velocity, delay);
 							MIDI.noteOff(0, note, delay + 0.75);
 						}
 
 						i++;
-						// MIDI.Player.stop();
 					}
 					// recursively call playTune()
 					playTune();
