@@ -128,6 +128,7 @@ MusicXMLAnalyzer.PatternController = function() {
 			for(var j = 0; j < currentPatternNotes[i].notes.length; j++){
 				// check if rest
 				if(currentPatternNotes[i].notes[j].type == 'rest'){
+					console.log("rest: ", currentPatternNotes[i].notes[j]);
 					var rest = currentPatternNotes[i].notes[j];
 					var restDuration = getDuration(currentPatternNotes[i].notes[j].duration);
 					notesToBePlayed.push({'note': 0, 'noteDuration': restDuration});
