@@ -38,10 +38,6 @@ class ResultController extends BaseController {
 				}
 			}
 
-			// foreach ($result->occurences as $index => $occ) {
-			// 	Log::info("results" . $index, array('occ' => $occ));
-			// }
-
 			$pattern = Cache::get('pattern')[0];
 
 			$itemsPerPage = 10;
@@ -73,8 +69,6 @@ class ResultController extends BaseController {
 		$start = Input::get('start') - 1;
 		$end = Input::get('end') - 1;
 
-		// Log::info("postResultExtract", array('file_id' => $file_id, 'file_url' => $file_url, 'part_id' => $part_id, 'voice' => $voice, 'start' => $start, 'end' => $end));
-
 		$resultExtract = $this->generateResultExtract($file_id, $part_id, $voice, $start, $end);
 
 		return json_encode($resultExtract);
@@ -94,7 +88,6 @@ class ResultController extends BaseController {
 	 */
 	private function generateResultExtract($upload_id, $part_id, $voice, $start, $end) {
 		set_time_limit(300);
-		// Log::info("Generating result extract", array("upload_id" => $upload_id, "part_id" => $part_id, "voice" => $voice, "start" => $start, "end" => $end));
 		$upload = Upload::find($upload_id);
 
 		$doc = new DOMDocument();
@@ -252,10 +245,6 @@ class ResultController extends BaseController {
 								$restDurationFloat = (float)((int)$curDuration / (int)$partDivision / 4);//(int)$curBeatType);
 								$restDuration = $this->getDurationType($restDurationFloat);
 								$noteObject->duration = $restDuration;
-								Debugbar::info($curDuration);
-								Debugbar::info($partDivision);
-								Debugbar::info($curBeatType);
-								Debugbar::info($restDuration);
 							} elseif ($unpitched->length) {
 								$noteObject->type = "unpitched";
 								$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
@@ -282,9 +271,7 @@ class ResultController extends BaseController {
 			} /* END: if ($j < $resultObject->start_extract) */
 		}
 
-		// Log::info("Generating result extract", get_object_vars($resultObject));
 		unset($doc);
-		// Log::info("Garbage collected", array("cycles" => gc_collect_cycles()));
 		return $resultObject;
 	}
 

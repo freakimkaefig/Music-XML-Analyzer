@@ -13,8 +13,6 @@
 		</div>
 	</div>
 
-	<!-- <pre><?php var_dump($result); ?></pre> -->
-
 	<div class="row">
 		<div class="col-xs-12">
 			{{ Form::hidden('pattern', json_encode(Cache::get('pattern')[0]), array('id' => 'patternValue')) }}
