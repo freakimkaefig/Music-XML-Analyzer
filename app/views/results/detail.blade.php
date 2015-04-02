@@ -33,7 +33,7 @@
 
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
-		<?php for ($i = 0; $i < count($result->occurences); $i++): ?>
+		<?php $countResultOccurences = count($result->occurences); for ($i = 0; $i < $countResultOccurences; $i++): ?>
 			<?php
 				$resultItem = $result->occurences[$i];
 				$resultItem->file_id = $result->file_id;
@@ -77,7 +77,7 @@
 	<div class="carousel-controls">
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
-			<?php for ($i = 0; $i < count($result->occurences); $i++): ?>
+			<?php $countResultOccurences = count($result->occurences); for ($i = 0; $i < $countResultOccurences; $i++): ?>
 				<li data-target="#extract-carousel" data-slide-to="<?php echo $i; ?>"<?php if ($i==0) echo ' class="active"'; ?>></li>
 			<?php endfor; ?>
 		</ol>
