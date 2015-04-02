@@ -12,12 +12,12 @@ class RhythmController {
 	static $noteCounter;
 
 	function __construct() {
-	
+
 
 	}
 
 public function search($pattern) {
-	
+
 	$p = $pattern[0]->notes;
 	self::$patternArray = array();
 	self::$results = array();
@@ -58,7 +58,7 @@ public function search($pattern) {
 		$file_url = $upload->url;
 
 		self::$once = true;
-		self::$xmlArray = array(); 
+		self::$xmlArray = array();
 		self::$xmlPositionArray = array();
 		self::$result = new stdClass();
 		self::$result->occurences = array();
@@ -74,7 +74,7 @@ public function search($pattern) {
 			for($i = 0; $i < count($part->measure); $i++){
 // echo"<br><hr>part->measure[$i] : ";
 // var_dump($part->measure[$i]);
-				
+
 				if($i == 0){
 					//get division for calculation of rest duration once
 					$partDivision = $part->measure[$i]->attributes->divisions;
@@ -148,7 +148,7 @@ public function search($pattern) {
 // echo"<br><br>REST added!";
 							// calculate rest duration
 							try{
-								$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / (int)$partBeatType);
+								$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / 4); // (int)$partBeatType);
 							} catch (Exception $e) {
 // echo"<br><hr>n->duration: <br>";
 // var_dump($n->duration);
@@ -192,12 +192,12 @@ public function search($pattern) {
 							} else {
 								// catch strange values (FALLBACK)
 								$restDuration = "64th";	// set to lowest possible value
-// 
+//
 // Debugbar::info($restDurationFloat);
 // echo 'Rest duration unclear: ',  $restDurationFloat, "<br>";
 // echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
 							}
-							
+
 							array_push(self::$xmlArray, $restDuration);
 							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
 
@@ -256,7 +256,7 @@ public function search($pattern) {
 
 							}
 
-						} //if array lengths aren't equal yet, continue	
+						} //if array lengths aren't equal yet, continue
 
 					}	// end if same voice
 					else{ //different voice incoming next; unset array; begin from scratch
@@ -265,7 +265,7 @@ public function search($pattern) {
 							$lastVoice = $part->measure[$i]->note[$j]->voice;
 							$j--;
 							self::$noteCounter--;
-							self::$xmlArray = array(); 
+							self::$xmlArray = array();
 							self::$xmlPositionArray = array();
 						}
 
