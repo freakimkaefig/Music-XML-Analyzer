@@ -187,7 +187,7 @@ class ResultController extends BaseController {
 							// determine alter value
 							$alter = $pitch->item(0)->getElementsByTagName('alter');
 							if ($alter->length) {
-								$noteObject->pitch->alter = $alter->item(0)->nodeValue;
+								$noteObject->pitch->alter = intval($alter->item(0)->nodeValue);
 							} else {
 								$noteObject->pitch->alter = 0;
 							}
