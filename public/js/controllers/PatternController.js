@@ -128,9 +128,9 @@ MusicXMLAnalyzer.PatternController = function() {
 			for(var j = 0; j < currentPatternNotes[i].notes.length; j++){
 				// check if rest
 				if(currentPatternNotes[i].notes[j].type == 'rest'){
-					console.log("rest: ", currentPatternNotes[i].notes[j]);
 					var rest = currentPatternNotes[i].notes[j];
 					var restDuration = getDuration(currentPatternNotes[i].notes[j].duration);
+					console.log("rest duration: " + restDuration);
 					notesToBePlayed.push({'note': 0, 'noteDuration': restDuration});
 
 				} else if(currentPatternNotes[i].notes[j].type == 'note'){
@@ -155,6 +155,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		var i = 0;
 		playTune = function() {
 
+			console.log("play tune with: ", notesToBePlayed);
 			// console.log("notes to be played: " + notesToBePlayed.length);
 			if(i < notesToBePlayed.length){
 				// console.log("pause: ", pause);
@@ -168,15 +169,10 @@ MusicXMLAnalyzer.PatternController = function() {
 				var delay = 0;
 				var timeout = 0;
 				if(!once){
-						// Laut Michl Standard bzw oft vorkommendes Metronom-'tempo' = 120
-						//  d.h. 120 schläge pro minute
-						// beats per minute ausgehend von 1/4 noten
-						// -> 120 viertel pro minute
-						// --> 30 ganze pro minute
-						// ---> 1 ganze = 2 sek.
-						// ----> timeout = (vorheriges) delay ( = notenlänge) * 2000, da delay einer ganzen = 1 (siehe getDuration())
+					
 					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*2000;
-					if(notesToBePlayed[i-1].noteBeam != false) {
+					if(notesToBePlayed[i-1].noteBeam == "begin" || notesToBePlayed[i-1].noteBeam == "continue" ||
+						notesToBePlayed[i-1].noteBeam == "end") {
 						timeout = (timeout * 2) / 3;
 					}
 				}
