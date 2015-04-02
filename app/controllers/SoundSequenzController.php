@@ -61,19 +61,22 @@ class SoundSequenzController {
 
 // echo"<br><hr>part: ";
 				//traverse §notes[]
-				for ($i = 0; $i < count($part->measure); $i++) {	// war vorher "$i < count($part->measure)-1" Unsinn?
+				// $countPartMeasure = count($part->measure);
+				// for ($i = 0; $i < $countPartMeasure; $i++) 
+				foreach($part->measure as $measure){	// war vorher "$i < count($part->measure)-1" Unsinn?
 // echo"<br><hr>NOTE: ";
 // var_dump($part->measure[$i]);
-					for($j = 0; $j < count($part->measure[$i]->note); $j++) {
+				$countPartMeasureNote = count($measure->note);
+					for($j = 0; $j < $countPartMeasureNote; $j++) {
 						self::$noteCounter++;
-						$n = $part->measure[$i]->note[$j];
+						$n = $measure->note[$j];
 // echo"<br><hr>COUNTER: ";
 // var_dump(self::$noteCounter);
 						//set lastVoice at beginning of xml file
 						if(self::$once){
 // echo"<br><br>LASTVOICE SET ";
 							self::$once = false;
-							$lastVoice = $part->measure[$i]->note[$j]->voice;
+							$lastVoice = $measure->note[$j]->voice;
 						}
 
 						if(!isset($n->rest) && !isset($n->chord)){ //exclude rests & chords (only looking for note patterns)
@@ -166,7 +169,7 @@ class SoundSequenzController {
 // var_dump($lastVoice);
 // echo"<br><br>NEXT VOICE: ";
 // var_dump($part->measure[$i]->note[$j]->voice);
-								$lastVoice = $part->measure[$i]->note[$j]->voice;
+								$lastVoice = $measure->note[$j]->voice;
 								$j--;
 								self::$noteCounter--;
 								self::$xmlIntervalArray = array();
