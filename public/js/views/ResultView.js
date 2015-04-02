@@ -461,10 +461,10 @@ MusicXMLAnalyzer.ResultView = function(){
 								note.color = color;
 								note = checkNextNotes(pattern, note, i, j);
 								switch (alter) {
-									case "-2": note.addAccidental(0, new Vex.Flow.Accidental("bb")); break;
-									case "-1": note.addAccidental(0, new Vex.Flow.Accidental("b")); break;
-									case "1": note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
-									case "2": note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
+									case -2: note.addAccidental(0, new Vex.Flow.Accidental("bb")); break;
+									case -1: note.addAccidental(0, new Vex.Flow.Accidental("b")); break;
+									case 1: note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
+									case 2: note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
 								}
 
 								if (pattern.measures[i].notes[j].pitch.dot) {

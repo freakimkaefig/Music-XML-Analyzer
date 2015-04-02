@@ -12,12 +12,12 @@ class MelodyController {
 	static $noteCounter;
 
 	function __construct() {
-	
+
 
 	}
 
 	public function search($pattern) {
-	
+
 		$p = $pattern[0]->notes;
 		self::$patternArray = array();
 		self::$results = array();
@@ -54,7 +54,7 @@ class MelodyController {
 			$file_url = $upload->url;
 
 			self::$once = true;
-			self::$xmlArray = array(); 
+			self::$xmlArray = array();
 			self::$xmlPositionArray = array();
 			self::$result = new stdClass();
 			self::$result->occurences = array();
@@ -66,7 +66,7 @@ class MelodyController {
 				self::$noteCounter = 0;
 				self::$once = true;
 				for($i = 0; $i < count($part->measure); $i++){
-					
+
 					if($i == 0){
 						//get division for calculation of rest duration once
 						$partDivision = $part->measure[$i]->attributes->divisions;
@@ -115,7 +115,7 @@ class MelodyController {
 									$obj->beam = (string)$n->beam[0];
 								}
 								// else if dotted note
-								//check with "!isnull" because n->dot === object(SimpleXMLElement)#226 (0) { } 
+								//check with "!isnull" because n->dot === object(SimpleXMLElement)#226 (0) { }
 								elseif(!is_null($n->dot)){
 									$obj->dot = "1";
 								}
@@ -128,7 +128,7 @@ class MelodyController {
 							else{
 								// calculate rest duration
 								try{
-									$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / (int)$partBeatType);
+									$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / 4); // (int)$partBeatType);
 								} catch (Exception $e) {
 // echo"<br><hr>n->duration: <br>";
 // var_dump($n->duration);
@@ -225,14 +225,14 @@ class MelodyController {
 
 								}
 
-								} //if array lengths aren't equal yet, continue	
+								} //if array lengths aren't equal yet, continue
 
 						}
 						else{ //different voice incoming next; unset array; begin from scratch
 								$lastVoice = $part->measure[$i]->note[$j]->voice;
 								$j--;
 								self::$noteCounter--;
-								self::$xmlArray = array(); 
+								self::$xmlArray = array();
 								self::$xmlPositionArray = array();
 							}
 					}
