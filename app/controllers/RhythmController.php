@@ -162,7 +162,7 @@ public function search($pattern) {
 // var_dump($partDivision);
 // echo"<br>partBeatType: <br>";
 // var_dump($partBeatType);
-							    Log::info('Exception abgefangen: ', array('error' => $e->getMessage());
+							    Log::info('Exception abgefangen: ', array('error' => $e->getMessage()));
 							}
 
 							// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
