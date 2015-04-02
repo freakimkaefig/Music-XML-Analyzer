@@ -70,7 +70,7 @@ MusicXMLAnalyzer.ResultView = function(){
 		canvas.id = "canvas" + index;
 		canvas.className = "canvas";
 		canvas.width = 970;
-		canvas.height = (data.measures.length / 2) * 230;
+		canvas.height = (data.measures.length / 2) * 250;
 		var canvasContainer = document.getElementById('canvasContainer' + index);
 		canvasContainer.innerHTML = "";
 		canvasContainer.appendChild(canvas);
@@ -461,10 +461,10 @@ MusicXMLAnalyzer.ResultView = function(){
 								note.color = color;
 								note = checkNextNotes(pattern, note, i, j);
 								switch (alter) {
-									case "-2": note.addAccidental(0, new Vex.Flow.Accidental("bb")); break;
-									case "-1": note.addAccidental(0, new Vex.Flow.Accidental("b")); break;
-									case "1": note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
-									case "2": note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
+									case -2: note.addAccidental(0, new Vex.Flow.Accidental("bb")); break;
+									case -1: note.addAccidental(0, new Vex.Flow.Accidental("b")); break;
+									case 1: note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
+									case 2: note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
 								}
 
 								if (pattern.measures[i].notes[j].pitch.dot) {

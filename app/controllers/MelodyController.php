@@ -13,12 +13,12 @@ class MelodyController {
 	static $noteCounter;
 
 	function __construct() {
-	
+
 
 	}
 
 	public function search($pattern) {
-	
+
 		$p = $pattern[0]->notes;
 		self::$patternArray = array();
 		self::$results = array();
@@ -55,7 +55,7 @@ class MelodyController {
 			$file_url = $upload->url;
 
 			self::$once = true;
-			self::$xmlArray = array(); 
+			self::$xmlArray = array();
 			self::$xmlPositionArray = array();
 			self::$result = new stdClass();
 			self::$result->occurences = array();
@@ -70,7 +70,7 @@ class MelodyController {
 				// $countPartMeasure = count($part->measure);
 				// for($i = 0; $i < $countPartMeasure; $i++)
 				foreach($part->measure as $measure){
-					
+
 					if(self::$once2){
 						self::$once2 = false;
 						//get division for calculation of rest duration once
@@ -121,7 +121,7 @@ class MelodyController {
 									$obj->beam = (string)$n->beam[0];
 								}
 								// else if dotted note
-								//check with "!isnull" because n->dot === object(SimpleXMLElement)#226 (0) { } 
+								//check with "!isnull" because n->dot === object(SimpleXMLElement)#226 (0) { }
 								elseif(!is_null($n->dot)){
 									$obj->dot = "1";
 								}
@@ -134,7 +134,7 @@ class MelodyController {
 							else{
 								// calculate rest duration
 								try{
-									$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / (int)$partBeatType);
+									$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / 4); // (int)$partBeatType);
 								} catch (Exception $e) {
 // echo"<br><hr>n->duration: <br>";
 // var_dump($n->duration);
@@ -142,7 +142,7 @@ class MelodyController {
 // var_dump($partDivision);
 // echo"<br>partBeatType: <br>";
 // var_dump($partBeatType);
-								    echo 'Exception abgefangen: ',  $e->getMessage(), "\n";
+								    Log::error('Exception abgefangen: ',  array('error' => $e->getMessage()));
 								}
 
 								// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
@@ -231,14 +231,14 @@ class MelodyController {
 
 								}
 
-								} //if array lengths aren't equal yet, continue	
+								} //if array lengths aren't equal yet, continue
 
 						}
 						else{ //different voice incoming next; unset array; begin from scratch
 								$lastVoice = $measure->note[$j]->voice;
 								$j--;
 								self::$noteCounter--;
-								self::$xmlArray = array(); 
+								self::$xmlArray = array();
 								self::$xmlPositionArray = array();
 							}
 					}
