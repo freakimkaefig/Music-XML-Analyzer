@@ -47,6 +47,9 @@ class MelodyController {
 			}
 		}
 
+// echo"<br><hr>patternArray:<br>";
+// var_dump(array_values(self::$patternArray));
+
 		//get user uploads & file_id's & file_url
 		$user = User::find(Cookie::get('user_id'));
 		$user->uploads->each(function($upload) {
@@ -115,14 +118,14 @@ class MelodyController {
 
 								$obj = new stdClass();
 								$obj->interval = PatternController::getInterval($note);
-								$obj->type = $n->type;
+								$obj->type = (string)$n->type;
 
 								if(isset($n->{'time-modification'})){
 									$obj->beam = (string)$n->beam[0];
 								}
 								// else if dotted note
 								//check with "!isnull" because n->dot === object(SimpleXMLElement)#226 (0) { }
-								elseif(!is_null($n->dot)){
+								elseif($n->dot){
 									$obj->dot = "1";
 								}
 
@@ -192,10 +195,10 @@ class MelodyController {
 
 // echo"<br><br><hr>restDuration: <br>";
 // var_dump($restDuration);
-// echo"<br><br><hr>array_values: <br>xmlArray:<br>";
+								
+// echo"<br><br><hr>xmlArray:<br>";
 // var_dump(array_values(self::$xmlArray));
-// echo"<br><br>patternArray:<br>";
-// var_dump(array_values(self::$patternArray));
+
 // echo"<br><br>xmlPositionArray:";
 // var_dump(self::$xmlPositionArray);
 // echo"<br><br>";
@@ -244,6 +247,7 @@ class MelodyController {
 					}
 				}
 			}//end of foreach(parts as part)
+// echo "<hr><hr>END OF FILE!<hr><hr>";
 
 			// check if result->occ is empty
 			if(!empty(self::$result->occurences)){
