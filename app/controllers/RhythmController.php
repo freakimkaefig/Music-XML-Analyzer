@@ -8,6 +8,7 @@ class RhythmController {
 	static $xmlArray;
 	static $xmlPositionArray;
 	static $once;
+	static $once2 = true;
 	// static $restDuration;
 	static $noteCounter;
 
@@ -71,22 +72,26 @@ public function search($pattern) {
 		foreach($parts as $part){
 			self::$noteCounter = 0;
 			self::$once = true;
-			for($i = 0; $i < count($part->measure); $i++){
+			self::$once2 = true;
+			// $countPartMeasure = count($part->measure);
+			// for($i = 0; $i < $countPartMeasure; $i++)
+			foreach($part->measure as $measure){
 // echo"<br><hr>part->measure[$i] : ";
 // var_dump($part->measure[$i]);
 
-				if($i == 0){
+				if(self::$once2){
+					self::$once2 = false;
 					//get division for calculation of rest duration once
-					$partDivision = $part->measure[$i]->attributes->divisions;
+					$partDivision = $measure->attributes->divisions;
 					//get beat-type for calculation of rest duration once
-					$partBeatType = $part->measure[$i]->attributes->time->{'beat-type'};
+					$partBeatType = $measure->attributes->time->{'beat-type'};
 				}
 				//get beat-type changes within measures
 				else{ //no changes within first round
 					// if changes occure
-					if(isset($part->measure[$i]->attributes->time->{'beat-type'})){
+					if(isset($measure->attributes->time->{'beat-type'})){
 						// get changes
-						$partBeatType = $part->measure[$i]->attributes->time->{'beat-type'};
+						$partBeatType = $measure->attributes->time->{'beat-type'};
 					}
 				}
 
@@ -94,12 +99,13 @@ public function search($pattern) {
 // var_dump($partDivision);
 // echo"<br>partBeatType: <br> ";
 // var_dump($partBeatType);
-				for($j = 0; $j < count($part->measure[$i]->note); $j++){
+				$countPartMeasureNote = count($measure->note);
+				for($j = 0; $j < $countPartMeasureNote; $j++){
 					self::$noteCounter++;
-					$n = $part->measure[$i]->note[$j];
+					$n = $measure->note[$j];
 					if(self::$once){
 						self::$once = false;
-						$lastVoice = $part->measure[$i]->note[$j]->voice;
+						$lastVoice = $measure->note[$j]->voice;
 					}
 
 					if((int)$n->voice == (int)$lastVoice){
@@ -156,7 +162,7 @@ public function search($pattern) {
 // var_dump($partDivision);
 // echo"<br>partBeatType: <br>";
 // var_dump($partBeatType);
-							    Log::info('Exception abgefangen: ', array('error' => $e->getMessage());
+							    Log::info('Exception abgefangen: ', array('error' => $e->getMessage()));
 							}
 
 							// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
@@ -262,7 +268,7 @@ public function search($pattern) {
 					else{ //different voice incoming next; unset array; begin from scratch
 // echo"<br><br>VOICES DONT MATCH -> : ";
 // var_dump(self::$xmlPositionArray);
-							$lastVoice = $part->measure[$i]->note[$j]->voice;
+							$lastVoice = $measure->note[$j]->voice;
 							$j--;
 							self::$noteCounter--;
 							self::$xmlArray = array();

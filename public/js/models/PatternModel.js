@@ -9,7 +9,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	curAccidential = "none",
 	curDuration = "quarter",
 	curRythSpec = "none",
-	curOctave = "5",
+	curOctave = "4",
 	VEXFLOW_REST_SIGN = "r",
 	// completeDurationIn64th = 0,
 	first = true,
@@ -203,6 +203,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					//break
 					noteElements.push(
 					{
+						type: curMode,
 						notes:
 						[
 							{
@@ -259,6 +260,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					//break
 					noteElements.push(
 					{
+						type: curMode,
 						notes:
 						[
 							{
@@ -440,6 +442,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	setDefaultValsForRhythmMode = function() {
 		curDuration = "quarter";
 		curRythSpec = "none";
+		curOctave = "5";
 
 		// lastDurationForTriplet = curDuration;
 		tripletCurrentAmount = 0;
