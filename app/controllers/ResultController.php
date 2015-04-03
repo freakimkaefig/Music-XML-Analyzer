@@ -17,6 +17,7 @@ class ResultController extends BaseController {
 			return Redirect::route('pattern');
 		}
 
+		Debugbar::info(Cache::get('results'));
 		return View::make('results.list');
 	}
 
@@ -66,10 +67,12 @@ class ResultController extends BaseController {
 		$file_url = Input::get('file_url');
 		$part_id = Input::get('part_id');
 		$voice = Input::get('voice');
+		$startMeasure = Input::get('startMeasure');
 		$start = Input::get('start') - 1;
+		$endMeasure = Input::get('endMeasure');
 		$end = Input::get('end') - 1;
 
-		$resultExtract = $this->generateResultExtract($file_id, $part_id, $voice, $start, $end);
+		$resultExtract = $this->generateResultExtract($file_id, $part_id, $voice, $startMeasure, $start, $endMeasure, $end);
 
 		return json_encode($resultExtract);
 	}
@@ -86,8 +89,9 @@ class ResultController extends BaseController {
 	 * @return 	\stdClass 	A \stdClass object containing information to render staves with vexflow
 	 *
 	 */
-	private function generateResultExtract($upload_id, $part_id, $voice, $start, $end) {
+	private function generateResultExtract($upload_id, $part_id, $voice, $startMeasure, $start, $endMeasure, $end) {
 		set_time_limit(300);
+		Log::info("Upload: " . $upload_id . ", Part: " . $part_id . ", StartMeasure: " . $startMeasure . ", Start: " . $start . ", EndMeasure: " . $endMeasure . ", End: ". $end);
 		$upload = Upload::find($upload_id);
 
 		$doc = new DOMDocument();
@@ -99,8 +103,19 @@ class ResultController extends BaseController {
 		$resultObject = new stdClass();
 		$resultObject->type = 2;
 		$resultObject->part_id = $part_id;
-		$resultObject->start_extract = $this->calculateStartExtract($part, $start);
-		$resultObject->end_extract = $this->calculateEndExtract($part, $end);
+		// $resultObject->start_extract = $this->calculateStartExtract($part, $start);
+		// $resultObject->end_extract = $this->calculateEndExtract($part, $end);
+		$start_extract = $startMeasure;
+		if ($startMeasure > 1) {
+			$start_extract--;
+		}
+		$end_extract = $endMeasure;
+		if ($part->getElementsByTagName('measure')->length > $endMeasure) {
+			$end_extract++;
+		}
+
+		$resultObject->start_extract = $start_extract;
+		$resultObject->end_extract = $end_extract;
 		$resultObject->measures = array();
 
 		// calculate beat type
@@ -110,22 +125,42 @@ class ResultController extends BaseController {
 		$curBeatType = $partBeatType;
 
 		$measureCounter = 0;
-		$noteCounter = 0;
 
-		for ($j = 1; $j <= $resultObject->end_extract; $j++) {
-			$part_measures = $part->getElementsByTagName('measure');
-			foreach ($part_measures as $part_measure) {
-				if ($part_measure->getAttribute('number') == $j) {
-					$measure = $part_measure;
-					break;
-				}
-			}
+		$part_measures = $part->getElementsByTagName('measure');
+		// foreach ($part_measures as $measure) {
+		for ($j = $start_extract; $j <= $end_extract; $j++) {
+			$noteCounter = 0;
+			$measure = $part_measures->item($j - 1);
+			// $measure_number = intval($measure->getAttribute('number'));
+
+			// $part_measures = $part->getElementsByTagName('measure');
+			// foreach ($part_measures as $part_measure) {
+			// 	if ($part_measure->getAttribute('number') == $j) {
+			// 		$measure = $part_measure;
+			// 		break;
+			// 	}
+			// }
+			// $measure = $part_measures->item($j-1);
 			$measureNotes = $measure->getElementsByTagName('note');
 
-			if ($j < $resultObject->start_extract) {
+			// if ($measure_number < $start_extract) {
 				// add count of notes before extract starts to counter
-				$noteCounter += $measureNotes->length;
-			} else {
+				// Log::info("j < start_extract");
+				// Log::info("Measure: " . $measure_number);
+				// Log::info("Count notes: " . $measureNotes->length);
+				// $noteCounter += $measureNotes->length;
+				// foreach ($measureNotes as $measureNote) {
+				// 	$noteCounter++;
+				// }
+				// Log::info("Counter (after): " . $noteCounter);
+				// Log::info("---------------");
+			// } elseif ($measure_number > $resultObject->end_extract) {
+				// break;
+			// } else {
+				// Log::info("else");
+				// Log::info("Measure: " . $measure_number);
+				// Log::info("Counter (before): " . $noteCounter);
+				// Log::info("---------------");
 				$measureObject = new stdClass();
 				$time_signature = false;	// no change in time signature
 
@@ -158,7 +193,7 @@ class ResultController extends BaseController {
 
 						// set color
 						$currentColor = "#000000";
-						if ($noteCounter >= $start && $noteCounter <= $end) {
+						if ($noteCounter >= $start && $noteCounter <= $end && ($j == $startMeasure || $j == $endMeasure)) {
 							// set color to red if note is between start and end of result
 							$currentColor = "#b71c1c";
 						}
@@ -267,11 +302,14 @@ class ResultController extends BaseController {
 						$noteCounter++;
 					} // END if ($note->getElementsByTagName('voice')->item(0) == $voice) {
 				} /* END: foreach ($measureNotes as $note) */
+				// Log::info("Counter (after): " . $noteCounter);
+				// Log::info("---------------");
 				$measureCounter++;
-			} /* END: if ($j < $resultObject->start_extract) */
+			// } /* END: if ($j < $resultObject->start_extract) */
 		}
 
 		unset($doc);
+		// Log::info("=================================================================");
 		return $resultObject;
 	}
 
