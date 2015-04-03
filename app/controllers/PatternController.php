@@ -62,7 +62,8 @@ class PatternController extends BaseController {
 						"B" => 11);
 		$note = $n;
 		$obj_arr = (array)$note;
-		// var_dump($obj_arr);
+		echo "<br><hr><br> GET-INTERVAL note:<br>";
+		var_dump($obj_arr);
 		if(!isset($obj_arr["rest"])){
 
 			$noteStep = $note->pitch->step;
@@ -75,7 +76,8 @@ class PatternController extends BaseController {
 					$noteValue = (int)$noteValue + (int)$noteAlter;
 				}
 				$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
-
+				echo "<br><br>calc. INTERVAL: <br>";
+				var_dump($noteValue);
 				return $noteValue;
 			}
 			else{
