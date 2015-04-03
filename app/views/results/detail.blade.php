@@ -4,9 +4,6 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-xs-6 text-left">
-			<a href="{{ URL::route('searchResults') }}">&laquo; Back to results</a>
-		</div>
 		<div class="col-xs-12 text-center">
 			<h1>Search results</h1>
 			<h4>for your pattern:</h4>
@@ -92,6 +89,10 @@
 	    </a>
 	</div>
 
+</div>
+
+<div class="col-xs-6 text-left">
+	<a href="{{ URL::route('searchResults') }}">&laquo; Back to results</a>
 </div>
 
 <?php
