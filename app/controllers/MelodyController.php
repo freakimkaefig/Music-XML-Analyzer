@@ -47,8 +47,8 @@ class MelodyController {
 			}
 		}
 
-// echo"<br><hr>patternArray:<br>";
-// var_dump(array_values(self::$patternArray));
+echo"<br><hr>patternArray:<br>";
+var_dump(array_values(self::$patternArray));
 
 		//get user uploads & file_id's & file_url
 		$user = User::find(Cookie::get('user_id'));
@@ -65,14 +65,23 @@ class MelodyController {
 
 			$parts = $xml->xpath("//part");
 
+// echo "<br><hr>PARTS: ";
+// var_dump(count($parts));
 
 			foreach($parts as $part){
+
+// echo "<br><hr>MEASURES IN THIS PART: ";
+// var_dump(count($part->measure));
+
 				self::$noteCounter = 0;
 				self::$once = true;
 				self::$once2 = true;
 				// $countPartMeasure = count($part->measure);
 				// for($i = 0; $i < $countPartMeasure; $i++)
 				foreach($part->measure as $measure){
+
+// echo "<br><hr>NOTES IN THIS MEASURE: ";
+// var_dump(count($measure->note));
 
 					if(self::$once2){
 						self::$once2 = false;
