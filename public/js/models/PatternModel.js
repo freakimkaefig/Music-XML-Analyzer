@@ -203,6 +203,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					//break
 					noteElements.push(
 					{
+						type: curMode,
 						notes:
 						[
 							{
@@ -259,6 +260,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					//break
 					noteElements.push(
 					{
+						type: curMode,
 						notes:
 						[
 							{
