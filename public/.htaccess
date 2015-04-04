@@ -13,3 +13,7 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+#increase post size (for uploads)
+php_value  post_max_size 2048M
+php_value  upload_max_filesize 2048M
