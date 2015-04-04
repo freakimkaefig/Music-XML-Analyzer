@@ -530,16 +530,17 @@ MusicXMLAnalyzer.ResultView = function(){
 					newNote = null;
 					newNote = new Vex.Flow.StaveNote({ keys: newKeys, duration: note.duration, auto_stem: true });
 					newNote = checkNextNotes(pattern, newNote, i, j);
+
+					// console.log(note.color);
+					if (pattern.measures[i].notes[j].color == "#b71c1c" || note.color == "#b71c1c") {
+						// console.log("red", i, j);
+						newNote.color = "#b71c1c";
+					} else {
+						newNote.color = note.color;
+					}
 				}
 			}
 
-			// console.log(note.color);
-			if (pattern.measures[i].notes[j].color == "#b71c1c" || note.color == "#b71c1c") {
-				// console.log("red", i, j);
-				newNote.color = "#b71c1c";
-			} else {
-				newNote.color = note.color;
-			}
 		}
 		return newNote;
 	},

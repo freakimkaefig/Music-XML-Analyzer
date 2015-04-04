@@ -158,6 +158,7 @@ class ResultController extends BaseController {
 
 			// loop over each note in measure
 			foreach ($measureNotes as $note) {
+				// $noteCounter++;
 				$noteVoice = $note->getElementsByTagName('voice')->item(0)->nodeValue;
 				if ($noteVoice == $voice) {
 					// create note object
@@ -170,6 +171,7 @@ class ResultController extends BaseController {
 						$currentColor = "#b71c1c";
 					}
 					$noteObject->color = $currentColor;
+					Log::info("Measure: " . $j . ", NoteCounter: " . $noteCounter . ", Start: " . $start . ", End: " . $end . ", Color: " . $currentColor);
 
 					// decide if current element is a note or a rest (only notes have a pitch child)
 					$pitch = $note->getElementsByTagName('pitch');
@@ -271,9 +273,9 @@ class ResultController extends BaseController {
 
 					// append note to results
 					$resultObject->measures[$measureCounter]->notes[] = $noteObject;
-					$noteCounter++;
-				} // END if ($note->getElementsByTagName('voice')->item(0)->nodeValue == $voice) {
-			} /* END: foreach ($measureNotes as $note) */
+				} // END if ($noteVoice == $voice) {
+				$noteCounter++;
+			} // END: foreach ($measureNotes as $note)
 			$measureCounter++;
 		}
 
