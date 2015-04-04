@@ -7,10 +7,11 @@ class MelodyController {
 	static $patternArray;
 	static $xmlArray;
 	static $xmlPositionArray;
+	static $xmlCounterArray;
 	static $once;
 	static $once2 = true;
-	// static $restDuration;
 	static $noteCounter;
+	static $counter;
 
 	function __construct() {
 
@@ -57,9 +58,14 @@ class MelodyController {
 			$file_id = $upload->id;
 			$file_url = $upload->url;
 
+			$doc = new DOMDocument();
+			$doc->load($file_url);
+			$xPath = new DOMXPath($doc);
+
 			self::$once = true;
 			self::$xmlArray = array();
 			self::$xmlPositionArray = array();
+			self::$xmlCounterArray = array();
 			self::$result = new stdClass();
 			self::$result->occurences = array();
 
@@ -93,6 +99,7 @@ class MelodyController {
 					$countPartMeasureNote = count($measure->note);
 					for($j = 0; $j < $countPartMeasureNote; $j++){
 						self::$noteCounter++;
+						self::$counter++;
 						$n = $measure->note[$j];
 
 						if(self::$once){
@@ -112,6 +119,7 @@ class MelodyController {
 							$note->voice = $n->voice;
 							// $note->type = $n->type;
 							$note->position = self::$noteCounter;
+							$note->counter = self::$counter;
 
 							// if note
 							if(!$n->rest && !isset($n->chord)){
@@ -124,13 +132,13 @@ class MelodyController {
 									$obj->beam = (string)$n->beam[0];
 								}
 								// else if dotted note
-								//check with "!isnull" because n->dot === object(SimpleXMLElement)#226 (0) { }
 								elseif($n->dot){
 									$obj->dot = "1";
 								}
 
 								array_push(self::$xmlArray, $obj);
 								array_push(self::$xmlPositionArray, $note->position);
+								array_push(self::$xmlCounterArray, $note->counter);
 
 							}
 							// else if rest
@@ -187,6 +195,7 @@ class MelodyController {
 								}
 								array_push(self::$xmlArray, $restDuration);
 								array_push(self::$xmlPositionArray, $note->position);
+								array_push(self::$xmlCounterArray, $note->counter);
 
 							}
 
@@ -209,10 +218,18 @@ class MelodyController {
 									self::$result->file_id = $file_id;
 									self::$result->file_url = $file_url;
 
+									$docPart = $xPath->query('//part[@id="' . $part['id'] . '"]')->item(0);
+									$startNote = $docPart->getElementsByTagName('note')->item((reset(self::$xmlPositionArray) - 1));
+									$startMeasureNumber = $startNote->parentNode->getAttribute('number');
+									$endNote = $docPart->getElementsByTagName('note')->item((end(self::$xmlPositionArray) - 1));
+									$endMeasureNumber = $endNote->parentNode->getAttribute('number');
+
 									//fill with occurences
 									$occ = new stdClass();
-									$occ->start = reset(self::$xmlPositionArray);
-									$occ->end = end(self::$xmlPositionArray);
+									$occ->start = reset(self::$xmlCounterArray);
+									$occ->startMeasure = $startMeasureNumber;
+									$occ->end = end(self::$xmlCounterArray);
+									$occ->endMeasure = $endMeasureNumber;
 									$occ->voice = (int)$note->voice;
 									$occ->part_id = (string)$part['id'];
 
@@ -221,15 +238,16 @@ class MelodyController {
 									//reset arrays
 									self::$xmlArray = array();
 									self::$xmlPositionArray = array();
+									self::$xmlCounterArray = array();
 
 								}else{
 
 									self::$xmlArray = array_splice(self::$xmlArray, 1);
-
+									self::$xmlCounterArray = array_splice(self::$xmlCounterArray, 1);
 									self::$xmlPositionArray = array_splice(self::$xmlPositionArray, 1);
 
 									self::$xmlArray = array_values(self::$xmlArray);
-
+									self::$xmlCounterArray = array_values(self::$xmlCounterArray);
 									self::$xmlPositionArray = array_values(self::$xmlPositionArray);
 
 								}
@@ -241,8 +259,10 @@ class MelodyController {
 								$lastVoice = $measure->note[$j]->voice;
 								$j--;
 								self::$noteCounter--;
+								self::$counter--;
 								self::$xmlArray = array();
 								self::$xmlPositionArray = array();
+								self::$xmlCounterArray = array();
 							}
 					}
 				}
