@@ -52,6 +52,7 @@
 						<ul class="no-list">
 							<li class="partName"><strong>Part name (Instrument):</strong> {{ ResultController::_getInstrument($result->file_id, $resultItem->part_id) }}</li>
 							<li class="partId"><strong>Part ID:</strong> {{ $resultItem->part_id }}</li>
+							<li class="voice"><strong>Voice:</strong> {{ $resultItem->voice }}</li>
 						</ul>
 					</div>
 					<div class="col-xs-3 martop40">

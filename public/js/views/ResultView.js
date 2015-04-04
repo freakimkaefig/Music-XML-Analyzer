@@ -426,29 +426,71 @@ MusicXMLAnalyzer.ResultView = function(){
 					var ties = [];
 					var tuplets = [];
 					var time_signature = pattern.measures[i].time_signature;
-					for (var j = 0; j < pattern.measures[i].notes.length; j++) {
+					if (pattern.measures[i].notes) {
+						for (var j = 0; j < pattern.measures[i].notes.length; j++) {
 
-						// set color of current note
-						var color = pattern.measures[i].notes[j].color;
+							// set color of current note
+							var color = pattern.measures[i].notes[j].color;
 
-						var note;
-						if (pattern.measures[i].notes[j].type == "note") {
-							if (!pattern.measures[i].notes[j].pitch.chord) {
-								// determine note variables
+							var note;
+							if (pattern.measures[i].notes[j].type == "note") {
+								if (!pattern.measures[i].notes[j].pitch.chord) {
+									// determine note variables
+									var step = pattern.measures[i].notes[j].pitch.step;
+									var octave = pattern.measures[i].notes[j].pitch.octave;
+									var alter = pattern.measures[i].notes[j].pitch.alter;
+									var keys = [getVexflowKey(step, octave, alter )];
+
+									var noteTies = [false];
+									if (pattern.measures[i].notes[j].pitch.ties) {
+										noteTies = pattern.measures[i].notes[j].pitch.ties;
+									}
+
+									var tuplet = false;
+									if (pattern.measures[i].notes[j].pitch.tuplet) {
+										tuplet = pattern.measures[i].notes[j].pitch.tuplet;
+									}
+
+									var type = pattern.measures[i].notes[j].pitch.type;
+									var durationType = 0;
+									if (pattern.measures[i].notes[j].pitch.dot) {
+										durationType = 2;
+									}
+									var noteDuration = getVexflowDuration(type, durationType);
+
+									note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true });
+									note.color = color;
+									note = checkNextNotes(pattern, note, i, j);
+									switch (alter) {
+										case -2: note.addAccidental(0, new Vex.Flow.Accidental("bb")); break;
+										case -1: note.addAccidental(0, new Vex.Flow.Accidental("b")); break;
+										case 1: note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
+										case 2: note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
+									}
+
+									if (pattern.measures[i].notes[j].pitch.dot) {
+										note.addDotToAll();
+									}
+
+									ties[noteCounter] = noteTies;
+									tuplets[noteCounter] = tuplet;
+									notes.push(note);
+									noteCounter++;
+								}
+							} else if (pattern.measures[i].notes[j].type == "rest") {
+								var durationType = 1; // rests type is 1
+								var noteDuration = getVexflowDuration(pattern.measures[i].notes[j].duration, durationType);
+
+								note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: noteDuration });
+								note.color = color;
+								ties[noteCounter] = [false];
+								notes.push(note);
+								noteCounter++;
+							} else if (pattern.measures[i].notes[j].type == "unpitched") {
 								var step = pattern.measures[i].notes[j].pitch.step;
 								var octave = pattern.measures[i].notes[j].pitch.octave;
 								var alter = pattern.measures[i].notes[j].pitch.alter;
 								var keys = [getVexflowKey(step, octave, alter )];
-
-								var noteTies = [false];
-								if (pattern.measures[i].notes[j].pitch.ties) {
-									noteTies = pattern.measures[i].notes[j].pitch.ties;
-								}
-
-								var tuplet = false;
-								if (pattern.measures[i].notes[j].pitch.tuplet) {
-									tuplet = pattern.measures[i].notes[j].pitch.tuplet;
-								}
 
 								var type = pattern.measures[i].notes[j].pitch.type;
 								var durationType = 0;
@@ -456,52 +498,12 @@ MusicXMLAnalyzer.ResultView = function(){
 									durationType = 2;
 								}
 								var noteDuration = getVexflowDuration(type, durationType);
-
-								note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true });
-								note.color = color;
-								note = checkNextNotes(pattern, note, i, j);
-								switch (alter) {
-									case -2: note.addAccidental(0, new Vex.Flow.Accidental("bb")); break;
-									case -1: note.addAccidental(0, new Vex.Flow.Accidental("b")); break;
-									case 1: note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
-									case 2: note.addAccidental(0, new Vex.Flow.Accidental("#")); break;
-								}
-
-								if (pattern.measures[i].notes[j].pitch.dot) {
-									note.addDotToAll();
-								}
-
-								ties[noteCounter] = noteTies;
-								tuplets[noteCounter] = tuplet;
+								note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true});
+								note.color = '#006064';
+								ties[noteCounter] = [false];
 								notes.push(note);
 								noteCounter++;
 							}
-						} else if (pattern.measures[i].notes[j].type == "rest") {
-							var durationType = 1; // rests type is 1
-							var noteDuration = getVexflowDuration(pattern.measures[i].notes[j].duration, durationType);
-
-							note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: noteDuration });
-							note.color = color;
-							ties[noteCounter] = [false];
-							notes.push(note);
-							noteCounter++;
-						} else if (pattern.measures[i].notes[j].type == "unpitched") {
-							var step = pattern.measures[i].notes[j].pitch.step;
-							var octave = pattern.measures[i].notes[j].pitch.octave;
-							var alter = pattern.measures[i].notes[j].pitch.alter;
-							var keys = [getVexflowKey(step, octave, alter )];
-
-							var type = pattern.measures[i].notes[j].pitch.type;
-							var durationType = 0;
-							if (pattern.measures[i].notes[j].pitch.dot) {
-								durationType = 2;
-							}
-							var noteDuration = getVexflowDuration(type, durationType);
-							note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true});
-							note.color = '#006064';
-							ties[noteCounter] = [false];
-							notes.push(note);
-							noteCounter++;
 						}
 					}
 					measures.push({ notes: notes, ties: ties, tuplets: tuplets, time_signature: time_signature, pattern: pattern });
