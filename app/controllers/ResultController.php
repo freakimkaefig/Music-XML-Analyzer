@@ -166,9 +166,16 @@ class ResultController extends BaseController {
 
 					// set color
 					$currentColor = "#000000";
-					if ($noteCounter >= $start && $noteCounter <= $end && ($j == $startMeasure || $j == $endMeasure)) {
-						// set color to red if note is between start and end of result
-						$currentColor = "#b71c1c";
+					if ($startMeasure == $endMeasure) {
+						if (($noteCounter >= $start && $noteCounter <= $end) && ($j == $startMeasure || $j == $endMeasure)) {
+							// set color to red if note is between start and end of result
+							$currentColor = "#b71c1c";
+						}
+					} else {
+						if (($j == $startMeasure && $noteCounter >= $start) || ($j == $endMeasure && $noteCounter <= $end)) {
+							// set color to red if note is between start and end of result
+							$currentColor = "#b71c1c";
+						}
 					}
 					$noteObject->color = $currentColor;
 					Log::info("Measure: " . $j . ", NoteCounter: " . $noteCounter . ", Start: " . $start . ", End: " . $end . ", Color: " . $currentColor);
