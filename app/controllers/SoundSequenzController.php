@@ -112,8 +112,13 @@ class SoundSequenzController {
 							// if voice stays the same
 							if((int)$n->voice == (int)$lastVoice){
 								// push current interval to xmlIntervalArray
+
+								$res = new stdClass();
+								$res->part = $part['id'];
+								$res->pos = self::$noteCounter;
+
 								array_push(self::$xmlIntervalArray, PatternController::getInterval($note));
-								array_push(self::$xmlPositionArray, $note->position);
+								array_push(self::$xmlPositionArray, $res);
 								array_push(self::$xmlCounterArray, $note->counter);
 // echo"<br><br>xmlIntervalArray: ";
 // var_dump(self::$xmlIntervalArray);
@@ -136,10 +141,13 @@ class SoundSequenzController {
 										self::$result->file_id = $file_id;
 										self::$result->file_url = $file_url;
 
-										$docPart = $xPath->query('//part[@id="' . $part['id'] . '"]')->item(0);
-										$startNote = $docPart->getElementsByTagName('note')->item((reset(self::$xmlPositionArray) - 1));
+										$docPart = $xPath->query('//part[@id="' . (string)reset(self::$xmlPositionArray)->part . '"]')->item(0);
+										$startNote = $docPart->getElementsByTagName('note')->item(((string)reset(self::$xmlPositionArray)->pos - 1));
 										$startMeasureNumber = $startNote->parentNode->getAttribute('number');
-										$endNote = $docPart->getElementsByTagName('note')->item((end(self::$xmlPositionArray) - 1));
+
+										//get docpart again, if partChange occured between start & end note
+										$docPart = $xPath->query('//part[@id="' . (string)end(self::$xmlPositionArray)->part . '"]')->item(0);
+										$endNote = $docPart->getElementsByTagName('note')->item(((string)end(self::$xmlPositionArray)->pos - 1));
 										$endMeasureNumber = $endNote->parentNode->getAttribute('number');
 
 										//fill with occurences

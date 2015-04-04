@@ -49,8 +49,7 @@ public function search($pattern) {
 			array_push(self::$patternArray, $note->duration);
 		}
 	}
-
-// echo"patternArray: ";
+// echo"<br><br>patternArray:<br> ";
 // var_dump(self::$patternArray);
 
 	//get user uploads & file_id's & file_url
@@ -73,10 +72,14 @@ public function search($pattern) {
 
 		$parts = $xml->xpath("//part");
 
-// echo"<br><hr>parts : ";
-// var_dump($parts);
+// echo"<br><br>file: : ";
+// var_dump($file_url);
 
 		foreach($parts as $part){
+
+// echo"<br><br>part ID: <br>";
+// var_dump($part['id']);
+
 			self::$noteCounter = 0;
 			self::$once = true;
 			self::$once2 = true;
@@ -152,8 +155,12 @@ public function search($pattern) {
 							}
 // echo"<br><hr>obj: <br>";
 // var_dump($obj);
+							$res = new stdClass();
+							$res->part = $part['id'];
+							$res->pos = self::$noteCounter;
+
 							array_push(self::$xmlArray, $obj);
-							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
+							array_push(self::$xmlPositionArray, $res);
 							array_push(self::$xmlCounterArray, self::$counter/*$note->position*/);
 // echo"<br><hr>xmlArray: ";
 // var_dump(self::$xmlArray);
@@ -214,8 +221,12 @@ public function search($pattern) {
 // echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
 							}
 
+							$res = new stdClass();
+							$res->part = $part['id'];
+							$res->pos = self::$noteCounter;
+
 							array_push(self::$xmlArray, $restDuration);
-							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
+							array_push(self::$xmlPositionArray, $res);
 							array_push(self::$xmlCounterArray, self::$counter/*$note->position*/);
 
 						} //end else if rest
@@ -231,6 +242,8 @@ public function search($pattern) {
 // // echo"<br><br>xmlPositionArray:";
 // var_dump(self::$xmlPositionArray);
 // echo"<br><br>";
+// echo"<br><br>noteCounter: <br>";
+// var_dump(self::$noteCounter);
 						//check if Array-length equals Pattern-length already
 						if(count(self::$xmlArray) == count(self::$patternArray)){
 // echo"<br><hr>same length xmlArray: ";
@@ -241,10 +254,32 @@ public function search($pattern) {
 								self::$result->file_id = $file_id;
 								self::$result->file_url = $file_url;
 
-								$docPart = $xPath->query('//part[@id="' . $part['id'] . '"]')->item(0);
-								$startNote = $docPart->getElementsByTagName('note')->item((reset(self::$xmlPositionArray) - 1));
+								$docPart = $xPath->query('//part[@id="' . (string)reset(self::$xmlPositionArray)->part . '"]')->item(0);
+// echo"<br><br>xmlPositionArray--pos: <br>";
+// var_dump((string)reset(self::$xmlPositionArray)->pos);
+// echo"<br><br>docPart->getElementsByTagName('note'): <br>";
+// var_dump($docPart->getElementsByTagName('note'));
+// echo"<br><br>noteCounter INSIDE MATCH: <br>";
+// var_dump(self::$noteCounter);
+// Debugbar::info($part['id']);
+// // Debugbar::info($docPart);
+// Debugbar::info(reset(self::$xmlPositionArray) - 1);
+// Debugbar::info($docPart->getElementsByTagName('note'));
+
+// echo"<br><br>docPart->getElementsByTagName('note')->item´COUNT:<br>";
+// var_dump($docPart->getElementsByTagName('note')->item(0));
+// echo"<br><br>xmlPositionArray:<br>";
+// var_dump(self::$xmlPositionArray);
+// echo"<br><br>reset(array) - 1:<br>";
+// var_dump((reset(self::$xmlPositionArray) - 1));
+// echo"<br><br>reset(array):<br>";
+// var_dump(reset(self::$xmlPositionArray));
+								$startNote = $docPart->getElementsByTagName('note')->item(((string)reset(self::$xmlPositionArray)->pos - 1));
 								$startMeasureNumber = $startNote->parentNode->getAttribute('number');
-								$endNote = $docPart->getElementsByTagName('note')->item((end(self::$xmlPositionArray) - 1));
+
+								//get docpart again, if partChange occured between start & end note
+								$docPart = $xPath->query('//part[@id="' . (string)end(self::$xmlPositionArray)->part . '"]')->item(0);
+								$endNote = $docPart->getElementsByTagName('note')->item(((string)end(self::$xmlPositionArray)->pos - 1));
 								$endMeasureNumber = $endNote->parentNode->getAttribute('number');
 
 								//fill with occurences
@@ -255,6 +290,17 @@ public function search($pattern) {
 								$occ->endMeasure = $endMeasureNumber;
 								$occ->voice = (int)$n->voice/*$note->voice*/;
 								$occ->part_id = (string)$part['id'];
+// echo"<br><br><hr>RESULT FOUND<br>";
+// var_dump(array_values(self::$xmlArray));
+// echo"<br><br>startMeasureNumber: <br>";
+// var_dump($startMeasureNumber);
+// echo"<br><br>endMeasureNumber: <br>";
+// var_dump($endMeasureNumber);
+// echo"<br><br>xmlCounterArray:";
+// var_dump(self::$xmlCounterArray);
+// echo "<br>PART_ID:";
+// var_dump((string)$part['id']);
+// echo"<br><br>";
 
 								array_push(self::$result->occurences, $occ);
 // echo"<br><br>MATCH result: ";
