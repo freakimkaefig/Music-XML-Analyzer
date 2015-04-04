@@ -347,7 +347,6 @@ MusicXMLAnalyzer.ResultView = function(){
 				// sound sequence
 				for (var i = 0; i < pattern.measures.length; i++) {	// iterate over measures in result
 					var notes = [];	//creating notes array for notes in current measure
-					var duration = 0;	// resetting duration to 0
 					var time_signature = pattern.measures[i].time_signature;
 					for (var j = 0; j < pattern.measures[i].notes.length; j++) {	// iterate over all notes in current measure
 						var step = pattern.measures[i].notes[j].pitch.step;	// determine the step
@@ -364,9 +363,8 @@ MusicXMLAnalyzer.ResultView = function(){
 						}
 
 						notes.push(note);
-						duration += 16;	// add 16 to duration; quarter = 16/64
 					}
-					measures.push({ notes: notes, duration: duration, time_signature: time_signature, pattern: pattern });	// push note to array
+					measures.push({ notes: notes, time_signature: time_signature, pattern: pattern });	// push note to array
 				}
 				break;
 
@@ -385,8 +383,11 @@ MusicXMLAnalyzer.ResultView = function(){
 							var keys = ["b/4"];
 
 							var tuplet = false;
-							if (pattern.measures[i].notes[j].pitch.tuplet) {
-								tuplet = pattern.measures[i].notes[j].pitch.tuplet;
+							if (pattern.measures[i].notes[j].pitch.beam) {
+								var beam = pattern.measures[i].notes[j].pitch.beam;
+								if (beam == "begin" || beam == "continue" || beam == "end") {
+									tuplet = "3";
+								}
 							}
 
 							var type = pattern.measures[i].notes[j].pitch.type;
@@ -413,7 +414,7 @@ MusicXMLAnalyzer.ResultView = function(){
 							notes.push(note);
 						}
 					}
-					measures.push({ notes: notes, tuplet: tuplets, time_signature: time_signature, pattern: pattern });
+					measures.push({ notes: notes, tuplets: tuplets, time_signature: time_signature, pattern: pattern });
 				}
 				break;
 
