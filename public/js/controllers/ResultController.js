@@ -116,37 +116,39 @@ MusicXMLAnalyzer.ResultController = function(){
 
 		//determine MIDI values for currentResultNotes
 		for(var i = 0; i < currentResultNotes.measures.length; i++){
-			for(var j = 0; j < currentResultNotes.measures[i].notes.length; j++){
-				// check if rest
-				if(currentResultNotes.measures[i].notes[j].type == 'rest'){
-					var rest = currentResultNotes.measures[i].notes[j];
-					var restDuration = getDuration(currentResultNotes.measures[i].notes[j].duration);
-					notesToBePlayed.push({'note': 0, 'noteDuration': restDuration});
+			if (currentResultNotes.measures[i].notes) {
+				for(var j = 0; j < currentResultNotes.measures[i].notes.length; j++){
+					// check if rest
+					if(currentResultNotes.measures[i].notes[j].type == 'rest'){
+						var rest = currentResultNotes.measures[i].notes[j];
+						var restDuration = getDuration(currentResultNotes.measures[i].notes[j].duration);
+						notesToBePlayed.push({'note': 0, 'noteDuration': restDuration});
 
-				}else if(currentResultNotes.measures[i].notes[j].type == 'note'){
-					var note = currentResultNotes.measures[i].notes[j];
-					var noteStep = note.pitch.step;
-					var noteOctave = note.pitch.octave;
-					var noteAlter = note.pitch.alter;
-					var noteDuration = getDuration(note.pitch.type);
-					var noteTuplet = note.pitch.tuplet;
-					if(typeof noteDuration === 'undefined'){
-						console.log("noteduration is undefined");
-						noteDuration = 0.25;
-					}
-					if(note.pitch.dot){
-						noteDuration += 0.5*noteDuration;
-					}
-					if(typeof noteTuplet === 'undefined'){
-						console.log("beam is undefined");
-						noteTuplet = false;
-					}
-					var chord = note.pitch.chord;
+					}else if(currentResultNotes.measures[i].notes[j].type == 'note'){
+						var note = currentResultNotes.measures[i].notes[j];
+						var noteStep = note.pitch.step;
+						var noteOctave = note.pitch.octave;
+						var noteAlter = note.pitch.alter;
+						var noteDuration = getDuration(note.pitch.type);
+						var noteTuplet = note.pitch.tuplet;
+						if(typeof noteDuration === 'undefined'){
+							console.log("noteduration is undefined");
+							noteDuration = 0.25;
+						}
+						if(note.pitch.dot){
+							noteDuration += 0.5*noteDuration;
+						}
+						if(typeof noteTuplet === 'undefined'){
+							console.log("beam is undefined");
+							noteTuplet = false;
+						}
+						var chord = note.pitch.chord;
 
-					var midiNote = getMidiValue(noteStep, noteOctave, noteAlter);
-					console.log(noteStep, noteOctave, noteAlter, noteDuration, "midiNote: ", midiNote);
+						var midiNote = getMidiValue(noteStep, noteOctave, noteAlter);
+						console.log(noteStep, noteOctave, noteAlter, noteDuration, "midiNote: ", midiNote);
 
-					notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration, 'chord': chord, 'noteTuplet' : noteTuplet});
+						notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration, 'chord': chord, 'noteTuplet' : noteTuplet});
+					}
 				}
 			}
 		}

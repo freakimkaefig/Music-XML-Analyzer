@@ -7,10 +7,12 @@ class RhythmController {
 	static $patternArray;
 	static $xmlArray;
 	static $xmlPositionArray;
+	static $xmlCounterArray;
 	static $once;
 	static $once2 = true;
 	// static $restDuration;
 	static $noteCounter;
+	static $counter;
 
 	function __construct() {
 
@@ -58,9 +60,14 @@ public function search($pattern) {
 		$file_id = $upload->id;
 		$file_url = $upload->url;
 
+		$doc = new DOMDocument();
+		$doc->load($file_url);
+		$xPath = new DOMXPath($doc);
+
 		self::$once = true;
 		self::$xmlArray = array();
 		self::$xmlPositionArray = array();
+		self::$xmlCounterArray = array();
 		self::$result = new stdClass();
 		self::$result->occurences = array();
 
@@ -76,6 +83,7 @@ public function search($pattern) {
 			// $countPartMeasure = count($part->measure);
 			// for($i = 0; $i < $countPartMeasure; $i++)
 			foreach($part->measure as $measure){
+				self::$counter = 0;
 // echo"<br><hr>part->measure[$i] : ";
 // var_dump($part->measure[$i]);
 
@@ -102,6 +110,7 @@ public function search($pattern) {
 				$countPartMeasureNote = count($measure->note);
 				for($j = 0; $j < $countPartMeasureNote; $j++){
 					self::$noteCounter++;
+					self::$counter++;
 					$n = $measure->note[$j];
 					if(self::$once){
 						self::$once = false;
@@ -145,6 +154,7 @@ public function search($pattern) {
 // var_dump($obj);
 							array_push(self::$xmlArray, $obj);
 							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
+							array_push(self::$xmlCounterArray, self::$counter/*$note->position*/);
 // echo"<br><hr>xmlArray: ";
 // var_dump(self::$xmlArray);
 
@@ -206,6 +216,7 @@ public function search($pattern) {
 
 							array_push(self::$xmlArray, $restDuration);
 							array_push(self::$xmlPositionArray, self::$noteCounter/*$note->position*/);
+							array_push(self::$xmlCounterArray, self::$counter/*$note->position*/);
 
 						} //end else if rest
 
@@ -230,10 +241,18 @@ public function search($pattern) {
 								self::$result->file_id = $file_id;
 								self::$result->file_url = $file_url;
 
+								$docPart = $xPath->query('//part[@id="' . $part['id'] . '"]')->item(0);
+								$startNote = $docPart->getElementsByTagName('note')->item((reset(self::$xmlPositionArray) - 1));
+								$startMeasureNumber = $startNote->parentNode->getAttribute('number');
+								$endNote = $docPart->getElementsByTagName('note')->item((end(self::$xmlPositionArray) - 1));
+								$endMeasureNumber = $endNote->parentNode->getAttribute('number');
+
 								//fill with occurences
 								$occ = new stdClass();
-								$occ->start = reset(self::$xmlPositionArray);
-								$occ->end = end(self::$xmlPositionArray);
+								$occ->start = reset(self::$xmlCounterArray);
+								$occ->startMeasure = $startMeasureNumber;
+								$occ->end = end(self::$xmlCounterArray);
+								$occ->endMeasure = $endMeasureNumber;
 								$occ->voice = (int)$n->voice/*$note->voice*/;
 								$occ->part_id = (string)$part['id'];
 
@@ -244,6 +263,7 @@ public function search($pattern) {
 								//reset arrays
 								self::$xmlArray = array();
 								self::$xmlPositionArray = array();
+								self::$xmlCounterArray = array();
 
 							}else{
 // echo"<br><br>no match patternArray: ";
@@ -253,9 +273,11 @@ public function search($pattern) {
 // var_dump(self::$xmlArray);
 								self::$xmlArray = array_splice(self::$xmlArray, 1);
 								self::$xmlPositionArray = array_splice(self::$xmlPositionArray, 1);
+								self::$xmlCounterArray = array_splice(self::$xmlCounterArray, 1);
 
 								self::$xmlArray = array_values(self::$xmlArray);
 								self::$xmlPositionArray = array_values(self::$xmlPositionArray);
+								self::$xmlCounterArray = array_values(self::$xmlCounterArray);
 // echo"<br><br>xmlArray AFTER splice: ";
 // var_dump(self::$xmlArray);
 
@@ -271,8 +293,10 @@ public function search($pattern) {
 							$lastVoice = $measure->note[$j]->voice;
 							$j--;
 							self::$noteCounter--;
+							self::$counter--;
 							self::$xmlArray = array();
 							self::$xmlPositionArray = array();
+							self::$xmlCounterArray = array();
 						}
 
 // echo"<br><hr>foreach(part->measure[$i]->note as n : ";
