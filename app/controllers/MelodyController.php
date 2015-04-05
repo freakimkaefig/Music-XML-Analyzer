@@ -7,10 +7,11 @@ class MelodyController {
 	static $patternArray;
 	static $xmlArray;
 	static $xmlPositionArray;
+	static $xmlCounterArray;
 	static $once;
 	static $once2 = true;
-	// static $restDuration;
 	static $noteCounter;
+	static $counter;
 
 	function __construct() {
 
@@ -47,8 +48,8 @@ class MelodyController {
 			}
 		}
 
-echo"<br><hr>patternArray:<br>";
-var_dump(array_values(self::$patternArray));
+// echo"<br><hr>patternArray:<br>";
+// var_dump(array_values(self::$patternArray));
 
 		//get user uploads & file_id's & file_url
 		$user = User::find(Cookie::get('user_id'));
@@ -57,9 +58,14 @@ var_dump(array_values(self::$patternArray));
 			$file_id = $upload->id;
 			$file_url = $upload->url;
 
+			$doc = new DOMDocument();
+			$doc->load($file_url);
+			$xPath = new DOMXPath($doc);
+
 			self::$once = true;
 			self::$xmlArray = array();
 			self::$xmlPositionArray = array();
+			self::$xmlCounterArray = array();
 			self::$result = new stdClass();
 			self::$result->occurences = array();
 
@@ -79,7 +85,7 @@ var_dump(array_values(self::$patternArray));
 				// $countPartMeasure = count($part->measure);
 				// for($i = 0; $i < $countPartMeasure; $i++)
 				foreach($part->measure as $measure){
-
+					self::$counter = 0;
 // echo "<br><hr>NOTES IN THIS MEASURE: ";
 // var_dump(count($measure->note));
 
@@ -102,6 +108,7 @@ var_dump(array_values(self::$patternArray));
 					$countPartMeasureNote = count($measure->note);
 					for($j = 0; $j < $countPartMeasureNote; $j++){
 						self::$noteCounter++;
+						self::$counter++;
 						$n = $measure->note[$j];
 
 						if(self::$once){
@@ -121,6 +128,7 @@ var_dump(array_values(self::$patternArray));
 							$note->voice = $n->voice;
 							// $note->type = $n->type;
 							$note->position = self::$noteCounter;
+							$note->counter = self::$counter;
 
 							// if note
 							if(!$n->rest && !isset($n->chord)){
@@ -133,13 +141,17 @@ var_dump(array_values(self::$patternArray));
 									$obj->beam = (string)$n->beam[0];
 								}
 								// else if dotted note
-								//check with "!isnull" because n->dot === object(SimpleXMLElement)#226 (0) { }
 								elseif($n->dot){
 									$obj->dot = "1";
 								}
 
+								$res = new stdClass();
+								$res->part = $part['id'];
+								$res->pos = self::$noteCounter;
+
 								array_push(self::$xmlArray, $obj);
-								array_push(self::$xmlPositionArray, $note->position);
+								array_push(self::$xmlPositionArray, $res);
+								array_push(self::$xmlCounterArray, $note->counter);
 
 							}
 							// else if rest
@@ -194,8 +206,13 @@ var_dump(array_values(self::$patternArray));
 // echo 'Rest duration unclear: ',  $restDurationFloat, "<br>";
 // echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
 								}
+								$res = new stdClass();
+								$res->part = $part['id'];
+								$res->pos = self::$noteCounter;
+
 								array_push(self::$xmlArray, $restDuration);
-								array_push(self::$xmlPositionArray, $note->position);
+								array_push(self::$xmlPositionArray, $res);
+								array_push(self::$xmlCounterArray, $note->counter);
 
 							}
 
@@ -214,14 +231,34 @@ var_dump(array_values(self::$patternArray));
 
 								// compare arrays
 								if(array_values(self::$xmlArray) == array_values(self::$patternArray)){
+// echo"<br><br><hr>RESULT FOUND<br>";
+// var_dump(array_values(self::$xmlIntervalArray));
+// echo"<br><br>patternArray: <br>";
+// var_dump(array_values(self::$patternIntervalArray));
+// echo"<br><br>xmlPositionArray:";
+// var_dump(self::$xmlPositionArray);
+// echo "<br>PART_ID:";
+// var_dump((string)$part['id']);
+// echo"<br><br>";
 									// create result
 									self::$result->file_id = $file_id;
 									self::$result->file_url = $file_url;
 
+									$docPart = $xPath->query('//part[@id="' . (string)reset(self::$xmlPositionArray)->part . '"]')->item(0);
+									$startNote = $docPart->getElementsByTagName('note')->item(((string)reset(self::$xmlPositionArray)->pos - 1));
+									$startMeasureNumber = $startNote->parentNode->getAttribute('number');
+
+									//get docpart again, if partChange occured between start & end note
+									$docPart = $xPath->query('//part[@id="' . (string)end(self::$xmlPositionArray)->part . '"]')->item(0);
+									$endNote = $docPart->getElementsByTagName('note')->item(((string)end(self::$xmlPositionArray)->pos - 1));
+									$endMeasureNumber = $endNote->parentNode->getAttribute('number');
+
 									//fill with occurences
 									$occ = new stdClass();
-									$occ->start = reset(self::$xmlPositionArray);
-									$occ->end = end(self::$xmlPositionArray);
+									$occ->start = reset(self::$xmlCounterArray);
+									$occ->startMeasure = $startMeasureNumber;
+									$occ->end = end(self::$xmlCounterArray);
+									$occ->endMeasure = $endMeasureNumber;
 									$occ->voice = (int)$note->voice;
 									$occ->part_id = (string)$part['id'];
 
@@ -230,15 +267,16 @@ var_dump(array_values(self::$patternArray));
 									//reset arrays
 									self::$xmlArray = array();
 									self::$xmlPositionArray = array();
+									self::$xmlCounterArray = array();
 
 								}else{
 
 									self::$xmlArray = array_splice(self::$xmlArray, 1);
-
+									self::$xmlCounterArray = array_splice(self::$xmlCounterArray, 1);
 									self::$xmlPositionArray = array_splice(self::$xmlPositionArray, 1);
 
 									self::$xmlArray = array_values(self::$xmlArray);
-
+									self::$xmlCounterArray = array_values(self::$xmlCounterArray);
 									self::$xmlPositionArray = array_values(self::$xmlPositionArray);
 
 								}
@@ -250,8 +288,10 @@ var_dump(array_values(self::$patternArray));
 								$lastVoice = $measure->note[$j]->voice;
 								$j--;
 								self::$noteCounter--;
+								self::$counter--;
 								self::$xmlArray = array();
 								self::$xmlPositionArray = array();
+								self::$xmlCounterArray = array();
 							}
 					}
 				}
