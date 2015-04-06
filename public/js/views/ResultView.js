@@ -287,10 +287,12 @@ MusicXMLAnalyzer.ResultView = function(){
 			// tuplets
 			var tuplets = [];
 			for (var j = 0; j < measures[i].notes.length; j++) {
-				if (measures[i].tuplets) {
+// console.log("measures[i].tuplets: ",measures[i].tuplets);
+// console.log("measures[i].tuplets[j]: ",measures[i].tuplets[j]);
+				if (measures[i].tuplets[j]) {
 					if (measures[i].tuplets[j].toString() != 'false' && measures[i].tuplets[j].toString() != 'undefined') {
-						// console.log("i", i," j ",j);
-						// console.log("measures[i].tuplets[j]", measures[i].tuplets[j], parseInt(measures[i].tuplets[j]));
+// console.log("i", i," j ",j);
+// console.log("measures[i].tuplets[j]", measures[i].tuplets[j], parseInt(measures[i].tuplets[j]));
 						var tupletNotes = measures[i].notes.slice(j, (j + parseInt(measures[i].tuplets[j])));
 						var tupletLocation = tupletNotes[0].stem.stem_direction;
 						var tuplet = new Vex.Flow.Tuplet(tupletNotes);
