@@ -345,7 +345,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		} else {
 			var keys = keyContent + "/" + curOctave;
 			if (getCurrentMode() == 1) {
-				if (durationContent === "w" || durationContent === "h") {
+				if (durationContent === "w" || durationContent === "h" || durationContent === "wd" || durationContent === "hd") {
 					keys += '/d0';
 				} else {
 					keys += '/d2';

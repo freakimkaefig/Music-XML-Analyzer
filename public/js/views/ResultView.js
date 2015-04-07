@@ -417,6 +417,11 @@ MusicXMLAnalyzer.ResultView = function(){
 							var noteDuration = getVexflowDuration(pattern.measures[i].notes[j].duration, durationType);
 
 							note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: noteDuration });
+
+							if (pattern.measures[i].notes[j].dot) {
+								note.addDotToAll();
+							}
+
 							tuplets[j] = [false];
 							notes.push(note);
 						}
@@ -491,6 +496,11 @@ MusicXMLAnalyzer.ResultView = function(){
 
 								note = new Vex.Flow.StaveNote({ keys: ["b/4"], duration: noteDuration });
 								note.color = color;
+
+								if (pattern.measures[i].notes[j].dot) {
+									note.addDotToAll();
+								}
+
 								ties[noteCounter] = [false];
 								notes.push(note);
 								noteCounter++;
