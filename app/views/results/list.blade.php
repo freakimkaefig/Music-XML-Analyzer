@@ -8,8 +8,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
-			<h1 class="text-center">Search results</h1>
-			<h4 class="text-center">for your pattern</h4>
+			<h4 class="text-center">Search resultsfor your pattern</h4>
 			<canvas id="patternCanvas" width="700" height="180"></canvas>
 		</div>
 	</div>
