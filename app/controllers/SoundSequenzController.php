@@ -145,8 +145,6 @@ class SoundSequenzController {
 										$startNote = $docPart->getElementsByTagName('note')->item(((string)reset(self::$xmlPositionArray)->pos - 1));
 										$startMeasureNumber = $startNote->parentNode->getAttribute('number');
 
-										//get docpart again, if partChange occured between start & end note
-										$docPart = $xPath->query('//part[@id="' . (string)end(self::$xmlPositionArray)->part . '"]')->item(0);
 										$endNote = $docPart->getElementsByTagName('note')->item(((string)end(self::$xmlPositionArray)->pos - 1));
 										$endMeasureNumber = $endNote->parentNode->getAttribute('number');
 
@@ -212,6 +210,11 @@ class SoundSequenzController {
 						}
 					} //end of foreach(notes as note){blabla}
 				}
+
+				// reset arrays
+				self::$xmlArray = array();
+				self::$xmlPositionArray = array();
+				self::$xmlCounterArray = array();
 			} //end of foreach(parts as part)
 
 			// check if result->occ is empty

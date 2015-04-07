@@ -277,12 +277,11 @@ public function search($pattern) {
 								$startNote = $docPart->getElementsByTagName('note')->item(((string)reset(self::$xmlPositionArray)->pos - 1));
 								$startMeasureNumber = $startNote->parentNode->getAttribute('number');
 
-								//get docpart again, if partChange occured between start & end note
-								$docPart = $xPath->query('//part[@id="' . (string)end(self::$xmlPositionArray)->part . '"]')->item(0);
 								$endNote = $docPart->getElementsByTagName('note')->item(((string)end(self::$xmlPositionArray)->pos - 1));
 								$endMeasureNumber = $endNote->parentNode->getAttribute('number');
 
 								//fill with occurences
+								Debugbar::info(self::$xmlPositionArray);
 								$occ = new stdClass();
 								$occ->start = reset(self::$xmlCounterArray);
 								$occ->startMeasure = $startMeasureNumber;
@@ -349,6 +348,11 @@ public function search($pattern) {
 // var_dump($n);
 				}
 			}
+
+			// reset arrays
+			self::$xmlArray = array();
+			self::$xmlPositionArray = array();
+			self::$xmlCounterArray = array();
 		}//end of foreach(parts as part)
 
 		// check if result->occ is empty
