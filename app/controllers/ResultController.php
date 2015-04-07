@@ -105,16 +105,29 @@ class ResultController extends BaseController {
 		$resultObject->part_id = $part_id;
 		// $resultObject->start_extract = $this->calculateStartExtract($part, $start);
 		// $resultObject->end_extract = $this->calculateEndExtract($part, $end);
+		$partMeasures = $part->getElementsByTagName('measure');
+		$numMeasures = $partMeasures->length - 1;
+		$firstMeasureNumber = $partMeasures->item(0)->getAttribute('number');
 		$start_extract = $startMeasure;
-		if ($startMeasure > 1) {
+		if ($startMeasure > $firstMeasureNumber) {
 			$start_extract--;
 		}
 		$end_extract = $endMeasure;
-		if ($part->getElementsByTagName('measure')->length > $endMeasure) {
+		if ($numMeasures > $end_extract) {
 			$end_extract++;
 		}
-		if ($startMeasure === $endMeasure && $part->getElementsByTagName('measure')->length > $endMeasure) {
-			$end_extract++;
+		if ($end_extract - $start_extract < 3){
+			Log::info($end_extract - $start_extract);
+			if ($numMeasures > $end_extract + 1) {
+				$end_extract++;
+			} elseif ($startMeasure > $firstMeasureNumber) {
+				$start_extract--;
+			}
+			if ($end_extract - $start_extract < 3) {
+				if ($startMeasure > $firstMeasureNumber) {
+					$start_extract--;
+				}
+			}
 		}
 
 		$resultObject->start_extract = $start_extract;
@@ -181,7 +194,7 @@ class ResultController extends BaseController {
 						}
 					}
 					$noteObject->color = $currentColor;
-					Log::info("Measure: " . $j . ", NoteCounter: " . $noteCounter . ", Start: " . $start . ", End: " . $end . ", Color: " . $currentColor);
+					// Log::info("Measure: " . $j . ", NoteCounter: " . $noteCounter . ", Start: " . $start . ", End: " . $end . ", Color: " . $currentColor);
 
 					// decide if current element is a note or a rest (only notes have a pitch child)
 					$pitch = $note->getElementsByTagName('pitch');
