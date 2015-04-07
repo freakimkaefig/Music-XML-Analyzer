@@ -51,6 +51,10 @@ a:focus {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+.navbar-header {
+	position: relative;
+	z-index: 99;
+}
 .navbar .navbar-brand {
 	font-weight: bold;
 	text-transform: uppercase;
