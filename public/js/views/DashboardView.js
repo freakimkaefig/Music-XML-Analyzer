@@ -122,7 +122,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	onFileSelectorChange = function(event) {
-		// console.info('MusicXMLAnalyzer.DashboardView.onFileSelectorChange', $fileSelector.find('select').val());
 		$(that).trigger('onFileSelectorChange', [ $fileSelector.find('select').val() ]);
 	},
 
@@ -155,88 +154,11 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$plainFacts3.empty();
 		$plainFacts3.append('<li><strong>Instruments:  </strong></li>');
 		$plainFacts3.append("<li>" + results.join(", ") + "</li>");
-		// for(var i = 0; i < results.length; i++){
-		// 	if(results.length == 1 || results[i] == results[results.length-1]){
-		// 		$plainFacts3.append('<li>' + results[i] + '</li>');
-		// 	}
-		// 	else{
-		// 		$plainFacts3.append('<li>' + results[i] + ', ' + '</li>');
-		// 	}
-		// }
 	},
 
-
-	/*initBarChart = function(data) {
-		var containerWidth = $('#bar_intervalDistribution').width() - 30;
-		var margin ={ top:20, right:30, bottom:50, left: 40 },
 		    width = containerWidth - margin.left - margin.right,
-		    height= 300 - margin.top - margin.bottom;
-
-		// scale to ordinal because x axis is not numerical
-		var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
-
-		//scale to numerical value by height
-		var y = d3.scale.linear().range([height, 0]);
-
-		// key on x axis
-		var xAxis = d3.svg.axis()
-		              .scale(x)
-		              .orient("bottom");  //orient bottom because x-axis will appear below the bars
-
-		// key on y axis
-		var yAxis = d3.svg.axis()
-		              .scale(y)
-		              .orient("left");*/
-
-		/*var tip = d3.tip()
-					.attr('class', 'd3-tip')
-					.offset([-10, 0])
-					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });*/
 
 /*		var svg = d3.select("#bar_intervalDistribution")
-		              .append("svg")  //append svg element inside #bar_intervalDistribution
-		              .attr("width", width+(2*margin.left)+margin.right)    //set width
-		              .attr("height", height+margin.top+margin.bottom)  //set height
-		              .append("g")
-		              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");*/
-
-		//svg.call(tip);
-
-		// transform data object
-/*	  	x.domain(data.map(function(d){ return d.label}));
-	  	y.domain([0, d3.max(data, function(d){return d.value})]);
-
-		svg.append("g")
-		     .attr("class", "x axis")
-		     .attr("transform", "translate(0,"+ height+")")
-		     .call(xAxis);
-
-		svg.append("g")
-		     .attr("class", "y axis")
-		     .attr("transform", "translate(0,0)")
-		     .call(yAxis)
-		     .append("text")
-		     .attr("transform", "rotate(-90)")
-		     .attr("y", 6)
-		     .attr("dy", ".71em")
-		     .style("text-anchor", "end")
-		     .text("Count");
-
-		svg.selectAll(".bar")
-		   .data(data)
-		   .enter()
-		   .append("rect")
-		   .attr("class", "bar")
-		   .attr("x", function(d) { return x(d.label); })
-		   .attr("width", x.rangeBand())
-		   .attr("y", function(d) { return y(d.value); })
-		   .attr("height", function(d) { return height - y(d.value); });
-
-
-
-		   //.on("click", tip.show);
-
-	},*/
 
 	/*BAR-CHART NOTE-DISTRIBUTION*/
 	initNoteDistribution = function(data) {
@@ -262,10 +184,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .scale(y)
 		              .orient("left");
 
-		/*var tip = d3.tip()
-					.attr('class', 'd3-tip')
-					.offset([-10, 0])
-					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });*/
 
 		var svg = d3.select("#bar_noteDistribution")
 		              .append("svg")  //append svg element inside #bar_noteDistribution
@@ -273,8 +191,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .attr("height", height+margin.top+margin.bottom)  //set height
 		              .append("g")
 		              .attr("transform", "translate(" + margin.left + ",50)");
-
-		//svg.call(tip);
 
 		// transform data object
 	  	x.domain(data.map(function(d){ return d.label; }));
@@ -352,10 +268,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .scale(y)
 		              .orient("left");
 
-		/*var tip = d3.tip()
-					.attr('class', 'd3-tip')
-					.offset([-10, 0])
-					.html(function(d) { return "<strong>" + d.value + "</strong> <span>(" + d.label + ")</span>"; });*/
 
 		var svg = d3.select("#bar_intervalDistribution")
 		              .append("svg")  //append svg element inside #bar_intervalDistribution
@@ -363,8 +275,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 		              .attr("height", height+margin.top+margin.bottom)  //set height
 		              .append("g")
 		              .attr("transform", "translate(" + margin.left + ",50)");
-
-		//svg.call(tip);
 
 		// transform data object
 	  	x.domain(data.map(function(d){ return d.label; }));
@@ -390,10 +300,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 		     .style("text-anchor", "end")
 		     .text("Count");
 
-		// svg.select(".x.axis")
-		//    .selectAll(".tick")
-		//    .attr("transform", "rotate(-90) translate(0,"+height+")");
-
 		svg.append("text")
 	        .attr("x", (width / 2))
 	        .attr("y", 0 - (margin.top / 2) - 20)
@@ -412,7 +318,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 		   .attr("width", x.rangeBand())
 		   .attr("y", function(d) { return y(d.value); })
 		   .attr("height", function(d) { return height - y(d.value); });
-		   //.on("click", tip.show);
 
 		   svg.selectAll("text.bar")
 			.data(data)
@@ -428,7 +333,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 	/*PIE-CHART KEY-DISTRIBUTION*/
 	initKeyDistribution = function(data) {
 		console.log(this);
-		// console.log("Key Distribution Pie data: ",typeof(data), data);
 		if (keyDistribution) {
 			keyDistribution.destroy();
 		}
@@ -497,7 +401,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 		}else{
 			data2 = data;
 		}
-			// console.log("Meter Pie data: ",typeof(data2), data2);
 
 		if (meterDistribution) {
 			meterDistribution.destroy();
@@ -529,18 +432,15 @@ MusicXMLAnalyzer.DashboardView = function(){
 		});
 	};
 
-
 	that.init = init;
 	that.disposeLogMessages = disposeLogMessages;
 	that.addLogMessage = addLogMessage;
 	that.initFileSelector = initFileSelector;
-	//that.initBarChart = initBarChart;
-
-	that.initNoteDistribution = initNoteDistribution;	/*BAR-CHART NOTE-DISTRIBUTION*/
-	that.initIntervalDistribution = initIntervalDistribution;	/*BAR-CHART INTERVAL-DISTRIBUTION*/
-	that.initKeyDistribution = initKeyDistribution;		/*PIE-CHART KEY-DISTRIBUTION*/
-	that.initNoteTypeDistribution = initNoteTypeDistribution;	/*PIE-CHART NOTE-DURATION*/
-	that.initMeterDistribution = initMeterDistribution;		/*PIE-CHART METERS*/
+	that.initNoteDistribution = initNoteDistribution;
+	that.initIntervalDistribution = initIntervalDistribution;
+	that.initKeyDistribution = initKeyDistribution;
+	that.initNoteTypeDistribution = initNoteTypeDistribution;
+	that.initMeterDistribution = initMeterDistribution;
 
 	that.initCountNotes = initCountNotes;
 	that.initCountRests = initCountRests;

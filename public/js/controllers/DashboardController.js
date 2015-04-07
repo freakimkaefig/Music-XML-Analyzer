@@ -29,14 +29,11 @@ MusicXMLAnalyzer.DashboardController = function() {
 		console.log(results);
 
 		view.initFileSelector(results);
-		// view.initBarChart(results.all.value.note_distribution)
 		view.initNoteDistribution(results.all.value.note_distribution);
 		view.initIntervalDistribution(results.all.value.intervals);
 		view.initKeyDistribution(results.all.value.key);
 		view.initMeterDistribution(results.all.value.meter);
 		view.initNoteTypeDistribution(results.all.value.note_types);
-
-
 		view.initCountNotes(results.all.value.count_notes);
 		view.initCountRests(results.all.value.count_rests);
 		view.initCountMeasures(results.all.value.count_measures);
@@ -56,7 +53,6 @@ MusicXMLAnalyzer.DashboardController = function() {
 		view.initKeyDistribution(result.value.key);
 		view.initMeterDistribution(result.value.meter);
 		view.initNoteTypeDistribution(result.value.note_types);
-
 		view.initCountNotes(result.value.count_notes - result.value.count_rests);
 		view.initCountRests(result.value.count_rests);
 		view.initCountMeasures(result.value.count_measures);
