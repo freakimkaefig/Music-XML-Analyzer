@@ -1,6 +1,4 @@
 <?php
-require 'SoundSequenzController.php';
-
 class PatternController extends BaseController {
 
 	public function getCreatePattern() {
@@ -15,6 +13,8 @@ class PatternController extends BaseController {
 	}
 
 	public function postPatternSearch() {
+		set_time_limit(300);
+
 		$time = 60*24;
 
 		$pattern = Input::get('pattern');
@@ -39,7 +39,7 @@ class PatternController extends BaseController {
 				$results = $mConntroller->search($pattern);
 				break;
 		}
-		
+
 
 		Cache::put('pattern', $pattern, $time);
 		Cache::put('results', $results, $time);
@@ -81,7 +81,7 @@ class PatternController extends BaseController {
 				return $noteValue;
 			}
 			else{
-				
+
 				return null;
 			}
 		}else{
