@@ -36,6 +36,9 @@ a:focus {
 	outline: none;
 }
 
+#documentationButton{
+	margin: 0;
+}
 
 .navbar-center {
 	position: absolute;
