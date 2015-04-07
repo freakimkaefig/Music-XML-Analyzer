@@ -113,6 +113,9 @@ class ResultController extends BaseController {
 		if ($part->getElementsByTagName('measure')->length > $endMeasure) {
 			$end_extract++;
 		}
+		if ($startMeasure === $endMeasure && $part->getElementsByTagName('measure')->length > $endMeasure) {
+			$end_extract++;
+		}
 
 		$resultObject->start_extract = $start_extract;
 		$resultObject->end_extract = $end_extract;
@@ -172,7 +175,7 @@ class ResultController extends BaseController {
 							$currentColor = "#b71c1c";
 						}
 					} else {
-						if (($j == $startMeasure && $noteCounter >= $start) || ($j == $endMeasure && $noteCounter <= $end)) {
+						if (($j == $startMeasure && $noteCounter >= $start) || ($j > $startMeasure && $j < $endMeasure) || ($j == $endMeasure && $noteCounter <= $end)) {
 							// set color to red if note is between start and end of result
 							$currentColor = "#b71c1c";
 						}
