@@ -272,6 +272,34 @@ class ResultController extends BaseController {
 							$noteObject->pitch->step = $unpitched->item(0)->getElementsByTagName('display-step')->item(0)->nodeValue;
 							$noteObject->pitch->octave = $unpitched->item(0)->getElementsByTagName('display-octave')->item(0)->nodeValue;
 							$noteObject->pitch->alter = 0;
+
+							// determine dot
+							$dot = $note->getElementsByTagName('dot');
+							if ($dot->length) {
+								$noteObject->pitch->dot = true;
+							} else {
+								$noteObject->pitch->dot = false;
+							}
+
+							// determine ties
+							$ties = $note->getElementsByTagName('tie');
+							if ($ties->length) {
+								foreach ($ties as $tie) {
+									$noteObject->pitch->ties[] = $tie->getAttribute('type');
+								}
+							} else {
+								$noteObject->pitch->ties[] = false;
+							}
+
+							// determine chords
+							$chord = $note->getElementsByTagName('chord');
+							if ($chord->length) {
+								$noteObject->pitch->chord = true;
+							} else {
+								$noteObject->pitch->chord = false;
+							}
+
+							$noteObject->counter = $noteCounter;
 						}
 					} // END: if ($pitch->length)
 

@@ -158,12 +158,12 @@ MusicXMLAnalyzer.PatternController = function() {
 				var note = notesToBePlayed[i].note;
 				// var noteDuration = notesToBePlayed[i].noteDuration;
 				// how hard the note gets hit
-				var velocity = 100; 
+				var velocity = 100;
 				// delay is set to fix value
 				var delay = 0;
 				var timeout = 0;
 				if(!once){
-					
+
 					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*2000;
 					if(notesToBePlayed[i-1].noteBeam == "begin" || notesToBePlayed[i-1].noteBeam == "continue" ||
 						notesToBePlayed[i-1].noteBeam == "end") {

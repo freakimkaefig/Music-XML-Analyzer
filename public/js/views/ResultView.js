@@ -70,7 +70,7 @@ MusicXMLAnalyzer.ResultView = function(){
 		canvas.id = "canvas" + index;
 		canvas.className = "canvas";
 		canvas.width = 970;
-		canvas.height = (data.measures.length / 2) * 250;
+		canvas.height = Math.ceil(data.measures.length / 2) * 180;
 		var canvasContainer = document.getElementById('canvasContainer' + index);
 		canvasContainer.innerHTML = "";
 		canvasContainer.appendChild(canvas);
@@ -383,7 +383,7 @@ MusicXMLAnalyzer.ResultView = function(){
 						var note;
 						if (pattern.measures[i].notes[j].type == "note") {
 							// determine note variables
-							var keys = ["b/4"];
+							var keys = ["b/4/d2"];
 
 							var tuplet = false;
 							if (pattern.measures[i].notes[j].pitch.beam) {
@@ -494,7 +494,12 @@ MusicXMLAnalyzer.ResultView = function(){
 								var step = pattern.measures[i].notes[j].pitch.step;
 								var octave = pattern.measures[i].notes[j].pitch.octave;
 								var alter = pattern.measures[i].notes[j].pitch.alter;
-								var keys = [getVexflowKey(step, octave, alter )];
+								var keys = [getVexflowKey(step, octave, alter ) + "/d2"];
+
+								var noteTies = [false];
+								if (pattern.measures[i].notes[j].pitch.ties) {
+									noteTies = pattern.measures[i].notes[j].pitch.ties;
+								}
 
 								var type = pattern.measures[i].notes[j].pitch.type;
 								var durationType = 0;
@@ -503,8 +508,14 @@ MusicXMLAnalyzer.ResultView = function(){
 								}
 								var noteDuration = getVexflowDuration(type, durationType);
 								note = new Vex.Flow.StaveNote({ keys: keys, duration: noteDuration, auto_stem: true});
-								note.color = '#006064';
-								ties[noteCounter] = [false];
+								note.color = color;
+								note = checkNextNotes(pattern, note, i, j);
+
+								if (pattern.measures[i].notes[j].pitch.dot) {
+									note.addDotToAll();
+								}
+
+								ties[noteCounter] = noteTies;
 								notes.push(note);
 								noteCounter++;
 							}

@@ -185,7 +185,11 @@ MusicXMLAnalyzer.NotationView = function(){
 	    						duration: durationContent + VEXFLOW_REST_SIGN,
 	    						auto_stem: true });
 		} else {
-			previewNote = new Vex.Flow.StaveNote({ keys: [key + "/" + hoveredOctave],
+			var keys = key + "/" + hoveredOctave;
+			if (patternModel.getCurrentMode() == 1) {
+				keys += "/d2";
+			}
+			previewNote = new Vex.Flow.StaveNote({ keys: [keys],
 	    						duration: durationContent,
 	    						auto_stem: true });
 		}

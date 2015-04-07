@@ -343,7 +343,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 	    						duration: durationContent + VEXFLOW_REST_SIGN,
 	    						auto_stem: true });
 		} else {
-			note = new Vex.Flow.StaveNote({ keys: [keyContent + "/" + curOctave],
+			var keys = keyContent + "/" + curOctave;
+			if (getCurrentMode() == 1) {
+				keys += '/d2';
+			}
+			note = new Vex.Flow.StaveNote({ keys: [keys],
 	    						duration: durationContent,
 	    						auto_stem: true });
 		}
