@@ -383,7 +383,12 @@ MusicXMLAnalyzer.ResultView = function(){
 						var note;
 						if (pattern.measures[i].notes[j].type == "note") {
 							// determine note variables
-							var keys = ["b/4/d2"];
+							var type = pattern.measures[i].notes[j].pitch.type;
+							if (type === "whole" || type === "half") {
+								var keys = ["b/4/d0"];
+							} else {
+								var keys = ["b/4/d2"];
+							}
 
 							var tuplet = false;
 							if (pattern.measures[i].notes[j].pitch.beam) {
@@ -393,7 +398,6 @@ MusicXMLAnalyzer.ResultView = function(){
 								}
 							}
 
-							var type = pattern.measures[i].notes[j].pitch.type;
 							var durationType = 0;
 							if (pattern.measures[i].notes[j].pitch.dot) {
 								durationType = 2;
