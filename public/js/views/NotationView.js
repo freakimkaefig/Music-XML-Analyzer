@@ -282,9 +282,10 @@ MusicXMLAnalyzer.NotationView = function(){
 	/* This method handels the mouseover event of canvas */
 	onMouseClickCanvas = function(event) {
 
-		console.log(event);
+		// console.log(event);
 
 		var noteName = patternModel.getCurrentNoteName();
+		// console.log("onMouseClickCanvas noteName: ",noteName);
 		var hoveredArea = null;
 
 		if (noteName == "break") {
@@ -294,8 +295,6 @@ MusicXMLAnalyzer.NotationView = function(){
 			hoveredArea = hoveredNote + "/" + hoveredOctave
 			patternController.addNoteByCanvasClick(hoveredArea);
 		}
-
-
 
 	},
 

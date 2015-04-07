@@ -8,7 +8,7 @@
 
 <div class="row text-center">
 	<div class="col-xs-12 marbo30">
-		<center><p class="no-margin">Choose Mode: </p></center>
+		<center><h4 class="no-margin">Choose Mode: </h4></center>
 		<div class="btn-group" data-toggle="buttons">
 			<label id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":melody">melody
@@ -112,10 +112,10 @@
 		<div id="rhythmNoteOrBreak" class="col-xs-8">
 			<p class="no-margin">Notes/Breaks: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label id="rhythmNote" class="btn btn-note btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+				<label id="rhythmNote" class="btn btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":c">Note
 				</label>
-				<label id="rhythmBreak" class="btn btn-note btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+				<label id="rhythmBreak" class="btn btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":break">Rest
                 </label>
 			</div>

@@ -41,8 +41,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		$addNoteButton.on("click", onAddButtonClick);
 		$removeNoteButton.on("click", onRemoveButtonClick);
 		$breakButton.on('click', onBreakButtonClick);
-		$rhythmNote.on('click', onRhythmNoteButtonClick);
-		$rhythmBreakButton.on('click', onRhythmBreakButtonClick);
+		$rhythmNoteOrBreak.on('click',onRhythmNoteOrBreakClick);
 
 		$noteOrBreak.show();
 		$rhythmNoteOrBreak.hide();
@@ -51,122 +50,6 @@ MusicXMLAnalyzer.PatternView = function(){
 		$logMessages = $('#searchMessages');
 		resultMessageCounter = 0;
 
-
-		// soundSequence pattern:
-		/*$('#patternValue').val(JSON.stringify(
-			[{
-				type: 0,
-				notes: [
-					{
-						pitch: {
-							step: "B",
-							alter: 0,
-							octave: 5
-						}
-					},
-					{
-						pitch: {
-							step: "B",
-							alter: 0,
-							octave: 5
-						}
-					}
-				]
-			}]
-		));*/
-
-
-		// rhythm pattern:
-		/*$('#patternValue').val(JSON.stringify(
-			[{
-				type: 1,
-				notes: [
-					{
-						type: "note",
-						pitch: {
-							type: "half",
-							dot: true,
-							beam: false
-						}
-					},
-					{
-						type: "rest",
-						duration: "whole"
-					}
-				]
-			}]
-		));*/
-
-
-		// melody pattern:
-		/*$('#patternValue').val(JSON.stringify(
-			[{
-				type: 2,
-				notes: [
-					{
-						type: "note",
-						pitch: {
-							step: "E",
-							type: "eighth",
-							alter: -1,
-							octave: 5,
-							dot: false,
-							beam: "begin"	// Triole (1)
-						}
-					},
-					{
-						type: "note",
-						pitch: {
-							step: "D",
-							type: "eighth",
-							alter: 0,
-							octave: 5,
-							dot: false,
-							beam: "continue"	// Triole (2)
-						}
-					},
-					{
-						type: "note",
-						pitch: {
-							step: "C",
-							type: "eighth",
-							alter: 0,
-							octave: 5,
-							dot: false,
-							beam: "end"	// Triole (3)
-						}
-					},
-					{
-						type: "note",
-						pitch: {
-							step: "F",
-							type: "half",
-							alter: 0,
-							octave: 1,
-							dot: true,	// punktierte Note
-							beam: false
-						}
-					},
-					{
-						type: "note",
-						pitch: {
-							step: "F",
-							type: "half",
-							alter: 0,
-							octave: 2,
-							dot: true,	// punktierte Note
-							beam: false
-						}
-					}
-					// ,
-					// {
-					// 	type: "rest",	// Pause
-					// 	duration: "whole"
-					// }
-
-				]
-			}]
-		));*/
 	},
 
 	onBreakButtonClick = function(event){
@@ -182,31 +65,28 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onNoteButtonClick = function(event) {
-		// console.log("event.target.id: ",event.target.id);
+		// patternController.changeNote(event.target.id);
+		$accidentialButtonClass.removeClass('disabled');
+	},
+
+	onRhythmNoteOrBreakClick = function(event){
+		console.log("event.target.id: ",event.target.id);
 		if(patternController.getCurrentMode() == 1){
-			if($rhythmNote.hasClass('active')){
-				patternController.changeNote('break');
-			}else if($rhythmBreakButton.hasClass('active')){
-				patternController.changeNote('c');
+			if(event.target.id === 'rhythmBreak'){
+
+				if($rhythmNote.hasClass('active')){
+					console.log("note WAS active");
+					patternController.changeNote('break');
+				}
 			}
-		}else{
-			patternController.changeNote(event.target.id);
-			$accidentialButtonClass.removeClass('disabled');
+			else if(event.target.id === 'rhythmNote'){
+
+				if($rhythmBreakButton.hasClass('active')){
+					console.log("break WAS active");
+					patternController.changeNote('c');
+				}
+			}
 		}
-	},
-
-	onRhythmNoteButtonClick = function(){
-		$rhythmBreakButton.removeClass('active');
-		// $rhythmBreakButton.addClass('disabled');
-		// $rhythmNote.removeClass('disabled');
-		$rhythmNote.addClass('active');
-	},
-
-	onRhythmBreakButtonClick = function(){
-		$rhythmNote.removeClass('active');
-		// $rhythmNote.addClass('disabled');
-		// $rhythmBreakButton.removeClass('disabled');
-		$rhythmBreakButton.addClass('active');
 	},
 
 	onAccidentialButtonClick = function(event) {
@@ -248,12 +128,16 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	setPatternValue = function(pattern) {
 		$patternValue.val(pattern);
-		//console.log("pattern changed to: ",$patternValue.val());
+		// console.log("pattern changed to: ",$patternValue.val());
 	},
 
 	setNoteNameActive = function(noteName) {
-		$(".btn-note.active").removeClass("active");
-		$("#" + noteName + "").addClass("active");
+		console.log("setNoteNameActive ", noteName);
+		if(patternController.getCurrentMode() != 1){
+			$(".btn-note.active").removeClass("active");
+			$("#" + noteName + "").addClass("active");
+		}
+
 	},
 
 	setOctaveActive = function(octave) {

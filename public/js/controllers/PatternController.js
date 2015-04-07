@@ -236,6 +236,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	changeNote = function(val) {
+		console.log("PatternController changeNote: ",val);
 		patternModel.setCurrentNoteName(val);
 	},
 
