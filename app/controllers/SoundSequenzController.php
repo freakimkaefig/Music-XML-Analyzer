@@ -212,7 +212,7 @@ class SoundSequenzController {
 				}
 
 				// reset arrays
-				self::$xmlArray = array();
+				self::$xmlIntervalArray = array();
 				self::$xmlPositionArray = array();
 				self::$xmlCounterArray = array();
 			} //end of foreach(parts as part)

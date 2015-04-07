@@ -153,7 +153,7 @@ public function search($pattern) {
 // var_dump($n);
 								$obj->dot = "1";
 							}
-// echo"<br><hr>obj: <br>";
+// echo"<br><hr>OBJ: <br>";
 // var_dump($obj);
 							$res = new stdClass();
 							$res->part = $part['id'];
@@ -167,7 +167,7 @@ public function search($pattern) {
 
 						}
 						// else if rest
-						else{
+						else if(isset($n->rest)){
 // echo"<br><br>REST added!";
 							// calculate rest duration
 							try{
@@ -246,8 +246,10 @@ public function search($pattern) {
 // var_dump(self::$noteCounter);
 						//check if Array-length equals Pattern-length already
 						if(count(self::$xmlArray) == count(self::$patternArray)){
-// echo"<br><hr>same length xmlArray: ";
+// echo"<br><hr>same length xmlArray:<br> ";
 // var_dump(self::$xmlArray);
+// echo"<br><br>xmlPositionArray:";
+// var_dump(self::$xmlPositionArray);
 							// compare arrays
 							if(array_values(self::$xmlArray) == array_values(self::$patternArray)){
 								// create result
@@ -295,8 +297,8 @@ public function search($pattern) {
 // var_dump($startMeasureNumber);
 // echo"<br><br>endMeasureNumber: <br>";
 // var_dump($endMeasureNumber);
-// echo"<br><br>xmlCounterArray:";
-// var_dump(self::$xmlCounterArray);
+// echo"<br><br>xmlPositionArray:";
+// var_dump(self::$xmlPositionArray);
 // echo "<br>PART_ID:";
 // var_dump((string)$part['id']);
 // echo"<br><br>";
