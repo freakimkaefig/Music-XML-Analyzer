@@ -221,7 +221,6 @@ class MelodyController {
 
 // echo"<br><br><hr>restDuration: <br>";
 // var_dump($restDuration);
-								
 // echo"<br><br><hr>xmlArray:<br>";
 // var_dump(array_values(self::$xmlArray));
 
@@ -248,8 +247,6 @@ class MelodyController {
 									$startNote = $docPart->getElementsByTagName('note')->item(((string)reset(self::$xmlPositionArray)->pos - 1));
 									$startMeasureNumber = $startNote->parentNode->getAttribute('number');
 
-									//get docpart again, if partChange occured between start & end note
-									$docPart = $xPath->query('//part[@id="' . (string)end(self::$xmlPositionArray)->part . '"]')->item(0);
 									$endNote = $docPart->getElementsByTagName('note')->item(((string)end(self::$xmlPositionArray)->pos - 1));
 									$endMeasureNumber = $endNote->parentNode->getAttribute('number');
 
@@ -295,6 +292,11 @@ class MelodyController {
 							}
 					}
 				}
+
+				// reset arrays
+				self::$xmlArray = array();
+				self::$xmlPositionArray = array();
+				self::$xmlCounterArray = array();
 			}//end of foreach(parts as part)
 // echo "<hr><hr>END OF FILE!<hr><hr>";
 

@@ -22,6 +22,9 @@ MusicXMLAnalyzer.PatternView = function(){
 	$noteOrBreak = $('#noteOrBreak'),
 	$rhythmNote = $('#rhythmNote'),
 
+	$logMessages = null,
+	resultMessageCounter = null,
+
 
 	init = function() {
 		console.info('MusicXMLAnalyzer.PatternView.init');
@@ -43,6 +46,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 		$noteOrBreak.show();
 		$rhythmNoteOrBreak.hide();
+
+		$searchPatternButton.on('click', onSubmitButtonClick);
+		$logMessages = $('#searchMessages');
+		resultMessageCounter = 0;
 
 
 		// soundSequence pattern:
@@ -346,6 +353,63 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	onRemoveButtonClick = function(event) {
 		patternController.removeLastNote();
+	},
+
+	onSubmitButtonClick = function(event) {
+		initLogMessages();
+		$('body').scrollTop($('body').height());
+		addLogMessage("Let's start searching the pattern.");
+		window.setTimeout(function() {
+			addLogMessage("We're working.");
+			window.setTimeout(function() {
+				addLogMessage("Please be patient.");
+				window.setTimeout(function() {
+					addLogMessage("Don't worry we didn't forget you.");
+					window.setTimeout(function() {
+						addLogMessage("Okay. We're ready soon. We promise.");
+						window.setTimeout(function() {
+							addLogMessage("Maybe a little coffee?");
+						}, 3000);
+					}, 3000);
+				}, 3000);
+			}, 3000);
+		}, 3000);
+	},
+
+	initLogMessages = function() {
+		resultMessageCounter = 0;
+		$logMessages.show();
+		$logMessages.animate({
+			height: 100
+		}, 500);
+	},
+
+	disposeLogMessages = function() {
+		window.setTimeout(function() {
+			$logMessages.animate({
+				height: 0
+			},
+			700,
+			function() {
+				$logMessages.hide();
+				$logMessages.empty();
+			});
+		}, 100);
+	},
+
+	addLogMessage = function(msg) {
+		$('#log' + (resultMessageCounter - 3)).animate({
+			"marginTop": "-30px"
+		}, 200);
+		$logMessages.append('<div id="log' + resultMessageCounter + '"></div>');
+		$('#log' + resultMessageCounter).typed({
+			strings: ['<p>' + msg + '</p>'],
+			backDelay: 100000000000000,
+			typeSpeed: 0,
+			backSpeed: 0,
+			loop: true,
+		});
+		resultMessageCounter++;
 	};
 
 	that.init = init;
