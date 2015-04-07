@@ -207,6 +207,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	onNotationViewUpdate = function(event, vexflowNotes) {
+		// console.log("PatternController onNotationViewUpdate vexflowNotes: ", vexflowNotes);
 		notationView.renderNotes(vexflowNotes);
 	},
 
@@ -253,6 +254,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	changeOctave = function(val) {
+		console.log("PatternController changeOctave val: ",val);
 		patternModel.setCurrentOctave(val);
 	},
 

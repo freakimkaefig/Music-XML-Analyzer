@@ -65,27 +65,28 @@ MusicXMLAnalyzer.PatternView = function(){
 	},
 
 	onNoteButtonClick = function(event) {
+		console.log("event.target.id: ",event.target.id);
 		patternController.changeNote(event.target.id);
 		$accidentialButtonClass.removeClass('disabled');
 	},
 
 	onRhythmNoteOrBreakClick = function(event){
 		console.log("event.target.id: ",event.target.id);
-			if(event.target.id === 'rhythmBreak'){
+		if(event.target.id === 'rhythmBreak'){
 
-				if($rhythmNote.hasClass('active')){
-					console.log("note WAS active");
-					patternController.changeNote('break');
-				}
-			}
-			else if(event.target.id === 'rhythmNote'){
-
-				if($rhythmBreakButton.hasClass('active')){
-					console.log("break WAS active");
-					patternController.changeNote('c');
-				}
+			if($rhythmNote.hasClass('active')){
+				console.log("note WAS active");
+				patternController.changeNote('break');
 			}
 		}
+		else if(event.target.id === 'rhythmNote'){
+
+			if($rhythmBreakButton.hasClass('active')){
+				console.log("break WAS active");
+				patternController.changeNote('c');
+			}
+		}
+		
 	},
 
 	onAccidentialButtonClick = function(event) {
@@ -199,6 +200,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		console.log("pattern view set rhythm");
 		$noteButtonClass.addClass('disabled');
 		$rhythmBreakButton.removeClass('disabled');
+		$rhythmBreakButton.removeClass('active');
 		$rhythmNote.removeClass('disabled');
 		$rhythmNote.addClass('active');
 		$octaveButtonClass.addClass('disabled');
@@ -209,7 +211,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		// disable search button
 		// (will get enabled after two notes are created)
 		$searchPatternButton.prop('disabled', true);
-
+		patternController.changeOctave(4);
 		$noteOrBreak.hide();
 		$rhythmNoteOrBreak.show();
 	},
