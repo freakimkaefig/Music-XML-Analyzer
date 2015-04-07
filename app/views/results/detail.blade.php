@@ -5,8 +5,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 text-center">
-			<h1>Search results</h1>
-			<h4>for your pattern:</h4>
+			<h4>Search results for your pattern:</h4>
 		</div>
 	</div>
 

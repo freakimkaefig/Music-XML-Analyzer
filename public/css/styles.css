@@ -42,6 +42,12 @@ a:focus {
 	font-size: 22px;
 }
 
+#navbarTitleText {
+    text-align: center;
+	font-weight: lighter;
+	font-size: 30px;
+	text-transform: uppercase;
+}
 /* === HELPER CLASSES === */
 .img-center {
 	margin: 0 auto;
