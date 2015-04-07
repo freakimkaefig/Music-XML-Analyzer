@@ -122,3 +122,8 @@ Route::get('/clear', array(
 	'as' => 'getClear',
 	'uses' => 'HomeController@getClear'
 ));
+
+Route::post('/clear' array(
+	'as' => 'postClear',
+	'uses' => 'HomeController@getClear'
+));
