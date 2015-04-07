@@ -155,7 +155,7 @@ class MelodyController {
 
 							}
 							// else if rest
-							else if(isset($n->rest){
+							else if(isset($n->rest)){
 								// calculate rest duration
 								try{
 									$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / 4); // (int)$partBeatType);

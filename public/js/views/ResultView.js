@@ -289,7 +289,7 @@ MusicXMLAnalyzer.ResultView = function(){
 			for (var j = 0; j < measures[i].notes.length; j++) {
 // console.log("measures[i].tuplets: ",measures[i].tuplets);
 // console.log("measures[i].tuplets[j]: ",measures[i].tuplets[j]);
-				if (measures[i].tuplets[j]) {
+				if (measures[i].tuplets && measures[i].tuplets[j]) {
 					if (measures[i].tuplets[j].toString() != 'false' && measures[i].tuplets[j].toString() != 'undefined') {
 // console.log("i", i," j ",j);
 // console.log("measures[i].tuplets[j]", measures[i].tuplets[j], parseInt(measures[i].tuplets[j]));
