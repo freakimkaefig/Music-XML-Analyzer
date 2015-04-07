@@ -113,42 +113,6 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	},
 
-	/*
-	addBeamAndTuplet = function(currentVexflowArrayLength) {
-		console.log(("display beam and tuplet: " + currentVexflowArrayLength));
-
-		var vexflowNotes = patternModel.getAllVexFlowNoteElements();
-
-		// delete canvas
-		context.clearRect(0, 0, canvas.width, canvas.height);
-
-		stave.setContext(context).draw();
-
-		var voice = new Vex.Flow.Voice({
-		    resolution: Vex.Flow.RESOLUTION
-		});
-
-		var tuplet1 = new Vex.Flow.Tuplet(vexflowNotes.slice(0, 3));
-		var beams1 = Vex.Flow.Beam.applyAndGetBeams(voice);
-
-		voice.setStrict(false);
-		voice.addTickables(vexflowNotes);
-
-		// Format and justify the notes to 700 pixels
-		var formatter = new Vex.Flow.Formatter().
-		    joinVoices([voice]).format([voice], 700);
-
-		// Render voice
-		stave.setContext(context).draw();
-		voice.draw(context, stave);
-		tuplet1.setContext(context).draw();
-
-		for(var i = 0; i < beams1.length; i++){
-        	beams1[i].setContext(context).draw();
-    	}
-	},
-	*/
-
 	renderVexFlowNotePreview = function() {
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -187,7 +151,11 @@ MusicXMLAnalyzer.NotationView = function(){
 		} else {
 			var keys = key + "/" + hoveredOctave;
 			if (patternModel.getCurrentMode() === 1) {
-				keys += "/d2";
+				if (durationContent === "w" || durationContent === "h" || durationContent === "wd" || durationContent === "hd") {
+					keys += "/d0";
+				} else {
+					keys += "/d2";
+				}
 			}
 			previewNote = new Vex.Flow.StaveNote({ keys: [keys],
 	    						duration: durationContent,
@@ -245,7 +213,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 
 	onNotationViewUpdate = function(event, notes) {
-		console.log("view triggered");
+		// console.log("view triggered");
 		//console.log("notes: " + notes);
 	},
 
@@ -266,7 +234,7 @@ MusicXMLAnalyzer.NotationView = function(){
 
     	//when rhythm mode -> just note b/4 is displayed when hovering
     	if (patternModel.getCurrentMode() === 1) {
-    		console.log("curMode: " + patternModel.getCurrentMode());
+    		// console.log("curMode: " + patternModel.getCurrentMode());
     		hoveredOctave = "4";
     		hoveredNote = "b";
     		renderVexFlowNotePreview("b");
@@ -280,9 +248,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 
 	/* This method handels the mouseover event of canvas */
-	onMouseClickCanvas = function(event) {
-
-		console.log(event);
+	onMouseClickCanvas = function() {
 
 		var noteName = patternModel.getCurrentNoteName();
 		var hoveredArea = null;

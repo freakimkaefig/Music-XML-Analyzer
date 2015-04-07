@@ -80,7 +80,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentNoteName = function(noteName) {
-		console.log("model " + noteName);
+		// console.log("model " + noteName);
 		curName = noteName;
 	},
 
@@ -89,7 +89,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentAccidential = function(accidential) {
-		console.log("model " + accidential);
+		// console.log("model " + accidential);
 		curAccidential = accidential;
 	},
 
@@ -98,7 +98,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentNoteDuration = function(noteDuration) {
-		console.log("model " + noteDuration);
+		// console.log("model " + noteDuration);
 		curDuration = noteDuration;
 	},
 
@@ -108,7 +108,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentNoteRythSpecial = function(rythSpec) {
-		console.log("model " + rythSpec);
+		// console.log("model " + rythSpec);
 		curRythSpec = rythSpec;
 	},
 
@@ -117,7 +117,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentOctave = function(octave) {
-		console.log("model " + octave);
+		// console.log("model " + octave);
 		curOctave = octave;
 	},
 
@@ -152,7 +152,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 		if(curRythSpec == "triplet") {
 			// if(lastDurationForTriplet == curDuration || tripletCurrentAmount == 0) {
 				tripletCurrentAmount++;
-				console.log("triplet amount ++ -> " + tripletCurrentAmount)
+				// console.log("triplet amount ++ -> " + tripletCurrentAmount)
 			// }
 		}
 
@@ -345,7 +345,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 		} else {
 			var keys = keyContent + "/" + curOctave;
 			if (getCurrentMode() == 1) {
-				keys += '/d2';
+				if (durationContent === "w" || durationContent === "h" || durationContent === "wd" || durationContent === "hd") {
+					keys += '/d0';
+				} else {
+					keys += '/d2';
+				}
 			}
 			note = new Vex.Flow.StaveNote({ keys: [keys],
 	    						duration: durationContent,
