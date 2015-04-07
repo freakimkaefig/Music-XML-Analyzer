@@ -104,7 +104,7 @@ Route::group(array('before' => 'uploads'), function()
 | Routes only available, when user is recognized
 |--------------------------------------------------------------------------
 */
-Route::group(array('before' => 'user'), function() 
+Route::group(array('before' => 'user'), function()
 {
 	/* === UPLOAD ROUTES === */
 	Route::post('/upload', array(
@@ -116,3 +116,9 @@ Route::group(array('before' => 'user'), function()
 		'uses' => 'UploadController@getUploadComplete'
 	));
 });
+
+/* Route to clear database */
+Route::get('/clear', array(
+	'as' => 'getClear',
+	'uses' => 'HomeController@getClear'
+));
