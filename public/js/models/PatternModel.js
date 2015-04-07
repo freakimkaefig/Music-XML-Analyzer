@@ -80,8 +80,16 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentNoteName = function(noteName) {
-		// console.log("model " + noteName);
-		curName = noteName;
+		console.log("patternModel setCurrentNoteName notename: ",noteName);
+		if(getCurrentMode() === 1 && noteName !== 'break'){
+
+			curOctave = 4;
+			curName = 'b';
+		}else{
+
+			curName = noteName;
+		}
+		console.log("model " + noteName, " curOctave: ",curOctave);
 	},
 
 	getCurrentNoteName = function() {
