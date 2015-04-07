@@ -1,10 +1,5 @@
 @extends('layout.main')
 @section('content')
-{{-- <div class="row text-center">
-	<div class="col-xs-12">
-		<h1 class="text-center">Search</h1>
-	</div>
-</div> --}}
 
 <div class="row text-center">
 	<div class="col-xs-12 marbo30">

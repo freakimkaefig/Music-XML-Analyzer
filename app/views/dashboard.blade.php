@@ -8,9 +8,7 @@
 	<div class="col-sm-6">
 		<a class="btn btn-success pull-left" href="{{ URL::route('download') }}"><span class="glyphicon glyphicon-export"></span> <span>Export as CSV</span></a>
 	</div>
-{{-- 	<div class="col-sm-6">
-		<h1 class="text-center">Dashboard</h1>
-	</div> --}}
+
 	<div class="col-sm-6">
 		<a class="btn btn-danger pull-right" href="{{ URL::route('pattern') }}"><span class="glyphicon glyphicon-search"></span> <span>Search for Patterns</span></a>
 	</div>
