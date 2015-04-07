@@ -134,7 +134,7 @@ public function search($pattern) {
 						// $note->position = self::$noteCounter;
 
 						// if note
-						if(!isset($n->rest) /*&& !isset($n->chord)*/){
+						if(!isset($n->rest) && !isset($n->chord)){
 // echo"<br><hr>n: <br>";
 // var_dump($n);
 							// get note intervals of xml file & fill xmlArray
