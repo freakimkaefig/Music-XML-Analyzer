@@ -75,14 +75,14 @@ MusicXMLAnalyzer.UploadView = function(){
 			disableAllInputs();
 			$(that).trigger('uploadSubmit');
 		} else {
-			var errorMessage = 'You have no new files to analyze!'
+			var errorMessage = 'You have no new files to analyze!';
 			addLogMessage('ERROR: ' + errorMessage);
 		}
 	},
 
 	onUploadClose = function() {
-		$uploadModal.modal('toggle')
-	}
+		$uploadModal.modal('toggle');
+	},
 
 	onError = function(file, errorMessage, xhrObject) {
 		// console.error("MusicXMLAnalyzer.UploadController.onError", event, errorMessage, xhrObject);
@@ -139,7 +139,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	addLogMessage = function(msg) {
-		if (uploadCounter == 1) {
+		if (uploadCounter === 1) {
 			initLogMessages();
 		}
 		$('#log' + (uploadMessageCounter - 3)).animate({
