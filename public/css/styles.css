@@ -288,18 +288,19 @@ h1 {
 }
 #overallStatistics li{
   /*display: inline;*/
-  font-size: 16px;
+  font-size: 14px;
 }
 
 div#fileSelector {
-	margin-bottom: 60px;
+	margin-bottom: 30px;
 }
+
 div#bar_noteDistribution,
 div#bar_intervalDistribution,
 div#pie_keyDistribution,
 div#pie_noteTypeDistribution,
 div#pie_meterDistribution {
-	margin-top: 120px;
+	margin-top: 60px;
 	margin-bottom: 30px;
 }
 

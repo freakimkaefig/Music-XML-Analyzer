@@ -80,8 +80,16 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentNoteName = function(noteName) {
-		// console.log("model " + noteName);
-		curName = noteName;
+		console.log("patternModel setCurrentNoteName notename: ",noteName);
+		if(getCurrentMode() === 1 && noteName !== 'break'){
+
+			curOctave = 4;
+			curName = 'b';
+		}else{
+
+			curName = noteName;
+		}
+		console.log("model " + noteName, " curOctave: ",curOctave);
 	},
 
 	getCurrentNoteName = function() {
@@ -117,7 +125,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentOctave = function(octave) {
-		// console.log("model " + octave);
+		console.log("model octave: " + octave);
 		curOctave = octave;
 	},
 
@@ -333,6 +341,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 		//then adapt values for vexflow an put them into an array
 		// console.log("curName: ",curName," curOctave: ",curOctave);
 		var note;
+		if(getCurrentMode() === 1 && curName !== 'break'){
+			curName = 'b';
+		}
 		var keyContent = getKeyContent4Vexflow(curName);
 		var durationContent = getDuration4Vexflow(curDuration);
 

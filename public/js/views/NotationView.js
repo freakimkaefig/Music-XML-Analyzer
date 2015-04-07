@@ -251,6 +251,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	onMouseClickCanvas = function() {
 
 		var noteName = patternModel.getCurrentNoteName();
+		
 		var hoveredArea = null;
 
 		if (noteName === "break") {
@@ -260,8 +261,6 @@ MusicXMLAnalyzer.NotationView = function(){
 			hoveredArea = hoveredNote + "/" + hoveredOctave;
 			patternController.addNoteByCanvasClick(hoveredArea);
 		}
-
-
 
 	},
 
