@@ -126,6 +126,8 @@ class ResultController extends BaseController {
 			if ($end_extract - $start_extract < 3) {
 				if ($startMeasure > $firstMeasureNumber) {
 					$start_extract--;
+				} elseif ($numMeasures > $end_extract + 1) {
+					$end_extract++;
 				}
 			}
 		}
