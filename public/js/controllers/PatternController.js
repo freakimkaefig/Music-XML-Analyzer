@@ -78,17 +78,17 @@ MusicXMLAnalyzer.PatternController = function() {
 
 		if (type == "whole"){
 			duration = 1;
-		} else if (type == "half") {
+		} else if (type === "half") {
 			duration = 0.5;
-		} else if (type == "quarter") {
+		} else if (type === "quarter") {
 			duration = 0.25;
-		} else if (type == "eighth") {
+		} else if (type === "eighth") {
 			duration = 0.125;
-		} else if (type == "16th") {
+		} else if (type === "16th") {
 			duration = 0.0625;
-		} else if (type == "32nd") {
+		} else if (type === "32nd") {
 			duration = 0.03125;
-		} else if (type == "64th") {
+		} else if (type === "64th") {
 			duration = 0.015625;
 		}
 
@@ -127,18 +127,18 @@ MusicXMLAnalyzer.PatternController = function() {
 		for(var i = 0; i < currentPatternNotes.length; i++){
 			for(var j = 0; j < currentPatternNotes[i].notes.length; j++){
 				// check if rest
-				if(currentPatternNotes[i].notes[j].type == 'rest'){
+				if(currentPatternNotes[i].notes[j].type === 'rest'){
 					var rest = currentPatternNotes[i].notes[j];
 					var restDuration = getDuration(currentPatternNotes[i].notes[j].duration);
 					notesToBePlayed.push({'note': 0, 'noteDuration': restDuration});
 
-				} else if(currentPatternNotes[i].notes[j].type == 'note'){
+				} else if(currentPatternNotes[i].notes[j].type === 'note'){
 					var note = currentPatternNotes[i].notes[j];
-					var noteDuration = (getDuration(note.pitch.type) != undefined ? getDuration(note.pitch.type) : 0.25);
-					var noteStep = (note.pitch.step != undefined ? note.pitch.step : 'C');
-					var noteOctave = (note.pitch.octave != undefined ? note.pitch.octave : 4);
-					var noteAlter = (note.pitch.alter != undefined ? note.pitch.alter : 0);
-					var noteBeam = (note.pitch.beam != undefined ? note.pitch.beam : false);
+					var noteDuration = (getDuration(note.pitch.type) !== undefined ? getDuration(note.pitch.type) : 0.25);
+					var noteStep = (note.pitch.step !== undefined ? note.pitch.step : 'C');
+					var noteOctave = (note.pitch.octave !== undefined ? note.pitch.octave : 4);
+					var noteAlter = (note.pitch.alter !== undefined ? note.pitch.alter : 0);
+					var noteBeam = (note.pitch.beam !== undefined ? note.pitch.beam : false);
 
 					if (note.pitch.dot) {
 						noteDuration += 0.5 * noteDuration;
@@ -151,8 +151,8 @@ MusicXMLAnalyzer.PatternController = function() {
 			}
 		}
 
-		var i = 0;
-		playTune = function() {
+		i = 0;
+		var playTune = function() {
 
 			if(i < notesToBePlayed.length){
 				var note = notesToBePlayed[i].note;
@@ -165,8 +165,8 @@ MusicXMLAnalyzer.PatternController = function() {
 				if(!once){
 
 					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*2000;
-					if(notesToBePlayed[i-1].noteBeam == "begin" || notesToBePlayed[i-1].noteBeam == "continue" ||
-						notesToBePlayed[i-1].noteBeam == "end") {
+					if(notesToBePlayed[i-1].noteBeam === "begin" || notesToBePlayed[i-1].noteBeam === "continue" ||
+						notesToBePlayed[i-1].noteBeam === "end") {
 						timeout = (timeout * 2) / 3;
 					}
 				}
@@ -176,7 +176,7 @@ MusicXMLAnalyzer.PatternController = function() {
 					if(stop){
 						i = notesToBePlayed.length;
 					}else{
-						if(i == notesToBePlayed.length -1){
+						if(i === notesToBePlayed.length -1){
 								MIDI.noteOn(0, note, velocity, delay);
 								MIDI.noteOff(0, note, delay + 0.75);
 						}else{
@@ -199,7 +199,7 @@ MusicXMLAnalyzer.PatternController = function() {
 				}, 1500);
 			}
 
-		}
+		};
 		if(once2){
 			once2 = false;
 			playTune();

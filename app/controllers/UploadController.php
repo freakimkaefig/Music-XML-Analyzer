@@ -1,7 +1,7 @@
 <?php
 
 class UploadController extends BaseController {
-	
+
 	public function postUpload() {
 		$user = User::find(Cookie::get('user_id'));
 		$file = Input::file('file');
@@ -29,9 +29,9 @@ class UploadController extends BaseController {
 		    $filename = str_replace("î", "i", $filename);
 		    $filename = preg_replace("/[^a-z0-9.]+/i", "_", $filename);
 		    $upload_success = Input::file('file')->move($destinationPath, $filename);
-		    
+
 		    if ($upload_success) {
-				$url = URL::to('/uploads/') . '/' . $user->id . '/' . $filename; 
+				$url = URL::to('/uploads/') . '/' . $user->id . '/' . $filename;
 		    	$this->_saveFile($user, $url);
 		    	return Response::json('success', 200);
 		    } else {
@@ -62,7 +62,7 @@ class UploadController extends BaseController {
 			if ($transformation) {
 				return $url;
 			} else {
-				exit;
+				return false;
 			}
 		}
 		return $url;

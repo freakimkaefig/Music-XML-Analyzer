@@ -50,12 +50,12 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 
 	addClef = function(mode) {
-		if (mode == 1) {
+		if (mode === 1) {
   			stave.addClef("percussion").setContext(context).draw();
   		} else {
   			stave.addClef("treble").setContext(context).draw();
   		}
-	}
+	},
 
 	registerListener = function() {
 		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
@@ -175,18 +175,18 @@ MusicXMLAnalyzer.NotationView = function(){
   		var accidental = patternModel.getCurrentAccidential();
   		var rythSpec = patternModel.getCurrentNoteRythSpecial();
 
-  		if (accidental == "#" || accidental == "b") {
+  		if (accidental === "#" || accidental === "b") {
 			key += accidental;
 		}
   		// add the preview to to notes array
   		// further down it's been removed again
-  		if (noteName == "break") {
+  		if (noteName === "break") {
 			previewNote = new Vex.Flow.StaveNote({ keys: ["b/4"],
 	    						duration: durationContent + VEXFLOW_REST_SIGN,
 	    						auto_stem: true });
 		} else {
 			var keys = key + "/" + hoveredOctave;
-			if (patternModel.getCurrentMode() == 1) {
+			if (patternModel.getCurrentMode() === 1) {
 				keys += "/d2";
 			}
 			previewNote = new Vex.Flow.StaveNote({ keys: [keys],
@@ -194,11 +194,11 @@ MusicXMLAnalyzer.NotationView = function(){
 	    						auto_stem: true });
 		}
 
-		if (accidental == "#" || accidental == "b") {
+		if (accidental === "#" || accidental === "b") {
 			previewNote.addAccidental(0, new Vex.Flow.Accidental(accidental));
 		}
 
-		if (rythSpec == "dotted") {
+		if (rythSpec === "dotted") {
 			previewNote.addDot(0);
 		}
 
@@ -265,7 +265,7 @@ MusicXMLAnalyzer.NotationView = function(){
     	//if yes the method returns val and not null
 
     	//when rhythm mode -> just note b/4 is displayed when hovering
-    	if (patternModel.getCurrentMode() == 1) {
+    	if (patternModel.getCurrentMode() === 1) {
     		console.log("curMode: " + patternModel.getCurrentMode());
     		hoveredOctave = "4";
     		hoveredNote = "b";
@@ -287,11 +287,11 @@ MusicXMLAnalyzer.NotationView = function(){
 		var noteName = patternModel.getCurrentNoteName();
 		var hoveredArea = null;
 
-		if (noteName == "break") {
-			hoveredArea = "break/4"
+		if (noteName === "break") {
+			hoveredArea = "break/4";
 			patternController.addNoteByCanvasClick(hoveredArea);
 		} else {
-			hoveredArea = hoveredNote + "/" + hoveredOctave
+			hoveredArea = hoveredNote + "/" + hoveredOctave;
 			patternController.addNoteByCanvasClick(hoveredArea);
 		}
 

@@ -169,7 +169,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		));*/
 	},
 
-	onBreakButtonClick = function(event){
+	onBreakButtonClick = function(){
 		patternController.changeAccidential("none");
 		setAccidentialActive("none");
 		$accidentialButtonClass.addClass('disabled');
@@ -183,7 +183,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	onNoteButtonClick = function(event) {
 		// console.log("event.target.id: ",event.target.id);
-		if(patternController.getCurrentMode() == 1){
+		if(patternController.getCurrentMode() === 1){
 			if($rhythmNote.hasClass('active')){
 				patternController.changeNote('break');
 			}else if($rhythmBreakButton.hasClass('active')){
@@ -211,7 +211,7 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	onAccidentialButtonClick = function(event) {
 		var acc = event.target.id;
-		acc = acc.substring(acc.indexOf("-") + 1, acc.length)
+		acc = acc.substring(acc.indexOf("-") + 1, acc.length);
 		patternController.changeAccidential(acc);
 	},
 
@@ -222,12 +222,12 @@ MusicXMLAnalyzer.PatternView = function(){
 	onSpecialRythButtonClick = function(event) {
 		//get the and of the specRyth String after the -
 		var specRyth = event.target.id;
-		specRyth = specRyth.substring(specRyth.indexOf("-") + 1, specRyth.length)
+		specRyth = specRyth.substring(specRyth.indexOf("-") + 1, specRyth.length);
 		//prevent adding break triplets by disabling the break button
-		if(specRyth == "triplet") {
+		if(specRyth === "triplet") {
 			// check if break button was active
 			// if true then set selected note to c
-			if($breakButton.hasClass("active") == true) {
+			if($breakButton.hasClass("active") === true) {
 				patternController.changeNote("c");
 				setNoteNameActive("c");
 			}
@@ -242,7 +242,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		patternController.changeOctave(event.target.id);
 	},
 
-	onAddButtonClick = function(event) {
+	onAddButtonClick = function() {
 		patternController.addNote();
 	},
 
@@ -351,11 +351,11 @@ MusicXMLAnalyzer.PatternView = function(){
 		$durationButtonClass.removeClass('disabled');
 	},
 
-	onRemoveButtonClick = function(event) {
+	onRemoveButtonClick = function() {
 		patternController.removeLastNote();
 	},
 
-	onSubmitButtonClick = function(event) {
+	onSubmitButtonClick = function() {
 		initLogMessages();
 		$('body').scrollTop($('body').height());
 		addLogMessage("Let's start searching the pattern.");
@@ -426,4 +426,4 @@ MusicXMLAnalyzer.PatternView = function(){
 	that.endTripletEnterMode = endTripletEnterMode;
 
 	return that;
-}
+};
