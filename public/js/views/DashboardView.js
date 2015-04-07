@@ -156,10 +156,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$plainFacts3.append("<li>" + results.join(", ") + "</li>");
 	},
 
-		    width = containerWidth - margin.left - margin.right,
-
-/*		var svg = d3.select("#bar_intervalDistribution")
-
 	/*BAR-CHART NOTE-DISTRIBUTION*/
 	initNoteDistribution = function(data) {
 		$('#bar_noteDistribution').empty();
