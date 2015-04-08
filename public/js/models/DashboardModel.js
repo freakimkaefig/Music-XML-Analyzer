@@ -244,23 +244,6 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				tempInstruments.push(resultsArr[i].value.instruments[x]);
 			}
 
-
-
-
-			// if (mergedArr.instruments.length > 0) {
-			// 	for (var instrumentCounter = 0; instrumentCounter < mergedArr.instruments.length; instrumentCounter++) {
-			// 		// check if instrument is already in array
-			// 		// if yes: count position up
-			// 		// else: add new position to array
-			// 		if (mergedArr.instruments[instrumentCounter] == '' || mergedArr.instruments[instrumentCounter] == ) {
-			// 			instrumentCounter++;
-			// 		}
-			// 	}
-			// } else {
-			// 	// add all instruments in array to merged array
-				// mergedArr.instruments = resultsArr[i].value.instruments;
-			// }
-
 			// merge counted intervals
 			for (var intervalCounter = 0; intervalCounter < resultsArr[i].value.intervals.length; intervalCounter++) {
 				mergedArr.intervals[intervalCounter].value += resultsArr[i].value.intervals[intervalCounter].value;
@@ -302,14 +285,6 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			mergedArr.title.push(resultsArr[i].value.title[0]);
 		}
 
-		// filter duplicate instruments
-		// var uniqueInstruments = [];
-		// $.each(tempInstruments, function(i, el){
-		//     if($.inArray(el, uniqueInstruments) === -1) uniqueInstruments.push(el);
-		// });
-
-
-
 		var seen = {};
 	    var out = [];
 	    var len = tempInstruments.length;
@@ -318,39 +293,14 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		    var item = tempInstruments[i];
 	        if(seen[item] !== 1) {
                seen[item] = 1;
-               // console.log("items in if: " + item);
                out[j++] = item;
-               // console.log("out in if: " + out);
         	}	
-        	// console.log("seen: ",seen," item: ",item," seen[item]: ",seen[item]," out: ",out," j: ",j);
 	    } 
-	    // console.log("var len: " +len)
-	    // console.log("tempinstruments after for: " + tempInstruments);
-	    // console.log("items after for:" + item);
-	    // console.log("out after for: " + out);
 	    
 		
 	    for(var i = 0; i < out.length; i++){
 			mergedArr.instruments = mergedArr.instruments.concat(out[i]);
 		};
-
-		// var a = tempInstruments;
-		// var b = {};
-		// for (var i = 0; i < a.length; i++) {
-		//     b[a[i]] = a[i];
-		// };
-		// var c = [];
-		// for (var key in b) {
-		//     c.push(key);
-		// };
-		// console.log("c array: " +c);
-
-		// for(var i = 0; i < c.length; i++){
-		// 	   mergedArr.instruments = mergedArr.instruments.concat(c[i]);
-		// };
-
-
-
 
 		// calculate most frequent note
 		mostFrequentNoteIndex = -1;

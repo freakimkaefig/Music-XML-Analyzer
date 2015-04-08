@@ -1,9 +1,11 @@
 MusicXMLAnalyzer.UploadController = function() {
 
 	var that = {},
-
 	view = null,
 
+	/**
+	 * Init function of UploadController
+	 */
 	init = function() {
 		view = MusicXMLAnalyzer.UploadView();
 		view.init();
