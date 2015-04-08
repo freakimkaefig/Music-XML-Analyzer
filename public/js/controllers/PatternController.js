@@ -28,7 +28,6 @@ MusicXMLAnalyzer.PatternController = function() {
 		$(patternModel).on('startTripletEnterMode', onTripletEnterModeStart);
 		$(patternModel).on('endTripletEnterMode', onTripletEnterModeEnd);
 		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
-		$(patternModel).on('testtest', test);
 		$(patternModel).on('clearCanvas', onCanvasClear);
 
 		MIDI.loadPlugin({

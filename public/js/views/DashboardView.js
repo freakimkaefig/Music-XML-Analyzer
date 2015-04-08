@@ -509,7 +509,6 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.initCountMeasures = initCountMeasures;
 	that.initMostFrequentNote = initMostFrequentNote;
 	that.initInstruments = initInstruments;
-	that.changeFile = changeFile;
 
 	return that;
 }
