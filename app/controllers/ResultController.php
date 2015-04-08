@@ -271,9 +271,20 @@ class ResultController extends BaseController {
 							$noteObject->type = "rest";
 							$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
 							$partDivision = $part->getElementsByTagName('divisions')->item(0)->nodeValue;
+
+							// determine dot
+							$dot = $note->getElementsByTagName('dot');
+							if ($dot->length) {
+								$noteObject->dot = true;
+								$curDuration = $curDuration - ($curDuration / 4);
+							} else {
+								$noteObject->dot = false;
+							}
+
 							$restDurationFloat = (float)((int)$curDuration / (int)$partDivision / 4);//(int)$curBeatType);
 							$restDuration = $this->getDurationType($restDurationFloat);
 							$noteObject->duration = $restDuration;
+
 						} elseif ($unpitched->length) {
 							$noteObject->type = "unpitched";
 							$curDuration = $note->getElementsByTagName('duration')->item(0)->nodeValue;
