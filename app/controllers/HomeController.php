@@ -1,11 +1,17 @@
 <?php
 
+/**
+ * Controller to handle requests to home
+ * Functions to create and delete users
+ *
+ * @package 	Controllers
+ */
 class HomeController extends BaseController {
 
 	/**
 	 * Function to handle GET request for front page
 	 *
-	 * @return 	\Illuminate\Http\RedirectResponse, \Illuminate\View\View 	if user already uploaded files the function redirects to dashboard, if not the home view is returned
+	 * @return 	\Illuminate\Http\RedirectResponse|\Illuminate\View\View 	if user already uploaded files the function redirects to dashboard, if not the home view is returned
 	 *
 	 */
 	public function getHome() {

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Controller to search rhythm patterns
+ *
+ * @package 	Controllers
+ */
 class RhythmController {
 
 	static $result;
@@ -16,9 +21,9 @@ class RhythmController {
 	/**
 	 * Search function to compare rhythm pattern to xml files
 	 *
-	 * @param   object      The user generated melody pattern
+	 * @param   object 	$pattern 	The user generated melody pattern
 	 *
-	 * @return  array      	Containing objects of \stdClass with file_id, file_url as well as start and end positions where pattern matches any given xml file
+	 * @return  array   Containing objects of \stdClass with file_id, file_url as well as start and end positions where pattern matches any given xml file
 	 *
 	 */
 	public function search($pattern) {

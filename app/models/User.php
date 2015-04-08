@@ -1,17 +1,42 @@
 <?php
 
+/**
+ * Model for representation of users
+ *
+ * @package 	Models
+ */
 class User extends Eloquent {
 
+	/**
+	 * String containing the database table
+	 * @var string
+	 */
 	protected $table = 'users';
 
+	/**
+	 * Controlling soft delete
+	 * @var bool
+	 */
 	protected $softDelete = false;
 
+	/**
+	 * Array with fillable fields
+	 * @var array
+	 */
 	protected $fillable = array('last_activity');
 
+
+	/**
+	 * Function to retrieve associated uploads
+	 * @return 	\Illuminate\Database\Eloquent\Collection 	A collection of users uploads
+	 */
 	public function uploads() {
 		return $this->hasMany('Upload');
 	}
 
+	/**
+	 * Function to reset the user as active
+	 */
 	public function resetLastActivity() {
 		$this->last_activity = date('Y-m-d H:m:s');
 		$this->save();

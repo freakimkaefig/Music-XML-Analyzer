@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Controller to handle rendering of dashboard
+ * Handles ajax calls for database fetching
+ *
+ * @package 	Controllers
+ */
 class DashboardController extends BaseController {
 
 	/**
@@ -61,7 +67,7 @@ class DashboardController extends BaseController {
 	/**
 	 * Function to get the result for a given id
 	 *
-	 * @param 	int 	The result id
+	 * @param 	int 	$id 	The result id
 	 *
 	 * @return 	string 	A JSON string containing the result object
 	 *

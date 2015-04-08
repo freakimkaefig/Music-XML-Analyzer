@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Controller to search sound sequence patterns
+ *
+ * @package 	Controllers
+ */
 class SoundSequenzController {
 
 	static $patternIntervalArray;
@@ -16,9 +21,9 @@ class SoundSequenzController {
 	/**
 	 * Search function to compare sound sequence pattern to xml files
 	 *
-	 * @param   object      The user generated melody pattern
+	 * @param   object 	$pattern 	The user generated melody pattern
 	 *
-	 * @return  array      	Array containing objects of \stdClass with file_id, file_url as well as start and end positions where pattern matches any given xml file
+	 * @return  array   Array containing objects of \stdClass with file_id, file_url as well as start and end positions where pattern matches any given xml file
 	 *
 	 */
 	public function search($pattern) {

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Example of a test class
+ *
+ * @package Tests
+ */
 class ExampleTest extends TestCase {
 
 	/**

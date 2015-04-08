@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class to test application creation
+ *
+ * @package Test
+ */
 class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
 	/**

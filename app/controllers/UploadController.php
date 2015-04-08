@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Controller to handle uploads
+ * Ability to transform timewise files to partwise files
+ *
+ * @package 	Controllers
+ */
 class UploadController extends BaseController {
 
 	/**
@@ -50,9 +56,9 @@ class UploadController extends BaseController {
 	/**
 	 * Function to transform MusicXML files in format "score-timewise" to format "score partwise"
 	 *
-	 * @param 	string 			The url of the file to transform
+	 * @param 	string 			$url 	The url of the file to transform
 	 *
-	 * @return 	bool, string 	False when operation fails, URL as string when operation succeeds
+	 * @return 	bool|string 	False when operation fails, URL as string when operation succeeds
 	 *
 	 */
 	private function xslTransform($url) {
@@ -87,8 +93,8 @@ class UploadController extends BaseController {
 	/**
 	 * Function to save files to database
 	 *
-	 * @param 	\User 	The user as Eloquent Model
-	 * @param 	string 	The file url
+	 * @param 	\User 	$user 	The user as Eloquent Model
+	 * @param 	string 	$url 	The file url
 	 *
 	 */
 	private function _saveFile($user, $url) {

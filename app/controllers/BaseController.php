@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Base class for all controllers
+ *
+ * @package 	Controllers
+ */
 class BaseController extends Controller {
 
 	/**

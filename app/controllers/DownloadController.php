@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Controller to handle downloading of analysis results
+ *
+ * @package 	Controllers
+ */
 class DownloadController extends BaseController {
 
 	/**
@@ -19,9 +24,9 @@ class DownloadController extends BaseController {
 	/**
 	 * Function to generate a CSV file
 	 *
-	 * @param   object    	The currently active user who requested the CSV file
+	 * @param   \User 	$user 	The currently active user who requested the CSV file
 	 *
-	 * @return  String      Url to download generated CSV file
+	 * @return  String 	Url to download generated CSV file
 	 *
 	 */
 	private function _generateCSV($user) {

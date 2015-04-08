@@ -3,10 +3,16 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Migration to create the relation between "results" and "files"
+ *
+ * @package Database
+ */
 class FilesResultsRelation extends Migration {
 
 	/**
 	 * Run the migrations.
+	 * Adds file_id to "results" table
 	 *
 	 * @return void
 	 */
@@ -21,6 +27,7 @@ class FilesResultsRelation extends Migration {
 
 	/**
 	 * Reverse the migrations.
+	 * Removes foreign_key file_id from "results" table
 	 *
 	 * @return void
 	 */

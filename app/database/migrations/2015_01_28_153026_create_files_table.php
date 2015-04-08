@@ -3,10 +3,16 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Migration to create the "files" table
+ *
+ * @package Database
+ */
 class CreateFilesTable extends Migration {
 
 	/**
 	 * Run the migrations.
+	 * Creates table "files" with columns id, url
 	 *
 	 * @return void
 	 */
@@ -23,6 +29,7 @@ class CreateFilesTable extends Migration {
 
 	/**
 	 * Reverse the migrations.
+	 * Drops table "files"
 	 *
 	 * @return void
 	 */

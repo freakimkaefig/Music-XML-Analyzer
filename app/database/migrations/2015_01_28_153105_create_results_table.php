@@ -3,10 +3,16 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Migration to create the "results" table
+ *
+ * @package Database
+ */
 class CreateResultsTable extends Migration {
 
 	/**
 	 * Run the migrations.
+	 * Creates the table "results" with columns id, value
 	 *
 	 * @return void
 	 */
@@ -23,6 +29,7 @@ class CreateResultsTable extends Migration {
 
 	/**
 	 * Reverse the migrations.
+	 * Drops table "results"
 	 *
 	 * @return void
 	 */

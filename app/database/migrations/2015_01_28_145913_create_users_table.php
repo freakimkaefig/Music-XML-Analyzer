@@ -3,10 +3,16 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Migration to create the "users" table
+ *
+ * @package Database
+ */
 class CreateUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
+	 * Creates table "users" with columns id, last_activity
 	 *
 	 * @return void
 	 */
@@ -23,6 +29,7 @@ class CreateUsersTable extends Migration {
 
 	/**
 	 * Reverse the migrations.
+	 * Drops table "users"
 	 *
 	 * @return void
 	 */

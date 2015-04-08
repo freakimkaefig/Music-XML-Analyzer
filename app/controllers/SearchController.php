@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Controller for analysis of uploads
+ *
+ * @package 	Controllers
+ */
 class SearchController extends BaseController {
 
 	/**
@@ -48,7 +53,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to count intervals in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  array      			interval array containing the frequency of intervals in a xml file
 	 *
@@ -234,7 +239,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to determine the artist/composer a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  string      		name of the artist (if available)
 	 *
@@ -251,7 +256,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to determine the title in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  string      		title of the xml file
 	 *
@@ -268,7 +273,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to determine the instruments in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  array      			instruments array containing the instruments taking part in a xml file
 	 *
@@ -300,7 +305,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to count note-length frequency in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  array      			note-length array containing the frequency of note-lengths in a xml file
 	 *
@@ -352,7 +357,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to determine the start meter in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  string      		the start meter of the given file
 	 *
@@ -371,7 +376,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to determine the frequency of keys in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  array      			key array containing the frequency of keys in a xml file
 	 *
@@ -523,7 +528,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to determine the clef in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  array      			clef array containing the frequency of clefs in a xml file
 	 *
@@ -608,7 +613,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to count measures in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  int      			number of measures in a given xml file
 	 *
@@ -621,7 +626,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to count rests in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  int      			number of rests in a given xml file
 	 *
@@ -634,7 +639,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to count notes in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  in      			number of notes in a given xml file
 	 *
@@ -647,7 +652,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to count note values in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  array      			notes array containing the frequency of note values in a xml file
 	 *
@@ -758,7 +763,7 @@ class SearchController extends BaseController {
 	/**
 	 * Helper function to determine the most frequent note in a given \SimpleXMLElement file
 	 *
-	 * @param   \SimpleXMLElement   uploaded user file
+	 * @param   \SimpleXMLElement 	$xml   uploaded user file
 	 *
 	 * @return  string      		name of the most frequent note in a given xml file
 	 *

@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Controller to handle search requests
+ * Initializes controllers for different search modes
+ *
+ * @package 	Controllers
+ */
 class PatternController extends BaseController {
 
 	/**
@@ -62,9 +69,9 @@ class PatternController extends BaseController {
 	/**
 	 * Helper function to calculate the interval of a given note
 	 *
-	 * @param   object    	note object without calculated interval
+	 * @param   object 	$n 	note object without calculated interval
 	 *
-	 * @return  int         calculated interval
+	 * @return  int     calculated interval
 	 *
 	 */
 	public static function getInterval($n){

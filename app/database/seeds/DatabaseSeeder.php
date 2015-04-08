@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class to fill the database with dummy data
+ *
+ * @package Database
+ */
 class DatabaseSeeder extends Seeder {
 
 	/**
@@ -16,6 +21,11 @@ class DatabaseSeeder extends Seeder {
 
 }
 
+/**
+ * Class to fill the user table with dummy data
+ *
+ * @package Database
+ */
 class UserTableSeeder extends Seeder {
 
     public function run()
@@ -71,7 +81,7 @@ class UserTableSeeder extends Seeder {
 		$result3->value = "Testvalue3";
 		$result3->upload()->associate($upload5);
 		$result3->push();
-        
+
         $user4 = new User;
         $user4->last_activity = date('Y-m-d H:m:s', time() - 24*60*60*16);
         $user4->push();

@@ -1,11 +1,18 @@
 <?php
 
+/**
+ * Controller to handle result requests
+ * Generating result extracts for search results
+ * Retrieves detail information about results
+ *
+ * @package 	Controllers
+ */
 class ResultController extends BaseController {
 
 	/**
 	 * Function handling get route 'searchResults' ('/results')
 	 *
-	 * @return 	\Illuminate\Http\RedirectResponse, \Illuminate\View\View 	Redirect to pattern input or results list
+	 * @return 	\Illuminate\Http\RedirectResponse|\Illuminate\View\View 	Redirect to pattern input or results list
 	 *
 	 */
 	public function getSearchResults() {
@@ -27,9 +34,10 @@ class ResultController extends BaseController {
 	/**
 	 * Function handling get route 'resultDetail' ('/results/detail/{file}')
 	 *
-	 * @param 	int 	The upload id
+	 * @param 	int 	$id 	The upload id
+	 * @param 	int 	$page 	The requested page
 	 *
-	 * @return 	\Illuminate\View\View, \Illuminate\Http\RedirectResponse 	A laravel view, when successful, or a redirect if fails
+	 * @return 	\Illuminate\View\View|\Illuminate\Http\RedirectResponse 	A laravel view, when successful, or a redirect if fails
 	 *
 	 */
 	public function getResultDetail($id, $page) {
@@ -81,10 +89,13 @@ class ResultController extends BaseController {
 	/**
 	 * Function to generate result extracts
 	 *
-	 * @param 	int 		The uploads id
-	 * @param 	string 		The part id
-	 * @param 	int 		The start note inside given part
-	 * @param 	int 		The end note inside given part
+	 * @param 	int 	$upload_id 		The uploads id
+	 * @param 	string 	$part_id 		The part id
+	 * @param 	int 	$voice 			The voice the finding is in
+	 * @param 	int 	$startMeasure 	The number of the starting measure
+	 * @param 	int 	$start 			The note inside the starting measure
+	 * @param 	int 	$endMeasure 	The number of the ending measure
+	 * @param 	int 	$end 			The note inside the ending measure
 	 *
 	 * @return 	\stdClass 	A \stdClass object containing information to render staves with vexflow
 	 *
@@ -348,9 +359,9 @@ class ResultController extends BaseController {
 	/**
 	 * Helper function to calculate the duration from float to type
 	 *
-	 * @param 	float 	  	The duration as float
+	 * @param 	float 	$durationFloat 	  	The duration as float
 	 *
-	 * @return 	string 		The duration as string type
+	 * @return 	string 	The duration as string type
 	 *
 	 */
 	private function getDurationType($durationFloat) {
@@ -390,69 +401,9 @@ class ResultController extends BaseController {
 
 
 	/**
-	 * Helper function to calculate the starting measures number
-	 *
-	 * @param 	\DOMNode 	The \DOMNode element for the music xml part
-	 * @param 	int 	  	The start notes number (inside the part)
-	 *
-	 * @return 	int 		Number of the measure where the extract should start
-	 *
-	 */
-	private function calculateStartExtract($part, $start) {
-		$notes = $part->getElementsByTagName('note');
-		if ($notes) {
-			$note = $notes->item($start);
-			if ($note) {
-				$startMeasureNumber = $note->parentNode->getAttribute('number');
-				$startExtract = $startMeasureNumber;
-				if ($startMeasureNumber > 1) {
-					// Check if measure before can be included in extract
-					$startExtract -= 1;
-				}
-				return $startExtract;
-			} else {
-				Log::error("ResultController.php:326 | Empty note!", array('notes' => $notes->length, 'start' => $start));
-			}
-		} else {
-			Log::error("ResultController.php:329 | Empty notes", array('part' => $part));
-		}
-	}
-
-
-	/**
-	 * Helper function to calculate the ending measures number
-	 *
-	 * @param 	\DOMNode 	The \DOMNode element for the music xml part
-	 * @param 	int 		The end notes number (inside the part)
-	 *
-	 * @return 	int 		Number of the measure where the extract should end
-	 *
-	 */
-	private function calculateEndExtract($part, $end) {
-		$notes = $part->getElementsByTagName('note');
-		if ($notes) {
-			$note = $notes->item($end);
-			if ($note) {
-				$endMeasureNumber = $note->parentNode->getAttribute('number');
-				$endExtract = $endMeasureNumber;
-				if ($endMeasureNumber < $part->getElementsByTagName('measure')->length) {
-					// Check if measure after can be included in extract
-					$endExtract += 1;
-				}
-				return $endExtract;
-			} else {
-			Log::error("ResultController.php:356 | Empty note!", array('notes' => $notes->length, 'end' => $end));
-			}
-		} else {
-			Log::error("ResultController.php:359 | Empty notes", array('part' => $part));
-		}
-	}
-
-
-	/**
 	 * Static helper function |  to retrieve the artist for a given upload id
 	 *
-	 * @param 	int 	the uploads id
+	 * @param 	int 	$id 	the uploads id
 	 *
 	 * @return 	string 	The artist for given upload id
 	 *
@@ -471,7 +422,7 @@ class ResultController extends BaseController {
 	/**
 	 * Static helper function to retrieve the title for a given upload id
 	 *
-	 * @param 	int 	the uploads id
+	 * @param 	int 	$id 	the uploads id
 	 *
 	 * @return 	string 	The title for given upload id
 	 *
@@ -490,7 +441,7 @@ class ResultController extends BaseController {
 	/**
 	 * Static helper function to retrieve the filename for a given upload id
 	 *
-	 * @param 	int 	the uploads id
+	 * @param 	int 	$id 	the uploads id
 	 *
 	 * @return 	string 	The title for given upload id
 	 *
@@ -503,8 +454,8 @@ class ResultController extends BaseController {
 	/**
 	 * Static helper function to retrieve the part name for a given upload id and part_id
 	 *
-	 * @param 	int 	the uploads id
-	 * @param 	int 	the part id
+	 * @param 	int 	$id 		the uploads id
+	 * @param 	int 	$part_id 	the part id
 	 *
 	 * @return 	string 	The title for given upload id
 	 *
@@ -523,7 +474,7 @@ class ResultController extends BaseController {
 	/**
 	 * Static helper function to retrieve the key for a given upload id
 	 *
-	 * @param 	int 	the uploads id
+	 * @param 	int 	$id 	the uploads id
 	 *
 	 * @return 	string 	The key for given upload id
 	 *

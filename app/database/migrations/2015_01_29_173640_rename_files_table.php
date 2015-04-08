@@ -3,10 +3,16 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Migration to rename the table "files" to "uploads"
+ *
+ * @package Database
+ */
 class RenameFilesTable extends Migration {
 
 	/**
 	 * Run the migrations.
+	 * Renames "files" table into "uploads"
 	 *
 	 * @return void
 	 */
@@ -82,7 +88,6 @@ class RenameFilesTable extends Migration {
 
 		Schema::dropIfExists('uploads');
 
-		
 
 		//Create Files table
 		Schema::create('files', function($table) {
