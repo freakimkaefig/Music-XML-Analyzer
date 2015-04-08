@@ -46,7 +46,11 @@ public function search($pattern) {
 			}
 			array_push(self::$patternArray, $obj);
 		}else{
-			array_push(self::$patternArray, $note->duration);
+				$obj = new stdClass();
+				$obj->duration = $note->duration;
+				$obj->dot = $note->dot;
+
+				array_push(self::$patternArray, $obj);
 		}
 	}
 // echo"<br><br>patternArray:<br> ";
@@ -225,7 +229,17 @@ public function search($pattern) {
 							$res->part = $part['id'];
 							$res->pos = self::$noteCounter;
 
-							array_push(self::$xmlArray, $restDuration);
+							$obj = new stdClass();
+							$obj->duration = $restDuration;
+							if($n->dot){
+
+								$obj->dot = $n->dot;
+							}else{
+								
+								$obj->dot = 'false';
+							}
+
+							array_push(self::$xmlArray, $obj);
 							array_push(self::$xmlPositionArray, $res);
 							array_push(self::$xmlCounterArray, self::$counter/*$note->position*/);
 
