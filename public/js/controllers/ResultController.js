@@ -11,8 +11,6 @@ MusicXMLAnalyzer.ResultController = function(){
 	tonika = { 'C':0, 'D':2, 'E':4, 'F':5, 'G':7, 'A':9, 'B':11 },
 
 	init = function(){
-		console.info('MusicXMLAnalyzer.ResultController.init');
-
 		model = MusicXMLAnalyzer.ResultModel();
 		$(model).on('resultExtractReceived', onResultExtractReceived);
 		model.init();
@@ -29,13 +27,11 @@ MusicXMLAnalyzer.ResultController = function(){
 			}
 		});
 
-
 		$playResult = $('.playResult');
 		$stopResult = $('.stopResult');
 
-		// disable stop button
+		//disable stop button
 		$stopResult.prop('disabled', true);
-
 
 		$playResult.click(function(){
 			stop = false;
@@ -50,7 +46,6 @@ MusicXMLAnalyzer.ResultController = function(){
 			stop = true;
 			$playResult.prop('disabled', false);
 			$stopResult.prop('disabled', true);
-
 		});
 
 		$(document).ajaxStop(onModelReady);
@@ -96,21 +91,14 @@ MusicXMLAnalyzer.ResultController = function(){
 		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));
 	},
 
+	/**
+	* Plays the found Pattern
+	*/
 	playResult = function(){
-		console.log("playResult: ");
 		var notesToBePlayed = [];
-		// console.log("playResult keyToNote: ",MIDI.keyToNote['A0']); //<-- returns key for var note
-		// console.log("playResult keytonote: ",MIDI.noteToKey); // 21 => A0
-
-		// TODO:
-		// # set duration correctly if dotted note
-		// # determine velocity
-		// # anschlags pausen bei notenlängen wechsel entfernen!
-
 
 		//get notes of current extract:
 		var currentResultNotes = JSON.parse($('#extract-carousel').find('div.carousel-inner').find('div.item.active').find('.resultExtract').val());
-		console.log("currentResultNotes: ",currentResultNotes);
 
 		MIDI.setVolume(0, 127);
 
@@ -132,7 +120,6 @@ MusicXMLAnalyzer.ResultController = function(){
 						var noteDuration = getDuration(note.pitch.type);
 						var noteTuplet = note.pitch.tuplet;
 						if(typeof noteDuration === 'undefined'){
-							console.log("noteduration is undefined");
 							noteDuration = 0.25;
 						}
 						if(note.pitch.dot){
@@ -145,15 +132,12 @@ MusicXMLAnalyzer.ResultController = function(){
 						var chord = note.pitch.chord;
 
 						var midiNote = getMidiValue(noteStep, noteOctave, noteAlter);
-						console.log(noteStep, noteOctave, noteAlter, noteDuration, "midiNote: ", midiNote);
 
 						notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration, 'chord': chord, 'noteTuplet' : noteTuplet});
 					}
 				}
 			}
 		}
-
-		// console.log("notesToBePlayed: ",notesToBePlayed);
 
 		var i = 0;
 		playTune = function(){
@@ -165,14 +149,10 @@ MusicXMLAnalyzer.ResultController = function(){
 				var noteDuration = notesToBePlayed[i].noteDuration;
 				var velocity = 127; // how hard the note hits
 				var delay = 0;
-				// var chord = notesToBePlayed[i].chord;
 				var timeout = 0;
 				if(!once){
-					// timeout needs adjustment
-					// currently trial&error values
 					timeout = notesToBePlayed[i-1].noteDuration*2000;
 					if(notesToBePlayed[i-1].noteTuplet == 3) {
-						
 						timeout = (timeout * 2) / 3;
 					}
 				}
@@ -190,15 +170,12 @@ MusicXMLAnalyzer.ResultController = function(){
 						}
 
 						if(!tooLong && notesToBePlayed[i].chord == false && notesToBePlayed[i + 1].chord == true) {
-							// var kCounter = 0;
 							do{
 								chordsToBePlayed.push(notesToBePlayed[i].note);
 								i++;
 							}while(notesToBePlayed[i] && notesToBePlayed[i].chord == true && i < notesToBePlayed.length)
 							MIDI.chordOn(0, chordsToBePlayed, velocity, delay);
 							MIDI.chordOff(0, chordsToBePlayed, delay + 0.75);
-							// TODO:
-							// adjust timeout for chords?
 						}
 						else{
 							MIDI.noteOn(0, note, velocity, delay);

@@ -1,14 +1,11 @@
 MusicXMLAnalyzer.PatternController = function() {
 	var that = {},
-
 	once = true,
 	once2 = true,
 	stop = false,
 	tonika = { 'C':0, 'D':2, 'E':4, 'F':5, 'G':7, 'A':9, 'B':11 },
 
 	init = function() {
-		console.info('MusicXMLAnalyzer.PatternController.init');
-
 		patternView = MusicXMLAnalyzer.PatternView();
 		patternView.init();
 
@@ -17,24 +14,20 @@ MusicXMLAnalyzer.PatternController = function() {
 
 		patternModel = MusicXMLAnalyzer.PatternModel();
 		patternModel.init();
+
 		$(patternModel).on('patternChange', onPatternChange);
 		$(patternModel).on('updateNotationView', onNotationViewUpdate);
-
 		$(patternModel).on('changeSelectedNoteName', onNoteNameSelectionChange);
 		$(patternModel).on('changeSelectedOctave', onOctaveSelectionChange);
 		$(patternModel).on('changeSelectedAccidential', onAccidentialSelectionChange);
 		$(patternModel).on('changeSelectedDuration', onDurationSelectionChange);
 		$(patternModel).on('changeSelectedSpecRyth', onSpecRythSelectionChange);
-
 		$(patternModel).on('startTripletEnterMode', onTripletEnterModeStart);
 		$(patternModel).on('endTripletEnterMode', onTripletEnterModeEnd);
-
 		$(patternModel).on('changeViewToCurrentMode', onViewChangedToCurrentMode);
 		$(patternModel).on('testtest', test);
-
 		$(patternModel).on('clearCanvas', onCanvasClear);
 
-		//init MIDI
 		MIDI.loadPlugin({
 			soundfontUrl: "../../libs/midijs/soundfont/",
 			instrument: "acoustic_grand_piano",
@@ -47,9 +40,7 @@ MusicXMLAnalyzer.PatternController = function() {
 		$playPattern = $('#playPattern');
 		$stopPattern = $('#stopPattern');
 
-		// disable stop button
 		$stopPattern.prop('disabled', true);
-
 
 		$playPattern.click(function(){
 			stop = false;
@@ -64,13 +55,7 @@ MusicXMLAnalyzer.PatternController = function() {
 			stop = true;
 			$playPattern.prop('disabled', false);
 			$stopPattern.prop('disabled', true);
-
 		});
-
-	},
-
-	test = function(event, x) {
-		console.log("in test function");
 	},
 
 	getDuration = function(type){
@@ -95,31 +80,17 @@ MusicXMLAnalyzer.PatternController = function() {
 		return duration;
 	},
 
-
 	getMidiValue = function(step, octave, alter) {
 		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));
 	},
-
+	/**
+	* Plays the created Pattern
+	*/
 	playPattern = function() {
-		// console.log("MIDI: ",MIDI);
 		var notesToBePlayed = [];
-		// console.log("playPattern keyToNote: ",MIDI.keyToNote['A0']); //<-- returns key for var note
-		// console.log("playPattern keytonote: ",MIDI.noteToKey); // 21 => A0
-
-		// TODO:
-		// # set duration correctly if dotted note
-		// # determine velocity
-		// # anschlags pausen bei notenlängen wechsel entfernen!
 
 		//get notes of current extract:
 		var currentPatternNotes = patternModel.getAllNoteElements();
-
-
-
-		// push empty note at end of pattern for noteOff of last pattern-note
-		// Todo: ONCE!
-		// currentPatternNotes[0].notes.push({'type':'note', 'pitch': { 'type': undefined, 'step': undefined }});
-		console.log("currentPatternNotes: ",currentPatternNotes);
 
 		MIDI.setVolume(0, 127);
 
@@ -131,8 +102,8 @@ MusicXMLAnalyzer.PatternController = function() {
 					var rest = currentPatternNotes[i].notes[j];
 					var restDuration = getDuration(currentPatternNotes[i].notes[j].duration);
 					notesToBePlayed.push({'note': 0, 'noteDuration': restDuration});
-
-				} else if(currentPatternNotes[i].notes[j].type === 'note'){
+				}
+				else if(currentPatternNotes[i].notes[j].type === 'note'){
 					var note = currentPatternNotes[i].notes[j];
 					var noteDuration = (getDuration(note.pitch.type) !== undefined ? getDuration(note.pitch.type) : 0.25);
 					var noteStep = (note.pitch.step !== undefined ? note.pitch.step : 'C');
@@ -145,7 +116,6 @@ MusicXMLAnalyzer.PatternController = function() {
 					}
 
 					var midiNote = getMidiValue(noteStep, noteOctave, noteAlter);
-					console.log(noteStep, noteOctave, noteAlter, noteDuration, "midiNote: ", midiNote);
 					notesToBePlayed.push({'note': midiNote, 'noteDuration': noteDuration, 'noteBeam' : noteBeam});
 				}
 			}
@@ -156,15 +126,13 @@ MusicXMLAnalyzer.PatternController = function() {
 
 			if(i < notesToBePlayed.length){
 				var note = notesToBePlayed[i].note;
-				// var noteDuration = notesToBePlayed[i].noteDuration;
 				// how hard the note gets hit
 				var velocity = 100;
 				// delay is set to fix value
 				var delay = 0;
 				var timeout = 0;
 				if(!once){
-
-					timeout = /*(( ) + noteDuration)*/notesToBePlayed[i-1].noteDuration*2000;
+					timeout = notesToBePlayed[i-1].noteDuration*2000;
 					if(notesToBePlayed[i-1].noteBeam === "begin" || notesToBePlayed[i-1].noteBeam === "continue" ||
 						notesToBePlayed[i-1].noteBeam === "end") {
 						timeout = (timeout * 2) / 3;
@@ -175,15 +143,16 @@ MusicXMLAnalyzer.PatternController = function() {
 				setTimeout(function(){
 					if(stop){
 						i = notesToBePlayed.length;
-					}else{
+					}
+					else{
 						if(i === notesToBePlayed.length -1){
 								MIDI.noteOn(0, note, velocity, delay);
 								MIDI.noteOff(0, note, delay + 0.75);
-						}else{
+						}
+						else{
 							MIDI.noteOn(0, note, velocity, delay);
 							MIDI.noteOff(0, note, delay + 0.75);
 						}
-
 						i++;
 					}
 					// recursively call playTune()
@@ -198,16 +167,14 @@ MusicXMLAnalyzer.PatternController = function() {
 					$stopPattern.prop('disabled', true);
 				}, 1500);
 			}
-
 		};
 		if(once2){
 			once2 = false;
 			playTune();
-		 }
+		}
 	},
 
 	onNotationViewUpdate = function(event, vexflowNotes) {
-		// console.log("PatternController onNotationViewUpdate vexflowNotes: ", vexflowNotes);
 		notationView.renderNotes(vexflowNotes);
 	},
 
@@ -237,7 +204,6 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	changeNote = function(val) {
-		console.log("PatternController changeNote: ",val);
 		patternModel.setCurrentNoteName(val);
 	},
 
@@ -254,20 +220,17 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	changeOctave = function(val) {
-		console.log("PatternController changeOctave val: ",val);
 		patternModel.setCurrentOctave(val);
 	},
 
 	addNote = function() {
 		if(patternModel.getPatternLength() < 12){
-			// console.log("getPatternLength: ",patternModel.getPatternLength());
 			patternModel.addNoteElement();
 		}
 	},
 
 	addNoteByCanvasClick = function(note) {
 		if(patternModel.getPatternLength() < 12){
-			// console.log("getPatternLength: ",patternModel.getPatternLength());
 			patternModel.addNoteElementByCanvasClick(note);
 		}
 	},
@@ -293,18 +256,17 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	onPatternChange = function(event, pattern) {
-		console.log("Trigger pattern: ",pattern);
 		patternView.setPatternValue(JSON.stringify(pattern));
 		if(pattern.length != 0){
 			if(pattern[0].notes.length >= 12){
 				// enable search button
 				$searchPatternButton.prop('disabled', false);
-
-			}else if(pattern[0].notes.length >= 2 && pattern[0].notes.length < 12){
+			}
+			else if(pattern[0].notes.length >= 2 && pattern[0].notes.length < 12){
 				// enable search button
 				$searchPatternButton.prop('disabled', false);
-
-			}else if(pattern[0].notes.length < 2){
+			}
+			else if(pattern[0].notes.length < 2){
 				// disable search button
 				$searchPatternButton.prop('disabled', true);
 			}
@@ -312,7 +274,6 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	onViewChangedToCurrentMode = function(event, mode) {
-		console.log("onViewChangedToCurrentMode");
 		switch(mode) {
 		    //sound sequence
 		    case 0:
@@ -332,7 +293,6 @@ MusicXMLAnalyzer.PatternController = function() {
 	dispose = function() {
 		that = {};
 	};
-
 
 	that.init = init;
 	that.changeMode = changeMode;

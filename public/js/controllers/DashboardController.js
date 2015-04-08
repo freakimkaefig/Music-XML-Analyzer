@@ -1,13 +1,10 @@
 MusicXMLAnalyzer.DashboardController = function() {
 
 	var that = {},
-
 	model = null,
 	view = null,
 
 	init = function() {
-		console.info('MusicXMLAnalyzer.DashboardController.init');
-
 		model = MusicXMLAnalyzer.DashboardModel();
 		model.init();
 		view = MusicXMLAnalyzer.DashboardView();
@@ -15,7 +12,6 @@ MusicXMLAnalyzer.DashboardController = function() {
 
 		$(model).on('logMessage', onLogMessage);
 		$(model).on('model_ready', onModelReady);
-
 		$(view).on('onFileSelectorChange', onFileSelectorChange);
 	},
 
@@ -24,10 +20,6 @@ MusicXMLAnalyzer.DashboardController = function() {
 	},
 
 	onModelReady = function(event, results) {
-		console.log('MusicXMLAnalyzer.DashboardController.onModelReady');
-
-		console.log(results);
-
 		view.initFileSelector(results);
 		view.initNoteDistribution(results.all.value.note_distribution);
 		view.initIntervalDistribution(results.all.value.intervals);
@@ -41,7 +33,6 @@ MusicXMLAnalyzer.DashboardController = function() {
 		view.initInstruments(results.all.value.instruments);
 
 		window.setTimeout(function() {
-
 			view.disposeLogMessages();
 		}, 3000);
 	},
