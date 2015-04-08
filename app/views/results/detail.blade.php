@@ -27,7 +27,6 @@
 
 <div id="extract-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
-	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
 		<?php $countResultOccurences = count($result->occurences); for ($i = 0; $i < $countResultOccurences; $i++): ?>
 			<?php
@@ -112,6 +111,7 @@
 		$displayedEndItem = $numResults;
 	}
 ?>
+
 <div class="row pager-row">
 	<div class="col-xs-12 text-center">
 		<p>Showing: {{ $startItem + 1 }} - {{ $displayedEndItem }} of {{ $numResults }}</p>

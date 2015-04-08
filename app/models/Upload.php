@@ -21,14 +21,12 @@ class Upload extends Eloquent {
 		return $path[count($path) - 1];
 	}
 
-	// http://stackoverflow.com/questions/2602612/php-remote-file-size-without-downloading-file
 	public function filesize() {
-		// Assume failure.
+		// Assume failure
 		$result = -1;
 
 		$curl = curl_init( $this->url );
 
-		// Issue a HEAD request and follow any redirects.
 		curl_setopt( $curl, CURLOPT_NOBODY, true );
 		curl_setopt( $curl, CURLOPT_HEADER, true );
 		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
@@ -50,12 +48,10 @@ class Upload extends Eloquent {
 		    	$content_length = (int)$matches[1];
 		    }
 
-		    // http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 		    if( $status == 200 || ($status > 300 && $status <= 308) ) {
 		    	$result = $content_length;
 		    }
 		}
-
 		return $result;
 	}
 
