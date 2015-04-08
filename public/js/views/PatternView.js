@@ -42,6 +42,7 @@ MusicXMLAnalyzer.PatternView = function(){
 		$removeNoteButton.on("click", onRemoveButtonClick);
 		$breakButton.on('click', onBreakButtonClick);
 		$rhythmNoteOrBreak.on('click',onRhythmNoteOrBreakClick);
+		$noteOrBreak.on('click', onNoteOrBreakClick);
 
 		$noteOrBreak.show();
 		$rhythmNoteOrBreak.hide();
@@ -50,6 +51,17 @@ MusicXMLAnalyzer.PatternView = function(){
 		$logMessages = $('#searchMessages');
 		resultMessageCounter = 0;
 
+	},
+
+	onNoteOrBreakClick = function(event){
+		if(patternController.getCurrentMode() === 2){
+// console.log("CURRENT MODE = 2! event.target.id: ",event.target.id );
+			if(event.target.id === 'break'){
+				$octaveButtonClass.addClass('disabled');
+			}else{
+				$octaveButtonClass.removeClass('disabled');
+			}
+		}
 	},
 
 	onBreakButtonClick = function(){
