@@ -6,7 +6,7 @@ MusicXMLAnalyzer.ApplicationController = function() {
 	dashboardController = null,
 	patternController = null,
 	resultController = null,
-	
+
 	/**
 	 * Init function of ApplicationController
 	 */

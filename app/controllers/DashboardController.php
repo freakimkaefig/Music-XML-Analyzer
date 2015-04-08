@@ -8,8 +8,7 @@ class DashboardController extends BaseController {
 	 * @return 	\Illuminate\View\View 	The dashboard view
 	 *
 	 */
-	public function getToDashboard()
-	{
+	public function getToDashboard() {
 		return View::make('dashboard');
 	}
 

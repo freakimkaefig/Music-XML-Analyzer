@@ -66,7 +66,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	 * Method renders result extract
 	 *
 	 * @param {int}    		index   counter
-	 * 
+	 *
 	 * @param {object}      data    contains information about extract position
 	 */
 	renderResultExtract = function(index, data) {
@@ -116,11 +116,11 @@ MusicXMLAnalyzer.ResultView = function(){
 	 * Method creates images from carousel data
 	 *
 	 * @param {URI}    		datas   		crousel image uri
-	 * 
+	 *
 	 * @param {float}       wantedWidth    	width of the image
-	 * 
+	 *
 	 * @param {float}       wantedHeight    height of the image
-	 * 
+	 *
 	 * @param {int}       	index    		counter
 	 */
 	resizedataURL = function(datas, wantedWidth, wantedHeight, index) {
@@ -154,7 +154,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	 * Method adds image to dom
 	 *
 	 * @param {int}    		index   	counter
-	 * 
+	 *
 	 * @param {string}      dataURI    	uri to image data
 	 */
     addImageToDOM = function(index, dataURI) {
@@ -235,11 +235,11 @@ MusicXMLAnalyzer.ResultView = function(){
 	 * Method renders result extract
 	 *
 	 * @param {array}    		measures    array containing the measures of result extract
-	 * 
+	 *
 	 * @param {object}     		canvas      the canvas proportions
-	 * 
+	 *
 	 * @param {canvas}     		context     the canvas context
-	 * 
+	 *
 	 * @param {object}     		pattern     the user pattern
 	 */
 	renderNotes = function(measures, canvas, renderer, context, stave, pattern) {
@@ -363,9 +363,9 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method generates vexflow notes
-	 * 
+	 *
 	 * @param {object}     		pattern     the user pattern
-	 * 
+	 *
 	 * @param {object}     		result      search result
 	 */
 	generateVexflowNotes = function(pattern, result) {

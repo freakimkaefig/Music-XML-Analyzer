@@ -204,7 +204,7 @@ class MelodyController {
 
 									$obj->dot = true;
 								}else{
-									
+
 									$obj->dot = false;
 								}
 

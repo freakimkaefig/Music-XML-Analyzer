@@ -32,7 +32,7 @@ Route::get('/hello', function() {
 | Routes only available, when user has uploaded files
 |--------------------------------------------------------------------------
 */
-Route::group(array('before' => 'uploads'), function() 
+Route::group(array('before' => 'uploads'), function()
 {
 	/* === SEARCH ROUTES === */
 	Route::get('/search', array(
