@@ -8,7 +8,7 @@
 			<label title="Create a melodic pattern." id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":melody">melody
 			</label>
-			<label title="Create a sound sequence püattern." id="sound-sequence-mode-0" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+			<label title="Create a sound sequence pattern." id="sound-sequence-mode-0" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":sound sequence">sound sequence
 			</label>
 			<label title="Create a rhythm pattern." id="rhythm-mode-1" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
@@ -47,7 +47,7 @@
 				<label title="NONE: Enter notes or breaks according to selected mode." id="spec-none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":none">None
                 </label>
-                <label title="TRIPLET: You have to creat three notes for a complete triplet. Pressing delete will remove the entire triplet." id="spec-triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+                <label title="TRIPLET: You have to create three notes for a complete triplet. Pressing delete will remove the entire triplet." id="spec-triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":triplet">Triplet
 				</label>
 				<label title="DOTTED: When active, notes and breaks will be dotted." id="spec-dotted" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
