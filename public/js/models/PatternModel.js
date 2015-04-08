@@ -11,10 +11,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 	curRythSpec = "none",
 	curOctave = "4",
 	VEXFLOW_REST_SIGN = "r",
-	// completeDurationIn64th = 0,
 	first = true,
 
-	// in this app a triplet must consist of 3 notes
 	tripletCurrentAmount = 0,
 	tripletEndPositions = [],
 	tupletArray = [],
@@ -22,19 +20,14 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	tripletEnterMode = false;
 
-	// lastDurationForTriplet = null,
-
 	// val for noteElements: -1,0,1
 	noteElementAccidential = 0,
-	// val for dot: true, false
 	isDot = false,
 	// val for beam: false, begin, continue, end
 	beamVal = false,
 
 
 	init = function() {
-		// lastDurationForTriplet = curDuration;
-		// sound sequence as default
 
 	},
 
@@ -56,6 +49,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 			case 1:
 				setDefaultValsForRhythmMode();
 				break;
+			//meldoy
 			case 2:
 				setDefaultValsForMelodyMode();
 				break;
@@ -97,7 +91,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentAccidential = function(accidential) {
-		// console.log("model " + accidential);
 		curAccidential = accidential;
 	},
 
@@ -106,7 +99,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentNoteDuration = function(noteDuration) {
-		// console.log("model " + noteDuration);
 		curDuration = noteDuration;
 	},
 
@@ -116,7 +108,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentNoteRythSpecial = function(rythSpec) {
-		// console.log("model " + rythSpec);
 		curRythSpec = rythSpec;
 	},
 
@@ -125,7 +116,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	},
 
 	setCurrentOctave = function(octave) {
-		console.log("model octave: " + octave);
 		curOctave = octave;
 	},
 
@@ -156,15 +146,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 
 		//beam
-		//if(curRythSpec == "triplet" && lastDurationForTriplet == curDuration) {
 		if(curRythSpec == "triplet") {
-			// if(lastDurationForTriplet == curDuration || tripletCurrentAmount == 0) {
 				tripletCurrentAmount++;
-				// console.log("triplet amount ++ -> " + tripletCurrentAmount)
-			// }
 		}
-
-		//}
 
 		switch(tripletCurrentAmount) {
 		    case 1:
@@ -339,8 +323,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 			}
 		}
 
-		console.log("noteELements: ", noteElements);
-
 		//check if break or normal note or note with accidential
 		//then adapt values for vexflow an put them into an array
 		// console.log("curName: ",curName," curOctave: ",curOctave);
@@ -383,7 +365,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		//check if triplet
 		if (curRythSpec == "triplet") {
-			// if (curDuration == lastDurationForTriplet || tripletCurrentAmount == 1) {
 				if (tripletCurrentAmount == 3) {
 					$(that).trigger('endTripletEnterMode');
 					tripletEnterMode = false;
@@ -399,35 +380,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 					 tripletEnterMode = true;
 					 $(that).trigger('startTripletEnterMode');
 				}
-				// lastDurationForTriplet = curDuration;
-			// }
-		} else {
-			//when user changes from triplet into different rythSpec
-			//when there are already 1 or 2 triplets, they will be deleted and removed from the note and vexflow array
-			/*
-			if (tripletCurrentAmount > 0) {
-				//splice -> (position in array, number of elements to be removed)
-				//position in array -> starts with 0
-
-				noteElements4VexFlow.splice(
-					// +1 because you should remove the last 3
-					noteElements4VexFlow.length - (tripletCurrentAmount + 1), tripletCurrentAmount + 1);
-
-				noteElements.splice(
-					// +1 because you should remove the last 3
-					noteElements.length - (tripletCurrentAmount + 1), tripletCurrentAmount + 1);
-
-				tripletCurrentAmount = 0;
-			}
-			*/
 		}
 
 		if(noteElements.length == 0) {
 			first = true;
 			noteElements = [];
 		}
-
-		// console.log("noteELements: ", noteElements);
 
 		$(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
@@ -437,9 +395,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	getPatternLength = function(){
 		if(noteElements.length > 0){
-
 			return noteElements[0].notes.length;
-		}else{
+		} else {
 			return 0;
 		}
 	}
@@ -467,7 +424,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curRythSpec = "none";
 		curOctave = "5";
 
-		// lastDurationForTriplet = curDuration;
 		tripletCurrentAmount = 0;
 		tripletEndPositions = [],
 		tupletArray = [],
@@ -487,7 +443,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		curDuration = "quarter";
 		curRythSpec = "none";
 
-		// lastDurationForTriplet = curDuration;
 		tripletCurrentAmount = 0;
 		tripletEndPositions = [],
 		tupletArray = [],
@@ -594,20 +549,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 		    	noteElements4VexFlow.pop();
 		    	beamArray.pop();
 				tupletArray.pop();
-		    	// if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
-		    	// 	if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
-		    	// 		noteElements[0].notes.pop();
-		    	// 		noteElements4VexFlow.pop();
-		    	// 		if (typeof noteElements4VexFlow[noteElements4VexFlow.length-1] != 'undefined') {
-		    	// 			if(noteElements[0].notes[noteElements4VexFlow.length-1].pitch.beam != false) {
-				   //  			noteElements[0].notes.pop();
-				   //  			noteElements4VexFlow.pop();
-				   //  			beamArray.pop();
-				   //  			tupletArray.pop();
-			    // 			}
-		    	// 		}
-		    	// 	}
-		    	// }
 		    } else {
 		    	noteElements[0].notes.pop();
 		    	noteElements4VexFlow.pop();
@@ -619,7 +560,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 	    $(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
-	    //console.log(noteElements4VexFlow);
 	},
 
 
