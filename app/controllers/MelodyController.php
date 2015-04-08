@@ -44,7 +44,11 @@ class MelodyController {
 				}
 				array_push(self::$patternArray, $obj);
 			}else{
-				array_push(self::$patternArray, $note->duration);
+				$obj = new stdClass();
+				$obj->duration = $note->duration;
+				$obj->dot = $note->dot;
+
+				array_push(self::$patternArray, $obj);
 			}
 		}
 
@@ -173,28 +177,30 @@ class MelodyController {
 								// determine 'type'
 								if ($restDurationFloat == 1){
 									$restDuration = "whole";
-								} elseif ($restDurationFloat == 0.75) {
+								} elseif ($restDurationFloat == 1.5) {
 									$restDuration = "whole";
+								} elseif ($restDurationFloat == 0.75) {
+									$restDuration = "half";
 								} elseif ($restDurationFloat == 0.5) {
 									$restDuration = "half";
 								} elseif ($restDurationFloat == 0.375) {
-									$restDuration = "half";
+									$restDuration = "quarter";
 								} elseif ($restDurationFloat == 0.25) {
 									$restDuration = "quarter";
 								} elseif ($restDurationFloat == 0.1875) {
-									$restDuration = "quarter";
+									$restDuration = "eighth";
 								} elseif ($restDurationFloat == 0.125) {
 									$restDuration = "eighth";
 								} elseif ($restDurationFloat == 0.09375) {
-									$restDuration = "eighth";
+									$restDuration = "16th";
 								} elseif ($restDurationFloat == 0.0625) {
 									$restDuration = "16th";
 								} elseif ($restDurationFloat == 0.046875) {
-									$restDuration = "16th";
+									$restDuration = "32nd";
 								} elseif ($restDurationFloat == 0.03125) {
 									$restDuration = "32nd";
 								} elseif ($restDurationFloat == 0.0234375) {
-									$restDuration = "32nd";
+									$restDuration = "64th";
 								} elseif ($restDurationFloat == 0.015625) {
 									$restDuration = "64th";
 								} elseif ($restDurationFloat == 0.01171875) {
@@ -210,7 +216,17 @@ class MelodyController {
 								$res->part = $part['id'];
 								$res->pos = self::$noteCounter;
 
-								array_push(self::$xmlArray, $restDuration);
+								$obj = new stdClass();
+								$obj->duration = $restDuration;
+								if($n->dot){
+
+									$obj->dot = true;
+								}else{
+									
+									$obj->dot = false;
+								}
+
+								array_push(self::$xmlArray, $obj);
 								array_push(self::$xmlPositionArray, $res);
 								array_push(self::$xmlCounterArray, $note->counter);
 
@@ -218,6 +234,10 @@ class MelodyController {
 
 							//check if Array-length equals Pattern-length already
 							if(count(self::$xmlArray) == count(self::$patternArray)){
+// echo"<br><br><hr>SAME LENGTH!<br>";
+// var_dump(array_values(self::$xmlArray));
+// echo"<br><br>patternArray: <br>";
+// var_dump(array_values(self::$patternArray));
 
 // echo"<br><br><hr>restDuration: <br>";
 // var_dump($restDuration);
@@ -230,10 +250,6 @@ class MelodyController {
 
 								// compare arrays
 								if(array_values(self::$xmlArray) == array_values(self::$patternArray)){
-// echo"<br><br><hr>RESULT FOUND<br>";
-// var_dump(array_values(self::$xmlIntervalArray));
-// echo"<br><br>patternArray: <br>";
-// var_dump(array_values(self::$patternIntervalArray));
 // echo"<br><br>xmlPositionArray:";
 // var_dump(self::$xmlPositionArray);
 // echo "<br>PART_ID:";
@@ -310,7 +326,6 @@ class MelodyController {
 
 
 return self::$results;
-
 // bla();
 
 	}

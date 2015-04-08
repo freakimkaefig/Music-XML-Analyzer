@@ -5,13 +5,13 @@
 	<div class="col-xs-12 marbo30">
 		<center><h4 class="no-margin">Choose Mode: </h4></center>
 		<div class="btn-group" data-toggle="buttons">
-			<label id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+			<label title="Create a melodic pattern." id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":melody">melody
 			</label>
-			<label id="sound-sequence-mode-0" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+			<label title="Create a sound sequence pattern." id="sound-sequence-mode-0" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":sound sequence">sound sequence
 			</label>
-			<label id="rhythm-mode-1" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+			<label title="Create a rhythm pattern." id="rhythm-mode-1" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":rhythm">rhythm
 			</label>
 		</div>
@@ -20,8 +20,8 @@
 
 <div class="row text-center">
 	<div class="col-xs-12">
-		<button id="playPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
-		<button id="stopPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
+		<button title="Start playing the pattern." id="playPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
+		<button title="Stop playing the pattern." id="stopPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
 	</div>
 </div>
 
@@ -44,20 +44,20 @@
 		<div class="col-xs-8">
 			<p class="no-margin">Special Ryth: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label id="spec-none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+				<label title="NONE: Enter standard notes or breaks according to selected mode." id="spec-none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":none">None
                 </label>
-                <label id="spec-triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+                <label title="TRIPLET: Once started you have to create three notes for a complete triplet. Pressing delete will remove the entire triplet." id="spec-triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":triplet">Triplet
 				</label>
-				<label id="spec-dotted" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+				<label title="DOTTED: When active, notes and breaks will be dotted." id="spec-dotted" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":dotted">Dotted
 				</label>
 			</div>
 		</div>
 		<div class="col-xs-4">
             <p class="no-margin">Octave: </p>
-            <div class="btn-group" data-toggle="buttons">
+            <div title="Choose the octave to create notes by button click or place notes directly on the stave via mouse." class="btn-group" data-toggle="buttons">
                 <label id="3" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":3">3
                 </label>
@@ -77,7 +77,7 @@
 	<div class="row marbo20">
 		<div id="noteOrBreak" class="col-xs-8">
 			<p class="no-margin">Notes/Breaks: </p>
-			<div class="btn-group" data-toggle="buttons">
+			<div title="Select notes ranging from 'C' to 'B' or select 'REST' to create the corresponding element." class="btn-group" data-toggle="buttons">
 				<label id="c" class="btn btn-note btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":c">C
 				</label>
@@ -106,7 +106,7 @@
 		</div>
 		<div id="rhythmNoteOrBreak" class="col-xs-8">
 			<p class="no-margin">Notes/Breaks: </p>
-			<div class="btn-group" data-toggle="buttons">
+			<div title="In rhythm mode you can only choose between 'NOTE' or 'REST'. Elements will be rendered slightly different. See 'RHYTHM' tooltip for further information." class="btn-group" data-toggle="buttons">
 				<label id="rhythmNote" class="btn btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":c">Note
 				</label>
@@ -117,7 +117,7 @@
 		</div>
 		<div class="col-xs-4">
 			<p class="no-margin">Accidental: </p>
-			<div class="btn-group" data-toggle="buttons">
+			<div title="If an accidental is selected it will be added to notes you create." class="btn-group" data-toggle="buttons">
 				<label id="accidential-none" class="btn btn-accidential btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":none">none
 				</label>
@@ -134,7 +134,7 @@
 	<div class="row marbo20">
 		<div class="col-xs-8">
 			<p class="no-margin">Duration: </p>
-			<div class="btn-group" data-toggle="buttons">
+			<div title="Select the desired duration for notes and rests." class="btn-group" data-toggle="buttons">
 				<label id="whole" class="btn btn-duration btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":whole">1/1
 				</label>
@@ -162,11 +162,11 @@
 
 	<div class="row">
         <div class="col-xs-3">
-            <button id="btn-add-note" type="button" class="btn btn-material-green-400">Add</button>
-            <button id="btn-remove-note" type="button" class="btn btn-material-red-400">Delete</button>
+            <button title="Add your configured element (according to highlighted selection) to the stave above. " id="btn-add-note" type="button" class="btn btn-material-green-400">Add</button>
+            <button title="Removes the last element." id="btn-remove-note" type="button" class="btn btn-material-red-400">Delete</button>
         </div>
 
-        <div class="col-xs-4 pull-right">
+        <div title="What could possibly go wrong?" class="col-xs-4 pull-right">
 			{{ Form::submit('Search', array('id' => 'searchPatternButton', 'class' => 'btn btn-success')) }}
 			{{ Form::close() }}
 		</div>
