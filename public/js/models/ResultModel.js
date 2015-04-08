@@ -9,8 +9,11 @@ MusicXMLAnalyzer.ResultModel = function() {
 	startedLoading = null,
 	loadingCounter = null,
 
+	/**
+	 * this is the init mehtod of result model
+	 *
+	 */
 	init = function() {
-		console.info('MusicXMLAnalyzer.ResultModel.init');
 
 		numItems = 0;
 		resultItems = [];
@@ -18,10 +21,22 @@ MusicXMLAnalyzer.ResultModel = function() {
 		loadingCounter = 0;
 	},
 
+	/**
+	 * Sets number of items
+	 *
+	 * @param {number}    num    number of items
+	 *
+	 */
 	setNumItems = function(num) {
 		numItems = num;
 	},
 
+	/**
+	 * Adds a result item to resultItems array
+	 *
+	 * @param {Result}    result    result item
+	 *
+	 */
 	addResultItem = function(result) {
 		resultItems.push(result);
 		if (!startedLoading) {
@@ -30,6 +45,10 @@ MusicXMLAnalyzer.ResultModel = function() {
 		}
 	},
 
+	/**
+	 * This method loads extracts of the result
+	 *
+	 */
 	loadResultExtracts = function() {
 		// console.log(loadingCounter);
 		$.ajax({
@@ -42,6 +61,10 @@ MusicXMLAnalyzer.ResultModel = function() {
 		});
 	},
 
+	/**
+	 * This method gets called when the result extracts have been loaded successfully
+	 *
+	 */
 	_onLoadResultExtract = function(index, data, textStatus, jqXHR) {
 		data = JSON.parse(data);
 		// console.log(index, data);
