@@ -5,6 +5,9 @@ MusicXMLAnalyzer.PatternController = function() {
 	stop = false,
 	tonika = { 'C':0, 'D':2, 'E':4, 'F':5, 'G':7, 'A':9, 'B':11 },
 
+	/**
+	 * Init method of PatternController
+	 */
 	init = function() {
 		patternView = MusicXMLAnalyzer.PatternView();
 		patternView.init();
@@ -58,6 +61,9 @@ MusicXMLAnalyzer.PatternController = function() {
 		});
 	},
 
+	/**
+	 * Function to get Duration of Notes
+	 */
 	getDuration = function(type){
 		var duration;
 
@@ -80,11 +86,15 @@ MusicXMLAnalyzer.PatternController = function() {
 		return duration;
 	},
 
+	/**
+	 * Method to get MIDI-Values
+	 */
 	getMidiValue = function(step, octave, alter) {
 		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));
 	},
+
 	/**
-	* Plays the created Pattern
+	* Method to play the created Pattern
 	*/
 	playPattern = function() {
 		var notesToBePlayed = [];

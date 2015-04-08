@@ -10,6 +10,9 @@ MusicXMLAnalyzer.ResultController = function(){
 	tooLong = false,
 	tonika = { 'C':0, 'D':2, 'E':4, 'F':5, 'G':7, 'A':9, 'B':11 },
 
+	/**
+	 * Init method of ResultController
+	 */
 	init = function(){
 		model = MusicXMLAnalyzer.ResultModel();
 		$(model).on('resultExtractReceived', onResultExtractReceived);
@@ -30,7 +33,6 @@ MusicXMLAnalyzer.ResultController = function(){
 		$playResult = $('.playResult');
 		$stopResult = $('.stopResult');
 
-		//disable stop button
 		$stopResult.prop('disabled', true);
 
 		$playResult.click(function(){
@@ -49,9 +51,11 @@ MusicXMLAnalyzer.ResultController = function(){
 		});
 
 		$(document).ajaxStop(onModelReady);
-
 	},
 
+	/**
+	* Function to add result to model
+	*/
 	onAddResultItem = function(event, numItems, result) {
 		model.setNumItems(numItems);
 		model.addResultItem(result);
@@ -65,6 +69,9 @@ MusicXMLAnalyzer.ResultController = function(){
 		view.setModelReady();
 	},
 
+	/**
+	* Function to get note durations
+	*/
 	getDuration = function(type){
 		var duration;
 
@@ -87,12 +94,15 @@ MusicXMLAnalyzer.ResultController = function(){
 		return duration;
 	},
 
+	/**
+	* Function to get MIDI values
+	*/
 	getMidiValue = function(step, octave, alter) {
 		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));
 	},
 
 	/**
-	* Plays the found Pattern
+	* Function to play the found Pattern
 	*/
 	playResult = function(){
 		var notesToBePlayed = [];
@@ -138,7 +148,6 @@ MusicXMLAnalyzer.ResultController = function(){
 				}
 			}
 		}
-
 		var i = 0;
 		playTune = function(){
 
@@ -199,7 +208,7 @@ MusicXMLAnalyzer.ResultController = function(){
 		if(once2){
 			once2 = false;
 			playTune();
-		 }
+		}
 	};
 
 	that.init = init;

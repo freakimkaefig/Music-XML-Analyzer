@@ -4,6 +4,9 @@ MusicXMLAnalyzer.DashboardController = function() {
 	model = null,
 	view = null,
 
+	/**
+	 * Init method of DashboardController
+	 */
 	init = function() {
 		model = MusicXMLAnalyzer.DashboardModel();
 		model.init();
@@ -19,6 +22,9 @@ MusicXMLAnalyzer.DashboardController = function() {
 		view.addLogMessage(msg);
 	},
 
+	/**
+	 * Method to pass results to view
+	 */
 	onModelReady = function(event, results) {
 		view.initFileSelector(results);
 		view.initNoteDistribution(results.all.value.note_distribution);
@@ -37,6 +43,9 @@ MusicXMLAnalyzer.DashboardController = function() {
 		}, 3000);
 	},
 
+	/**
+	 * Method to pass Fileselectorchanges
+	 */
 	onFileSelectorChange = function(event, id) {
 		var result = model.getResults(id);
 		view.initNoteDistribution(result.value.note_distribution);
