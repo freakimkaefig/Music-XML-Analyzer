@@ -5,7 +5,7 @@
 	<div class="col-xs-12 marbo30">
 		<center><h4 class="no-margin">Choose Mode: </h4></center>
 		<div class="btn-group" data-toggle="buttons">
-			<label title="Create a melodic pattern." id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+			<label title="Create a melodiy pattern." id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":melody">melody
 			</label>
 			<label title="Create a sound sequence pattern." id="sound-sequence-mode-0" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
@@ -25,7 +25,6 @@
 	</div>
 </div>
 
-<!-- HINT: if there is a column arround you get problems with mouse x and y-->
 <canvas class="center-block" id="myCanvas" width="720" height="180" style="border:1px solid #000000; margin:auto"></canvas>
 
 <div class="row text-center">
@@ -34,12 +33,10 @@
 	</div>
 </div>
 
-
 {{ Form::open(array('route' => 'patternSearch')) }}
 {{ Form::hidden('pattern', '', array('id' => 'patternValue')) }}
 
 <div class="container">
-
 	<div class="row marbo20">
 		<div class="col-xs-8">
 			<p class="no-margin">Special Ryth: </p>
@@ -55,6 +52,7 @@
 				</label>
 			</div>
 		</div>
+
 		<div class="col-xs-4">
             <p class="no-margin">Octave: </p>
             <div title="Choose the octave to create notes by button click or place notes directly on the stave via mouse." class="btn-group" data-toggle="buttons">
@@ -104,6 +102,7 @@
                 </label>
 			</div>
 		</div>
+
 		<div id="rhythmNoteOrBreak" class="col-xs-8">
 			<p class="no-margin">Notes/Breaks: </p>
 			<div title="In rhythm mode you can only choose between 'NOTE' or 'REST'. Elements will be rendered slightly different. See 'RHYTHM' tooltip for further information." class="btn-group" data-toggle="buttons">
@@ -115,6 +114,7 @@
                 </label>
 			</div>
 		</div>
+
 		<div class="col-xs-4">
 			<p class="no-margin">Accidental: </p>
 			<div title="If an accidental is selected it will be added to notes you create." class="btn-group" data-toggle="buttons">
@@ -177,9 +177,5 @@
 			<div id="searchMessages" class="logBox"></div>
 		</div>
 	</div>
-
-
-
-
 </div>
 @stop

@@ -20,6 +20,7 @@
  <!-- extras -->
 {{ HTML::script('libs/midijs/inc/Base64.js') }}
 {{ HTML::script('libs/midijs/inc/base64binary.js') }}
+
 <!-- MIDI.js -->
 {{ HTML::script('libs/midijs/js/Color/SpaceW3.js') }}
 {{ HTML::script('libs/midijs/js/MIDI/AudioDetect.js') }}
@@ -30,16 +31,14 @@
 {{ HTML::script('libs/midijs/js/MusicTheory/Synesthesia.js') }}
 {{ HTML::script('libs/midijs/js/Widgets/Loader.js') }}
 {{ HTML::script('libs/midijs/js/Window/Event.js') }}
+
  <!-- jasmid package -->
 {{ HTML::script('libs/midijs/inc/jasmid/stream.js') }}
 {{ HTML::script('libs/midijs/inc/jasmid/midifile.js') }}
-{{-- {{ HTML::script('libs/inc/jasmid/synth.js') }} --}}
-{{-- {{ HTML::script('libs/inc/jasmid/audio.js') }} --}}
 {{ HTML::script('libs/midijs/inc/jasmid/replayer.js') }}
 
 <!-- jsPdf -->
 {{ HTML::script('libs/jsPDF-0.9.0rc2/dist/jspdf.min.js') }}
-
 
  <!-- others -->
 {{ HTML::script('js/helpers/Route.js') }}
@@ -65,10 +64,6 @@
 {{ HTML::script('js/controllers/PatternController.js') }}
 {{ HTML::script('js/controllers/ResultController.js') }}
 {{ HTML::script('js/controllers/ApplicationController.js') }}
-
-
-
-
 
 <script type="text/javascript">
 MusicXMLAnalyzer.init();

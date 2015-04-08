@@ -48,8 +48,6 @@ class ResultController extends BaseController {
 			$endItem = $startItem + $itemsPerPage - 1;
 			$result->occurences = array_slice($result->occurences, $startItem, $itemsPerPage);
 
-			// Log::info("Passing results", array('startItem' => $startItem, 'endItem' => $endItem, 'result' => $result));
-
 			return View::make('results.detail', array('result' => $result, 'itemsPerPage' => $itemsPerPage, 'numPages' => $numPages, 'page' => $page, 'numResults' => $numResults, 'startItem' => $startItem, 'endItem' => $endItem));
 		} else {
 			return Redirect::route('pattern');
@@ -103,8 +101,6 @@ class ResultController extends BaseController {
 		$resultObject = new stdClass();
 		$resultObject->type = 2;
 		$resultObject->part_id = $part_id;
-		// $resultObject->start_extract = $this->calculateStartExtract($part, $start);
-		// $resultObject->end_extract = $this->calculateEndExtract($part, $end);
 		$partMeasures = $part->getElementsByTagName('measure');
 		$numMeasures = $partMeasures->length - 1;
 		$firstMeasureNumber = $partMeasures->item(0)->getAttribute('number');
@@ -145,7 +141,7 @@ class ResultController extends BaseController {
 		$measureCounter = 0;
 
 		$part_measures = $part->getElementsByTagName('measure');
-		// foreach ($part_measures as $measure) {
+
 		for ($j = $start_extract; $j <= $end_extract; $j++) {
 			$noteCounter = 0;
 			$measure = $xPath->query('//part[@id="' . $part_id . '"]/measure[@number="' . $j . '"]')->item(0);
@@ -176,7 +172,7 @@ class ResultController extends BaseController {
 
 			// loop over each note in measure
 			foreach ($measureNotes as $note) {
-				// $noteCounter++;
+
 				$noteVoice = $note->getElementsByTagName('voice')->item(0)->nodeValue;
 				if ($noteVoice == $voice) {
 					// create note object
@@ -196,7 +192,6 @@ class ResultController extends BaseController {
 						}
 					}
 					$noteObject->color = $currentColor;
-					// Log::info("Measure: " . $j . ", NoteCounter: " . $noteCounter . ", Start: " . $start . ", End: " . $end . ", Color: " . $currentColor);
 
 					// decide if current element is a note or a rest (only notes have a pitch child)
 					$pitch = $note->getElementsByTagName('pitch');

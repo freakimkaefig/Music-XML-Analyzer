@@ -1,17 +1,25 @@
 <?php
 class PatternController extends BaseController {
 
+	/**
+	 * Helper function clear cache and return pattern-creation-view
+	 *
+	 * @return  View     pattern-creation-view
+	 *
+	 */
 	public function getCreatePattern() {
 		Cache::forget('pattern');
 		Cache::forget('results');
 		Cache::forget('duration');
 		return View::make('createPattern');
-
-		// TESTING
-		// $pattern = '[{"name":"c","accidential":"none","duration":"1/1","rythSpecial":"None","octave":"2"}]';
-		// return Redirect::route('patternSearch', array('pattern' => $pattern));
 	}
 
+	/**
+	 * Function to pass patterns to corresponding Controllers, receive results and place both, pattern and results, in cache
+	 *
+	 * @return  Redirect      route to search results
+	 *
+	 */
 	public function postPatternSearch() {
 		set_time_limit(300);
 
@@ -46,12 +54,19 @@ class PatternController extends BaseController {
 
 		$duration = Input::get('duration');
 		$duration = json_decode($duration);
-		Debugbar::info($duration);
 		Cache::put('duration', $duration, $time);
 
 		return Redirect::route('searchResults');
 	}
 
+	/**
+	 * Helper function to calculate the interval of a given note
+	 *
+	 * @param   object    	note object without calculated interval
+	 *
+	 * @return  int         calculated interval
+	 *
+	 */
 	public static function getInterval($n){
 		$tonika = array("C" => 0,
 						"D" => 2,
@@ -62,8 +77,6 @@ class PatternController extends BaseController {
 						"B" => 11);
 		$note = $n;
 		$obj_arr = (array)$note;
-// echo "<br><hr><br> GET-INTERVAL note:<br>";
-// var_dump($obj_arr);
 		if(!isset($obj_arr["rest"])){
 
 			$noteStep = $note->pitch->step;
@@ -76,8 +89,6 @@ class PatternController extends BaseController {
 					$noteValue = (int)$noteValue + (int)$noteAlter;
 				}
 				$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
-// echo "<br><br>calc. INTERVAL: <br>";
-// var_dump($noteValue);
 				return $noteValue;
 			}
 			else{

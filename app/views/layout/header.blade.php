@@ -1,14 +1,12 @@
 <nav class="navbar navbar-material-blue-grey-800 navbar-fixed-top">
-
     <div class="navbar-header">
         <a class="navbar-brand" href="{{ URL::route('home') }}">Music XML Analyzer</a>
     </div>
-	<div class="container-fluid">
 
+	<div class="container-fluid">
         <div class="nav navbar-nav navbar-center">
             <h1>
             <?php
-                // Debugbar::info(Route::currentRouteName());
                 $route = Route::currentRouteName();
                 switch($route){
                     case 'pattern':
@@ -32,6 +30,7 @@
             ?>
             </h1>
         </div>
+
      	<?php if (Cookie::get('user_id')): ?>
      		<?php $user = User::find(Cookie::get('user_id')); ?>
      		<?php if ($user): ?>
@@ -58,7 +57,5 @@
 			  	</ul>
      		<?php endif; ?>
      	<?php endif; ?>
-
-
 	</div>
 </nav>
