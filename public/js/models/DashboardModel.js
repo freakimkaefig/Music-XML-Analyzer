@@ -11,9 +11,11 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	results = null,
 	tempInstruments = [],
 
-	init = function(){
-		console.info('MusicXMLAnalyzer.DashboardModel.init');
 
+	/**
+	 * Init function
+	 */
+	init = function(){
 		results = [];
 
 		loadUploadIds();
