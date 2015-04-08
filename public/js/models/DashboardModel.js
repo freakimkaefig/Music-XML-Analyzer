@@ -109,7 +109,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 
 	_mergeResults = function(resultsArr) {
 		mergedArr = {
-			artist: [], 
+			artist: [],
 			clef: null,
 			count_measures: 0.0,
 			count_notes: 0.0,
@@ -296,10 +296,10 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	        if(seen[item] !== 1) {
                seen[item] = 1;
                out[j++] = item;
-        	}	
-	    } 
-	    
-		
+        	}
+	    }
+
+
 	    for(var i = 0; i < out.length; i++){
 			mergedArr.instruments = mergedArr.instruments.concat(out[i]);
 		};
@@ -322,6 +322,6 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	that.init = init;
 	that.loadUploadIds = loadUploadIds;
 	that.getResults = getResults;
-	
+
 	return that;
 }

@@ -40,7 +40,7 @@
 	<div class="row">
 		<div id="bar_noteDistribution" class="bar-chart col-xs-12"></div>
 	</div>
-	
+
 	<div class="row">
 		<div id="bar_intervalDistribution" class="bar-chart col-xs-12"></div>
 	</div>
@@ -54,7 +54,7 @@
 	</div>
 </div>
 
-<div class="col-xs-6 "id="chart"></div> 
+<div class="col-xs-6 "id="chart"></div>
 
 <div class="col-xs-6 "id="resultlist"></div>
 

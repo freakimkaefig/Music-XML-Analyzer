@@ -22,10 +22,6 @@ Route::get('/', array(
 	'as' => 'home',
 	'uses' => 'HomeController@getHome'
 ));
-Route::get('/imprint', array(
-	'as' => 'imprint',
-	'uses' => 'HomeController@getToImprint'
-));
 
 Route::get('/hello', function() {
 	return View::make('hello');
@@ -36,7 +32,7 @@ Route::get('/hello', function() {
 | Routes only available, when user has uploaded files
 |--------------------------------------------------------------------------
 */
-Route::group(array('before' => 'uploads'), function() 
+Route::group(array('before' => 'uploads'), function()
 {
 	/* === SEARCH ROUTES === */
 	Route::get('/search', array(

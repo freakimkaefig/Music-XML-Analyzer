@@ -267,7 +267,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	onMouseClickCanvas = function() {
 
 		var noteName = patternModel.getCurrentNoteName();
-		
+
 		var hoveredArea = null;
 
 		if (noteName === "break") {

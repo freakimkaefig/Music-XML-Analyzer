@@ -70,7 +70,7 @@
 				<small><a href="mailto:matthias.schneider89@gmail.com">matthias.schneider89@gmail.com</a></small>
 			</address>
 		</div>
-		
+
 		<div class="col-xs-12 col-md-3 col-lg-2 docs">
 			<a href="http://freakimkaefig.github.io/Music-XML-Analyzer/" class="btn btn-material-teal-400" id="documentationButton">Documentation</a>
 		</div>

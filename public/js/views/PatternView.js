@@ -116,7 +116,7 @@ MusicXMLAnalyzer.PatternView = function(){
 				patternController.changeNote('c');
 			}
 		}
-		
+
 	},
 
 	/**

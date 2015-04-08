@@ -5,6 +5,8 @@ class ResultController extends BaseController {
 	/**
 	 * Function handling get route 'searchResults' ('/results')
 	 *
+	 * @return 	\Illuminate\Http\RedirectResponse, \Illuminate\View\View 	Redirect to pattern input or results list
+	 *
 	 */
 	public function getSearchResults() {
 		if (!Cache::has('pattern')) {
@@ -27,7 +29,7 @@ class ResultController extends BaseController {
 	 *
 	 * @param 	int 	The upload id
 	 *
-	 * @return 	\Illuminate\View\View, \Illuminate\Support\Facades\Redirect 	A laravel view, when successful, or a redirect if fails
+	 * @return 	\Illuminate\View\View, \Illuminate\Http\RedirectResponse 	A laravel view, when successful, or a redirect if fails
 	 *
 	 */
 	public function getResultDetail($id, $page) {

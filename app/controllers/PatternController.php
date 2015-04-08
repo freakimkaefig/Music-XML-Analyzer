@@ -4,7 +4,7 @@ class PatternController extends BaseController {
 	/**
 	 * Helper function clear cache and return pattern-creation-view
 	 *
-	 * @return  View     pattern-creation-view
+	 * @return  \Illuminate\View\View     pattern-creation-view
 	 *
 	 */
 	public function getCreatePattern() {
@@ -17,7 +17,7 @@ class PatternController extends BaseController {
 	/**
 	 * Function to pass patterns to corresponding Controllers, receive results and place both, pattern and results, in cache
 	 *
-	 * @return  Redirect      route to search results
+	 * @return  \Illuminate\Http\RedirectResponse      route to search results
 	 *
 	 */
 	public function postPatternSearch() {
@@ -77,25 +77,24 @@ class PatternController extends BaseController {
 						"B" => 11);
 		$note = $n;
 		$obj_arr = (array)$note;
-		if(!isset($obj_arr["rest"])){
+		if (!isset($obj_arr["rest"])) {
 
 			$noteStep = $note->pitch->step;
 			$noteAlter = $note->pitch->alter;
 			$noteOctave = $note->pitch->octave;
 
-			if($noteStep && $noteOctave){
+			if ($noteStep && $noteOctave) {
 				$noteValue = $tonika[(string)$noteStep];
-				if($noteAlter == 1 || $noteAlter == -1){
+				if ($noteAlter == 1 || $noteAlter == -1) {
 					$noteValue = (int)$noteValue + (int)$noteAlter;
 				}
 				$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
 				return $noteValue;
-			}
-			else{
+			} else {
 
 				return null;
 			}
-		}else{
+		} else {
 				return null;
 		}
 

@@ -238,7 +238,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	/**
-	 * Method changes current mode 
+	 * Method changes current mode
 	 *
 	 * @param {number}    val    mode name
 	 */
@@ -248,7 +248,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	/**
-	 * Method changes current note 
+	 * Method changes current note
 	 *
 	 * @param {string}    val    note name
 	 */
@@ -257,7 +257,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	/**
-	 * Method changes current accidential 
+	 * Method changes current accidential
 	 *
 	 * @param {string}    val    accidential name
 	 */
@@ -266,7 +266,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	/**
-	 * Method changes current note duration 
+	 * Method changes current note duration
 	 *
 	 * @param {string}    val    note duration
 	 */
@@ -275,7 +275,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	/**
-	 * Method changes current special rhythm 
+	 * Method changes current special rhythm
 	 *
 	 * @param {string}    val    special rhythm
 	 */
@@ -284,7 +284,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	},
 
 	/**
-	 * Method changes current octave 
+	 * Method changes current octave
 	 *
 	 * @param {string}    val    current octave
 	 */
@@ -341,7 +341,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method returns the current mode
 	 *
-	 * @return {string}    currentMode    
+	 * @return {string}    currentMode
 	 */
 	getCurrentMode = function(){
 		return patternModel.getCurrentMode();
@@ -350,9 +350,9 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method changes state of SearchPatternButton
 	 *
-	 * @param {event}    event    
+	 * @param {event}    event
 	 *
-	 * @param {int}    pattern 		    
+	 * @param {int}    pattern
 	 */
 	onPatternChange = function(event, pattern) {
 		patternView.setPatternValue(JSON.stringify(pattern));
@@ -375,9 +375,9 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method changes current mode
 	 *
-	 * @param {event}    event    
+	 * @param {event}    event
 	 *
-	 * @param {int}    mode 		    
+	 * @param {int}    mode
 	 */
 	onViewChangedToCurrentMode = function(event, mode) {
 		switch(mode) {
