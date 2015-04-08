@@ -216,6 +216,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 						[
 							{
 							type: "rest",
+							dot: isDot,
 							duration: curDuration
 							}
 						]
@@ -240,6 +241,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					noteElements[0].notes.push(
 					{
 						type: "rest",
+						dot: isDot,
 						duration: curDuration
 					});
 				}
@@ -273,6 +275,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 						[
 							{
 								type: "rest",
+								dot: isDot,
 								duration: curDuration
 							}
 						]
@@ -296,6 +299,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 					noteElements[0].notes.push(
 					{
 						type: "rest",
+						dot: isDot,
 						duration: curDuration
 					});
 				}
@@ -335,7 +339,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 			}
 		}
 
-		// console.log("noteELements: ", noteElements);
+		console.log("noteELements: ", noteElements);
 
 		//check if break or normal note or note with accidential
 		//then adapt values for vexflow an put them into an array
