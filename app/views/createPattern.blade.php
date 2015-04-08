@@ -20,8 +20,8 @@
 
 <div class="row text-center">
 	<div class="col-xs-12">
-		<button title="Start listening to your pattern." id="playPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
-		<button title="Stop listening." id="stopPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
+		<button title="Start playing the pattern." id="playPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
+		<button title="Stop playing the pattern." id="stopPattern" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
 	</div>
 </div>
 
@@ -44,10 +44,10 @@
 		<div class="col-xs-8">
 			<p class="no-margin">Special Ryth: </p>
 			<div class="btn-group" data-toggle="buttons">
-				<label title="NONE: Enter notes or breaks according to selected mode." id="spec-none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+				<label title="NONE: Enter standard notes or breaks according to selected mode." id="spec-none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":none">None
                 </label>
-                <label title="TRIPLET: You have to create three notes for a complete triplet. Pressing delete will remove the entire triplet." id="spec-triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
+                <label title="TRIPLET: Once started you have to create three notes for a complete triplet. Pressing delete will remove the entire triplet." id="spec-triplet" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":triplet">Triplet
 				</label>
 				<label title="DOTTED: When active, notes and breaks will be dotted." id="spec-dotted" class="btn btn-special-ryth btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
@@ -57,7 +57,7 @@
 		</div>
 		<div class="col-xs-4">
             <p class="no-margin">Octave: </p>
-            <div title="OCTAVE: Choose the octave to create notes by button click or place notes directly on the stave." class="btn-group" data-toggle="buttons">
+            <div title="OCTAVE: Choose the octave to create notes by button click or place notes directly on the stave via mouse." class="btn-group" data-toggle="buttons">
                 <label id="3" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":3">3
                 </label>
@@ -77,7 +77,7 @@
 	<div class="row marbo20">
 		<div id="noteOrBreak" class="col-xs-8">
 			<p class="no-margin">Notes/Breaks: </p>
-			<div title="Select notes ranging from 'C' to 'B' or select 'REST' to create the desired element." class="btn-group" data-toggle="buttons">
+			<div title="Select notes ranging from 'C' to 'B' or select 'REST' to create the corresponding element." class="btn-group" data-toggle="buttons">
 				<label id="c" class="btn btn-note btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":c">C
 				</label>
@@ -106,7 +106,7 @@
 		</div>
 		<div id="rhythmNoteOrBreak" class="col-xs-8">
 			<p class="no-margin">Notes/Breaks: </p>
-			<div title="In rhythm mode you can only choose between 'NOTE' and 'REST'. Elements will be rendered slightly different. See 'RHYTHM' tooltip for further information." class="btn-group" data-toggle="buttons">
+			<div title="In rhythm mode you can only choose between 'NOTE' or 'REST'. Elements will be rendered slightly different. See 'RHYTHM' tooltip for further information." class="btn-group" data-toggle="buttons">
 				<label id="rhythmNote" class="btn btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":c">Note
 				</label>
