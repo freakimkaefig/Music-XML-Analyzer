@@ -18,9 +18,10 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	VEXFLOW_REST_SIGN = "r",
 
-
+	/**
+	 * Init function
+	 */
 	init = function() {
-		console.info('MusicXMLAnalyzer.NotationView.init');
 		patternController = MusicXMLAnalyzer.PatternController();
 		patternModel = MusicXMLAnalyzer.PatternModel();
 
@@ -29,8 +30,9 @@ MusicXMLAnalyzer.NotationView = function(){
 		registerListener();
 	},
 
-
-	/* This method inits canvas and context and sets canvas top and left to variable*/
+	/**
+	 * This method inits canvas and context and sets canvas top and left to variable
+	 */
 	initCanvas = function() {
 		canvas = document.getElementById('myCanvas');
 	    canvasLeft = canvas.offsetLeft;
@@ -43,12 +45,20 @@ MusicXMLAnalyzer.NotationView = function(){
   		addClef(patternModel.getCurrentMode());
 	},
 
-	onChangeMode = function(event, mode) {
+	/**
+	 * Method clears canvas, creates new stave and adds a new clef on mode change
+	 */
+	onChangeMode = function() {
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave = new Vex.Flow.Stave(10, 45, 700);
   		addClef(patternModel.getCurrentMode());
 	},
 
+	/**
+	 * Method adds a clef according to mode
+	 *
+	 * @param {int}    mode    current selected mode
+	 */
 	addClef = function(mode) {
 		if (mode === 1) {
   			stave.addClef("percussion").setContext(context).draw();
@@ -57,6 +67,9 @@ MusicXMLAnalyzer.NotationView = function(){
   		}
 	},
 
+	/**
+	 * Method registers listener to canvas
+	 */
 	registerListener = function() {
 		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
 		$("#myCanvas").on("click", onMouseClickCanvas);
@@ -64,9 +77,11 @@ MusicXMLAnalyzer.NotationView = function(){
 		$(patternController).on('changed_mode', onChangeMode);
 	},
 
-
-	// display note elements on the canvas and get them from model
-	// via controller
+	/**
+	 * Method displays note elements on the canvas and get them from model
+	 *
+	 * @param {object}    vexflowNotes    contains notes for vexflow
+	 */
 	renderNotes = function(vexflowNotes) {
 
 		// delete canvas
@@ -75,8 +90,6 @@ MusicXMLAnalyzer.NotationView = function(){
 		stave.setContext(context).draw();
 
 		var voice = new Vex.Flow.Voice({
-		    // num_beats: completeDurationIn64th,
-		    // beat_value: 64,
 		    resolution: Vex.Flow.RESOLUTION
 		});
 
@@ -113,6 +126,9 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	},
 
+	/**
+	 * Method renders preview note on canvas at mouseover
+	 */
 	renderVexFlowNotePreview = function() {
 		// delete canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -211,19 +227,16 @@ MusicXMLAnalyzer.NotationView = function(){
 		vexflowNotes.pop();
 
 	},
-
-	onNotationViewUpdate = function(event, notes) {
-		// console.log("view triggered");
-		//console.log("notes: " + notes);
-	},
-
-	/* this methods calcs the position of the notes */
+	/**
+	 * Method calculates the position of the notes
+	 */
 	setTopNoteValues = function() {
 		spaceBetweenLines = (canvas.height/16);
-
 	},
 
-	/* This method handels the mouseover event of canvas */
+	/**
+	 * Method handels the mouseover event on canvas
+	 */
 	onMouseMoveCanvas = function(event) {
 
 		var x = event.pageX - canvasLeft,
@@ -234,7 +247,6 @@ MusicXMLAnalyzer.NotationView = function(){
 
     	//when rhythm mode -> just note b/4 is displayed when hovering
     	if (patternModel.getCurrentMode() === 1) {
-    		// console.log("curMode: " + patternModel.getCurrentMode());
     		hoveredOctave = "4";
     		hoveredNote = "b";
     		renderVexFlowNotePreview("b");
@@ -242,12 +254,12 @@ MusicXMLAnalyzer.NotationView = function(){
     	else if (checkHorizontalArea(y)) {
     		// call method to render note preview with given noteName
     		renderVexFlowNotePreview();
-
     	}
-
 	},
 
-	/* This method handels the mouseover event of canvas */
+	/**
+	 * Method handels mouseclick event on canvas
+	 */
 	onMouseClickCanvas = function() {
 
 		var noteName = patternModel.getCurrentNoteName();
@@ -264,7 +276,13 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	},
 
-	/* This method checks on which horizontal position the cursor is and saves the corresponding note to the variable */
+	/**
+	 * Method checks on which horitiontal position the mousecursor is and saves the corresponding note
+	 *
+	 * @param {int}    		y    		 horizontal position of cursor
+	 *
+	 * @return {string}    hoverdnote    hovered note according to calculated cursor position
+	 */
 	checkHorizontalArea = function(y) {
 
 		if (y > spaceBetweenLines * 1.25 && y <= spaceBetweenLines * 1.75) {
@@ -357,6 +375,9 @@ MusicXMLAnalyzer.NotationView = function(){
 		return hoveredNote;
 	},
 
+	/**
+	 * Method to clear canvas and redraw staves
+	 */
 	clearCanvas = function() {
 		// clear canvas and redraw staves
 		context.clearRect(0, 0, canvas.width, canvas.height);

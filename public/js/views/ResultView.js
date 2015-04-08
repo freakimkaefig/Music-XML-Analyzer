@@ -17,10 +17,10 @@ MusicXMLAnalyzer.ResultView = function(){
 	$logMessages = null,
 	resultMessageCounter = null,
 
-
+	/**
+	 * Init function
+	 */
 	init = function(){
-		console.info('MusicXMLAnalyzer.ResultView.init');
-
 		if ($('#patternCanvas').length) {
 			$patternValue = $('#patternValue');
 			initPatternCanvas(JSON.parse($patternValue.val()));
@@ -43,23 +43,33 @@ MusicXMLAnalyzer.ResultView = function(){
 		resultMessageCounter = 0;
 	},
 
+	/**
+	 * Method preapares model export
+	 */
 	setModelReady = function() {
-		console.log('MusicXMLAnalyzer.ResultView.setModelReady');
 		finishedLoading = true;
 		prepareExport();
 	},
 
+	/**
+	 * Method inits result items
+	 */
 	initResultItems = function() {
 		var numItems = $carousel.find('.item').length;
 		$carousel.find('.item').each(function(index) {
-			// console.log(index);
 			var result = JSON.parse($(this).find('.resultItem').val());
 			$(that).trigger('addResultItem', [numItems, result]);
 		});
 	},
 
+	/**
+	 * Method renders result extract
+	 *
+	 * @param {int}    		index   counter
+	 * 
+	 * @param {object}      data    contains information about extract position
+	 */
 	renderResultExtract = function(index, data) {
-		// console.log('MusicXMLAnalyzer.ResultView.renderResultExtract', index);
 		var measuresText = '<strong>Measures: </strong>' + data.start_extract + ' - ' + data.end_extract;
 		$carousel.find('#item' + index).find('.facts-list').find('.measures').html(measuresText);
 
@@ -85,6 +95,9 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	},
 
+	/**
+	 * Method prepares pdf export
+	 */
 	prepareExport = function() {
 		$('.item').each(function(index) {
 			var canvas = $(this).find('.canvas')[0];
@@ -99,6 +112,17 @@ MusicXMLAnalyzer.ResultView = function(){
 		$exportButton.removeClass('disabled');
 	},
 
+	/**
+	 * Method creates images from carousel data
+	 *
+	 * @param {URI}    		datas   		crousel image uri
+	 * 
+	 * @param {float}       wantedWidth    	width of the image
+	 * 
+	 * @param {float}       wantedHeight    height of the image
+	 * 
+	 * @param {int}       	index    		counter
+	 */
 	resizedataURL = function(datas, wantedWidth, wantedHeight, index) {
         // We create an image to receive the Data URI
         var img = document.createElement('img');
@@ -119,7 +143,6 @@ MusicXMLAnalyzer.ResultView = function(){
             var dataURI = canvas.toDataURL("image/jpeg", 1.0);
 
             // return dataURI;
-        	// console.log(dataURI);
         	addImageToDOM(index, dataURI);
         };
 
@@ -127,13 +150,21 @@ MusicXMLAnalyzer.ResultView = function(){
     	img.src = datas;
     },
 
+	/**
+	 * Method adds image to dom
+	 *
+	 * @param {int}    		index   	counter
+	 * 
+	 * @param {string}      dataURI    	uri to image data
+	 */
     addImageToDOM = function(index, dataURI) {
     	$('#image' + index).val(dataURI);
     },
 
+	/**
+	 * Method generates pdf export
+	 */
 	generateExportPdf = function() {
-		console.info('MusicXMLAnalyzer.ResultView.generateExportPdf');
-
 		var doc = new jsPDF();
 
 		// add title page
@@ -155,7 +186,6 @@ MusicXMLAnalyzer.ResultView = function(){
 		doc.text(15, 240, "created with MusicXMLAnalyzer");
 		doc.text(15, 250, "http://musicxmlanalyzer.de");
 
-		// console.log(doc);
 		var pageHeader = $artist.text() + " - " + $title.text();
 
 		// add page for each result
@@ -185,9 +215,12 @@ MusicXMLAnalyzer.ResultView = function(){
 		doc.save("search_results.pdf");
 	},
 
-
+	/**
+	 * Method renders pattern canvas above result carousel
+	 *
+	 * @param {object}    	pattern   user created pattern
+	 */
 	initPatternCanvas = function(pattern) {
-		// console.info('MusicXMLAnalyzer.ResultView.initPatternCanvas');
 		patternCanvas = document.getElementById('patternCanvas');
 
 		var vexflowNotes = generateVexflowNotes({ measures: [{ notes: pattern.notes }], type: pattern.type }, false);
@@ -198,8 +231,18 @@ MusicXMLAnalyzer.ResultView = function(){
 		renderNotes(vexflowNotes, patternCanvas, renderer, context, stave, true);
 	},
 
+	/**
+	 * Method renders result extract
+	 *
+	 * @param {array}    		measures    array containing the measures of result extract
+	 * 
+	 * @param {object}     		canvas      the canvas proportions
+	 * 
+	 * @param {canvas}     		context     the canvas context
+	 * 
+	 * @param {object}     		pattern     the user pattern
+	 */
 	renderNotes = function(measures, canvas, renderer, context, stave, pattern) {
-		console.log("before", measures);
 
 		// clear canvas
 		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -207,8 +250,6 @@ MusicXMLAnalyzer.ResultView = function(){
 		context.fillStyle = '#EEEEEE';
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		context.fillStyle = '#000000';
-
-		// stave.setContext(context).draw();
 
 		var voice = new Vex.Flow.Voice({
 		    num_beats: 4,
@@ -287,12 +328,8 @@ MusicXMLAnalyzer.ResultView = function(){
 			// tuplets
 			var tuplets = [];
 			for (var j = 0; j < measures[i].notes.length; j++) {
-// console.log("measures[i].tuplets: ",measures[i].tuplets);
-// console.log("measures[i].tuplets[j]: ",measures[i].tuplets[j]);
 				if (measures[i].tuplets && measures[i].tuplets[j]) {
 					if (measures[i].tuplets[j].toString() !== 'false' && measures[i].tuplets[j].toString() !== 'undefined') {
-// console.log("i", i," j ",j);
-// console.log("measures[i].tuplets[j]", measures[i].tuplets[j], parseInt(measures[i].tuplets[j]));
 						var tupletNotes = measures[i].notes.slice(j, (j + parseInt(measures[i].tuplets[j])));
 						var tupletLocation = tupletNotes[0].stem.stem_direction;
 						var tuplet = new Vex.Flow.Tuplet(tupletNotes);
@@ -322,13 +359,16 @@ MusicXMLAnalyzer.ResultView = function(){
 		for (var t2 = 0; t2 < ties.length; t2++) {
 			ties[t2].setContext(context).draw();
 		}
-
-		// console.log("after", measures);
 	},
 
+	/**
+	 * Method generates vexflow notes
+	 * 
+	 * @param {object}     		pattern     the user pattern
+	 * 
+	 * @param {object}     		result      search result
+	 */
 	generateVexflowNotes = function(pattern, result) {
-		// console.log("MusicXMLAnalyzer.ResultView.generateVexflowNotes", result, pattern);
-
 		// prepare pattern if no result from ResultController.php
 		if (!result) {
 			for (var i = 0; i < pattern.measures.length; i++) {
@@ -539,13 +579,11 @@ MusicXMLAnalyzer.ResultView = function(){
 				}
 				break;
 		}
-
-		// console.log(measures);
 		return measures;
 	},
 
+
 	checkNextNotes = function(pattern, note, i, j) {
-		// console.log(pattern);
 		j++;
 		var newNote = note;
 		var newKeys = note.keys;
@@ -560,9 +598,7 @@ MusicXMLAnalyzer.ResultView = function(){
 					newNote = new Vex.Flow.StaveNote({ keys: newKeys, duration: note.duration, auto_stem: true });
 					newNote = checkNextNotes(pattern, newNote, i, j);
 
-					// console.log(note.color);
 					if (pattern.measures[i].notes[j].color == "#b71c1c" || note.color == "#b71c1c") {
-						// console.log("red", i, j);
 						newNote.color = "#b71c1c";
 					} else {
 						newNote.color = note.color;

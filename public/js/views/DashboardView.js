@@ -45,9 +45,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 		"#263238",	// blue-grey-900
 	],
 
+	/**
+	 * Init function
+	 */
 	init = function(){
-		console.info('MusicXMLAnalyzer.DashboardView.init');
-
 		$logMessages = $('#dashboardMessages');
 		initLogMessages();
 		$showingResultsFor = $('#showingResultsFor');
@@ -59,6 +60,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	},
 
+	/**
+	 * Method to initiate log messages
+	 */
 	initLogMessages = function() {
 		dashboardMessageCounter = 0;
 		$logMessages.show();
@@ -68,6 +72,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 		addLogMessage('Fetching results from database ...');
 	},
 
+	/**
+	 * Method to animate the log message box
+	 */
 	disposeLogMessages = function() {
 		window.setTimeout(function() {
 			$logMessages.animate({
@@ -81,6 +88,11 @@ MusicXMLAnalyzer.DashboardView = function(){
 		}, 1500);
 	},
 
+	/**
+	 * Method to add a log message
+	 *
+	 * @param {string}    msg    message to be added
+	 */
 	addLogMessage = function(msg) {
 		$('#log' + (dashboardMessageCounter - 3)).animate({
 			"marginTop": "-30px"
@@ -96,6 +108,11 @@ MusicXMLAnalyzer.DashboardView = function(){
 		dashboardMessageCounter++;
 	},
 
+	/**
+	 * Method to initate the file selector on dashboard
+	 *
+	 * @param {array}    data    array containing information to user uploaded files
+	 */
 	initFileSelector = function(data) {
 		$fileSelector.empty();
 		var selectorElement = '<select class="form-control btn-material-blue-grey-100" name="fileSelector">';
@@ -121,14 +138,20 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$fileSelector.find('select').on('change', onFileSelectorChange);
 	},
 
+	/**
+	 * Method description
+	 *
+	 * @param {event}    event    nothing.
+	 */
 	onFileSelectorChange = function(event) {
 		$(that).trigger('onFileSelectorChange', [ $fileSelector.find('select').val() ]);
 	},
 
-	changeFile = function(result) {
-
-	},
-
+	/**
+	 * Method to append number of notes to html-view
+	 *
+	 * @param {int}    results    number of total notes
+	 */
 	initCountNotes = function(results){
 		$overallStatistics.empty();
 		$overallStatistics.append('<h3 class="text-center">Overall Statistics</h3><br>');
@@ -137,26 +160,50 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$plainFacts.find('li').on('change', onFileSelectorChange);
 	},
 
+	/**
+	 * Method to append number of rests to html-view
+	 *
+	 * @param {int}    results    number of total rests
+	 */
 	initCountRests = function(results){
 		$plainFacts.append('<li><strong>Total Rests:  </strong>' + results + '</li>');
 	},
 
+	/**
+	 * Method to append number of measures to html-view
+	 *
+	 * @param {int}    results    number of measures notes
+	 */
 	initCountMeasures = function(results){
 		$plainFacts2.empty();
 		$plainFacts2.append('<li><strong>Total Measures:  </strong>' + results + '</li><br><br>');
 	},
 
+	/**
+	 * Method to append most frequent to html-view
+	 *
+	 * @param {string}    results    most frequent note
+	 */
 	initMostFrequentNote = function(results){
 		$plainFacts2.append('<li><strong>Most frequent Note:  </strong>' + results + '</li>');
 	},
 
+	/**
+	 * Method to append instruments to html-view
+	 *
+	 * @param {array}    results    array containing all instruments
+	 */
 	initInstruments = function(results) {
 		$plainFacts3.empty();
 		$plainFacts3.append('<li><strong>Instruments:  </strong></li>');
 		$plainFacts3.append("<li>" + results.join(", ") + "</li>");
 	},
 
-	/*BAR-CHART NOTE-DISTRIBUTION*/
+	/**
+	 * Method to create barchart representing the note distribution
+	 *
+	 * @param {object}    data    objet containing information about the distribution of notes
+	 */
 	initNoteDistribution = function(data) {
 		$('#bar_noteDistribution').empty();
 		var containerWidth = $('#bar_noteDistribution').width() - 30;
@@ -240,7 +287,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 			.attr("dy", "-.5em");
 
 	},
-	/*BAR-CHART INTERVAL-DISTRIBUTION*/
+
+	/**
+	 * Method to create barchart representing the interval distribution
+	 *
+	 * @param {object}    data    objet containing information about the distribution of intervals
+	 */
 	initIntervalDistribution = function(data) {
 		$('#bar_intervalDistribution').empty();
 		var containerWidth = $('#bar_intervalDistribution').width() - 30;
@@ -326,9 +378,13 @@ MusicXMLAnalyzer.DashboardView = function(){
 			.attr("dx", "1em")
 			.attr("dy", "-.5em");
 	},
-	/*PIE-CHART KEY-DISTRIBUTION*/
+
+	/**
+	 * Method to create piechart representing the key distribution
+	 *
+	 * @param {object}    data    objet containing information about the distribution of keys
+	 */
 	initKeyDistribution = function(data) {
-		console.log(this);
 		if (keyDistribution) {
 			keyDistribution.destroy();
 		}
@@ -358,7 +414,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 			}
 		});
 	},
-	/*PIE-CHART NOTE-DURATION*/
+
+	/**
+	 * Method to create piechart representing the note-length distribution
+	 *
+	 * @param {object}    data    objet containing information about the distribution of note-lengths
+	 */
 	initNoteTypeDistribution = function(data) {
 		if (noteTypeDistribution) {
 			noteTypeDistribution.destroy();
@@ -389,7 +450,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 			}
 		});
 	},
-	/*PIE-CHART METERS*/
+
+	/**
+	 * Method to create piechart representing the meter distribution
+	 *
+	 * @param {object}    data    objet containing information about the distribution of meters
+	 */
 	initMeterDistribution = function(data) {
 		var data2;
 		if(typeof(data) == 'string'){

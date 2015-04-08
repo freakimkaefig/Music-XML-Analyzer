@@ -14,8 +14,6 @@ MusicXMLAnalyzer.UploadView = function(){
 
 
 	init = function(){
-		console.info('MusicXMLAnalyzer.UploadView.init');
-
 		$uploadModal = $('#uploadModal');
 		$uploadModal.data('backdrop', 'static');
 		$uploadModal.data('keyboard', false);
@@ -68,8 +66,6 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	onUploadSubmit = function(event) {
-		console.info("MusicXMLAnalyzer.UploadController.onUploadSubmit");
-
 		if (gotValidFile) {
 			addLogMessage('Analyzing files. Hang out ...');
 			disableAllInputs();
@@ -85,20 +81,15 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	onError = function(file, errorMessage, xhrObject) {
-		// console.error("MusicXMLAnalyzer.UploadController.onError", event, errorMessage, xhrObject);
-
 		addLogMessage('ERROR: ' + file.name + ' - ' + errorMessage);
 	},
 
 	onSuccess = function(file, response) {
-		console.info("MusicXMLAnalyzer.UploadController.onSuccess", file, response);
-
 		if (!Route.check('/')) {
 			$uploadModal.modal({
 				keyboard: false,
 				backdrop: 'static'
 			});
-			// console.info("MusicXMLAnalyzer.UploadController.onSuccess", "Fixed modal");
 		}
 
 		if (file.accepted) {
@@ -110,9 +101,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	onQueueComplete = function() {
-		console.info("MusicXMLAnalyzer.UploadController.onQueueComplete");
 		if (gotValidFile) {
-			// console.info("MusicXMLAnalyzer.UploadController.onQueueComplete", "READY");
 			setUploadSubmit(true);
 		}
 	},

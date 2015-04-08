@@ -25,10 +25,10 @@ MusicXMLAnalyzer.PatternView = function(){
 	$logMessages = null,
 	resultMessageCounter = null,
 
-
+	/**
+	 * Init function
+	 */
 	init = function() {
-		console.info('MusicXMLAnalyzer.PatternView.init');
-
 		patternController = MusicXMLAnalyzer.PatternController();
 
 		$modeButtonClass.on("click", onModeButtonClick);
@@ -53,9 +53,13 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	},
 
+	/**
+	 * Method handles the mouseclick event on note- or break button to disable or enable octaves according to mode
+	 *
+	 * @param {event}    event    click event
+	 */
 	onNoteOrBreakClick = function(event){
 		if(patternController.getCurrentMode() === 2){
-// console.log("CURRENT MODE = 2! event.target.id: ",event.target.id );
 			if(event.target.id === 'break'){
 				$octaveButtonClass.addClass('disabled');
 			}else{
@@ -64,53 +68,82 @@ MusicXMLAnalyzer.PatternView = function(){
 		}
 	},
 
+	/**
+	 * Method handles the mouseclick event on break button
+	 */
 	onBreakButtonClick = function(){
 		patternController.changeAccidential("none");
 		setAccidentialActive("none");
 		$accidentialButtonClass.addClass('disabled');
 	},
 
+	/**
+	 * Method handles the mouseclick event on mode button
+	 *
+	 * @param {event}    event    click event
+	 */
 	onModeButtonClick = function(event) {
 		var modeButtonId = event.target.id;
 		// slice -1 gets the last char of the mode id
 		patternController.changeMode(parseInt(modeButtonId.slice(-1)));
 	},
 
+	/**
+	 * Method handles the mouseclick event on note button
+	 *
+	 * @param {event}    event    click event
+	 */
 	onNoteButtonClick = function(event) {
-		console.log("event.target.id: ",event.target.id);
 		patternController.changeNote(event.target.id);
 		$accidentialButtonClass.removeClass('disabled');
 	},
 
+	/**
+	 * Method handles the mouseclick event on note or break in rhythm mode to highlight user selection and change the note accordingly
+	 *
+	 * @param {event}    event    click event
+	 */
 	onRhythmNoteOrBreakClick = function(event){
-		console.log("event.target.id: ",event.target.id);
 		if(event.target.id === 'rhythmBreak'){
 
 			if($rhythmNote.hasClass('active')){
-				console.log("note WAS active");
 				patternController.changeNote('break');
 			}
 		}
 		else if(event.target.id === 'rhythmNote'){
 
 			if($rhythmBreakButton.hasClass('active')){
-				console.log("break WAS active");
 				patternController.changeNote('c');
 			}
 		}
 		
 	},
 
+	/**
+	 * Method handles the mouseclick event on accidentals
+	 *
+	 * @param {event}    event    click event
+	 */
 	onAccidentialButtonClick = function(event) {
 		var acc = event.target.id;
 		acc = acc.substring(acc.indexOf("-") + 1, acc.length);
 		patternController.changeAccidential(acc);
 	},
 
+	/**
+	 * Method handles the mouseclick event on durations
+	 *
+	 * @param {event}    event    click event
+	 */
 	onDurationButtonClick = function(event) {
 		patternController.changeDuration(event.target.id);
 	},
 
+	/**
+	 * Method handles the mouseclick event on special rhythm
+	 *
+	 * @param {event}    event    click event
+	 */
 	onSpecialRythButtonClick = function(event) {
 		//get the and of the specRyth String after the -
 		var specRyth = event.target.id;
@@ -130,21 +163,39 @@ MusicXMLAnalyzer.PatternView = function(){
 		patternController.changeSpecialRyth(specRyth);
 	},
 
+	/**
+	 * Method handles the mouseclick event on ocatave button
+	 *
+	 * @param {event}    event    click event
+	 */
 	onOctaveButtonClick = function(event) {
 		patternController.changeOctave(event.target.id);
 	},
 
+	/**
+	 * Method handles the mouseclick event on add button
+	 *
+	 * @param {event}    event    click event
+	 */
 	onAddButtonClick = function() {
 		patternController.addNote();
 	},
 
+	/**
+	 * Method sets the pattern values
+	 *
+	 * @param {object}    pattern    pattern values
+	 */
 	setPatternValue = function(pattern) {
 		$patternValue.val(pattern);
-		// console.log("pattern changed to: ",$patternValue.val());
 	},
 
+	/**
+	 * Method sets the active note
+	 *
+	 * @param {string}    noteName    name of the note
+	 */
 	setNoteNameActive = function(noteName) {
-		console.log("setNoteNameActive ", noteName);
 		if(patternController.getCurrentMode() != 1){
 			$(".btn-note.active").removeClass("active");
 			$("#" + noteName + "").addClass("active");
@@ -152,30 +203,50 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	},
 
+	/**
+	 * Method sets the active octave
+	 *
+	 * @param {string}    octave    name of the octave
+	 */
 	setOctaveActive = function(octave) {
 		$(".btn-octave.active").removeClass("active");
-		// $('btn-group-names label.active').removeClass('active');
 		$("#" + octave + "").addClass("active");
 	},
 
+	/**
+	 * Method sets the active accidental
+	 *
+	 * @param {string}    acc    name of the accidental
+	 */
 	setAccidentialActive = function(acc) {
 		$(".btn-accidential.active").removeClass("active");
 		$("#accidential-" + acc + "").addClass("active");
 	},
 
+	/**
+	 * Method sets the active duration
+	 *
+	 * @param {string}    duration    name of the duration
+	 */
 	setDurationActive = function(duration) {
 		$(".btn-duration.active").removeClass("active");
 		$("#" + duration + "").addClass("active");
 	},
 
+	/**
+	 * Method sets the active special rhythm element
+	 *
+	 * @param {string}    specRyth    name of the special rhythm element
+	 */
 	setSpecRythActive = function(specRyth) {
 		$(".btn-special-ryth.active").removeClass("active");
 		$("#spec-" + specRyth + "").addClass("active");
 	},
 
+	/**
+	 * Method changes layout according to melody mode
+	 */
 	setToMelodyMode = function() {
-		console.log("pattern view set melody");
-
 		$noteButtonClass.removeClass("disabled");
 		$accidentialButtonClass.removeClass("disabled");
 		$durationButtonClass.removeClass("disabled");
@@ -189,8 +260,10 @@ MusicXMLAnalyzer.PatternView = function(){
 		$rhythmNoteOrBreak.hide();
 	},
 
+	/**
+	 * Method changes layout according to sound sequence mode
+	 */
 	setToSoundSequenceMode = function() {
-		console.log("pattern view set Sound sequence");
 		$durationButtonClass.addClass('disabled');
 		$specialRythButtonClass.addClass('disabled');
 
@@ -208,8 +281,10 @@ MusicXMLAnalyzer.PatternView = function(){
 		$rhythmNoteOrBreak.hide();
 	},
 
+	/**
+	 * Method changes layout according to rhythm mode
+	 */
 	setToRhythmMode = function() {
-		console.log("pattern view set rhythm");
 		$noteButtonClass.addClass('disabled');
 		$rhythmBreakButton.removeClass('disabled');
 		$rhythmBreakButton.removeClass('active');
@@ -228,6 +303,9 @@ MusicXMLAnalyzer.PatternView = function(){
 		$rhythmNoteOrBreak.show();
 	},
 
+	/**
+	 * Method enters triplet creation mode
+	 */
 	startTripletEnterMode = function() {
 		//disable search and remove btn
 		$searchPatternButton.addClass('disabled');
@@ -238,6 +316,9 @@ MusicXMLAnalyzer.PatternView = function(){
 		$durationButtonClass.addClass('disabled');
 	},
 
+	/**
+	 * Method ends triplet creation mode
+	 */
 	endTripletEnterMode = function() {
 		//enable search and remove btn
 		$searchPatternButton.removeClass('disabled');
@@ -248,10 +329,16 @@ MusicXMLAnalyzer.PatternView = function(){
 		$durationButtonClass.removeClass('disabled');
 	},
 
+	/**
+	 * Method handles mouse click on remove button
+	 */
 	onRemoveButtonClick = function() {
 		patternController.removeLastNote();
 	},
 
+	/**
+	 * Method handles mouse click on search button, including a log message box to overcome waiting time
+	 */
 	onSubmitButtonClick = function() {
 		initLogMessages();
 		$('body').scrollTop($('body').height());
@@ -273,6 +360,9 @@ MusicXMLAnalyzer.PatternView = function(){
 		}, 3000);
 	},
 
+	/**
+	 * Method to initiate log messages
+	 */
 	initLogMessages = function() {
 		resultMessageCounter = 0;
 		$logMessages.show();
@@ -281,6 +371,9 @@ MusicXMLAnalyzer.PatternView = function(){
 		}, 500);
 	},
 
+	/**
+	 * Method to animate the log message box
+	 */
 	disposeLogMessages = function() {
 		window.setTimeout(function() {
 			$logMessages.animate({
@@ -294,6 +387,11 @@ MusicXMLAnalyzer.PatternView = function(){
 		}, 100);
 	},
 
+	/**
+	 * Method to add a log message
+	 *
+	 * @param {string}    msg    message to be added
+	 */
 	addLogMessage = function(msg) {
 		$('#log' + (resultMessageCounter - 3)).animate({
 			"marginTop": "-30px"
