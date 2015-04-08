@@ -47,8 +47,12 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Method clears canvas, creates new stave and adds a new clef on mode change
+	 *
+	 * @param {event}    event    not needed
+	 *
+	 * @param {int}      mode     not needed
 	 */
-	onChangeMode = function() {
+	onChangeMode = function(event, mode) {
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		stave = new Vex.Flow.Stave(10, 45, 700);
   		addClef(patternModel.getCurrentMode());
