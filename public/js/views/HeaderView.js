@@ -4,9 +4,11 @@ MusicXMLAnalyzer.HeaderView = function(){
 
 	deleteMeLink = null,
 
-	init = function(){
-		console.info('MusicXMLAnalyzer.HeaderView.init');
 
+	/**
+	 * Init function
+	 */
+	init = function(){
 		deleteMeLink = $('#deleteMeLink');
 		deleteMeLink.on('click', onDeleteMeLinkClick);
 	},
