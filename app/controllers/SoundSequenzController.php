@@ -13,20 +13,18 @@ class SoundSequenzController {
 	static $noteCounter;
 	static $counter;
 
-	function __construct() {
-
-	}
-
+	/**
+	 * Search function to compare sound sequence pattern to xml files
+	 *
+	 * @param   object      The user generated melody pattern
+	 *
+	 * @return  object      Contains file_id, file_url as well as start and end positions where pattern matches any given xml file
+	 *
+	 */
 	public function search($pattern) {
-		// Debugbar::info($pattern);
+
 		$p = $pattern[0]->notes;
-		// $exactMatch = $pattern->exact;
-		//
-		// NICE TO HAVE:
-		// if !exactMatch:
-		// #intervall differenzen aus pattern berechnen
-		// #differenzen vergleichen mit
-		//
+
 		self::$patternIntervalArray = array();
 		self::$results = array();
 
@@ -36,8 +34,6 @@ class SoundSequenzController {
 			$interval = PatternController::getInterval($note);
 			array_push(self::$patternIntervalArray, $interval);
 		}
-// echo"<br><br>patternIntervalArray: ";
-// var_dump(self::$patternIntervalArray);
 
 		//get user uploads & file_id's & file_url
 		$user = User::find(Cookie::get('user_id'));
@@ -60,39 +56,25 @@ class SoundSequenzController {
 			$parts = $xml->xpath("//part");
 
 			foreach($parts as $part){
-// var_dump($part);
-
-// echo "<hr><br>";
 				self::$once = true;
 				self::$noteCounter = 0;
 
-// echo"<br><hr>part: ";
-				//traverse §notes[]
-				// $countPartMeasure = count($part->measure);
-				// for ($i = 0; $i < $countPartMeasure; $i++)
-				foreach($part->measure as $measure){	// war vorher "$i < count($part->measure)-1" Unsinn?
+				foreach($part->measure as $measure){
 					self::$counter = 0;
-// echo"<br><hr>NOTE: ";
-// var_dump($part->measure[$i]);
 					$countPartMeasureNote = count($measure->note);
+
 					for($j = 0; $j < $countPartMeasureNote; $j++) {
 						self::$noteCounter++;
 						self::$counter++;
 						$n = $measure->note[$j];
-// echo"<br><hr>COUNTER: ";
-// var_dump(self::$noteCounter);
+
 						//set lastVoice at beginning of xml file
 						if(self::$once){
-// echo"<br><br>LASTVOICE SET ";
 							self::$once = false;
 							$lastVoice = $measure->note[$j]->voice;
 						}
 
 						if(!isset($n->rest) && !isset($n->chord)){ //exclude rests & chords (only looking for note patterns)
-// echo"<hr><br>CHORD?: <br>";
-// var_dump(isset($n->chord));
-// echo "<br><br>";
-// var_dump($n);
 							$pitch = new stdClass();
 							$pitch->step = $n->pitch->step;
 							$pitch->alter = $n->pitch->alter;
@@ -103,12 +85,6 @@ class SoundSequenzController {
 							$note->voice = $n->voice;
 							$note->position = self::$noteCounter;
 							$note->counter = self::$counter;
-// var_dump($note);
-// echo "<hr><br>";
-// echo"<br><br>LASTVOICE: ";
-// var_dump((int)$lastVoice);
-// echo"<br><br>current note: ";
-// var_dump($n);
 							// if voice stays the same
 							if((int)$n->voice == (int)$lastVoice){
 								// push current interval to xmlIntervalArray
@@ -120,24 +96,13 @@ class SoundSequenzController {
 								array_push(self::$xmlIntervalArray, PatternController::getInterval($note));
 								array_push(self::$xmlPositionArray, $res);
 								array_push(self::$xmlCounterArray, $note->counter);
-// echo"<br><br>xmlIntervalArray: ";
-// var_dump(self::$xmlIntervalArray);
+
 								//check if Array-length equals Pattern-length already
 								if(count(self::$xmlIntervalArray) == count(self::$patternIntervalArray)){
-
 
 									// compare arrays
 									if(array_values(self::$xmlIntervalArray) == array_values(self::$patternIntervalArray)){
 										// create result
-// echo"<br><br><hr>RESULT FOUND<br>intervalArray: <br>";
-// var_dump(array_values(self::$xmlIntervalArray));
-// echo"<br><br>patternArray: <br>";
-// var_dump(array_values(self::$patternIntervalArray));
-// echo"<br><br>xmlPositionArray:";
-// var_dump(self::$xmlPositionArray);
-// echo "<br>PART_ID:";
-// var_dump((string)$part['id']);
-// echo"<br><br>";
 										self::$result->file_id = $file_id;
 										self::$result->file_url = $file_url;
 
@@ -156,34 +121,24 @@ class SoundSequenzController {
 										$occ->endMeasure = $endMeasureNumber;
 										$occ->voice = (int)$note->voice;
 										$occ->part_id = (string)$part['id'];
-// var_dump($occ);
+
 										array_push(self::$result->occurences, $occ);
 
 										//reset arrays
 										self::$xmlIntervalArray = array();
 										self::$xmlPositionArray = array();
 										self::$xmlCounterArray = array();
-// echo"<br><br>MATCH FOUND xmlIntervalArray RESET: ";
-// var_dump(self::$xmlIntervalArray);
 
 									}else{
 
-// echo"<br><br>xmlIntervalArray BEFORE splice: ";
-// var_dump(self::$xmlIntervalArray);
 										self::$xmlIntervalArray = array_splice(self::$xmlIntervalArray, 1);
 
-// echo"<br><br>xmlIntervalArray AFTER splice: ";
-// var_dump(self::$xmlIntervalArray);
 										self::$xmlPositionArray = array_splice(self::$xmlPositionArray, 1);
 										self::$xmlCounterArray = array_splice(self::$xmlCounterArray, 1);
 										self::$xmlIntervalArray = array_values(self::$xmlIntervalArray);
 
 										self::$xmlPositionArray = array_values(self::$xmlPositionArray);
 										self::$xmlCounterArray = array_values(self::$xmlCounterArray);
-
-										// self::$result = new stdClass();
-										// self::$result->occurences = array();
-
 									}
 
 								} //if array lengths aren't equal yet, continue
@@ -193,10 +148,6 @@ class SoundSequenzController {
 							}
 							else{ //different voice incoming next; unset array; begin from scratch
 
-// echo"<br><br>LASTVOICE: ";
-// var_dump($lastVoice);
-// echo"<br><br>NEXT VOICE: ";
-// var_dump($part->measure[$i]->note[$j]->voice);
 								$lastVoice = $measure->note[$j]->voice;
 								$j--;
 								self::$noteCounter--;
@@ -204,8 +155,6 @@ class SoundSequenzController {
 								self::$xmlIntervalArray = array();
 								self::$xmlPositionArray = array();
 								self::$xmlCounterArray = array();
-// echo"<br><br>xmlIntervalArray AFTER VOICE CHANGED: ";
-// var_dump(self::$xmlIntervalArray);
 							}
 						}
 					} //end of foreach(notes as note){blabla}
@@ -225,7 +174,5 @@ class SoundSequenzController {
 
 		});
 		return self::$results;
-// bla();
 	}
-
 }

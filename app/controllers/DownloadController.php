@@ -8,6 +8,14 @@ class DownloadController extends BaseController {
 		return View::make('download.download')->with('path', $path);
 	}
 
+	/**
+	 * Function to generate a CSV file
+	 *
+	 * @param   object    	The currently active user who requested the CSV file
+	 *
+	 * @return  String      Url to download generated CSV file
+	 *
+	 */
 	private function _generateCSV($user) {
 
 		// csv variables

@@ -13,11 +13,14 @@ class MelodyController {
 	static $noteCounter;
 	static $counter;
 
-	function __construct() {
-
-
-	}
-
+	/**
+	 * Search function to compare melody pattern to xml files
+	 *
+	 * @param   object      The user generated melody pattern
+	 *
+	 * @return  object      Contains file_id, file_url as well as start and end positions where pattern matches any given xml file
+	 *
+	 */
 	public function search($pattern) {
 
 		$p = $pattern[0]->notes;
@@ -52,12 +55,10 @@ class MelodyController {
 			}
 		}
 
-// echo"<br><hr>patternArray:<br>";
-// var_dump(array_values(self::$patternArray));
-
 		//get user uploads & file_id's & file_url
 		$user = User::find(Cookie::get('user_id'));
 		$user->uploads->each(function($upload) {
+
 			$xml = simplexml_load_file($upload->url);
 			$file_id = $upload->id;
 			$file_url = $upload->url;
@@ -75,23 +76,14 @@ class MelodyController {
 
 			$parts = $xml->xpath("//part");
 
-// echo "<br><hr>PARTS: ";
-// var_dump(count($parts));
-
 			foreach($parts as $part){
-
-// echo "<br><hr>MEASURES IN THIS PART: ";
-// var_dump(count($part->measure));
 
 				self::$noteCounter = 0;
 				self::$once = true;
 				self::$once2 = true;
-				// $countPartMeasure = count($part->measure);
-				// for($i = 0; $i < $countPartMeasure; $i++)
+
 				foreach($part->measure as $measure){
 					self::$counter = 0;
-// echo "<br><hr>NOTES IN THIS MEASURE: ";
-// var_dump(count($measure->note));
 
 					if(self::$once2){
 						self::$once2 = false;
@@ -162,18 +154,11 @@ class MelodyController {
 							else if(isset($n->rest)){
 								// calculate rest duration
 								try{
-									$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / 4); // (int)$partBeatType);
+									$restDurationFloat = (float)((int)$n->duration / (int)$partDivision / 4);
 								} catch (Exception $e) {
-// echo"<br><hr>n->duration: <br>";
-// var_dump($n->duration);
-// echo"<br>partDivision: <br>";
-// var_dump($partDivision);
-// echo"<br>partBeatType: <br>";
-// var_dump($partBeatType);
 								    Log::error('Exception abgefangen: ',  array('error' => $e->getMessage()));
 								}
 
-								// rest durations: "whole" "half" "quarter" "eighth" "16th" "32nd" "64th"
 								// determine 'type'
 								if ($restDurationFloat == 1){
 									$restDuration = "whole";
@@ -208,9 +193,6 @@ class MelodyController {
 								} else {
 									// catch strange values (FALLBACK)
 									$restDuration = "64th";	// set to lowest possible value
-// Debugbar::info($restDurationFloat);
-// echo 'Rest duration unclear: ',  $restDurationFloat, "<br>";
-// echo $restDurationFloat, $n->duration, $partDivision, $partBeatType, "<br>";
 								}
 								$res = new stdClass();
 								$res->part = $part['id'];
@@ -234,27 +216,9 @@ class MelodyController {
 
 							//check if Array-length equals Pattern-length already
 							if(count(self::$xmlArray) == count(self::$patternArray)){
-// echo"<br><br><hr>SAME LENGTH!<br>";
-// var_dump(array_values(self::$xmlArray));
-// echo"<br><br>patternArray: <br>";
-// var_dump(array_values(self::$patternArray));
-
-// echo"<br><br><hr>restDuration: <br>";
-// var_dump($restDuration);
-// echo"<br><br><hr>xmlArray:<br>";
-// var_dump(array_values(self::$xmlArray));
-
-// echo"<br><br>xmlPositionArray:";
-// var_dump(self::$xmlPositionArray);
-// echo"<br><br>";
 
 								// compare arrays
 								if(array_values(self::$xmlArray) == array_values(self::$patternArray)){
-// echo"<br><br>xmlPositionArray:";
-// var_dump(self::$xmlPositionArray);
-// echo "<br>PART_ID:";
-// var_dump((string)$part['id']);
-// echo"<br><br>";
 									// create result
 									self::$result->file_id = $file_id;
 									self::$result->file_url = $file_url;
@@ -314,7 +278,6 @@ class MelodyController {
 				self::$xmlPositionArray = array();
 				self::$xmlCounterArray = array();
 			}//end of foreach(parts as part)
-// echo "<hr><hr>END OF FILE!<hr><hr>";
 
 			// check if result->occ is empty
 			if(!empty(self::$result->occurences)){
@@ -324,9 +287,6 @@ class MelodyController {
 
 		});
 
-
-return self::$results;
-// bla();
-
+		return self::$results;
 	}
 }

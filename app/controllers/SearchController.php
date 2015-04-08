@@ -2,11 +2,15 @@
 
 class SearchController extends BaseController {
 
+	/**
+	 * Search function for automatic analysis of xml files
+	 *
+	 * @return  Redirec      route to dashboard
+	 *
+	 */
 	public function search()
 	{
-		/**
-		 * Getting files for current user
-		 */
+		// Getting files for current user
 		$user = User::find(Cookie::get('user_id'));
 		$user->uploads->each(function($upload) {
 			if (!$upload->result) {
@@ -41,24 +45,15 @@ class SearchController extends BaseController {
 		return Redirect::route('dashboard');
 	}
 
-	/////////////////////////////
-	//Internal analysis private functions
-	/////////////////////////////
+	/**
+	 * Helper function to count intervals in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  array      			interval array containing the frequency of intervals in a xml file
+	 *
+	 */
 	private function _countIntervals($xml){
-		//toDo: magic.
-		//Halbtonschritte zur Tonika (C-Dur)
-		// C = 0
-		// C#/Db = 1
-		// D = 2
-		// D#/Eb = 3
-		// E = 4
-		// F = 5
-		// F#/Gb = 6
-		// G = 7
-		// G#/Ab = 8
-		// A = 9
-		// A#/Bb = 10
-		// B = 11
 		$tonika = array("C" => 0,
 						"D" => 2,
 						"E" => 4,
@@ -72,7 +67,6 @@ class SearchController extends BaseController {
 		foreach($notes as $note){
 			$rest = $note->rest;
 			if(!$rest){
-				// echo "rest is null<br/>";
 				$noteStep = $note->pitch->step;
 				$noteAlter = $note->pitch->alter;
 				$noteOctave = $note->pitch->octave;
@@ -83,15 +77,11 @@ class SearchController extends BaseController {
 						$noteValue = (int)$noteValue + (int)$noteAlter;
 					}
 					$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
-					//array befüllen
+					//fill array
 					array_push($notesArray, $noteValue);
 				}
 			}
-			else{
-				//rest
-			}
 		}//end foreach
-		// var_dump($notesArray);
 		$intervalArray = array(
 			(object)array("label" => "Perfect unison", "value" => 0 ),
 			(object)array("label" => "Minor second", "value" => 0 ),
@@ -131,7 +121,7 @@ class SearchController extends BaseController {
 
 		for($i = 0; $i < count($notesArray) - 1;$i++){
 			$intervalValue = abs((int)$notesArray[$i] - (int)$notesArray[++$i]);
-			// echo "<br/>intervall: ".$intervalValue;
+
 			switch($intervalValue):
 				case 0:
 					$intervalArray[0]->value = $intervalArray[0]->value + 1;
@@ -238,16 +228,19 @@ class SearchController extends BaseController {
 			endswitch;
 		}
 
-	    // echo "<pre>";
-	    // var_dump($intervalArray);
-	    // echo "</pre>";
 		return $intervalArray;
 	}
 
-
+	/**
+	 * Helper function to determine the artist/composer a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  string      		name of the artist (if available)
+	 *
+	 */
 	private function _determineArtist($xml){
 		$artist = $xml->xpath("//credit[credit-type='composer']");
-		// var_dump($artist[0]);
 		if ($artist) {
 			return $artist[0]->{'credit-words'}->{0};
 		} else {
@@ -255,10 +248,16 @@ class SearchController extends BaseController {
 		}
 	}
 
-
+	/**
+	 * Helper function to determine the title in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  string      		title of the xml file
+	 *
+	 */
 	private function _determineTitle($xml){
 		$title = $xml->xpath("//credit[credit-type='title']");
-		// var_dump($title[0]->{'credit-words'});
 		if ($title) {
 			return $title[0]->{'credit-words'}->{0};
 		} else {
@@ -266,7 +265,14 @@ class SearchController extends BaseController {
 		}
 	}
 
-
+	/**
+	 * Helper function to determine the instruments in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  array      			instruments array containing the instruments taking part in a xml file
+	 *
+	 */
 	private function _determineInstruments($xml){
 		$instruments = $xml->xpath("//score-part");
 		$instrumentsArray = array();
@@ -291,7 +297,14 @@ class SearchController extends BaseController {
 		return $instrumentsArray;
 	}
 
-
+	/**
+	 * Helper function to count note-length frequency in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  array      			note-length array containing the frequency of note-lengths in a xml file
+	 *
+	 */
 	private function _countNoteTypes($xml){
 		$notes = $xml->xpath("//note");
 
@@ -307,7 +320,6 @@ class SearchController extends BaseController {
 
 		foreach($notes as $note) {
 			$value = $note->type;
-			// $rest = $note->rest;
 			if($value){
 				switch($value):
 					case "whole":
@@ -334,13 +346,17 @@ class SearchController extends BaseController {
 				endswitch;
 			}
 	    }
-	    // echo "<pre>";
-	    // var_dump($noteTypesArray);
-	    // echo "</pre>";
 	    return $noteTypesArray;
 	}
 
-
+	/**
+	 * Helper function to determine the start meter in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  string      		the start meter of the given file
+	 *
+	 */
 	private function _determineMeter($xml){
 		$beat = $xml->xpath("//beats");
 		$beatType =  $xml->xpath("//beat-type");
@@ -352,7 +368,14 @@ class SearchController extends BaseController {
 		}
 	}
 
-
+	/**
+	 * Helper function to determine the frequency of keys in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  array      			key array containing the frequency of keys in a xml file
+	 *
+	 */
 	private function _determineKey($xml){
 		$keys = $xml->xpath("//key");
 		$keysArray = array(
@@ -440,7 +463,7 @@ class SearchController extends BaseController {
 						$keysArray[14]->value = $keysArray[14]->value + 1;
 						break;
 				endswitch;
-				// array_push($keysArray, $keyString." major");
+
 			}
 			elseif($fifths != null && $mode === "minor"){
 				switch($fifths):
@@ -490,20 +513,24 @@ class SearchController extends BaseController {
 						$keysArray[29]->value = $keysArray[29]->value + 1;
 						break;
 				endswitch;
-				// array_push($keysArray, $keyString." minor");
+
 			}
 	    }
-	    // echo "<pre>";
-	    // var_dump($keysArray);
-	    // echo "</pre>";
+
 	    return $keysArray;
 	}
 
-
+	/**
+	 * Helper function to determine the clef in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  array      			clef array containing the frequency of clefs in a xml file
+	 *
+	 */
 	private function _determineClef($xml){
 		$clefs = $xml->xpath("//clef");
-		//print_r($clefs);
-		// $a = (object)array("label" => "soprano clef", "value" => 0 );
+
 		$clefsArray = array(
 			(object)array("label" => "soprano clef", "value" => 0 ),
 			(object)array("label" => "mezzo-sopran clef", "value" => 0 ),
@@ -516,10 +543,10 @@ class SearchController extends BaseController {
 			(object)array("label" => "tablature", "value" => 0 ),
 			(object)array("label" => "none", "value" => 0 )
 			);
-		// var_dump($clefsArray);
+
 		foreach($clefs as $clef) {
 			$value = $clef->sign;
-			$line = $clef->line; //https://de.wikipedia.org/wiki/Notenschl%C3%BCssel#C-Schl.C3.BCssel
+			$line = $clef->line;
 
 			if($value != null){
 				switch($value):
@@ -571,41 +598,61 @@ class SearchController extends BaseController {
 					default:
 						break;
 				endswitch;
-				// array_push($clefsArray,$value);
+
 			}
 	    }
-	    //print_R($clefsArray);
-	    // return array_count_values($clefsArray);
-	    // echo "<pre>";
-	    // var_dump($clefsArray);
-	    // echo "</pre>";
+
 	    return $clefsArray;
 	}
 
-
+	/**
+	 * Helper function to count measures in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  int      			number of measures in a given xml file
+	 *
+	 */
 	private function _countMeasures($xml){
 		$measures = $xml->xpath("//measure");
 		return count($measures);
 	}
 
-
+	/**
+	 * Helper function to count rests in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  int      			number of rests in a given xml file
+	 *
+	 */
 	private function _countRests($xml){
 		$rests = $xml->xpath("//rest");
 		return count($rests);
 	}
 
-
+	/**
+	 * Helper function to count notes in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  in      			number of notes in a given xml file
+	 *
+	 */
 	private function _countNotes($xml){
 		$notes = $xml->xpath("//note");
 		return count($notes);
 	}
 
-
+	/**
+	 * Helper function to count note values in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  array      			notes array containing the frequency of note values in a xml file
+	 *
+	 */
 	private function _countNoteValues($xml){
-
-		//"The descendant (double-slash) operator in xpath will search all descendants for a match."
-		//"The below is equivalent to the DOM method getElementsByTagName"
-		//fetch all <note> tags
 		$notes = $xml->xpath("//note");
 
 		$notesArray = array(
@@ -704,16 +751,20 @@ class SearchController extends BaseController {
 					break;
 			endswitch;
 	    }
-	    // echo "<pre>";
-	    // var_dump($notesArray);
-	    // echo "</pre>";
+
 	    return $notesArray;
 	}
 
-
+	/**
+	 * Helper function to determine the most frequent note in a given php-SimpleXML file
+	 *
+	 * @param   php-SimpleXML       uploaded user file
+	 *
+	 * @return  string      		name of the most frequent note in a given xml file
+	 *
+	 */
 	private function _determineMostFrequentNote($xml){
 
-		//häufigkeiten der Noten zählen
 		$countedNotes = $this->_countNoteValues($xml);
 
 		usort($countedNotes, function($a, $b) {
@@ -725,7 +776,6 @@ class SearchController extends BaseController {
 		});
 		$highest = array_slice($countedNotes, -1, 1);
 
-	    //häufigste note ausgeben
 	    return $highest[0]->label;
 
 	}
