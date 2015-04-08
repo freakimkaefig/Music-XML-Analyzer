@@ -57,7 +57,7 @@
 		</div>
 		<div class="col-xs-4">
             <p class="no-margin">Octave: </p>
-            <div title="OCTAVE: Choose the octave to create notes by button click or place notes directly on the stave via mouse." class="btn-group" data-toggle="buttons">
+            <div title="Choose the octave to create notes by button click or place notes directly on the stave via mouse." class="btn-group" data-toggle="buttons">
                 <label id="3" class="btn btn-octave btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":3">3
                 </label>
