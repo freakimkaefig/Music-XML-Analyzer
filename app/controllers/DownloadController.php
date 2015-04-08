@@ -1,12 +1,20 @@
 <?php
 
 class DownloadController extends BaseController {
+
+	/**
+	 * Function to get results as CSV
+	 *
+	 * @return 	\Illuminate\View\View 	The download view
+	 *
+	 */
 	public function getResultsCSV() {
 		$user = User::find(Cookie::get('user_id'));
 
 		$path = $this->_generateCSV($user);
 		return View::make('download.download')->with('path', $path);
 	}
+
 
 	/**
 	 * Function to generate a CSV file

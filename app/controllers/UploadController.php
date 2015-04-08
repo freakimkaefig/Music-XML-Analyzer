@@ -2,6 +2,12 @@
 
 class UploadController extends BaseController {
 
+	/**
+	 * Function to handle POST request for file upload
+	 *
+	 * @return 	\Illuminate\Http\JsonResponse 	The JSON response code
+	 *
+	 */
 	public function postUpload() {
 		$user = User::find(Cookie::get('user_id'));
 		$file = Input::file('file');
@@ -40,6 +46,15 @@ class UploadController extends BaseController {
 		}
 	}
 
+
+	/**
+	 * Function to transform MusicXML files in format "score-timewise" to format "score partwise"
+	 *
+	 * @param 	string 			The url of the file to transform
+	 *
+	 * @return 	bool, string 	False when operation fails, URL as string when operation succeeds
+	 *
+	 */
 	private function xslTransform($url) {
 		// $url = 'http://music-xml-analyzer.local/uploads/130/MahlerLiedVon_timewise_.xml';
 		$simpleXml = simplexml_load_file($url);
@@ -68,6 +83,14 @@ class UploadController extends BaseController {
 		return $url;
 	}
 
+
+	/**
+	 * Function to save files to database
+	 *
+	 * @param 	\User 	The user as Eloquent Model
+	 * @param 	string 	The file url
+	 *
+	 */
 	private function _saveFile($user, $url) {
 		$upload = new Upload;
 		$upload->url = $this->xslTransform($url);
@@ -75,6 +98,13 @@ class UploadController extends BaseController {
 		$upload->save();
 	}
 
+
+	/**
+	 * Function to trigger that the upload is complete
+	 *
+	 * @return 	\Illuminate\Http\RedirectResponse 	The redirect to trigger search
+	 *
+	 */
 	public function getUploadComplete() {
 		return Redirect::route('search');
 	}

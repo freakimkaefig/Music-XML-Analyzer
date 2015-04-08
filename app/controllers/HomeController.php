@@ -2,21 +2,13 @@
 
 class HomeController extends BaseController {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
-
-	public function getHome()
-	{
+	/**
+	 * Function to handle GET request for front page
+	 *
+	 * @return 	\Illuminate\Http\RedirectResponse, \Illuminate\View\View 	if user already uploaded files the function redirects to dashboard, if not the home view is returned
+	 *
+	 */
+	public function getHome() {
 		if (Cookie::get('user_id')) {
 			$user = User::find(Cookie::get('user_id'));
 			if ($user) {
@@ -39,6 +31,13 @@ class HomeController extends BaseController {
 		return View::make('home');
 	}
 
+
+	/**
+	 * Function to handle GET request for resetting user data
+	 *
+	 * @return 	\Illuminate\Http\RedirectResponse 	Redirect to home view
+	 *
+	 */
 	public function getDeleteMe()
 	{
 		$user = User::find(Cookie::get('user_id'));
@@ -62,6 +61,10 @@ class HomeController extends BaseController {
 	    return Redirect::route('home');
 	}
 
+
+	/**
+	 * Function to create a new user in database
+	 */
 	private function _createNewUser() {
 		$user = new User;
 		$user->last_activity = date('Y-m-d H:m:s');
@@ -73,11 +76,11 @@ class HomeController extends BaseController {
 		Cookie::queue($name, $value, $minutes);
 	}
 
-	public function getToImprint()
-	{
-		return View::make('imprint');
-	}
 
+	/**
+	 * Function to handle GET and POST request to clear database.
+	 * This function is used when deploying to remote
+	 */
 	public function getClear()
 	{
 		foreach (User::all() as $user)
