@@ -190,28 +190,30 @@ public function search($pattern) {
 							// determine 'type'
 							if ($restDurationFloat == 1){
 								$restDuration = "whole";
-							} elseif ($restDurationFloat == 0.75) {
+							} elseif ($restDurationFloat == 1.5) {
 								$restDuration = "whole";
+							} elseif ($restDurationFloat == 0.75) {
+								$restDuration = "half";
 							} elseif ($restDurationFloat == 0.5) {
 								$restDuration = "half";
 							} elseif ($restDurationFloat == 0.375) {
-								$restDuration = "half";
+								$restDuration = "quarter";
 							} elseif ($restDurationFloat == 0.25) {
 								$restDuration = "quarter";
 							} elseif ($restDurationFloat == 0.1875) {
-								$restDuration = "quarter";
+								$restDuration = "eighth";
 							} elseif ($restDurationFloat == 0.125) {
 								$restDuration = "eighth";
 							} elseif ($restDurationFloat == 0.09375) {
-								$restDuration = "eighth";
+								$restDuration = "16th";
 							} elseif ($restDurationFloat == 0.0625) {
 								$restDuration = "16th";
 							} elseif ($restDurationFloat == 0.046875) {
-								$restDuration = "16th";
+								$restDuration = "32nd";
 							} elseif ($restDurationFloat == 0.03125) {
 								$restDuration = "32nd";
 							} elseif ($restDurationFloat == 0.0234375) {
-								$restDuration = "32nd";
+								$restDuration = "64th";
 							} elseif ($restDurationFloat == 0.015625) {
 								$restDuration = "64th";
 							} elseif ($restDurationFloat == 0.01171875) {
