@@ -54,13 +54,28 @@ MusicXMLAnalyzer.ResultController = function(){
 	},
 
 	/**
-	* Function to add result to model
-	*/
+	 * Method to add results to model
+	 *
+	 * @param {event}    event    
+	 *
+	 * @param {int}      numItems     number of items 
+	 * 
+	 * @param {object}    result    contains results
+	 */
 	onAddResultItem = function(event, numItems, result) {
 		model.setNumItems(numItems);
 		model.addResultItem(result);
 	},
 
+	/** 
+	* Method to pass result to view
+	* 
+	* @param {event}	event
+	*
+	* @param {int}    index
+	* 
+	* @param {object}	data 
+	*/
 	onResultExtractReceived = function(event, index, data) {
 		view.renderResultExtract(index, data);
 	},
@@ -96,6 +111,14 @@ MusicXMLAnalyzer.ResultController = function(){
 
 	/**
 	* Function to get MIDI values
+	* 
+	* @param {int}    step
+	* 
+	* @param {int}    octave
+	* 
+	* @param {int}    alter
+	* 
+	* @return {int}    step, octave, alter
 	*/
 	getMidiValue = function(step, octave, alter) {
 		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));

@@ -184,87 +184,177 @@ MusicXMLAnalyzer.PatternController = function() {
 		}
 	},
 
+	/**
+	 * Method updates notes in notationView
+	 *
+	 * @param {event}    event    update event
+	 */
 	onNotationViewUpdate = function(event, vexflowNotes) {
 		notationView.renderNotes(vexflowNotes);
 	},
 
+	/**
+	 * Method updates note selection
+	 *
+	 * @param {event}    event    update event
+	 */
 	onNoteNameSelectionChange = function(event, selectedNoteName) {
 		patternView.setNoteNameActive(selectedNoteName);
 	},
 
+	/**
+	 * Method updates octave selection
+	 *
+	 * @param {event}    event    update event
+	 */
 	onOctaveSelectionChange = function(event, selectedOctave) {
 		patternView.setOctaveActive(selectedOctave);
 	},
 
+	/**
+	 * Method updates accidential selection
+	 *
+	 * @param {event}    event    update event
+	 */
 	onAccidentialSelectionChange = function(event, selectedAcc) {
 		patternView.setAccidentialActive(selectedAcc);
 	},
 
+	/**
+	 * Method updates duration selection
+	 *
+	 * @param {event}    event    update event
+	 */
 	onDurationSelectionChange = function(event, selectedDur) {
 		patternView.setDurationActive(selectedDur);
 	},
 
+	/**
+	 * Method updates rhythm selection
+	 *
+	 * @param {event}    event    update event
+	 */
 	onSpecRythSelectionChange = function(event, selectedSpecRyth) {
 		patternView.setSpecRythActive(selectedSpecRyth);
 	},
 
+	/**
+	 * Method changes current mode 
+	 *
+	 * @param {number}    val    mode name
+	 */
 	changeMode = function(val) {
 		patternModel.setCurrentMode(val);
 		$(that).trigger('changed_mode', [val]);
 	},
 
+	/**
+	 * Method changes current note 
+	 *
+	 * @param {string}    val    note name
+	 */
 	changeNote = function(val) {
 		patternModel.setCurrentNoteName(val);
 	},
 
+	/**
+	 * Method changes current accidential 
+	 *
+	 * @param {string}    val    accidential name
+	 */
 	changeAccidential = function(val) {
 		patternModel.setCurrentAccidential(val);
 	},
 
+	/**
+	 * Method changes current note duration 
+	 *
+	 * @param {string}    val    note duration
+	 */
 	changeDuration = function(val) {
 		patternModel.setCurrentNoteDuration(val);
 	},
 
+	/**
+	 * Method changes current special rhythm 
+	 *
+	 * @param {string}    val    special rhythm
+	 */
 	changeSpecialRyth = function(val) {
 		patternModel.setCurrentNoteRythSpecial(val);
 	},
 
+	/**
+	 * Method changes current octave 
+	 *
+	 * @param {string}    val    current octave
+	 */
 	changeOctave = function(val) {
 		patternModel.setCurrentOctave(val);
 	},
 
+	/**
+	 * Method adds a note to pattern by click on button if pattern.length < 12
+	 */
 	addNote = function() {
 		if(patternModel.getPatternLength() < 12){
 			patternModel.addNoteElement();
 		}
 	},
 
+	/**
+	 * Method adds a note to pattern by click on canvas if pattern.length < 12
+	 */
 	addNoteByCanvasClick = function(note) {
 		if(patternModel.getPatternLength() < 12){
 			patternModel.addNoteElementByCanvasClick(note);
 		}
 	},
 
+	/**
+	 * Method clears the canvas
+	 */
 	onCanvasClear = function() {
 		notationView.clearCanvas();
 	},
 
+	/**
+	 * Method removes last element on canvas
+	 */
 	removeLastNote = function() {
 		patternModel.removeLastNoteElement();
 	},
 
+	/**
+	 * Method enables triplet input
+	 */
 	onTripletEnterModeStart = function() {
 		patternView.startTripletEnterMode();
 	},
 
+	/**
+	 * Method ends triplet input
+	 */
 	onTripletEnterModeEnd = function() {
 		patternView.endTripletEnterMode();
 	},
 
+	/**
+	 * Method returns the current mode
+	 *
+	 * @return {string}    currentMode    
+	 */
 	getCurrentMode = function(){
 		return patternModel.getCurrentMode();
 	},
 
+	/**
+	 * Method changes state of SearchPatternButton
+	 *
+	 * @param {event}    event    
+	 *
+	 * @param {int}    pattern 		    
+	 */
 	onPatternChange = function(event, pattern) {
 		patternView.setPatternValue(JSON.stringify(pattern));
 		if(pattern.length != 0){
@@ -283,6 +373,13 @@ MusicXMLAnalyzer.PatternController = function() {
 		}
 	},
 
+	/**
+	 * Method changes current mode
+	 *
+	 * @param {event}    event    
+	 *
+	 * @param {int}    mode 		    
+	 */
 	onViewChangedToCurrentMode = function(event, mode) {
 		switch(mode) {
 		    //sound sequence
