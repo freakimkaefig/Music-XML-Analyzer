@@ -6,7 +6,10 @@ MusicXMLAnalyzer.ApplicationController = function() {
 	dashboardController = null,
 	patternController = null,
 	resultController = null,
-
+	
+	/**
+	 * Init function of ApplicationController
+	 */
 	init = function() {
 		headerController = MusicXMLAnalyzer.HeaderController();
 		headerController.init();
