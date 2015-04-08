@@ -19,18 +19,23 @@ MusicXMLAnalyzer.PatternModel = function(){
 	beamArray = [],
 
 	tripletEnterMode = false;
-
-	// val for noteElements: -1,0,1
 	noteElementAccidential = 0,
 	isDot = false,
-	// val for beam: false, begin, continue, end
 	beamVal = false,
 
-
+	/**
+	 * Init method of PatternModel
+	 */
 	init = function() {
 
 	},
 
+	/**
+	 * Calls method to set the current Mode active
+	 *
+	 * @param {number}    mode    the current mode as number 0 (sound sequence), number 1 (rhythm) and number 2 (melody)
+	 *
+	 */
 	setCurrentMode = function(mode) {
 		if (curMode != mode) {
 			emptyNoteArrays();
@@ -39,42 +44,48 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		curMode = mode;
 
-		//set variables to default vals when there is mode 1 or 0
 		switch(curMode) {
-			//sound sequence
 			case 0:
 				setDefaultValsForSoundSequenceMode();
 				break;
-			//rhythm
 			case 1:
 				setDefaultValsForRhythmMode();
 				break;
-			//meldoy
 			case 2:
 				setDefaultValsForMelodyMode();
 				break;
 		}
-		//pattern update view
+		//update view
 		$(that).trigger('changeViewToCurrentMode', curMode);
 
 	},
 
-	/*
-	This method empties the notes arrays and sets the val
-	first to true.
-	*/
+	/**
+	 * This method empties the notes arrays and sets the val first to true.
+	 */
 	emptyNoteArrays = function() {
 		noteElements = [];
 		noteElements4VexFlow = [];
 		first = true;
 	}
 
+	/**
+	 * Returns the current mode
+	 *
+	 * @return {number}    The current mode
+	 *
+	 */
 	getCurrentMode = function() {
 		return curMode;
 	},
 
+	/**
+	 * Sets the current note name
+	 *
+	 * @param {string}    noteName    the current note name
+	 *
+	 */
 	setCurrentNoteName = function(noteName) {
-		console.log("patternModel setCurrentNoteName notename: ",noteName);
 		if(getCurrentMode() === 1 && noteName !== 'break'){
 
 			curOctave = 4;
@@ -83,50 +94,102 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 			curName = noteName;
 		}
-		console.log("model " + noteName, " curOctave: ",curOctave);
 	},
 
+	/**
+	 * Returns the current note name
+	 *
+	 * @return {string}    The current note name
+	 *
+	 */
 	getCurrentNoteName = function() {
 		return curName;
 	},
 
+	/**
+	 * Sets the current accidential
+	 *
+	 * @param {string}    accidential    the current accidential
+	 *
+	 */
 	setCurrentAccidential = function(accidential) {
 		curAccidential = accidential;
 	},
 
+	/**
+	 * Returns the current accidential
+	 *
+	 * @return {string}    The current accidential
+	 *
+	 */
 	getCurrentAccidential = function() {
 		return curAccidential;
 	},
 
+	/**
+	 * Sets the current note duration
+	 *
+	 * @param {string}    noteDuration    the current note duration
+	 *
+	 */
 	setCurrentNoteDuration = function(noteDuration) {
 		curDuration = noteDuration;
 	},
 
-	//duration like written on button
+	/**
+	 * Returns the current note duration
+	 *
+	 * @return {string}    The current note duration
+	 *
+	 */
 	getCurrentNoteDuration = function() {
 		return curDuration;
 	},
 
+	/**
+	 * Sets the current rhythmic special
+	 *
+	 * @param {string}    rythSpec    the current rhythmic special
+	 *
+	 */
 	setCurrentNoteRythSpecial = function(rythSpec) {
 		curRythSpec = rythSpec;
 	},
 
+	/**
+	 * Returns the current rhythmic special which can be a dot or triplet
+	 *
+	 * @return {string}    The current rhythmic special
+	 *
+	 */
 	getCurrentNoteRythSpecial = function() {
 		return curRythSpec;
 	},
 
+	/**
+	 * Sets the current octave
+	 *
+	 * @param {string}    octave    the current octave
+	 *
+	 */
 	setCurrentOctave = function(octave) {
 		curOctave = octave;
 	},
 
+	/**
+	 * Returns the current octave
+	 *
+	 * @return {string}    The current octave
+	 *
+	 */
 	getCurrentOctave = function() {
 		return curOctave;
 	},
 
-	/*
-	This method sets vals for accidentials, dots and beams
-	for noteElements-Array
-	*/
+	/**
+	 * This method sets vals for accidentials, dots and beams for noteElements-Array
+	 *
+	 */
 	setValuesForNoteElement = function() {
 
 		//accidential
@@ -150,6 +213,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 				tripletCurrentAmount++;
 		}
 
+		//triplet
 		switch(tripletCurrentAmount) {
 		    case 1:
 		        beamVal = "begin";
@@ -165,6 +229,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 	},
 
+	/**
+	 * This method adds notes and breaks to the noteElements Array and the noteElements4VexFlow Array
+	 *
+	 */
 	addNoteElement = function() {
 
 		setValuesForNoteElement();
@@ -325,7 +393,6 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 		//check if break or normal note or note with accidential
 		//then adapt values for vexflow an put them into an array
-		// console.log("curName: ",curName," curOctave: ",curOctave);
 		var note;
 		if(getCurrentMode() === 1 && curName !== 'break'){
 			curName = 'b';
@@ -393,6 +460,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	},
 
+	/**
+	 * Returns the length of the noteElements Array
+	 *
+	 * @return {number}    length of noteElements Array
+	 */
 	getPatternLength = function(){
 		if(noteElements.length > 0){
 			return noteElements[0].notes.length;
@@ -401,12 +473,14 @@ MusicXMLAnalyzer.PatternModel = function(){
 		}
 	}
 
+	/**
+	 * Sets the default values when you change to sound sequence mode
+	 */
 	setDefaultValsForSoundSequenceMode = function() {
 		curName = "c";
 		curOctave = "4";
 		curAccidential = "none";
 
-		// lastDurationForTriplet = curDuration;
 		tripletCurrentAmount = 0;
 		tripletEndPositions = [],
 		tupletArray = [],
@@ -419,6 +493,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 		$(that).trigger('changeSelectedAccidential', curAccidential);
 	},
 
+	/**
+	 * Sets the default values when you change to rhythm mode
+	 */
 	setDefaultValsForRhythmMode = function() {
 		curDuration = "quarter";
 		curRythSpec = "none";
@@ -435,6 +512,9 @@ MusicXMLAnalyzer.PatternModel = function(){
 		$(that).trigger('changeSelectedSpecRyth', curRythSpec);
 	},
 
+	/**
+	 * Sets the default values when you change to melody mode
+	 */
 	setDefaultValsForMelodyMode = function() {
 		curMode = 2;
 		curName = "c";
@@ -457,18 +537,38 @@ MusicXMLAnalyzer.PatternModel = function(){
 		$(that).trigger('changeSelectedSpecRyth', curRythSpec);
 	},
 
+	/**
+	 * Returns an Array with triplet end positions
+	 *
+	 * @return {Array.<number>}    Array with trilet end positions
+	 */
 	getTripletEndPositions = function() {
 		return tripletEndPositions;
 	},
 
+	/**
+	 * Returns an Array with tuplet end positions
+	 *
+	 * @return {Array.<number>}    Array with tuplet end positions
+	 */
 	getTupletArray = function() {
 		return tupletArray;
 	},
 
+	/**
+	 * Returns an Array with beam end positions
+	 *
+	 * @return {Array.<number>}    Array with beam end positions
+	 */
 	getBeamArray = function() {
 		return beamArray;
 	},
 
+	/**
+	 * Returns the content of a vexflow key
+	 *
+	 * @return {string}    content of vexflow key
+	 */
 	getKeyContent4Vexflow = function(noteName) {
 		var keyContent = noteName;
 		switch (curAccidential) {
@@ -484,6 +584,11 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return keyContent;
 	},
 
+	/**
+	 * Returns the duration label which is used by vexflow
+	 *
+	 * @return {string}    duration for vexflow
+	 */
 	getDuration4Vexflow = function(duration) {
 		var duration4Vexflow = null;
 
@@ -510,12 +615,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 		return duration4Vexflow;
 	},
 
-	/*
-	This method gets called when your click on the canvas
-	to add a note element.
-	The paramter note looks like "c/4".
-	It updates the model values curName and curOctave and calls addNoteElement
-	*/
+	/**
+	 * This method gets called when your click on the canvas to add a note element. The paramter note looks like "c/4". It updates the model values curName and curOctave and calls addNoteElement.
+	 *
+	 * @param {string}    note name in vexflow style like "c/4"
+	 *
+	 */
 	addNoteElementByCanvasClick = function(note) {
 		//split string at "/" to get noteName and ovtave
 		//and saves it into array noteContainer
@@ -530,9 +635,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 		$(that).trigger('changeSelectedOctave', [curOctave]);
 
 		addNoteElement();
-
 	},
 
+	/**
+	 * Removes last added note element from noteElementsArray and vexflowArray.
+	 *
+	 */
 	removeLastNoteElement = function() {
 		if(noteElements.length == 0) {
 	    	first = true;
@@ -555,18 +663,25 @@ MusicXMLAnalyzer.PatternModel = function(){
 		    }
 		}
 
-
-
 	    $(that).trigger('patternChange', [noteElements]);
 		// send vexflow note elements to controller and then back to view
 		$(that).trigger('updateNotationView', [getAllVexFlowNoteElements()]);
 	},
 
-
+	/**
+	 * Returns an array with Note Elements
+	 *
+	 * @return {Array<Notes>}    array of Note Elements
+	 */
 	getAllNoteElements = function() {
 		return noteElements;
 	},
 
+	/**
+	 * Returns an array wtih vexflow notes elements
+	 *
+	 * @return {Array<vexflowNotes>}    array of vexflowNotes
+	 */
 	getAllVexFlowNoteElements = function() {
 		return noteElements4VexFlow;
 	};
