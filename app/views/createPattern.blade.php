@@ -5,7 +5,7 @@
 	<div class="col-xs-12 marbo30">
 		<center><h4 class="no-margin">Choose Mode: </h4></center>
 		<div class="btn-group" data-toggle="buttons">
-			<label title="Create a melodic pattern." id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
+			<label title="Create a melodiy pattern." id="melody-mode-2" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":melody">melody
 			</label>
 			<label title="Create a sound sequence pattern." id="sound-sequence-mode-0" class="btn btn-mode btn-material-blue-grey" data-toggle="tooltip" data-placement="top">
