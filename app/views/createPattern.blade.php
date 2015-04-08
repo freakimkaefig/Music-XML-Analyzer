@@ -39,7 +39,7 @@
 <div class="container">
 	<div class="row marbo20">
 		<div class="col-xs-8">
-			<p class="no-margin">Special Ryth: </p>
+			<p class="no-margin">Special Rhythm: </p>
 			<div class="btn-group" data-toggle="buttons">
 				<label title="NONE: Enter standard notes or breaks according to selected mode." id="spec-none" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":none">None
