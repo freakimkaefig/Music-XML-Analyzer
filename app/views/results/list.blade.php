@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 {{ Form::hidden('pattern', json_encode(Cache::get('pattern')[0]), array('id' => 'patternValue')) }}
 
 <div class="container">
@@ -25,11 +24,13 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="tbody">
-			@foreach($results as $result)
-				@include('results.item', array('result' => $result))
-			@endforeach
+		@foreach($results as $result)
+			@include('results.item', array('result' => $result))
+		@endforeach
 	</div>
+
 	<div class="row">
 		<div class="col-xs-12 col-md-6 col-md-offset-3">
 			<div id="resultMessages" class="logBox"></div>
@@ -38,7 +39,6 @@
 	@else
 		<p class="no-results text-center">No results found for your pattern!</p>
 	@endif
-
 </div>
 
 @stop
