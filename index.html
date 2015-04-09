@@ -1,132 +1,191 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset='utf-8'>
-        <meta http-equiv="X-UA-Compatible" content="chrome=1">
-        <meta name="description" content="Music XML Analyzer : Music XML Analyzer">
-        <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-        <title>Music XML Analyzer</title>
-    </head>
-    <body>
-        <!-- HEADER -->
-        <div id="header_wrap" class="outer">
-            <header class="inner">
-                <a id="forkme_banner" target="_blank" href="https://github.com/freakimkaefig/Music-XML-Analyzer">View on GitHub</a>
-                <h1 id="project_title">Music XML Analyzer</h1>
-                <h2 id="project_tagline">Looking for patterns in music? We'll find them.</h2>
-                <section id="downloads">
-                    <a class="zip_download_link" target="_blank" href="https://github.com/freakimkaefig/Music-XML-Analyzer/zipball/master">Download this project as a .zip file</a>
-                    <a class="tar_download_link" target="_blank" href="https://github.com/freakimkaefig/Music-XML-Analyzer/tarball/master">Download this project as a tar.gz file</a>
-                </section>
-            </header>
-        </div>
-        <!-- MAIN CONTENT -->
-        <div id="main_content_wrap" class="outer">
-            <section id="main_content" class="inner">
-                <h1>
-                <a id="music-xml-analyzer" class="anchor" href="#music-xml-analyzer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Music XML Analyzer</h1>
-                <h2>
-                <a id="zusammenfassung" class="anchor" href="#zusammenfassung" aria-hidden="true"><span class="octicon octicon-link"></span></a>Zusammenfassung</h2>
-                <p>Bei einer komplexen Untersuchung von Musikstücken ist es oft unumgänglich, auch die Partitur auszuwerten. Die manuelle Analyse ist, vor allem wenn mehrere Partituren gleichzeitig untersucht werden sollen, oftmals aufwendig und mühselig. Neben kostenpflichtiger Software wie Finale<sup><a href="#1">[1]</a></sup> und kostenloser Software wie Musescore<sup><a href="#2">[2]</a></sup>, die zum Erstellen und Bearbeiten von Partituren geeignet sind, entstehen auch einige Projekte, die das Festhalten und Bearbeiten von Noten im Browser erlauben. Beispiele hierfür sind Vexflow<sup><a href="#3">[3]</a></sup> oder Noteflight<sup><a href="#4">[4]</a></sup>. Diesen Programmen fehlt jedoch eine umfangreiche Komponente zur Analyse und statistischen Auswertung von Musikstücken. Der Music-XML-Analyzer setzt genau hier an und bietet die Möglichkeit, Partituren im Music-XML-Format statistisch auszuwerten und in Musikstücken nach verschiedenen Pattern zu suchen.</p>
-                <h2>
-                <a id="setup-anweisungen" class="anchor" href="#setup-anweisungen" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup-Anweisungen</h2>
-                <p>Da es sich um eine Webanwendung handelt, sind zum Betrieb keine Installationsschritte notwendig. Die Projektseite ist unter der URL <a target="_blank" href="http://music-xml-analyzer.herokuapp.com/">http://music-xml-analyzer.herokuapp.com/</a> zu erreichen. Aufgrund der Beschaffenheit des Projekts wurde die Seite lediglich für Bildschirme mit einer Mindestbreite von 1200 Pixeln optimiert. Um eine spätere Anpassung für weitere Bildschirmgrößen zu ermöglichen wurde das Twitter Bootstrap Framework eingesetzt.</p>
-                <h2>
-                <a id="problemstellung" class="anchor" href="#problemstellung" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problemstellung</h2>
-                <p>Das System soll Musikinteressierte oder Forscher dabei unterstützen, Musik einerseits statistisch auszuwerten und andererseits konkrete Suchmuster in mehreren Musikstücken aufzufinden. Aktuelle Softwarelösungen wie Musescore bieten meist keine Komponenten, um diese Aufgaben zu erfüllen.</p>
-                <h2>
-                <a id="projektbeschreibung" class="anchor" href="#projektbeschreibung" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projektbeschreibung</h2>
-                <p>Das System lässt sich grob in drei Teilbereiche unterteilen, die in den folgenden Abschnitten näher erläutert werden. Zur besseren Übersichtlichkeit werden die Teilbereiche entsprechend dem Workflow des Nutzers aufgeteilt. Im ersten Schritt erfolgt der Upload von Dateien und daraufhin die automatische, statistische Auswertung. Den letzten Schritt stellt die Suche nach Mustern in den hochgeladenen Dateien dar. Auf der Startseite der Anwendung (<a href="#abb1">Abbildung 1</a>) bekommt der Nutzer einen kleinen Überblick über die Funktionen und kann per Klick auf den Button START UPLOADING NOW! mit der Arbeit beginnen.</p>
-                <p><img id="abb1" src="images/home.png" alt="Startseite">
-                <small>Abbildung 1: Startseite (Screenshot)</small></p>
-                <h3>
-                <a id="upload" class="anchor" href="#upload" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upload</h3>
-                <p>Um dem Anwender die Möglichkeit der statistischen Analyse von Musikstücken zu bieten, müssen zunächst Dateien im MusicXML-Format hochgeladen werden. Das im XML-Standard realisierte, offene Austauschformat MusicXML wird von vielen Notensatzprogrammen unterstützt und löst das vorangehende Notation Interchange File Format (NIFF)<sup><a href="#5">[5]</a></sup> ab. Zudem bieten einige Portale, wie zum Beispiel Musescore<sup><a href="#6">[6]</a></sup> den kostenlosen Download von Partituren im MusicXML-Format an, wodurch eine Vielzahl von Musikstücken bereits verfügbar ist. Auf der Homepage von Musescore sind die Partituren in verschiedenen Formaten verfügbar und können nach kostenloser Registrierung heruntergeladen werden. Mit Hilfe der ebenfalls kostenlosen Software können die Partituren in andere Formate (mscx, mscz, xml, mid, ogg, wav oder pdf) umgewandelt werden. <a href="#abb2">Abbildung 2</a> zeigt die Uploadfunktion des Music-XML-Analyzer, nachdem verschiedene Dateien hochgeladen wurden. Mit einem Klick auf ANALYZE werden die Dateien ausgewertet.</p>
-                <p><img id="abb2" src="images/upload.png" alt="Upload">
-                <small>Abbildung 2: Upload (Screenshot)</small></p>
-                <h3>
-                <a id="statistische-analyse" class="anchor" href="#statistische-analyse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Statistische Analyse</h3>
-                <p>Die hochgeladenen Dateien werden nach erfolgreichem Upload automatisch analysiert. Dabei werden neben den Noten und Pausen auch die enthaltenen Intervalle, Taktarten und Instrumente gezählt. </p>
-                <h3>
-                <a id="dashboard" class="anchor" href="#dashboard" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dashboard</h3>
-                <p>Im Dashboard (<a href="#abb3">Abbildung 3</a>) erhält der Nutzer einen Überblick über die wichtigsten Fakten und Statistiken zu den einzelnen Musikstücken oder über den gesamten hochgeladenen Korpus. Dabei werden die Noten- und Intervallverteilung in einem Balkendiagramm, die Distribution der Tonarten, Notenlängen und Taktarten in einem Kreisdiagramm dargestellt. Daneben werden noch einige Fakten zur Anzahl und zum Auftreten der Takte, Noten, Pausen und Instrumente angegeben.</p>
-                <p><img id="abb3" src="images/dashboard.png" alt="Dashboard">
-                <small>Abbildung 3: Dashboard (Screenshot)</small></p>
-                <h3>
-                <a id="suche-nach-patterns" class="anchor" href="#suche-nach-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Suche nach Patterns</h3>
-                <p>Vom Dashboard aus gelangt der User durch einen Klick auf den Button SEARCH FOR PATTERNS oder im Header via SEARCH zur Patternsuche. Die verschiedenen Möglichkeiten, die der Benutzer hat, um seine Musikstücke zu durchsuchen, werden im Folgenden kurz erläutert und sind in <a href="#abb4">Abbildung 4</a> dargestellt. Als ersten Schritt muss zwischen MELODY, SOUND SEQUENCE oder RHYTHM unterschieden werden, wobei MELODY  hier voreingestellt ist. Daraufhin kann der Benutzer entweder per Maus direkt auf den Notenzeilen, oder mit Hilfe der Buttons die gewünschten Noten eingeben. Werden die Buttons zur Noteneingabe verwendet, muss jede Note mit einem Klick auf ADD hinzugefügt werden. Durch Klick auf DELETE wird die zuletzt eingegebene Note wieder gelöscht. Alle Noten werden in der angezeigten Notenzeile dargestellt und können jederzeit abgespielt werden. Wird die Maus zur  Noteneingabe verwendet, so wird standartmäßig eine Viertelnote ohne Vorzeichen an der entsprechenden Stelle eingegeben. Triolen, punktierte Noten, Vorzeichen oder eine andere Notenlänge müssen mit Hilfe der Buttons eingestellt werden. Alle Noten der dritten bis sechsten Oktave mit einer Dauer von einer Ganzen Note bis zur 64tel Note können ausgewählt werden. Auch Noten mit Kreuz- oder B-Vorzeichen können hinzugefügt werden.</p>
-                <p><img id="abb4" src="images/search.png" alt="Search for Patterns">
-                <small>Abbildung 4: Search (Screenshot)</small></p>
-                <h3>
-                <a id="suchergebnisse" class="anchor" href="#suchergebnisse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Suchergebnisse</h3>
-                <p>Ist der Benutzer mit seiner Noteneingabe zufrieden, werden durch einen Klick auf SEARCH alle hochgeladenen Musikstücke nach dem erstellten Pattern durchsucht. <a href="#abb5">Abbildung 5</a> zeigt die Ergebnisseite der Suche. Hier wird im oberen Bereich das gesuchte Pattern noch einmal dargestellt und darunter die Musikstücke, welche das Pattern enthalten, samt jeweiliger Häufigkeit der Treffer.</p>
-                <p><img id="abb5" src="images/result_list.png" alt="Result list">
-                <small>Abbildung 5: Searchresult (Screenshot)</small></p>
-                <p>Klickt der User auf einen Treffer, so wird eine Detailansicht aufgerufen, wie in <a href="#abb6">Abbildung 6</a> zu erkennen ist. Hier werden neben dem Titel des Stücks die jeweiligen Trefferstellen in einem Carousel dargestellt und farblich hervorgehoben. Mit Hilfe der Pfeile kann zwischen den Treffern hin und her gewechselt werden. Informationen, in welcher Stimme und in welchem Takt das Pattern gefunden wurde, werden ebenfalls dargestellt. Ein Klick auf PLAY spielt einen Auszug, der das Pattern enthält, ab. Der Nutzer hat außerdem die Möglichkeit, alle visualisierten Treffer als PDF-Dokument zu exportieren, was mit einem Klick auf den Button EXPORT AS PDF erreicht werden kann.</p>
-                <p><img id="abb6" src="images/result.png" alt="Search result detail">
-                <small>Abbildung 6: Searchresult Details (Screenshot)</small></p>
-                <h2>
-                <a id="architektur-und-implementierung" class="anchor" href="#architektur-und-implementierung" aria-hidden="true"><span class="octicon octicon-link"></span></a>Architektur und Implementierung</h2>
-                <h3>
-                <a id="projektablauf" class="anchor" href="#projektablauf" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projektablauf</h3>
-                <p>Die Projektanforderungen wurden zunächst in Form von User Stories erfasst, welche im digitalen Anhang XX einzusehen sind. Um den Projektablauf zu organisieren, wurde das Issue-System von Github benutzt. Hierbei repräsentierten die Meilensteine jeweils eine User Story. Diesen wurden anschließend kleinere Teilaufgaben, die Issues, zugewiesen. Eine zusätzliche Erweiterung für Google Chrome namens ZenHub<sup><a href="#7">[7]</a></sup> erlaubte die Anordnung der Issues in Form eines Boards mit verschiedenen Pipelines. Das verwendete Board wurde, angelehnt an das Projektmanagement-Framework Kanban, in „Backlog“, „Nice to have“, „To-Do“, „In Progress“ und „Closed“  unterteilt.</p>
-                <p>Zu Beginn des Projekts konnten die Zuständigkeiten relativ klar aufgeteilt werden. Während Lukas Lamm für die Implementierung des verwendeten Frameworks Laravel und die daran gebundene Datenbankarchitektur zuständig war, kümmerte sich Tobias Semmelmann um die Frontend-Seite des Systems. David Lechler wurde mit der Traversierung, Analyse und Entwicklung der Suchalgorithmen für die MusicXML-Dateien betraut. Matthias Schneider kümmerte sich um die Eingabe der Suchpatterns. In späteren Projektphasen verwischten die Grenzen der Zuständigkeiten immer häufiger. Dadurch griff Lukas Lamm auch in die Darstellung der Suchergebnisse in Form von Takten und Noten unterstützend ein und kümmerte sich um die beiden Export-Funktionen. David Lechler übernahm schließlich die Wiedergabe der Ergebnisse mit Midi.js.</p>
-                <h3>
-                <a id="frameworks-und-bibliotheken" class="anchor" href="#frameworks-und-bibliotheken" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frameworks und Bibliotheken</h3>
-                <p>Als Grundlage der Anwendung wurde das PHP Framework Laravel<sup><a href="#8">[8]</a></sup> in Version 4.2 verwendet, welches auf dem Model-View-Controller-Pattern basiert. Dieses bietet Möglichkeiten, das Routing zwischen den einzelnen Controllern und Views zu handhaben, sowie die Gestaltung der Views durch Templates. Zudem konnte mit den in Laravel integrierten Models das Datenbankschema in SQL und die einfache Abfrage realisiert werden.<br>
-                Zur Realisation interaktiver Funktionen und Vereinfachung von Javascript-Code wurde das Framework jQuery<sup><a href="#9">[9]</a></sup> verwendet. Zudem wird jQuery vom eingesetzten CSS-Framework Twitter Bootstrap<sup><a href="#10">[10]</a></sup> und weiteren hier genannten Bibliotheken benötigt. Um einen modernen Look im Material Design zu erzielen, wurde zudem das Theme Material Design for Bootstrap<sup><a href="#11">[11]</a></sup> eingebunden. Die Darstellung der Graphen erfolgt mit der Bibliothek D3.js<sup><a href="#12">[12]</a></sup>, die Ausgabe der Noten hingegen wird über die API Vexflow<sup><a href="#13">[13]</a></sup> abgewickelt. Die Visualisierung von Statusnachrichten wird mit dem Plugin Typed.js<sup><a href="#14">[14]</a></sup> animiert. Die Darstellung und Abwicklung von hochgeladenen Dateien erfolgt durch die Bibliothek Dropzone.js<sup><a href="#15">[15]</a></sup> im Zusammenspiel mit dem Framework Laravel. Die Audioausgabe von eingegebenen Pattern zur Suche oder von Ergebnisausschnitten wird mit dem Framework MIDI.js<sup><a href="#16">[16]</a></sup> abgewickelt, während die Exportfunktion der Ergebnisse als PDF mit dem Plugin jsPDF<sup><a href="#17">[17]</a></sup> erfolgt. </p>
-                <h3>
-                <a id="systemarchitektur" class="anchor" href="#systemarchitektur" aria-hidden="true"><span class="octicon octicon-link"></span></a>Systemarchitektur</h3>
-                <p><a href="#abb7">Abbildung 7</a> zeigt den Aufbau des Laravel-Frameworks im Zusammenspiel mit den jeweiligen Javascript-Komponenten. Die Laravel-Komponente kümmert sich dabei um die serverseitige Logik der Anwendung, wie die Auslieferung von HTML-Seiten über eine integrierte Templating-Engine und die Kommunikation mit der Datenbank zur persistenten Speicherung. In <a href="#abb7">Abbildung 7</a> wird auch der Aufbau nach dem Model-View-Controller-Pattern deutlich, demzufolge die grafische Repräsentation (View) von der Logik (Controller) und der Datenschicht (Model) getrennt ist. Die Javascript-Komponente der Anwendung ist ebenso nach dem MVC-Pattern aufgebaut und kümmert sich hauptsächlich um die Interaktivität der Anwendung. Beispielsweise werden die Suchmuster in Javascript vorerst clientseitig zwischengespeichert und erst beim Absenden der Suchanfrage an der Server gleitet. Weitere Aufgabengebiete sind die grafische Aufbereitung der Analysedaten und Partiturausschnitten, sowie die Wiedergabe einzelner Sequenzen.</p>
-                <p><img id="abb7" src="images/system_architektur.png" alt="Systemarchitektur">
-                <small>Abbildung 7: Systemarchitektur</small></p>
-                <p>Um dem Nutzer die Möglichkeit zu bieten seine Arbeit ohne zusätzliche Speicherung immer aktuell zu halten wurde ein einfaches Datenbankschema entwickelt, welches in <a href="#abb8">Abbildung 8</a> als ERM-Model aufgeführt ist. Den Nutzern wird dabei beim ersten betreten der Anwendung eine ID zugewiesen, die gleichzeitig als Cookie beim Nutzer im Browser hinterlegt wird. Auf den Server geladene Dateien werden entsprechend mit dem Nutzer referenziert, ebenso wie einem Upload-Objekt nach erfolgreicher Analyse dessen Ergebnisse zugeordnet werden. Bei der Konzeption wurde bewusst auf eine aufwendige Nutzerverwaltung mit Registrierung und Anmeldung verzichtet, da dies den schnellen Einstieg oft erheblich behindert.</p>
-                <p><img id="abb8" src="images/database_schema.png" alt="Datenbankschema">
-                <small>Abbildung 8: Datenbankschema</small></p>
-                <h2>
-                <a id="ausblick" class="anchor" href="#ausblick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ausblick</h2>
-                <p>Eine Funktion, die nicht mehr implementiert wurde ist das Abspielen einzelner, hochgeladener Musikstücke. Der Grund hierfür ist, dass bei den Tests gegen Ende des Projektes noch einige Bugs gefunden wurden und die verbleibende Zeit damit verbracht wurde, diese zu beheben.<br>
-                Eine Erweiterungsmöglichkeit des Music-XML-Analyzer wäre, die Beschränkung auf das Format Music-XML aufzuheben, um so andere Dateitypen hochladen und analysieren zu können. </p>
-                <h2>
-                <a id="ueber-das-projekt" class="anchor" href="#ueber-das-projekt" aria-hidden="true"><span class="octicon octicon-link"></span></a>Über das Projekt</h2>
-                <a target="_blank" href="http://music-xml-analyzer.herokuapp.com">Live-Demo</a>
-                <p>Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von Dr. Manuel Burghardt im Wintersemester 2014/2015 an der Universität Regensburg durchgeführt.</p>
-                <p><strong>Kontakt:</strong></p>
-                <ul>
-                    <li>Lukas Lamm (<a href="mailto:freak.im.kaefig@gmx.net">freak.im.kaefig@gmx.net</a>, <a target="_blank" href="http://lukaslamm.de">http://lukaslamm.de</a>)</li>
-                    <li>David Lechler (<a href="mailto:davidlechler@outlook.com">davidlechler@outlook.com</a>)</li>
-                    <li>Tobias Semmelmann (<a href="mailto:semmler1988@gmail.com">semmler1988@gmail.com</a>)</li>
-                    <li>Matthias Schneider (<a href="mailto:matthias.schneider89@gmail.com">matthias.schneider89@gmail.com</a>)</li>
-                </ul>
-                <h2>
-                <a id="links" class="anchor" href="#links" aria-hidden="true"><span class="octicon octicon-link"></span></a>Links</h2>
-                <p>[1] <a id="1" target="_blank" href="http://www.klemm-music.de/makemusic/finale/">http://www.klemm-music.de/makemusic/finale/</a> 27.03.2015<br>
-                [2] <a id="2" target="_blank" href="https://musescore.org/de">https://musescore.org/de</a> 27.03.2015<br>
-                [3] <a id="3" target="_blank" href="http://my.vexflow.com/">http://my.vexflow.com/</a> 27.03.2015<br>
-                [4] <a id="4" target="_blank" href="https://www.noteflight.com/">https://www.noteflight.com/</a> 27.03.2015<br>
-                [5] <a id="5" target="_blank" href="https://de.wikipedia.org/wiki/MusicXML">https://de.wikipedia.org/wiki/MusicXML</a> 27.03.2015<br>
-                [6] <a id="6" target="_blank" href="https://musescore.org/de">https://musescore.org/de</a> 27.03.2015<br>
-                [7] <a id="7" target="_blank" href="https://www.zenhub.io/">https://www.zenhub.io/</a> 27.03.2015<br>
-                [8] <a id="8" target="_blank" href="http://laravel.com/">http://laravel.com/</a> 27.03.2015<br>
-                [9] <a id="9" target="_blank" href="https://jquery.com/">https://jquery.com/</a> 27.03.2015<br>
-                [10] <a id="10" target="_blank" href="http://getbootstrap.com/">http://getbootstrap.com/</a> 27.03.2015<br>
-                [11] <a id="11" target="_blank" href="https://fezvrasta.github.io/bootstrap-material-design/">https://fezvrasta.github.io/bootstrap-material-design/</a> 27.03.2015<br>
-                [12] <a id="12" target="_blank" href="http://d3js.org/">http://d3js.org/</a> 27.03.2015<br>
-                [13] <a id="13" target="_blank" href="http://www.vexflow.com/">http://www.vexflow.com/</a> 27.03.2015<br>
-                [14] <a id="14" target="_blank" href="http://www.mattboldt.com/demos/typed-js/">http://www.mattboldt.com/demos/typed-js/</a> 27.03.2015<br>
-                [15] <a id="15" target="_blank" href="http://www.dropzonejs.com/">http://www.dropzonejs.com/</a> 27.03.2015<br>
-                [16] <a id="16" target="_blank" href="http://mudcu.be/midi-js/">http://mudcu.be/midi-js/</a> 27.03.2015<br>
-                [17] <a id="17" target="_blank" href="https://parall.ax/products/jspdf">https://parall.ax/products/jspdf</a> 27.03.2015  </p>
 
-                <p><a target="_blank" href="docs/index.html">API Documentation</a></p>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Music XML Analyzer : Music XML Analyzer">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Music XML Analyzer</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/freakimkaefig/Music-XML-Analyzer">View on GitHub</a>
+
+          <h1 id="project_title">Music XML Analyzer</h1>
+          <h2 id="project_tagline">Music XML Analyzer</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/freakimkaefig/Music-XML-Analyzer/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/freakimkaefig/Music-XML-Analyzer/tarball/master">Download this project as a tar.gz file</a>
             </section>
-        </div>
-        <!-- FOOTER  -->
-        <div id="footer_wrap" class="outer">
-            <footer class="inner">
-                <p class="copyright">Music XML Analyzer maintained by <a target="_blank" href="https://github.com/freakimkaefig">freakimkaefig</a></p>
-                <p>Published with <a target="_blank" href="https://pages.github.com">GitHub Pages</a></p>
-            </footer>
-        </div>
-    </body>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="music-xml-analyzer" class="anchor" href="#music-xml-analyzer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Music XML Analyzer</h1>
+
+<p><a href="https://codeclimate.com/repos/5519aa9d69568002f2000d6c/feed"><img src="https://codeclimate.com/repos/5519aa9d69568002f2000d6c/badges/4b713fa4c132cc6c5fa7/gpa.svg" alt="Code Climate"></a></p>
+
+<p><a href="http://freakimkaefig.github.io/Music-XML-Analyzer/">http://freakimkaefig.github.io/Music-XML-Analyzer/</a>  </p>
+
+<p><a href="http://music-xml-analyzer.herokuapp.com/">http://music-xml-analyzer.herokuapp.com/</a></p>
+
+<h2>
+<a id="zusammenfassung" class="anchor" href="#zusammenfassung" aria-hidden="true"><span class="octicon octicon-link"></span></a>Zusammenfassung</h2>
+
+<p>Bei einer komplexen Untersuchung von Musikstücken ist es oft unumgänglich, auch die Partitur auszuwerten. Die manuelle Analyse ist, vor allem wenn mehrere Partituren gleichzeitig untersucht werden sollen, oftmals aufwendig und mühselig. Neben kostenpflichtiger Software wie Finale[1] und kostenloser Software wie Musescore[2], die zum Erstellen und Bearbeiten von Partituren geeignet sind, entstehen auch einige Projekte, die das Festhalten und Bearbeiten von Noten im Browser erlauben. Beispiele hierfür sind Vexflow[3] oder Noteflight[4]. Diesen Programmen fehlt jedoch eine umfangreiche Komponente zur Analyse und statistischen Auswertung von Musikstücken. Der Music-XML-Analyzer setzt genau hier an und bietet die Möglichkeit, Partituren im Music-XML-Format statistisch auszuwerten und in Musikstücken nach verschiedenen Pattern zu suchen.</p>
+
+<h2>
+<a id="setup-anweisungen" class="anchor" href="#setup-anweisungen" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup-Anweisungen</h2>
+
+<p>Da es sich um eine Webanwendung handelt, sind zum Betrieb keine Installationsschritte notwendig. Die Projektseite ist unter der URL <a href="http://music-xml-analyzer.herokuapp.com/">http://music-xml-analyzer.herokuapp.com/</a> zu erreichen. Aufgrund der Beschaffenheit des Projekts wurde die Seite lediglich für Bildschirme mit einer Mindestbreite von 1200 Pixeln optimiert. Um eine spätere Anpassung für weitere Bildschirmgrößen zu ermöglichen wurde das Twitter Bootstrap Framework eingesetzt.</p>
+
+<h2>
+<a id="problemstellung" class="anchor" href="#problemstellung" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problemstellung</h2>
+
+<p>Das System soll Musikinteressierte oder Forscher dabei unterstützen, Musik einerseits statistisch auszuwerten und andererseits konkrete Suchmuster in mehreren Musikstücken aufzufinden. Aktuelle Softwarelösungen wie Musescore bieten meist keine Komponenten, um diese Aufgaben zu erfüllen.</p>
+
+<h2>
+<a id="projektbeschreibung" class="anchor" href="#projektbeschreibung" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projektbeschreibung</h2>
+
+<p>Das System lässt sich grob in drei Teilbereiche unterteilen, die in den folgenden Abschnitten näher erläutert werden. Zur besseren Übersichtlichkeit werden die Teilbereiche entsprechend dem Workflow des Nutzers aufgeteilt. Im ersten Schritt erfolgt der Upload von Dateien und daraufhin die automatische, statistische Auswertung. Den letzten Schritt stellt die Suche nach Mustern in den hochgeladenen Dateien dar. Auf der Startseite der Anwendung (Abbildung 1) bekommt der Nutzer einen kleinen Überblick über die Funktionen und kann per Klick auf den Button START UPLOADING NOW! mit der Arbeit beginnen.<br>
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/home.png" alt="Startseite">
+Abbildung 1: Startseite (Screenshot)</p>
+
+<h3>
+<a id="upload" class="anchor" href="#upload" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upload</h3>
+
+<p>Um dem Anwender die Möglichkeit der statistischen Analyse von Musikstücken zu bieten, müssen zunächst Dateien im MusicXML-Format hochgeladen werden. Das im XML-Standard realisierte, offene Austauschformat MusicXML wird von vielen Notensatzprogrammen unterstützt und löst das vorangehende Notation Interchange File Format (NIFF)[5] ab. Zudem bieten einige Portale, wie zum Beispiel Musescore6 den kostenlosen Download von Partituren im MusicXML-Format an, wodurch eine Vielzahl von Musikstücken bereits verfügbar ist. Auf der Homepage von Musescore sind die Partituren in verschiedenen Formaten verfügbar und können nach kostenloser Registrierung heruntergeladen werden. Mit Hilfe der ebenfalls kostenlosen Software können die Partituren in andere Formate (mscx, mscz, xml, mid, ogg, wav oder pdf) umgewandelt werden. Abbildung 2 zeigt die Uploadfunktion des Music-XML-Analyzer, nachdem verschiedene Dateien hochgeladen wurden. Mit einem Klick auf ANALYZE werden die Dateien ausgewertet.<br>
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/upload.png" alt="Upload">
+Abbildung 2: Upload (Screenshot)</p>
+
+<h3>
+<a id="statistische-analyse" class="anchor" href="#statistische-analyse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Statistische Analyse</h3>
+
+<p>Die hochgeladenen Dateien werden nach erfolgreichem Upload automatisch analysiert. Dabei werden neben den Noten und Pausen auch die enthaltenen Intervalle, Taktarten und Instrumente gezählt. </p>
+
+<h3>
+<a id="dashboard" class="anchor" href="#dashboard" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dashboard</h3>
+
+<p>Im Dashboard (Abbildung 3) erhält der Nutzer einen Überblick über die wichtigsten Fakten und Statistiken zu den einzelnen Musikstücken oder über den gesamten hochgeladenen Korpus. Dabei werden die Noten- und Intervallverteilung in einem Balkendiagramm, die Distribution der Tonarten, Notenlängen und Taktarten in einem Kreisdiagramm dargestellt. Daneben werden noch einige Fakten zur Anzahl und zum Auftreten der Takte, Noten, Pausen und Instrumente angegeben.<br>
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/dashboard.png" alt="Dashboard">
+Abbildung 3: Dashboard (Screenshot)</p>
+
+<h3>
+<a id="suche-nach-patterns" class="anchor" href="#suche-nach-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Suche nach Patterns</h3>
+
+<p>Vom Dashboard aus gelangt der User durch einen Klick auf den Button SEARCH FOR PATTERNS oder im Header via SEARCH zur Patternsuche. Die verschiedenen Möglichkeiten, die der Benutzer hat, um seine Musikstücke zu durchsuchen, werden im Folgenden kurz erläutert und sind in Abbildung 4 dargestellt. Als ersten Schritt muss zwischen MELODY, SOUND SEQUENCE oder RHYTHM unterschieden werden, wobei MELODY  hier voreingestellt ist. Daraufhin kann der Benutzer entweder per Maus direkt auf den Notenzeilen, oder mit Hilfe der Buttons die gewünschten Noten eingeben. Werden die Buttons zur Noteneingabe verwendet, muss jede Note mit einem Klick auf ADD hinzugefügt werden. Durch Klick auf DELETE wird die zuletzt eingegebene Note wieder gelöscht. Alle Noten werden in der angezeigten Notenzeile dargestellt und können jederzeit abgespielt werden. Wird die Maus zur  Noteneingabe verwendet, so wird standartmäßig eine Viertelnote ohne Vorzeichen an der entsprechenden Stelle eingegeben. Triolen, punktierte Noten, Vorzeichen oder eine andere Notenlänge müssen mit Hilfe der Buttons eingestellt werden. Alle Noten der dritten bis sechsten Oktave mit einer Dauer von einer Ganzen Note bis zur 64tel Note können ausgewählt werden. Auch Noten mit Kreuz- oder B-Vorzeichen können hinzugefügt werden.<br>
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/search.png" alt="Search for Patterns">
+Abbildung 4: Search (Screenshot)</p>
+
+<h3>
+<a id="suchergebnisse" class="anchor" href="#suchergebnisse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Suchergebnisse</h3>
+
+<p>Ist der Benutzer mit seiner Noteneingabe zufrieden, werden durch einen Klick auf SEARCH alle hochgeladenen Musikstücke nach dem erstellten Pattern durchsucht. Abbildung 5 zeigt die Ergebnisseite der Suche. Hier wird im oberen Bereich das gesuchte Pattern noch einmal dargestellt und darunter die Musikstücke, welche das Pattern enthalten, samt jeweiliger Häufigkeit der Treffer.<br>
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/result_list.png" alt="Result list">
+Abbildung 5: Searchresult (Screenshot)
+Klickt der User auf einen Treffer, so wird eine Detailansicht aufgerufen, wie in Abbildung 6 zu erkennen ist. Hier werden neben dem Titel des Stücks die jeweiligen Trefferstellen in einem Carousel dargestellt und farblich hervorgehoben. Mit Hilfe der Pfeile kann zwischen den Treffern hin und her gewechselt werden. Informationen, in welcher Stimme und in welchem Takt das Pattern gefunden wurde, werden ebenfalls dargestellt. Ein Klick auf PLAY spielt einen Auszug, der das Pattern enthält, ab. Der Nutzer hat außerdem die Möglichkeit, alle visualisierten Treffer als PDF-Dokument zu exportieren, was mit einem Klick auf den Button EXPORT AS PDF erreicht werden kann.<br>
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/result.png" alt="Search result detail">
+Abbildung 6: Searchresult Details (Screenshot)</p>
+
+<h2>
+<a id="architektur-und-implementierung" class="anchor" href="#architektur-und-implementierung" aria-hidden="true"><span class="octicon octicon-link"></span></a>Architektur und Implementierung</h2>
+
+<h3>
+<a id="projektablauf" class="anchor" href="#projektablauf" aria-hidden="true"><span class="octicon octicon-link"></span></a>Projektablauf</h3>
+
+<p>Die Projektanforderungen wurden zunächst in Form von User Stories erfasst, welche im digitalen Anhang XX einzusehen sind. Um den Projektablauf zu organisieren, wurde das Issue-System von Github benutzt. Hierbei repräsentierten die Meilensteine jeweils eine User Story. Diesen wurden anschließend kleinere Teilaufgaben, die Issues, zugewiesen. Eine zusätzliche Erweiterung für Google Chrome namens ZenHub7 erlaubte die Anordnung der Issues in Form eines Boards mit verschiedenen Pipelines. Das verwendete Board wurde, angelehnt an das Projektmanagement-Framework Kanban, in „Backlog“, „Nice to have“, „To-Do“, „In Progress“ und „Closed“  unterteilt.<br>
+Zu Beginn des Projekts konnten die Zuständigkeiten relativ klar aufgeteilt werden. Während Lukas Lamm für die Implementierung des verwendeten Frameworks Laravel und die daran gebundene Datenbankarchitektur zuständig war, kümmerte sich Tobias Semmelmann um die Frontend-Seite des Systems. David Lechler wurde mit der Traversierung, Analyse und Entwicklung der Suchalgorithmen für die MusicXML-Dateien betraut. Matthias Schneider kümmerte sich um die Eingabe der Suchpatterns. In späteren Projektphasen verwischten die Grenzen der Zuständigkeiten immer häufiger. Dadurch griff Lukas Lamm auch in die Darstellung der Suchergebnisse in Form von Takten und Noten unterstützend ein und kümmerte sich um die beiden Export-Funktionen. David Lechler übernahm schließlich die Wiedergabe der Ergebnisse mit Midi.js.</p>
+
+<h3>
+<a id="frameworks-und-bibliotheken" class="anchor" href="#frameworks-und-bibliotheken" aria-hidden="true"><span class="octicon octicon-link"></span></a>Frameworks und Bibliotheken</h3>
+
+<p>Als Grundlage der Anwendung wurde das PHP Framework Laravel8 in Version 4.2 verwendet, welches auf dem Model-View-Controller-Pattern basiert. Dieses bietet Möglichkeiten, das Routing zwischen den einzelnen Controllern und Views zu handhaben, sowie die Gestaltung der Views durch Templates. Zudem konnte mit den in Laravel integrierten Models das Datenbankschema in SQL und die einfache Abfrage realisiert werden.<br>
+Zur Realisation interaktiver Funktionen und Vereinfachung von Javascript-Code wurde das Framework jQuery9 verwendet. Zudem wird jQuery vom eingesetzten CSS-Framework Twitter Bootstrap10 und weiteren hier genannten Bibliotheken benötigt. Um einen modernen Look im Material Design zu erzielen, wurde zudem das Theme Material Design for Bootstrap11 eingebunden. Die Darstellung der Graphen erfolgt mit der Bibliothek D3.js12, die Ausgabe der Noten hingegen wird über die API Vexflow13 abgewickelt. Die Visualisierung von Statusnachrichten wird mit dem Plugin Typed.js14 animiert. Die Darstellung und Abwicklung von hochgeladenen Dateien erfolgt durch die Bibliothek Dropzone.js15 im Zusammenspiel mit dem Framework Laravel. Die Audioausgabe von eingegebenen Pattern zur Suche oder von Ergebnisausschnitten wird mit dem Framework MIDI.js16 abgewickelt, während die Exportfunktion der Ergebnisse als PDF mit dem Plugin jsPDF17 erfolgt. </p>
+
+<h3>
+<a id="systemarchitektur" class="anchor" href="#systemarchitektur" aria-hidden="true"><span class="octicon octicon-link"></span></a>Systemarchitektur</h3>
+
+<p>Abbildung 7 zeigt den Aufbau des Laravel-Frameworks im Zusammenspiel mit den jeweiligen Javascript-Komponenten. Die Laravel-Komponente kümmert sich dabei um die serverseitige Logik der Anwendung, wie die Auslieferung von HTML-Seiten über eine integrierte Templating-Engine und die Kommunikation mit der Datenbank zur persistenten Speicherung. In Abbildung 7 wird auch der Aufbau nach dem Model-View-Controller-Pattern deutlich, demzufolge die grafische Repräsentation (View) von der Logik (Controller) und der Datenschicht (Model) getrennt ist. Die Javascript-Komponente der Anwendung ist ebenso nach dem MVC-Pattern aufgebaut und kümmert sich hauptsächlich um die Interaktivität der Anwendung. Beispielsweise werden die Suchmuster in Javascript vorerst clientseitig zwischengespeichert und erst beim Absenden der Suchanfrage an der Server gleitet. Weitere Aufgabengebiete sind die grafische Aufbereitung der Analysedaten und Partiturausschnitten, sowie die Wiedergabe einzelner Sequenzen.
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/system_architektur.png" alt="Systemarchitektur">
+Abbildung 7: Systemarchitektur</p>
+
+<p>Um dem Nutzer die Möglichkeit zu bieten seine Arbeit ohne zusätzliche Speicherung immer aktuell zu halten wurde ein einfaches Datenbankschema entwickelt, welches in Abbildung 8 als ERM-Model aufgeführt ist. Den Nutzern wird dabei beim ersten betreten der Anwendung eine ID zugewiesen, die gleichzeitig als Cookie beim Nutzer im Browser hinterlegt wird. Auf den Server geladene Dateien werden entsprechend mit dem Nutzer referenziert, ebenso wie einem Upload-Objekt nach erfolgreicher Analyse dessen Ergebnisse zugeordnet werden. Bei der Konzeption wurde bewusst auf eine aufwendige Nutzerverwaltung mit Registrierung und Anmeldung verzichtet, da dies den schnellen Einstieg oft erheblich behindert.
+<img src="https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/database_schema.png" alt="Datenbankschema">
+Abbildung 8: Datenbankschema</p>
+
+<h2>
+<a id="ausblick" class="anchor" href="#ausblick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ausblick</h2>
+
+<p>Eine Funktion, die nicht mehr implementiert wurde ist das Abspielen einzelner, hochgeladener Musikstücke. Der Grund hierfür ist, dass bei den Tests gegen Ende des Projektes noch einige Bugs gefunden wurden und die verbleibende Zeit damit verbracht wurde, diese zu beheben.<br>
+Eine Erweiterungsmöglichkeit des Music-XML-Analyzer wäre, die Beschränkung auf das Format Music-XML aufzuheben, um so andere Dateitypen hochladen und analysieren zu können. </p>
+
+<h2>
+<a id="Über-das-projekt" class="anchor" href="#%C3%9Cber-das-projekt" aria-hidden="true"><span class="octicon octicon-link"></span></a>Über das Projekt</h2>
+
+<p>Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von Dr. Manuel Burghardt im Wintersemester 2014/2015 an der Universität Regensburg durchgeführt.  </p>
+
+<p><strong>Kontakt:</strong></p>
+
+<ul>
+<li>Lukas Lamm (<a href="mailto:freak.im.kaefig@gmx.net">freak.im.kaefig@gmx.net</a>, <a href="http://lukaslamm.de">http://lukaslamm.de</a>)</li>
+<li>David Lechler (<a href="mailto:davidlechler@outlook.com">davidlechler@outlook.com</a>)</li>
+<li>Tobias Semmelmann (<a href="mailto:semmler1988@gmail.com">semmler1988@gmail.com</a>)</li>
+<li>Matthias Schneider (<a href="mailto:matthias.schneider89@gmail.com">matthias.schneider89@gmail.com</a>)</li>
+</ul>
+
+<h2>
+<a id="links" class="anchor" href="#links" aria-hidden="true"><span class="octicon octicon-link"></span></a>Links</h2>
+
+<p>[1] <a href="http://www.klemm-music.de/makemusic/finale/">http://www.klemm-music.de/makemusic/finale/</a> 27.03.2015<br>
+[2] <a href="https://musescore.org/de">https://musescore.org/de</a> 27.03.2015<br>
+[3] <a href="http://my.vexflow.com/">http://my.vexflow.com/</a> 27.03.2015<br>
+[4] <a href="https://www.noteflight.com/">https://www.noteflight.com/</a> 27.03.2015<br>
+[5] <a href="https://de.wikipedia.org/wiki/MusicXML">https://de.wikipedia.org/wiki/MusicXML</a> 27.03.2015<br>
+[6] <a href="https://musescore.org/de">https://musescore.org/de</a> 27.03.2015<br>
+[7] <a href="https://www.zenhub.io/">https://www.zenhub.io/</a> 27.03.2015<br>
+[8] <a href="http://laravel.com/">http://laravel.com/</a> 27.03.2015<br>
+[9] <a href="https://jquery.com/">https://jquery.com/</a> 27.03.2015<br>
+[10] <a href="http://getbootstrap.com/">http://getbootstrap.com/</a> 27.03.2015<br>
+[11] <a href="https://fezvrasta.github.io/bootstrap-material-design/">https://fezvrasta.github.io/bootstrap-material-design/</a> 27.03.2015<br>
+[12] <a href="http://d3js.org/">http://d3js.org/</a> 27.03.2015<br>
+[13] <a href="http://www.vexflow.com/">http://www.vexflow.com/</a> 27.03.2015<br>
+[14] <a href="http://www.mattboldt.com/demos/typed-js/">http://www.mattboldt.com/demos/typed-js/</a> 27.03.2015<br>
+[15] <a href="http://www.dropzonejs.com/">http://www.dropzonejs.com/</a> 27.03.2015<br>
+[16] <a href="http://mudcu.be/midi-js/">http://mudcu.be/midi-js/</a> 27.03.2015<br>
+[17] <a href="https://parall.ax/products/jspdf">https://parall.ax/products/jspdf</a> 27.03.2015  </p>
+
+<h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p><a href="http://freakimkaefig.github.io/Music-XML-Analyzer/docs">phpDoc</a></p>
+
+<h2>
+<a id="copyright-and-license" class="anchor" href="#copyright-and-license" aria-hidden="true"><span class="octicon octicon-link"></span></a>Copyright and license</h2>
+
+<p>Code and documentation copyright 2015 Lukas Lamm, David Lechler, Matthias Schneider, Tobias Semmelmann. Code released under the MIT license. See LICENSE.md</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Music XML Analyzer maintained by <a href="https://github.com/freakimkaefig">freakimkaefig</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
 </html>

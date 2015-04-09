@@ -43,15 +43,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-small, sub, sup {
-  font-size: .83em
-}
-sub {
-  vertical-align: sub
-}
-sup {
-  vertical-align: super
-}
 
 /*******************************************************************************
 Theme Styles
@@ -145,8 +136,7 @@ strong {
 img {
   position: relative;
   margin: 0 auto;
-  max-width: 100%;
-  height: auto;
+  max-width: 739px;
   padding: 5px;
   margin: 10px 0 10px 0;
   border: 1px solid #ebebeb;
@@ -156,12 +146,6 @@ img {
   -moz-box-shadow: 0 0 5px #ebebeb;
   -o-box-shadow: 0 0 5px #ebebeb;
   -ms-box-shadow: 0 0 5px #ebebeb;
-}
-p > img + small {
-  text-align: center;
-  display: block;
-  font-weight: bold;
-  margin: 5px 0;
 }
 
 p img {
@@ -282,7 +266,7 @@ Full-Width Styles
 
 .inner {
   position: relative;
-  max-width: 960px;
+  max-width: 640px;
   padding: 20px 10px;
   margin: 0 auto;
 }
