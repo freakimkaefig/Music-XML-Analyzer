@@ -111,7 +111,7 @@ Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von 
 [17] https://parall.ax/products/jspdf 27.03.2015  
 
 ## Documentation
-[phpDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs/php) [jsDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs/js)
+[phpDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs/php) [jsDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs/js/App.js.html)
 
 ## Copyright and license
 
