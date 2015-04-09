@@ -13,6 +13,8 @@ MusicXMLAnalyzer.ResultController = function(){
 
 	/**
 	 * Init method of ResultController
+	 * @function
+     * @public
 	 */
 	init = function(){
 		model = MusicXMLAnalyzer.ResultModel();
@@ -56,12 +58,12 @@ MusicXMLAnalyzer.ResultController = function(){
 
 	/**
 	 * Method to add results to model
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event
-	 *
-	 * @param {int}      numItems     number of items
-	 *
-	 * @param {object}    result    contains results
+	 * @param {event}    event 		the triggered event
+	 * @param {int}      numItems   number of items
+	 * @param {object}   result     contains results
 	 */
 	onAddResultItem = function(event, numItems, result) {
 		model.setNumItems(numItems);
@@ -69,25 +71,36 @@ MusicXMLAnalyzer.ResultController = function(){
 	},
 
 	/**
-	* Method to pass result to view
-	*
-	* @param {event}	event
-	*
-	* @param {int}    index
-	*
-	* @param {object}	data
-	*/
+	 * Method to pass result to view
+	 * @function
+     * @private
+	 *
+	 * @param {event}	event 	the triggered event
+	 * @param {int}    	index 	the result index
+	 * @param {object}	data 	the result data
+	 */
 	onResultExtractReceived = function(event, index, data) {
 		view.renderResultExtract(index, data);
 	},
 
+	/**
+	 * Callback when model has loaded results
+	 * @function
+     * @private
+	 *
+	 * @param 	{Event} 	event 	The triggered event
+	 */
 	onModelReady = function(event) {
 		view.setModelReady();
 	},
 
 	/**
-	* Function to get note durations
-	*/
+	 * Function to get note durations
+	 * @function
+     * @private
+	 *
+	 * @param 	{string} 	type 	The note type
+	 */
 	getDuration = function(type){
 		var duration;
 
@@ -111,23 +124,25 @@ MusicXMLAnalyzer.ResultController = function(){
 	},
 
 	/**
-	* Function to get MIDI values
-	*
-	* @param {int}    step
-	*
-	* @param {int}    octave
-	*
-	* @param {int}    alter
-	*
-	* @return {int}    step, octave, alter
-	*/
+	 * Function to get MIDI values
+	 * @function
+     * @private
+	 *
+	 * @param {int}    step 	the notes step
+	 * @param {int}    octave 	the notes octave
+	 * @param {int}    alter 	the notes accidential (as alter)
+	 *
+	 * @return {int}    the MIDI value
+	 */
 	getMidiValue = function(step, octave, alter) {
 		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));
 	},
 
 	/**
-	* Function to play the found Pattern
-	*/
+	 * Function to play the found Pattern
+	 * @function
+     * @private
+	 */
 	playResult = function(){
 		var notesToBePlayed = [];
 

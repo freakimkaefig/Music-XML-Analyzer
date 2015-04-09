@@ -15,6 +15,8 @@ MusicXMLAnalyzer.DashboardModel = function(){
 
 	/**
 	 * Init function
+	 * @function
+     * @public
 	 */
 	init = function(){
 		results = [];
@@ -25,8 +27,10 @@ MusicXMLAnalyzer.DashboardModel = function(){
 
 	/**
 	 * Adds log message
+	 * @function
+     * @private
 	 *
-	 * @param {string}    msg    log message
+	 * @param {string}    log message
 	 *
 	 */
 	addLogMessage = function(msg) {
@@ -35,10 +39,12 @@ MusicXMLAnalyzer.DashboardModel = function(){
 
 	/**
 	 * Returns results
+	 * @function
+     * @public
 	 *
-	 * @param {string}    id    result id
+	 * @param {int} 	result id
 	 *
-	 * @return {Result}    result    a search result
+	 * @return {array} the search results
 	 */
 	getResults = function(id) {
 		if (id === undefined) {
@@ -54,6 +60,8 @@ MusicXMLAnalyzer.DashboardModel = function(){
 
 	/**
 	 * Method loads ids of all uploads
+	 * @function
+     * @public
 	 *
 	 */
 	loadUploadIds = function() {
@@ -64,7 +72,13 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	},
 
 	/**
-	 * Gets called when data has been uploaded
+	 * Ajax callback for {@link loadUploadIds}
+	 * @function
+     * @private
+	 *
+	 * @param {json}    the returned data from ajax call
+	 * @param {string}  status message
+	 * @param {jqXHR}   the jqXHR object
 	 *
 	 */
 	_onLoadResults = function(data, textStatus, jqXHR) {
@@ -77,6 +91,10 @@ MusicXMLAnalyzer.DashboardModel = function(){
 
 	/**
 	 * Method loads ids of all results
+	 * @function
+     * @private
+	 *
+	 * @param 	{json} 	the json data from ajax call
 	 *
 	 */
 	loadResultIds = function() {
@@ -87,13 +105,13 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	},
 
 	/**
-	 * Gets called when result ids have been loaded
+	 * Ajax callback for {@link loadResultIds}
+	 * @function
+     * @private
 	 *
-	 * @param {Data}    data    a file
-	 *
-	 * @param {string}    textStatus    status message
-	 *
-	 * @param {jqXHR}    jqXHR    jqXHR
+	 * @param {json}    the returned data from ajax call
+	 * @param {string}  status message
+	 * @param {jqXHR}   the jqXHR object
 	 *
 	 */
 	_onLoadResultIds = function(data, textStatus, jqXHR) {
@@ -111,8 +129,10 @@ MusicXMLAnalyzer.DashboardModel = function(){
 
 	/**
 	 * Method laads results by given id
+	 * @function
+     * @private
 	 *
-	 * @param {string}    id    result id
+	 * @param {int}    the result id
 	 *
 	 */
 	loadResultById = function(id) {
@@ -125,15 +145,14 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	},
 
 	/**
-	 * Gets called when result by id have been loaded
+	 * Ajax callback for {@link loadResultById}
+	 * @function
+     * @private
 	 *
-	 * @param {string}    id    id of result
-	 *
-	 * @param {Data}    textStatus    a file
-	 *
-	 * @param {string}    textStatus    status message
-	 *
-	 * @param {jqXHR}    jqXHR    jqXHR
+	 * @param {int} 	id of result
+	 * @param {json}    the returned json data from ajax call
+	 * @param {string}  status message
+	 * @param {jqXHR}   the jqXHR object
 	 *
 	 */
 	_onLoadResultById = function(id, data, textStatus, jqXHR) {
@@ -162,7 +181,11 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	},
 
 	/**
-	 * Method merges all uploaded files
+	 * Method merges all retrieved results for overall statistics
+	 * @function
+     * @private
+	 *
+	 * @param {array} 	the array containing the results for every single upload
 	 *
 	 */
 	_mergeResults = function(resultsArr) {

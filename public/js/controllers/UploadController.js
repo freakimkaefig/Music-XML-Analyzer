@@ -6,6 +6,8 @@ MusicXMLAnalyzer.UploadController = function() {
 
 	/**
 	 * Init function of UploadController
+	 * @function
+     * @public
 	 */
 	init = function() {
 		view = MusicXMLAnalyzer.UploadView();
@@ -14,6 +16,13 @@ MusicXMLAnalyzer.UploadController = function() {
 		$(view).on('uploadSubmit', onUploadSubmit);
 	},
 
+	/**
+	 * Callback function for upload submit button
+	 * @function
+     * @private
+	 *
+	 * @param 	{Event} 	event 	The triggered event
+	 */
 	onUploadSubmit = function(event) {
 		window.location.href = '/upload-complete';
 	};

@@ -48,6 +48,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Init function
+	 * @function
+     * @public
 	 */
 	init = function(){
 		$logMessages = $('#dashboardMessages');
@@ -63,6 +65,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to initiate log messages
+	 * @function
+     * @private
 	 */
 	initLogMessages = function() {
 		dashboardMessageCounter = 0;
@@ -75,6 +79,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to animate the log message box
+	 * @function
+     * @public
 	 */
 	disposeLogMessages = function() {
 		window.setTimeout(function() {
@@ -91,6 +97,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to add a log message
+	 * @function
+     * @public
 	 *
 	 * @param {string}    msg    message to be added
 	 */
@@ -111,6 +119,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to initate the file selector on dashboard
+	 * @function
+     * @public
 	 *
 	 * @param {array}    data    array containing information to user uploaded files
 	 */
@@ -141,8 +151,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method description
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    nothing.
+	 * @param {Event}    event    The triggered event
 	 */
 	onFileSelectorChange = function(event) {
 		$(that).trigger('onFileSelectorChange', [ $fileSelector.find('select').val() ]);
@@ -150,6 +162,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to append number of notes to html-view
+	 * @function
+     * @public
 	 *
 	 * @param {int}    results    number of total notes
 	 */
@@ -163,6 +177,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to append number of rests to html-view
+	 * @function
+     * @public
 	 *
 	 * @param {int}    results    number of total rests
 	 */
@@ -172,6 +188,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to append number of measures to html-view
+	 * @function
+     * @public
 	 *
 	 * @param {int}    results    number of measures notes
 	 */
@@ -182,6 +200,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to append most frequent to html-view
+	 * @function
+     * @public
 	 *
 	 * @param {string}    results    most frequent note
 	 */
@@ -191,6 +211,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to append instruments to html-view
+	 * @function
+     * @public
 	 *
 	 * @param {array}    results    array containing all instruments
 	 */
@@ -202,6 +224,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to create barchart representing the note distribution
+	 * @function
+     * @public
 	 *
 	 * @param {object}    data    objet containing information about the distribution of notes
 	 */
@@ -291,6 +315,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to create barchart representing the interval distribution
+	 * @function
+     * @public
 	 *
 	 * @param {object}    data    objet containing information about the distribution of intervals
 	 */
@@ -382,6 +408,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to create piechart representing the key distribution
+	 * @function
+     * @public
 	 *
 	 * @param {object}    data    objet containing information about the distribution of keys
 	 */
@@ -418,6 +446,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to create piechart representing the note-length distribution
+	 * @function
+     * @public
 	 *
 	 * @param {object}    data    objet containing information about the distribution of note-lengths
 	 */
@@ -454,6 +484,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	/**
 	 * Method to create piechart representing the meter distribution
+	 * @function
+     * @public
 	 *
 	 * @param {object}    data    objet containing information about the distribution of meters
 	 */

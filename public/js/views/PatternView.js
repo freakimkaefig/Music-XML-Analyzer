@@ -28,6 +28,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Init function
+	 * @function
+     * @public
 	 */
 	init = function() {
 		patternController = MusicXMLAnalyzer.PatternController();
@@ -56,8 +58,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles the mouseclick event on note- or break button to disable or enable octaves according to mode
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 */
 	onNoteOrBreakClick = function(event){
 		if(patternController.getCurrentMode() === 2){
@@ -71,6 +75,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles the mouseclick event on break button
+	 * @function
+     * @private
 	 */
 	onBreakButtonClick = function(){
 		patternController.changeAccidential("none");
@@ -80,8 +86,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles the mouseclick event on mode button
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 */
 	onModeButtonClick = function(event) {
 		var modeButtonId = event.target.id;
@@ -91,8 +99,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles the mouseclick event on note button
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 */
 	onNoteButtonClick = function(event) {
 		patternController.changeNote(event.target.id);
@@ -101,8 +111,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles the mouseclick event on note or break in rhythm mode to highlight user selection and change the note accordingly
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 */
 	onRhythmNoteOrBreakClick = function(event){
 		if(event.target.id === 'rhythmBreak'){
@@ -122,8 +134,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles the mouseclick event on accidentals
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 */
 	onAccidentialButtonClick = function(event) {
 		var acc = event.target.id;
@@ -133,8 +147,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles the mouseclick event on durations
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 */
 	onDurationButtonClick = function(event) {
 		patternController.changeDuration(event.target.id);
@@ -142,8 +158,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles the mouseclick event on special rhythm
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 */
 	onSpecialRythButtonClick = function(event) {
 		//get the and of the specRyth String after the -
@@ -166,8 +184,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles the mouseclick event on ocatave button
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 */
 	onOctaveButtonClick = function(event) {
 		patternController.changeOctave(event.target.id);
@@ -175,8 +195,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles the mouseclick event on add button
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 */
 	onAddButtonClick = function() {
 		patternController.addNote();
@@ -184,8 +206,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method sets the pattern values
+	 * @function
+     * @public
 	 *
-	 * @param {object}    pattern    pattern values
+	 * @param {object}    pattern    the pattern values
 	 */
 	setPatternValue = function(pattern) {
 		$patternValue.val(pattern);
@@ -193,8 +217,10 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method sets the active note
+	 * @function
+     * @public
 	 *
-	 * @param {string}    noteName    name of the note
+	 * @param {string}    noteName    the name of the note
 	 */
 	setNoteNameActive = function(noteName) {
 		if(patternController.getCurrentMode() != 1){
@@ -206,6 +232,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method sets the active octave
+	 * @function
+     * @public
 	 *
 	 * @param {string}    octave    name of the octave
 	 */
@@ -216,6 +244,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method sets the active accidental
+	 * @function
+     * @public
 	 *
 	 * @param {string}    acc    name of the accidental
 	 */
@@ -226,6 +256,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method sets the active duration
+	 * @function
+     * @public
 	 *
 	 * @param {string}    duration    name of the duration
 	 */
@@ -236,6 +268,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method sets the active special rhythm element
+	 * @function
+     * @public
 	 *
 	 * @param {string}    specRyth    name of the special rhythm element
 	 */
@@ -246,6 +280,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method changes layout according to melody mode
+	 * @function
+     * @public
 	 */
 	setToMelodyMode = function() {
 		$noteButtonClass.removeClass("disabled");
@@ -263,6 +299,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method changes layout according to sound sequence mode
+	 * @function
+     * @public
 	 */
 	setToSoundSequenceMode = function() {
 		$durationButtonClass.addClass('disabled');
@@ -284,6 +322,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method changes layout according to rhythm mode
+	 * @function
+     * @public
 	 */
 	setToRhythmMode = function() {
 		$noteButtonClass.addClass('disabled');
@@ -306,6 +346,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method enters triplet creation mode
+	 * @function
+     * @public
 	 */
 	startTripletEnterMode = function() {
 		//disable search and remove btn
@@ -319,6 +361,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method ends triplet creation mode
+	 * @function
+     * @public
 	 */
 	endTripletEnterMode = function() {
 		//enable search and remove btn
@@ -332,6 +376,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles mouse click on remove button
+	 * @function
+     * @private
 	 */
 	onRemoveButtonClick = function() {
 		patternController.removeLastNote();
@@ -339,6 +385,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method handles mouse click on search button, including a log message box to overcome waiting time
+	 * @function
+     * @private
 	 */
 	onSubmitButtonClick = function() {
 		initLogMessages();
@@ -363,6 +411,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method to initiate log messages
+	 * @function
+     * @private
 	 */
 	initLogMessages = function() {
 		resultMessageCounter = 0;
@@ -374,6 +424,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method to animate the log message box
+	 * @function
+     * @private
 	 */
 	disposeLogMessages = function() {
 		window.setTimeout(function() {
@@ -390,6 +442,8 @@ MusicXMLAnalyzer.PatternView = function(){
 
 	/**
 	 * Method to add a log message
+	 * @function
+     * @private
 	 *
 	 * @param {string}    msg    message to be added
 	 */

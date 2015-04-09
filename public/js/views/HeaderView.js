@@ -8,6 +8,8 @@ MusicXMLAnalyzer.HeaderView = function(){
 
 	/**
 	 * Init function
+	 * @function
+     * @public
 	 */
 	init = function(){
 		deleteMeLink = $('#deleteMeLink');
@@ -16,8 +18,10 @@ MusicXMLAnalyzer.HeaderView = function(){
 
 	/**
 	 * Resets the page and removes current work
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 *
 	 */
 	onDeleteMeLinkClick = function(event) {

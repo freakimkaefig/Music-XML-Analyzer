@@ -15,6 +15,8 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	 /**
 	 * Init function of UploadView
+	 * @function
+     * @public
 	 *
 	 */
 	init = function(){
@@ -54,6 +56,8 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	/**
 	 * This method sets the upload submit button active or disabled
+	 * @function
+     * @private
 	 *
 	 * @param {boolean}    value    boolean value for active or disabled
 	 *
@@ -70,6 +74,8 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	/**
 	 * Disables all input buttons
+	 * @function
+     * @private
 	 *
 	 */
 	disableAllInputs = function() {
@@ -79,8 +85,10 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	/**
 	 * Gets called when upload hast been started
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    click event
+	 * @param {event}    event    the triggered click event
 	 *
 	 */
 	onUploadSubmit = function(event) {
@@ -96,6 +104,8 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	/**
 	 * Gets called when uploading data is done
+	 * @function
+     * @private
 	 *
 	 */
 	onUploadClose = function() {
@@ -104,12 +114,12 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	/**
 	 * Gets called when an error occurs
+	 * @function
+     * @private
 	 *
-	 * @param {file}    file    the file to upload
-	 *
-	 * @param {string}    errorMessage    error message
-	 *
-	 * @param {object}    xhrObject    an xhr object
+	 * @param {file}    file    		the file to upload
+	 * @param {string}  errorMessage    error message
+	 * @param {object}  xhrObject    	the xhr object
 	 */
 	onError = function(file, errorMessage, xhrObject) {
 		addLogMessage('ERROR: ' + file.name + ' - ' + errorMessage);
@@ -117,10 +127,11 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	/**
 	 * Gets called when uploading data has been successful
+	 * @function
+     * @private
 	 *
-	 * @param {file}    file    the file to upload
-	 *
-	 * @param {string}    respone    response message
+	 * @param {file}    file    	the file to upload
+	 * @param {string}  respone     the uplaod response message
 	 *
 	 */
 	onSuccess = function(file, response) {
@@ -141,6 +152,8 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	/**
 	 * Gets called when upload queue is complete
+	 * @function
+     * @private
 	 *
 	 */
 	onQueueComplete = function() {
@@ -151,6 +164,8 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	/**
 	 * Inits the log messages
+	 * @function
+     * @private
 	 *
 	 */
 	initLogMessages = function() {
@@ -163,6 +178,8 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	/**
 	 * Disposes log messages
+	 * @function
+     * @public
 	 *
 	 */
 	disposeLogMessages = function() {
@@ -180,6 +197,8 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	/**
 	 * Adds a log message
+	 * @function
+     * @public
 	 *
 	 * @param {string}    msg    log message
 	 *

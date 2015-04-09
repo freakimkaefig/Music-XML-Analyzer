@@ -20,6 +20,8 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Init function
+	 * @function
+     * @public
 	 */
 	init = function(){
 		if ($('#patternCanvas').length) {
@@ -46,6 +48,8 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method preapares model export
+	 * @function
+     * @public
 	 */
 	setModelReady = function() {
 		finishedLoading = true;
@@ -54,6 +58,8 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method inits result items
+	 * @function
+     * @private
 	 */
 	initResultItems = function() {
 		var numItems = $carousel.find('.item').length;
@@ -65,9 +71,10 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method renders result extract
+	 * @function
+     * @public
 	 *
 	 * @param {int}    		index   counter
-	 *
 	 * @param {object}      data    contains information about extract position
 	 */
 	renderResultExtract = function(index, data) {
@@ -98,6 +105,8 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method prepares pdf export
+	 * @function
+     * @private
 	 */
 	prepareExport = function() {
 		$('.item').each(function(index) {
@@ -115,13 +124,12 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method creates images from carousel data
+	 * @function
+     * @private
 	 *
-	 * @param {URI}    		datas   		crousel image uri
-	 *
+	 * @param {URI}    		datas   		carousel image uri
 	 * @param {float}       wantedWidth    	width of the image
-	 *
 	 * @param {float}       wantedHeight    height of the image
-	 *
 	 * @param {int}       	index    		counter
 	 */
 	resizedataURL = function(datas, wantedWidth, wantedHeight, index) {
@@ -153,9 +161,10 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method adds image to dom
+	 * @function
+     * @private
 	 *
 	 * @param {int}    		index   	counter
-	 *
 	 * @param {string}      dataURI    	uri to image data
 	 */
     addImageToDOM = function(index, dataURI) {
@@ -164,6 +173,8 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method generates pdf export
+	 * @function
+     * @private
 	 */
 	generateExportPdf = function() {
 		var doc = new jsPDF();
@@ -218,6 +229,8 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method renders pattern canvas above result carousel
+	 * @function
+     * @private
 	 *
 	 * @param {object}    	pattern   user created pattern
 	 */
@@ -234,13 +247,12 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method renders result extract
+	 * @function
+     * @private
 	 *
 	 * @param {array}    		measures    array containing the measures of result extract
-	 *
 	 * @param {object}     		canvas      the canvas proportions
-	 *
 	 * @param {canvas}     		context     the canvas context
-	 *
 	 * @param {object}     		pattern     the user pattern
 	 */
 	renderNotes = function(measures, canvas, renderer, context, stave, pattern) {
@@ -364,9 +376,10 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method generates vexflow notes
+	 * @function
+     * @private
 	 *
 	 * @param {object}     		pattern     the user pattern
-	 *
 	 * @param {object}     		result      search result
 	 */
 	generateVexflowNotes = function(pattern, result) {
@@ -584,15 +597,17 @@ MusicXMLAnalyzer.ResultView = function(){
 	},
 
 	/**
-	 * Method checks next note to render it and give it e.g. a certain color
+	 * Method checks if the following note belongs to current chord
+	 * Also handles highlighting of chords in results
+	 * @function
+     * @private
 	 *
-	 * @param {Array<Note>}    		pattern    array containing notes
+	 * @param {object}    		pattern    array containing notes
+	 * @param {Vex.Flow.Note}   note       the current vexflow note
+	 * @param {int}     		i  		   counter of the current measure
+	 * @param {int}     		j     	   counter of the current note
 	 *
-	 * @param {Note}     		note      a note object
-	 *
-	 * @param {int}     		i     value to get a certain value from array
-	 *
-	 * @param {int}     		j     value to get a certain value from array
+	 * @return {Vex.Flow.Note} 	Returns a vexflow compatible note object
 	 */
 	checkNextNotes = function(pattern, note, i, j) {
 		j++;
@@ -623,11 +638,13 @@ MusicXMLAnalyzer.ResultView = function(){
 
 
 	/**
-	 * Method converts duration from string to certain number values
+	 * Method converts duration from string to number values as 1/64
+	 * @function
+     * @private
 	 *
-	 * @param {string}    		duration    string of note duration
+	 * @param {string}    	duration    string of note duration
 	 *
-	 * @return {number}    duration value as number
+	 * @return {number}     duration value as number
 	 *
 	 */
 	getDurationIn64th = function(duration) {
@@ -653,10 +670,11 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method returns the note duration in vexflow style
+	 * @function
+     * @private
 	 *
 	 * @param {string}    		duration    duration of note
-	 *
-	 * @param {number}     		type      	type of note
+	 * @param {number}     		type      	type of note (0 = note, 1 = rest, 2 = dotted note)
 	 *
 	 * @return {string}         duration for vexflow
 	 */
@@ -723,14 +741,14 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Method returns key description for vexflow
+	 * @function
+     * @private
 	 *
-	 * @param {string}    step    note name
-	 *
+	 * @param {string}    step    	note name
 	 * @param {string}    octave    octave number
+	 * @param {string}    alter     accidential of the note
 	 *
-	 * @param {string}    alter    accidential of the note
-	 *
-	 * @return {string}    key    key description for vexflow
+	 * @return {string}   key description for vexflow
 	 */
 	getVexflowKey = function(step, octave, alter) {
 		key = step.toLowerCase();
@@ -753,8 +771,10 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Gets called when a list item has been clicked
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    note name
+	 * @param {Event}    event    the triggered click event
 	 *
 	 */
 	onListItemClick = function(event) {
@@ -780,6 +800,8 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Inits the log messages
+	 * @function
+     * @private
 	 *
 	 */
 	initLogMessages = function() {
@@ -792,6 +814,8 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Disposes log messages
+	 * @function
+     * @private
 	 *
 	 */
 	disposeLogMessages = function() {
@@ -809,6 +833,8 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	/**
 	 * Adds a log message
+	 * @function
+     * @private
 	 *
 	 * @param {string}    msg    log message
 	 *

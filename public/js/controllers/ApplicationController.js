@@ -10,6 +10,8 @@ MusicXMLAnalyzer.ApplicationController = function() {
 
 	/**
 	 * Init function of ApplicationController
+	 * @function
+     * @public
 	 */
 	init = function() {
 		headerController = MusicXMLAnalyzer.HeaderController();
@@ -31,14 +33,9 @@ MusicXMLAnalyzer.ApplicationController = function() {
 			resultController = MusicXMLAnalyzer.ResultController();
 			resultController.init();
 		}
-	},
-
-	dispose = function() {
-		that = {};
 	};
 
 	that.init = init;
-	that.dispose = dispose;
 
 	return that;
 };

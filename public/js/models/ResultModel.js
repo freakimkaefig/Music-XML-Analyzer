@@ -12,6 +12,8 @@ MusicXMLAnalyzer.ResultModel = function() {
 
 	/**
 	 * this is the init mehtod of result model
+	 * @function
+     * @public
 	 *
 	 */
 	init = function() {
@@ -24,8 +26,10 @@ MusicXMLAnalyzer.ResultModel = function() {
 
 	/**
 	 * Sets number of items
+	 * @function
+     * @public
 	 *
-	 * @param {number}    num    number of items
+	 * @param {number}    number of items
 	 *
 	 */
 	setNumItems = function(num) {
@@ -34,8 +38,10 @@ MusicXMLAnalyzer.ResultModel = function() {
 
 	/**
 	 * Adds a result item to resultItems array
+	 * @function
+     * @public
 	 *
-	 * @param {Result}    result    result item
+	 * @param {Result}    result item
 	 *
 	 */
 	addResultItem = function(result) {
@@ -48,6 +54,8 @@ MusicXMLAnalyzer.ResultModel = function() {
 
 	/**
 	 * This method loads extracts of the result
+	 * @function
+     * @private
 	 *
 	 */
 	loadResultExtracts = function() {
@@ -64,6 +72,8 @@ MusicXMLAnalyzer.ResultModel = function() {
 
 	/**
 	 * This method gets called when the result extracts have been loaded successfully
+	 * @function
+     * @private
 	 *
 	 */
 	_onLoadResultExtract = function(index, data, textStatus, jqXHR) {

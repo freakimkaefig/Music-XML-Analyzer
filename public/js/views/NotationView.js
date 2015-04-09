@@ -9,8 +9,8 @@ MusicXMLAnalyzer.NotationView = function(){
 	renderer = null,
 	stave = null,
 
-	hoveredNote = null;
-	hoveredOctave = null;
+	hoveredNote = null,
+	hoveredOctave = null,
 
 	paddingTopStaves = 0,
 	spaceBetweenLines = 0,
@@ -21,6 +21,8 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Init function
+	 * @function
+     * @public
 	 */
 	init = function() {
 		patternController = MusicXMLAnalyzer.PatternController();
@@ -33,6 +35,8 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * This method inits canvas and context and sets canvas top and left to variable
+	 * @function
+     * @private
 	 */
 	initCanvas = function() {
 		canvas = document.getElementById('myCanvas');
@@ -48,10 +52,12 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Method clears canvas, creates new stave and adds a new clef on mode change
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    not needed
+	 * @param {event}    event    the triggered event
 	 *
-	 * @param {int}      mode     not needed
+	 * @param {int}      mode     the selected mode
 	 */
 	onChangeMode = function(event, mode) {
 		context.clearRect(0, 0, canvas.width, canvas.height);
@@ -61,6 +67,8 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Method adds a clef according to mode
+	 * @function
+     * @private
 	 *
 	 * @param {int}    mode    current selected mode
 	 */
@@ -74,6 +82,8 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Method registers listener to canvas
+	 * @function
+     * @private
 	 */
 	registerListener = function() {
 		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
@@ -84,6 +94,8 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Method displays note elements on the canvas and get them from model
+	 * @function
+     * @public
 	 *
 	 * @param {object}    vexflowNotes    contains notes for vexflow
 	 */
@@ -133,6 +145,8 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Method renders preview note on canvas at mouseover
+	 * @function
+     * @private
 	 */
 	renderVexFlowNotePreview = function() {
 		// delete canvas
@@ -234,6 +248,8 @@ MusicXMLAnalyzer.NotationView = function(){
 	},
 	/**
 	 * Method calculates the position of the notes
+	 * @function
+     * @private
 	 */
 	setTopNoteValues = function() {
 		spaceBetweenLines = (canvas.height/16);
@@ -241,6 +257,10 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Method handels the mouseover event on canvas
+	 * @function
+     * @private
+	 *
+	 * @param 	{Event} 	The triggered event
 	 */
 	onMouseMoveCanvas = function(event) {
 
@@ -264,6 +284,8 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Method handels mouseclick event on canvas
+	 * @function
+     * @private
 	 */
 	onMouseClickCanvas = function() {
 
@@ -283,10 +305,12 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Method checks on which horitiontal position the mousecursor is and saves the corresponding note
+	 * @function
+     * @private
 	 *
 	 * @param {int}    		y    		 horizontal position of cursor
 	 *
-	 * @return {string}    hoverdnote    hovered note according to calculated cursor position
+	 * @return {string}     hoverdnote   hovered note according to calculated cursor position
 	 */
 	checkHorizontalArea = function(y) {
 
@@ -382,6 +406,8 @@ MusicXMLAnalyzer.NotationView = function(){
 
 	/**
 	 * Method to clear canvas and redraw staves
+	 * @function
+     * @public
 	 */
 	clearCanvas = function() {
 		// clear canvas and redraw staves

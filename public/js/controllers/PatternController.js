@@ -8,6 +8,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Init method of PatternController
+	 * @function
+     * @public
 	 */
 	init = function() {
 		patternView = MusicXMLAnalyzer.PatternView();
@@ -63,6 +65,12 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Function to get Duration of Notes
+	 * @function
+     * @private
+	 *
+	 * @param 	{string} 	type 	The note type
+	 *
+	 * @retrun 	{float} 	The duration of the note as float
 	 */
 	getDuration = function(type){
 		var duration;
@@ -88,6 +96,14 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method to get MIDI-Values
+	 * @function
+     * @private
+	 *
+	 * @param 	{string} 	step 	The note step
+	 * @param 	{string} 	octave 	The notes octave
+	 * @param 	{string} 	alter 	The alter value
+	 *
+	 * @return 	{number} 	The MIDI value
 	 */
 	getMidiValue = function(step, octave, alter) {
 		return (parseInt(octave) * 12) + (tonika[step] + parseInt(alter));
@@ -95,6 +111,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	* Method to play the created Pattern
+	 * @function
+     * @private
 	*/
 	playPattern = function() {
 		var notesToBePlayed = [];
@@ -186,8 +204,11 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method updates notes in notationView
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    update event
+	 * @param {event} 						event    		update event
+	 * @param {Array.<Vex.Flow.StaveNote>} 	vexflowNotes 	The current notes
 	 */
 	onNotationViewUpdate = function(event, vexflowNotes) {
 		notationView.renderNotes(vexflowNotes);
@@ -195,8 +216,11 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method updates note selection
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    update event
+	 * @param {event} 	event    			update event
+	 * @param {string} 	selectedNoteName 	the selected note name
 	 */
 	onNoteNameSelectionChange = function(event, selectedNoteName) {
 		patternView.setNoteNameActive(selectedNoteName);
@@ -204,8 +228,11 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method updates octave selection
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    update event
+	 * @param {event} 	event    		update event
+	 * @param {string} 	selectedOctave 	the selected octave
 	 */
 	onOctaveSelectionChange = function(event, selectedOctave) {
 		patternView.setOctaveActive(selectedOctave);
@@ -213,8 +240,11 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method updates accidential selection
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    update event
+	 * @param {event} 	event    		update event
+	 * @param {string} 	selectedAcc 	the selected accidential
 	 */
 	onAccidentialSelectionChange = function(event, selectedAcc) {
 		patternView.setAccidentialActive(selectedAcc);
@@ -222,8 +252,11 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method updates duration selection
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    update event
+	 * @param {event} 	event    		update event
+	 * @param {string} 	selectedDur 	the selected duration
 	 */
 	onDurationSelectionChange = function(event, selectedDur) {
 		patternView.setDurationActive(selectedDur);
@@ -231,8 +264,11 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method updates rhythm selection
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event    update event
+	 * @param {event} 	event    			update event
+	 * @param {string} 	selectedSpecRyth 	the selected rhythmic special
 	 */
 	onSpecRythSelectionChange = function(event, selectedSpecRyth) {
 		patternView.setSpecRythActive(selectedSpecRyth);
@@ -240,6 +276,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method changes current mode
+	 * @function
+     * @public
 	 *
 	 * @param {number}    val    mode name
 	 */
@@ -250,6 +288,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method changes current note
+	 * @function
+     * @public
 	 *
 	 * @param {string}    val    note name
 	 */
@@ -259,6 +299,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method changes current accidential
+	 * @function
+     * @public
 	 *
 	 * @param {string}    val    accidential name
 	 */
@@ -268,6 +310,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method changes current note duration
+	 * @function
+     * @public
 	 *
 	 * @param {string}    val    note duration
 	 */
@@ -277,6 +321,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method changes current special rhythm
+	 * @function
+     * @public
 	 *
 	 * @param {string}    val    special rhythm
 	 */
@@ -286,6 +332,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method changes current octave
+	 * @function
+     * @public
 	 *
 	 * @param {string}    val    current octave
 	 */
@@ -295,6 +343,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method adds a note to pattern by click on button if pattern.length < 12
+	 * @function
+     * @public
 	 */
 	addNote = function() {
 		if(patternModel.getPatternLength() < 12){
@@ -304,6 +354,10 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method adds a note to pattern by click on canvas if pattern.length < 12
+	 * @function
+     * @public
+	 *
+	 * @param {Vex.Flow.StavNote} 	note 	the note that should be added
 	 */
 	addNoteByCanvasClick = function(note) {
 		if(patternModel.getPatternLength() < 12){
@@ -313,6 +367,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method clears the canvas
+	 * @function
+     * @private
 	 */
 	onCanvasClear = function() {
 		notationView.clearCanvas();
@@ -320,6 +376,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method removes last element on canvas
+	 * @function
+     * @public
 	 */
 	removeLastNote = function() {
 		patternModel.removeLastNoteElement();
@@ -327,6 +385,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method enables triplet input
+	 * @function
+     * @private
 	 */
 	onTripletEnterModeStart = function() {
 		patternView.startTripletEnterMode();
@@ -334,6 +394,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method ends triplet input
+	 * @function
+     * @private
 	 */
 	onTripletEnterModeEnd = function() {
 		patternView.endTripletEnterMode();
@@ -341,6 +403,8 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method returns the current mode
+	 * @function
+     * @public
 	 *
 	 * @return {string}    currentMode
 	 */
@@ -350,10 +414,11 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method changes state of SearchPatternButton
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event
-	 *
-	 * @param {int}    pattern
+	 * @param {event}    event 		The triggered event
+	 * @param {object}   pattern 	The current configured patter
 	 */
 	onPatternChange = function(event, pattern) {
 		patternView.setPatternValue(JSON.stringify(pattern));
@@ -375,10 +440,11 @@ MusicXMLAnalyzer.PatternController = function() {
 
 	/**
 	 * Method changes current mode
+	 * @function
+     * @private
 	 *
-	 * @param {event}    event
-	 *
-	 * @param {int}    mode
+	 * @param {event}   event 	The triggered event
+	 * @param {int} 	mode 	The selected mode
 	 */
 	onViewChangedToCurrentMode = function(event, mode) {
 		switch(mode) {
@@ -395,10 +461,6 @@ MusicXMLAnalyzer.PatternController = function() {
 		    patternView.setToMelodyMode();
 		    	break;
 		}
-	},
-
-	dispose = function() {
-		that = {};
 	};
 
 	that.init = init;
@@ -411,7 +473,6 @@ MusicXMLAnalyzer.PatternController = function() {
 	that.addNote = addNote;
 	that.addNoteByCanvasClick = addNoteByCanvasClick;
 	that.removeLastNote = removeLastNote;
-	that.dispose = dispose;
 	that.getCurrentMode = getCurrentMode;
 
 	return that;

@@ -7,6 +7,8 @@ MusicXMLAnalyzer.DashboardController = function() {
 
 	/**
 	 * Init method of DashboardController
+	 * @function
+     * @public
 	 */
 	init = function() {
 		model = MusicXMLAnalyzer.DashboardModel();
@@ -19,12 +21,26 @@ MusicXMLAnalyzer.DashboardController = function() {
 		$(view).on('onFileSelectorChange', onFileSelectorChange);
 	},
 
+	/**
+	 * Callback function when log message revceived
+	 * @function
+     * @private
+	 *
+	 * @param {Event} 	event 	The triggered event
+	 * @param {string} 	msg 	The log message
+	 *
+	 */
 	onLogMessage = function(event, msg) {
 		view.addLogMessage(msg);
 	},
 
 	/**
-	 * Method to pass results to view
+	 * Callback function when model loaded all results and merged them
+	 * @function
+     * @private
+	 *
+	 * @param {Event} 	event 	 	the triggered event
+	 * @param {array}	results 	the list of results
 	 */
 	onModelReady = function(event, results) {
 		view.initFileSelector(results);
@@ -45,7 +61,12 @@ MusicXMLAnalyzer.DashboardController = function() {
 	},
 
 	/**
-	 * Method to pass Fileselectorchanges
+	 * Callback function for change event on dashboards file selector
+	 * @function
+     * @private
+	 *
+	 * @param 	{Event} 	event 	The triggered event
+	 * @param 	{number} 	id 		the id of the selected file
 	 */
 	onFileSelectorChange = function(event, id) {
 		var result = model.getResults(id);

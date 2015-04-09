@@ -5,6 +5,8 @@ MusicXMLAnalyzer.HeaderController = function(){
 	view = null,
 	/**
 	 * Init function of HeaderController
+	 * @function
+     * @public
 	 */
 	init = function(){
 		view = MusicXMLAnalyzer.HeaderView();

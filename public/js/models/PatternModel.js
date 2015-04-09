@@ -19,13 +19,15 @@ MusicXMLAnalyzer.PatternModel = function(){
 	tupletArray = [],
 	beamArray = [],
 
-	tripletEnterMode = false;
+	tripletEnterMode = false,
 	noteElementAccidential = 0,
 	isDot = false,
 	beamVal = false,
 
 	/**
 	 * Init method of PatternModel
+	 * @function
+     * @public
 	 */
 	init = function() {
 
@@ -33,8 +35,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Calls method to set the current Mode active
+	 * @function
+     * @public
 	 *
-	 * @param {number}    mode    the current mode as number 0 (sound sequence), number 1 (rhythm) and number 2 (melody)
+	 * @param {number}    the current mode as number 0 (sound sequence), number 1 (rhythm) and number 2 (melody)
 	 *
 	 */
 	setCurrentMode = function(mode) {
@@ -63,15 +67,19 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * This method empties the notes arrays and sets the val first to true.
+	 * @function
+     * @private
 	 */
 	emptyNoteArrays = function() {
 		noteElements = [];
 		noteElements4VexFlow = [];
 		first = true;
-	}
+	},
 
 	/**
 	 * Returns the current mode
+	 * @function
+     * @public
 	 *
 	 * @return {number}    The current mode
 	 *
@@ -82,8 +90,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Sets the current note name
+	 * @function
+     * @public
 	 *
-	 * @param {string}    noteName    the current note name
+	 * @param {string}    the current note name
 	 *
 	 */
 	setCurrentNoteName = function(noteName) {
@@ -99,6 +109,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns the current note name
+	 * @function
+     * @public
 	 *
 	 * @return {string}    The current note name
 	 *
@@ -109,8 +121,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Sets the current accidential
+	 * @function
+     * @public
 	 *
-	 * @param {string}    accidential    the current accidential
+	 * @param {string}    the current accidential
 	 *
 	 */
 	setCurrentAccidential = function(accidential) {
@@ -119,6 +133,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns the current accidential
+	 * @function
+     * @public
 	 *
 	 * @return {string}    The current accidential
 	 *
@@ -129,8 +145,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Sets the current note duration
+	 * @function
+     * @public
 	 *
-	 * @param {string}    noteDuration    the current note duration
+	 * @param {string}    the current note duration
 	 *
 	 */
 	setCurrentNoteDuration = function(noteDuration) {
@@ -139,6 +157,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns the current note duration
+	 * @function
+     * @public
 	 *
 	 * @return {string}    The current note duration
 	 *
@@ -149,8 +169,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Sets the current rhythmic special
+	 * @function
+     * @public
 	 *
-	 * @param {string}    rythSpec    the current rhythmic special
+	 * @param {string}    the current rhythmic special
 	 *
 	 */
 	setCurrentNoteRythSpecial = function(rythSpec) {
@@ -159,6 +181,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns the current rhythmic special which can be a dot or triplet
+	 * @function
+     * @public
 	 *
 	 * @return {string}    The current rhythmic special
 	 *
@@ -169,8 +193,10 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Sets the current octave
+	 * @function
+     * @public
 	 *
-	 * @param {string}    octave    the current octave
+	 * @param {string}    the current octave
 	 *
 	 */
 	setCurrentOctave = function(octave) {
@@ -179,6 +205,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns the current octave
+	 * @function
+     * @public
 	 *
 	 * @return {string}    The current octave
 	 *
@@ -189,6 +217,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * This method sets vals for accidentials, dots and beams for noteElements-Array
+	 * @function
+     * @private
 	 *
 	 */
 	setValuesForNoteElement = function() {
@@ -232,6 +262,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * This method adds notes and breaks to the noteElements Array and the noteElements4VexFlow Array
+	 * @function
+     * @public
 	 *
 	 */
 	addNoteElement = function() {
@@ -463,6 +495,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns the length of the noteElements Array
+	 * @function
+     * @public
 	 *
 	 * @return {number}    length of noteElements Array
 	 */
@@ -472,10 +506,12 @@ MusicXMLAnalyzer.PatternModel = function(){
 		} else {
 			return 0;
 		}
-	}
+	},
 
 	/**
 	 * Sets the default values when you change to sound sequence mode
+	 * @function
+     * @private
 	 */
 	setDefaultValsForSoundSequenceMode = function() {
 		curName = "c";
@@ -496,6 +532,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Sets the default values when you change to rhythm mode
+	 * @function
+     * @private
 	 */
 	setDefaultValsForRhythmMode = function() {
 		curDuration = "quarter";
@@ -515,6 +553,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Sets the default values when you change to melody mode
+	 * @function
+     * @private
 	 */
 	setDefaultValsForMelodyMode = function() {
 		curMode = 2;
@@ -540,6 +580,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns an Array with triplet end positions
+	 * @function
+     * @private
 	 *
 	 * @return {Array.<number>}    Array with trilet end positions
 	 */
@@ -549,6 +591,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns an Array with tuplet end positions
+	 * @function
+     * @public
 	 *
 	 * @return {Array.<number>}    Array with tuplet end positions
 	 */
@@ -558,6 +602,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns an Array with beam end positions
+	 * @function
+     * @public
 	 *
 	 * @return {Array.<number>}    Array with beam end positions
 	 */
@@ -567,6 +613,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns the content of a vexflow key
+	 * @function
+     * @public
 	 *
 	 * @return {string}    content of vexflow key
 	 */
@@ -587,6 +635,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns the duration label which is used by vexflow
+	 * @function
+     * @public
 	 *
 	 * @return {string}    duration for vexflow
 	 */
@@ -618,6 +668,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * This method gets called when your click on the canvas to add a note element. The paramter note looks like "c/4". It updates the model values curName and curOctave and calls addNoteElement.
+	 * @function
+     * @public
 	 *
 	 * @param {string}    note name in vexflow style like "c/4"
 	 *
@@ -640,6 +692,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Removes last added note element from noteElementsArray and vexflowArray.
+	 * @function
+     * @public
 	 *
 	 */
 	removeLastNoteElement = function() {
@@ -671,6 +725,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns an array with Note Elements
+	 * @function
+     * @public
 	 *
 	 * @return {Array<Notes>}    array of Note Elements
 	 */
@@ -680,6 +736,8 @@ MusicXMLAnalyzer.PatternModel = function(){
 
 	/**
 	 * Returns an array wtih vexflow notes elements
+	 * @function
+     * @public
 	 *
 	 * @return {Array<vexflowNotes>}    array of vexflowNotes
 	 */
