@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/PatternView.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: views/PatternView.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/** @constructor */
+MusicXMLAnalyzer.PatternView = function(){
+
+	var that = {},
+	$modeButtonClass = $(".btn-mode"),
+
+	$noteButtonClass = $(".btn-note"),
+	$accidentialButtonClass = $(".btn-accidential"),
+	$durationButtonClass = $(".btn-duration"),
+	$specialRythButtonClass = $(".btn-special-ryth"),
+	$octaveButtonClass = $(".btn-octave"),
+
+	$addNoteButton = $("#btn-add-note"),
+	$removeNoteButton = $("#btn-remove-note"),
+	$searchPatternButton = $("#searchPatternButton"),
+
+	$patternValue = $('#patternValue'),
+
+	$breakButton = $("#break"),
+	$rhythmBreakButton = $("#rhythmBreak"),
+
+	$rhythmNoteOrBreak = $('#rhythmNoteOrBreak'),
+	$noteOrBreak = $('#noteOrBreak'),
+	$rhythmNote = $('#rhythmNote'),
+
+	$logMessages = null,
+	resultMessageCounter = null,
+
+	/**
+	 * Init function
+	 * @function
+     * @public
+	 */
+	init = function() {
+		patternController = MusicXMLAnalyzer.PatternController();
+
+		$modeButtonClass.on("click", onModeButtonClick);
+
+		$noteButtonClass.on("click", onNoteButtonClick);
+		$accidentialButtonClass.on("click", onAccidentialButtonClick);
+		$durationButtonClass.on("click", onDurationButtonClick);
+		$specialRythButtonClass.on("click", onSpecialRythButtonClick);
+		$octaveButtonClass.on("click", onOctaveButtonClick);
+		$addNoteButton.on("click", onAddButtonClick);
+		$removeNoteButton.on("click", onRemoveButtonClick);
+		$breakButton.on('click', onBreakButtonClick);
+		$rhythmNoteOrBreak.on('click',onRhythmNoteOrBreakClick);
+		$noteOrBreak.on('click', onNoteOrBreakClick);
+
+		$noteOrBreak.show();
+		$rhythmNoteOrBreak.hide();
+
+		$searchPatternButton.on('click', onSubmitButtonClick);
+		$logMessages = $('#searchMessages');
+		resultMessageCounter = 0;
+
+	},
+
+	/**
+	 * Method handles the mouseclick event on note- or break button to disable or enable octaves according to mode
+	 * @function
+     * @private
+	 *
+	 * @param {event}    event    the triggered click event
+	 */
+	onNoteOrBreakClick = function(event){
+		if(patternController.getCurrentMode() === 2){
+			if(event.target.id === 'break'){
+				$octaveButtonClass.addClass('disabled');
+			}else{
+				$octaveButtonClass.removeClass('disabled');
+			}
+		}
+	},
+
+	/**
+	 * Method handles the mouseclick event on break button
+	 * @function
+     * @private
+	 */
+	onBreakButtonClick = function(){
+		patternController.changeAccidential("none");
+		setAccidentialActive("none");
+		$accidentialButtonClass.addClass('disabled');
+	},
+
+	/**
+	 * Method handles the mouseclick event on mode button
+	 * @function
+     * @private
+	 *
+	 * @param {event}    event    the triggered click event
+	 */
+	onModeButtonClick = function(event) {
+		var modeButtonId = event.target.id;
+		// slice -1 gets the last char of the mode id
+		patternController.changeMode(parseInt(modeButtonId.slice(-1)));
+	},
+
+	/**
+	 * Method handles the mouseclick event on note button
+	 * @function
+     * @private
+	 *
+	 * @param {event}    event    the triggered click event
+	 */
+	onNoteButtonClick = function(event) {
+		patternController.changeNote(event.target.id);
+		$accidentialButtonClass.removeClass('disabled');
+	},
+
+	/**
+	 * Method handles the mouseclick event on note or break in rhythm mode to highlight user selection and change the note accordingly
+	 * @function
+     * @private
+	 *
+	 * @param {event}    event    the triggered click event
+	 */
+	onRhythmNoteOrBreakClick = function(event){
+		if(event.target.id === 'rhythmBreak'){
+
+			if($rhythmNote.hasClass('active')){
+				patternController.changeNote('break');
+			}
+		}
+		else if(event.target.id === 'rhythmNote'){
+
+			if($rhythmBreakButton.hasClass('active')){
+				patternController.changeNote('c');
+			}
+		}
+
+	},
+
+	/**
+	 * Method handles the mouseclick event on accidentals
+	 * @function
+     * @private
+	 *
+	 * @param {event}    event    the triggered click event
+	 */
+	onAccidentialButtonClick = function(event) {
+		var acc = event.target.id;
+		acc = acc.substring(acc.indexOf("-") + 1, acc.length);
+		patternController.changeAccidential(acc);
+	},
+
+	/**
+	 * Method handles the mouseclick event on durations
+	 * @function
+     * @private
+	 *
+	 * @param {event}    event    the triggered click event
+	 */
+	onDurationButtonClick = function(event) {
+		patternController.changeDuration(event.target.id);
+	},
+
+	/**
+	 * Method handles the mouseclick event on special rhythm
+	 * @function
+     * @private
+	 *
+	 * @param {event}    event    the triggered click event
+	 */
+	onSpecialRythButtonClick = function(event) {
+		//get the and of the specRyth String after the -
+		var specRyth = event.target.id;
+		specRyth = specRyth.substring(specRyth.indexOf("-") + 1, specRyth.length);
+		//prevent adding break triplets by disabling the break button
+		if(specRyth === "triplet") {
+			// check if break button was active
+			// if true then set selected note to c
+			if($breakButton.hasClass("active") === true) {
+				patternController.changeNote("c");
+				setNoteNameActive("c");
+			}
+			$breakButton.addClass("disabled");
+		} else {
+			$breakButton.removeClass("disabled");
+		}
+		patternController.changeSpecialRyth(specRyth);
+	},
+
+	/**
+	 * Method handles the mouseclick event on ocatave button
+	 * @function
+     * @private
+	 *
+	 * @param {event}    event    the triggered click event
+	 */
+	onOctaveButtonClick = function(event) {
+		patternController.changeOctave(event.target.id);
+	},
+
+	/**
+	 * Method handles the mouseclick event on add button
+	 * @function
+     * @private
+	 *
+	 * @param {event}    event    the triggered click event
+	 */
+	onAddButtonClick = function() {
+		patternController.addNote();
+	},
+
+	/**
+	 * Method sets the pattern values
+	 * @function
+     * @public
+	 *
+	 * @param {object}    pattern    the pattern values
+	 */
+	setPatternValue = function(pattern) {
+		$patternValue.val(pattern);
+	},
+
+	/**
+	 * Method sets the active note
+	 * @function
+     * @public
+	 *
+	 * @param {string}    noteName    the name of the note
+	 */
+	setNoteNameActive = function(noteName) {
+		if(patternController.getCurrentMode() != 1){
+			$(".btn-note.active").removeClass("active");
+			$("#" + noteName + "").addClass("active");
+		}
+
+	},
+
+	/**
+	 * Method sets the active octave
+	 * @function
+     * @public
+	 *
+	 * @param {string}    octave    name of the octave
+	 */
+	setOctaveActive = function(octave) {
+		$(".btn-octave.active").removeClass("active");
+		$("#" + octave + "").addClass("active");
+	},
+
+	/**
+	 * Method sets the active accidental
+	 * @function
+     * @public
+	 *
+	 * @param {string}    acc    name of the accidental
+	 */
+	setAccidentialActive = function(acc) {
+		$(".btn-accidential.active").removeClass("active");
+		$("#accidential-" + acc + "").addClass("active");
+	},
+
+	/**
+	 * Method sets the active duration
+	 * @function
+     * @public
+	 *
+	 * @param {string}    duration    name of the duration
+	 */
+	setDurationActive = function(duration) {
+		$(".btn-duration.active").removeClass("active");
+		$("#" + duration + "").addClass("active");
+	},
+
+	/**
+	 * Method sets the active special rhythm element
+	 * @function
+     * @public
+	 *
+	 * @param {string}    specRyth    name of the special rhythm element
+	 */
+	setSpecRythActive = function(specRyth) {
+		$(".btn-special-ryth.active").removeClass("active");
+		$("#spec-" + specRyth + "").addClass("active");
+	},
+
+	/**
+	 * Method changes layout according to melody mode
+	 * @function
+     * @public
+	 */
+	setToMelodyMode = function() {
+		$noteButtonClass.removeClass("disabled");
+		$accidentialButtonClass.removeClass("disabled");
+		$durationButtonClass.removeClass("disabled");
+		$specialRythButtonClass.removeClass("disabled");
+		$octaveButtonClass.removeClass("disabled");
+		// disable search button
+		// (will get enabled after two notes are created)
+		$searchPatternButton.prop('disabled', true);
+
+		$noteOrBreak.show();
+		$rhythmNoteOrBreak.hide();
+	},
+
+	/**
+	 * Method changes layout according to sound sequence mode
+	 * @function
+     * @public
+	 */
+	setToSoundSequenceMode = function() {
+		$durationButtonClass.addClass('disabled');
+		$specialRythButtonClass.addClass('disabled');
+
+		$noteButtonClass.removeClass('disabled');
+		//disable only break button from notes class
+		$("#break").addClass('disabled');
+
+		$octaveButtonClass.removeClass('disabled');
+		$accidentialButtonClass.removeClass('disabled');
+		// disable search button
+		// (will get enabled after two notes are created)
+		$searchPatternButton.prop('disabled', true);
+
+		$noteOrBreak.show();
+		$rhythmNoteOrBreak.hide();
+	},
+
+	/**
+	 * Method changes layout according to rhythm mode
+	 * @function
+     * @public
+	 */
+	setToRhythmMode = function() {
+		$noteButtonClass.addClass('disabled');
+		$rhythmBreakButton.removeClass('disabled');
+		$rhythmBreakButton.removeClass('active');
+		$rhythmNote.removeClass('disabled');
+		$rhythmNote.addClass('active');
+		$octaveButtonClass.addClass('disabled');
+		$accidentialButtonClass.addClass('disabled');
+
+		$durationButtonClass.removeClass('disabled');
+		$specialRythButtonClass.removeClass('disabled');
+		// disable search button
+		// (will get enabled after two notes are created)
+		$searchPatternButton.prop('disabled', true);
+		patternController.changeOctave(4);
+		$noteOrBreak.hide();
+		$rhythmNoteOrBreak.show();
+	},
+
+	/**
+	 * Method enters triplet creation mode
+	 * @function
+     * @public
+	 */
+	startTripletEnterMode = function() {
+		//disable search and remove btn
+		$searchPatternButton.addClass('disabled');
+		$removeNoteButton.addClass('disabled');
+		//disable spec ryth
+		$specialRythButtonClass.addClass('disabled');
+		//diable duration
+		$durationButtonClass.addClass('disabled');
+	},
+
+	/**
+	 * Method ends triplet creation mode
+	 * @function
+     * @public
+	 */
+	endTripletEnterMode = function() {
+		//enable search and remove btn
+		$searchPatternButton.removeClass('disabled');
+		$removeNoteButton.removeClass('disabled');
+		//enable spec ryth
+		$specialRythButtonClass.removeClass('disabled');
+		//enable duration
+		$durationButtonClass.removeClass('disabled');
+	},
+
+	/**
+	 * Method handles mouse click on remove button
+	 * @function
+     * @private
+	 */
+	onRemoveButtonClick = function() {
+		patternController.removeLastNote();
+	},
+
+	/**
+	 * Method handles mouse click on search button, including a log message box to overcome waiting time
+	 * @function
+     * @private
+	 */
+	onSubmitButtonClick = function() {
+		initLogMessages();
+		$('body').scrollTop($('body').height());
+		addLogMessage("Let's start searching the pattern.");
+		window.setTimeout(function() {
+			addLogMessage("We're working.");
+			window.setTimeout(function() {
+				addLogMessage("Please be patient.");
+				window.setTimeout(function() {
+					addLogMessage("Don't worry we didn't forget you.");
+					window.setTimeout(function() {
+						addLogMessage("Okay. We're ready soon. We promise.");
+						window.setTimeout(function() {
+							addLogMessage("Maybe a little coffee?");
+						}, 3000);
+					}, 3000);
+				}, 3000);
+			}, 3000);
+		}, 3000);
+	},
+
+	/**
+	 * Method to initiate log messages
+	 * @function
+     * @private
+	 */
+	initLogMessages = function() {
+		resultMessageCounter = 0;
+		$logMessages.show();
+		$logMessages.animate({
+			height: 100
+		}, 500);
+	},
+
+	/**
+	 * Method to animate the log message box
+	 * @function
+     * @private
+	 */
+	disposeLogMessages = function() {
+		window.setTimeout(function() {
+			$logMessages.animate({
+				height: 0
+			},
+			700,
+			function() {
+				$logMessages.hide();
+				$logMessages.empty();
+			});
+		}, 100);
+	},
+
+	/**
+	 * Method to add a log message
+	 * @function
+     * @private
+	 *
+	 * @param {string}    msg    message to be added
+	 */
+	addLogMessage = function(msg) {
+		$('#log' + (resultMessageCounter - 3)).animate({
+			"marginTop": "-30px"
+		}, 200);
+		$logMessages.append('&lt;div id="log' + resultMessageCounter + '">&lt;/div>');
+		$('#log' + resultMessageCounter).typed({
+			strings: ['&lt;p>' + msg + '&lt;/p>'],
+			backDelay: 100000000000000,
+			typeSpeed: 0,
+			backSpeed: 0,
+			loop: true,
+		});
+		resultMessageCounter++;
+	};
+
+	that.init = init;
+	that.setPatternValue = setPatternValue;
+	that.setNoteNameActive = setNoteNameActive;
+	that.setOctaveActive = setOctaveActive;
+	that.setAccidentialActive = setAccidentialActive;
+	that.setDurationActive = setDurationActive;
+	that.setSpecRythActive = setSpecRythActive;
+	that.setToSoundSequenceMode = setToSoundSequenceMode;
+	that.setToRhythmMode = setToRhythmMode;
+	that.setToMelodyMode = setToMelodyMode;
+	that.startTripletEnterMode = startTripletEnterMode;
+	that.endTripletEnterMode = endTripletEnterMode;
+
+	return that;
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Apr 09 2015 21:47:56 GMT+0200 (MESZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
