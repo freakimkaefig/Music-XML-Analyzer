@@ -149,7 +149,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	/**
-	 * Inits the log messages for uploading
+	 * Inits the log messages
 	 *
 	 */
 	initLogMessages = function() {
@@ -161,7 +161,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	},
 
 	/**
-	 * Disposes log messages concerning the upload
+	 * Disposes log messages
 	 *
 	 */
 	disposeLogMessages = function() {
