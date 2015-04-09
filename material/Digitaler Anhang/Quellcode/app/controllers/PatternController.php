@@ -1,0 +1,110 @@
+<?php
+
+/**
+ * Controller to handle search requests
+ * Initializes controllers for different search modes
+ *
+ * @package 	Controllers
+ */
+class PatternController extends BaseController {
+
+	/**
+	 * Helper function clear cache and return pattern-creation-view
+	 *
+	 * @return  \Illuminate\View\View     pattern-creation-view
+	 *
+	 */
+	public function getCreatePattern() {
+		Cache::forget('pattern');
+		Cache::forget('results');
+		Cache::forget('duration');
+		return View::make('createPattern');
+	}
+
+	/**
+	 * Function to pass patterns to corresponding Controllers, receive results and place both, pattern and results, in cache
+	 *
+	 * @return  \Illuminate\Http\RedirectResponse      route to search results
+	 *
+	 */
+	public function postPatternSearch() {
+		set_time_limit(300);
+
+		$time = 60*24;
+
+		$pattern = Input::get('pattern');
+		$pattern = json_decode($pattern);
+
+		Debugbar::info($pattern);
+
+		switch ($pattern[0]->type) {
+			case 0:
+				// Type == Tonfolge
+				$ssConntroller = new SoundSequenzController();
+				$results = $ssConntroller->search($pattern);
+				break;
+			case 1:
+				// Type == Rhythmus
+				$rConntroller = new RhythmController();
+				$results = $rConntroller->search($pattern);
+				break;
+			case 2:
+				// Type == Melodie
+				$mConntroller = new MelodyController();
+				$results = $mConntroller->search($pattern);
+				break;
+		}
+
+
+		Cache::put('pattern', $pattern, $time);
+		Cache::put('results', $results, $time);
+
+		$duration = Input::get('duration');
+		$duration = json_decode($duration);
+		Cache::put('duration', $duration, $time);
+
+		return Redirect::route('searchResults');
+	}
+
+	/**
+	 * Helper function to calculate the interval of a given note
+	 *
+	 * @param   object 	$n 	note object without calculated interval
+	 *
+	 * @return  int     calculated interval
+	 *
+	 */
+	public static function getInterval($n){
+		$tonika = array("C" => 0,
+						"D" => 2,
+						"E" => 4,
+						"F" => 5,
+						"G" => 7,
+						"A" => 9,
+						"B" => 11);
+		$note = $n;
+		$obj_arr = (array)$note;
+		if (!isset($obj_arr["rest"])) {
+
+			$noteStep = $note->pitch->step;
+			$noteAlter = $note->pitch->alter;
+			$noteOctave = $note->pitch->octave;
+
+			if ($noteStep && $noteOctave) {
+				$noteValue = $tonika[(string)$noteStep];
+				if ($noteAlter == 1 || $noteAlter == -1) {
+					$noteValue = (int)$noteValue + (int)$noteAlter;
+				}
+				$noteValue = (int)$noteOctave * 12 + (int)$noteValue;
+				return $noteValue;
+			} else {
+
+				return null;
+			}
+		} else {
+				return null;
+		}
+
+	}
+
+}

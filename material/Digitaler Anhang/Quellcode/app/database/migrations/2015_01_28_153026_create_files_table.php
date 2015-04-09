@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+/**
+ * Migration to create the "files" table
+ *
+ * @package Database
+ */
+class CreateFilesTable extends Migration {
+
+	/**
+	 * Run the migrations.
+	 * Creates table "files" with columns id, url
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		//Create Files table
+		Schema::create('files', function($table) {
+			$table->engine = "InnoDB";
+			$table->increments('id', true);
+			$table->string('url', 250000);
+			$table->timestamps();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 * Drops table "files"
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		//Drop Files table
+		Schema::dropIfExists('files');
+	}
+
+}
