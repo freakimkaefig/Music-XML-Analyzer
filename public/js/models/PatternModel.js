@@ -1,3 +1,4 @@
+/** @constructor */
 MusicXMLAnalyzer.PatternModel = function(){
 
 	var that = {},

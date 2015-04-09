@@ -1,3 +1,4 @@
+/** @constructor */
 MusicXMLAnalyzer.NotationView = function(){
 
 	var that = {},

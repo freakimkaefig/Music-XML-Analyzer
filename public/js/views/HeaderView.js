@@ -1,3 +1,4 @@
+/** @constructor */
 MusicXMLAnalyzer.HeaderView = function(){
 
 	var that = {},

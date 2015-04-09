@@ -1,3 +1,4 @@
+/** @constructor */
 MusicXMLAnalyzer.ApplicationController = function() {
 
 	var that = {},

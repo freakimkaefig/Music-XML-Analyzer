@@ -1,3 +1,4 @@
+/** @constructor */
 MusicXMLAnalyzer.UploadController = function() {
 
 	var that = {},

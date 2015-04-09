@@ -1,3 +1,4 @@
+/** @constructor */
 MusicXMLAnalyzer.DashboardView = function(){
 
 	var that = {},

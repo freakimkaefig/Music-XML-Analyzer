@@ -1,3 +1,4 @@
+/** @constructor */
 MusicXMLAnalyzer.PatternController = function() {
 	var that = {},
 	once = true,

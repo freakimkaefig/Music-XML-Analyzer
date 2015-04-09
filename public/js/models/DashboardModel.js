@@ -1,3 +1,4 @@
+/** @constructor */
 MusicXMLAnalyzer.DashboardModel = function(){
 
 	var that = {},
