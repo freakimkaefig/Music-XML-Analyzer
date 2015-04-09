@@ -583,7 +583,17 @@ MusicXMLAnalyzer.ResultView = function(){
 		return measures;
 	},
 
-
+	/**
+	 * Method checks next note to render it and give it e.g. a certain color
+	 *
+	 * @param {Array<Note>}    		pattern    array containing notes
+	 *
+	 * @param {Note}     		note      a note object
+	 *
+	 * @param {int}     		i     value to get a certain value from array
+	 *
+	 * @param {int}     		j     value to get a certain value from array
+	 */
 	checkNextNotes = function(pattern, note, i, j) {
 		j++;
 		var newNote = note;
@@ -612,7 +622,14 @@ MusicXMLAnalyzer.ResultView = function(){
 	},
 
 
-	/* HELPER FUNCTIONS */
+	/**
+	 * Method converts duration from string to certain number values
+	 *
+	 * @param {string}    		duration    string of note duration
+	 *
+	 * @return {number}    duration value as number
+	 *
+	 */
 	getDurationIn64th = function(duration) {
 		switch (duration) {
 			case "whole":
@@ -634,6 +651,15 @@ MusicXMLAnalyzer.ResultView = function(){
 		}
 	},
 
+	/**
+	 * Method returns the note duration in vexflow style
+	 *
+	 * @param {string}    		duration    duration of note
+	 *
+	 * @param {number}     		type      	type of note
+	 *
+	 * @return {string}         duration for vexflow
+	 */
 	getVexflowDuration = function(duration, type) {
 		switch (duration) {
 			case "whole":
@@ -695,6 +721,17 @@ MusicXMLAnalyzer.ResultView = function(){
 		}
 	},
 
+	/**
+	 * Method returns key description for vexflow
+	 *
+	 * @param {string}    step    note name
+	 *
+	 * @param {string}    octave    octave number
+	 *
+	 * @param {string}    alter    accidential of the note
+	 *
+	 * @return {string}    key    key description for vexflow
+	 */
 	getVexflowKey = function(step, octave, alter) {
 		key = step.toLowerCase();
 		switch (alter) {
@@ -714,6 +751,12 @@ MusicXMLAnalyzer.ResultView = function(){
 		return key;
 	},
 
+	/**
+	 * Gets called when a list item has been clicked
+	 *
+	 * @param {event}    event    note name
+	 *
+	 */
 	onListItemClick = function(event) {
 		initLogMessages();
 		addLogMessage("We're preparing your results.");
@@ -735,6 +778,10 @@ MusicXMLAnalyzer.ResultView = function(){
 
 	},
 
+	/**
+	 * Inits the log messages
+	 *
+	 */
 	initLogMessages = function() {
 		resultMessageCounter = 0;
 		$logMessages.show();
@@ -743,6 +790,10 @@ MusicXMLAnalyzer.ResultView = function(){
 		}, 500);
 	},
 
+	/**
+	 * Disposes log messages
+	 *
+	 */
 	disposeLogMessages = function() {
 		window.setTimeout(function() {
 			$logMessages.animate({
@@ -756,6 +807,12 @@ MusicXMLAnalyzer.ResultView = function(){
 		}, 100);
 	},
 
+	/**
+	 * Adds a log message
+	 *
+	 * @param {string}    msg    log message
+	 *
+	 */
 	addLogMessage = function(msg) {
 		$('#log' + (resultMessageCounter - 3)).animate({
 			"marginTop": "-30px"

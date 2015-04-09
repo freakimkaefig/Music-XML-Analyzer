@@ -14,6 +14,12 @@ MusicXMLAnalyzer.HeaderView = function(){
 		deleteMeLink.on('click', onDeleteMeLinkClick);
 	},
 
+	/**
+	 * Resets the page and removes current work
+	 *
+	 * @param {event}    event    click event
+	 *
+	 */
 	onDeleteMeLinkClick = function(event) {
 		return confirm('This will remove all of your previous work. Are you sure?');
 	};

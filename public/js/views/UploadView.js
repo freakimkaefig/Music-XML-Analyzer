@@ -13,7 +13,10 @@ MusicXMLAnalyzer.UploadView = function(){
 	gotValidFile = null,
 	uploadCounter = null,
 
-
+	 /**
+	 * Init function of UploadView
+	 *
+	 */
 	init = function(){
 		$uploadModal = $('#uploadModal');
 		$uploadModal.data('backdrop', 'static');
@@ -36,8 +39,6 @@ MusicXMLAnalyzer.UploadView = function(){
 			acceptedFiles: '.xml',
 			maxFiles: null,
 			maxFilesize: 1024,
-			// addRemoveLinks: true,
-			// addedfile: onAddedFile,
 			error: onError,
 			success: onSuccess,
 			queuecomplete: onQueueComplete,
@@ -51,6 +52,12 @@ MusicXMLAnalyzer.UploadView = function(){
 		uploadMessageCounter = 0;
 	},
 
+	/**
+	 * This method sets the upload submit button active or disabled
+	 *
+	 * @param {boolean}    value    boolean value for active or disabled
+	 *
+	 */
 	setUploadSubmit = function(value) {
 		if (value == true) {
 			$uploadSubmit.removeAttr('disabled');
@@ -61,11 +68,21 @@ MusicXMLAnalyzer.UploadView = function(){
 		}
 	},
 
+	/**
+	 * Disables all input buttons
+	 *
+	 */
 	disableAllInputs = function() {
 		$uploadSubmit.attr('disabled', 'disabled');
 		$uploadClose.attr('disabled', 'disabled');
 	},
 
+	/**
+	 * Gets called when upload hast been started
+	 *
+	 * @param {event}    event    click event
+	 *
+	 */
 	onUploadSubmit = function(event) {
 		if (gotValidFile) {
 			addLogMessage('Analyzing files. Hang out ...');
@@ -77,14 +94,35 @@ MusicXMLAnalyzer.UploadView = function(){
 		}
 	},
 
+	/**
+	 * Gets called when uploading data is done
+	 *
+	 */
 	onUploadClose = function() {
 		$uploadModal.modal('toggle');
 	},
 
+	/**
+	 * Gets called when an error occurs
+	 *
+	 * @param {file}    file    the file to upload
+	 *
+	 * @param {string}    errorMessage    error message
+	 *
+	 * @param {object}    xhrObject    an xhr object
+	 */
 	onError = function(file, errorMessage, xhrObject) {
 		addLogMessage('ERROR: ' + file.name + ' - ' + errorMessage);
 	},
 
+	/**
+	 * Gets called when uploading data has been successful
+	 *
+	 * @param {file}    file    the file to upload
+	 *
+	 * @param {string}    respone    response message
+	 *
+	 */
 	onSuccess = function(file, response) {
 		if (!Route.check('/')) {
 			$uploadModal.modal({
@@ -101,12 +139,20 @@ MusicXMLAnalyzer.UploadView = function(){
 
 	},
 
+	/**
+	 * Gets called when upload queue is complete
+	 *
+	 */
 	onQueueComplete = function() {
 		if (gotValidFile) {
 			setUploadSubmit(true);
 		}
 	},
 
+	/**
+	 * Inits the log messages
+	 *
+	 */
 	initLogMessages = function() {
 		uploadMessageCounter = 0;
 		$logMessages.show();
@@ -115,6 +161,10 @@ MusicXMLAnalyzer.UploadView = function(){
 		}, 500);
 	},
 
+	/**
+	 * Disposes log messages
+	 *
+	 */
 	disposeLogMessages = function() {
 		window.setTimeout(function() {
 			$logMessages.animate({
@@ -128,6 +178,12 @@ MusicXMLAnalyzer.UploadView = function(){
 		}, 100);
 	},
 
+	/**
+	 * Adds a log message
+	 *
+	 * @param {string}    msg    log message
+	 *
+	 */
 	addLogMessage = function(msg) {
 		if (uploadCounter === 1) {
 			initLogMessages();
