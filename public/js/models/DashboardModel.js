@@ -22,10 +22,23 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		loadResultIds();
 	},
 
+	/**
+	 * Adds log message
+	 *
+	 * @param {string}    msg    log message
+	 *
+	 */
 	addLogMessage = function(msg) {
 		$(that).trigger('logMessage', [msg]);
 	},
 
+	/**
+	 * Returns results
+	 *
+	 * @param {string}    id    result id
+	 *
+	 * @return {Result}    result    a search result
+	 */
 	getResults = function(id) {
 		if (id === undefined) {
 			return results;
@@ -38,6 +51,10 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		}
 	},
 
+	/**
+	 * Method loads ids of all uploads
+	 *
+	 */
 	loadUploadIds = function() {
 		$.ajax({
 			url: URL_GET_UPLOAD_IDS,
@@ -45,6 +62,10 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		});
 	},
 
+	/**
+	 * Gets called when data has been uploaded
+	 *
+	 */
 	_onLoadResults = function(data, textStatus, jqXHR) {
 		if (data !== "empty") {
 			uploadIds = JSON.parse(data);
@@ -53,6 +74,10 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		}
 	},
 
+	/**
+	 * Method loads ids of all results
+	 *
+	 */
 	loadResultIds = function() {
 		$.ajax({
 			url: URL_GET_RESULT_IDS,
@@ -60,6 +85,16 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		});
 	},
 
+	/**
+	 * Gets called when result ids have been loaded
+	 *
+	 * @param {Data}    data    a file
+	 *
+	 * @param {string}    textStatus    status message
+	 *
+	 * @param {jqXHR}    jqXHR    jqXHR
+	 *
+	 */
 	_onLoadResultIds = function(data, textStatus, jqXHR) {
 		if (data !== "empty") {
 			resultIds = JSON.parse(data);
@@ -73,6 +108,12 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		}
 	},
 
+	/**
+	 * Method laads results by given id
+	 *
+	 * @param {string}    id    result id
+	 *
+	 */
 	loadResultById = function(id) {
 		$.ajax({
 			url: URL_GET_RESULT_VALUE_BY_ID + id,
@@ -82,6 +123,18 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		});
 	},
 
+	/**
+	 * Gets called when result by id have been loaded
+	 *
+	 * @param {string}    id    id of result
+	 *
+	 * @param {Data}    textStatus    a file
+	 *
+	 * @param {string}    textStatus    status message
+	 *
+	 * @param {jqXHR}    jqXHR    jqXHR
+	 *
+	 */
 	_onLoadResultById = function(id, data, textStatus, jqXHR) {
 		var seen = false;
 		for (var i = 0; i < results.length; i++) {
@@ -107,6 +160,10 @@ MusicXMLAnalyzer.DashboardModel = function(){
 		}
 	},
 
+	/**
+	 * Method merges all uploaded files
+	 *
+	 */
 	_mergeResults = function(resultsArr) {
 		mergedArr = {
 			artist: [],
