@@ -115,4 +115,4 @@ Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von 
 
 ## Copyright and license
 
-Code and documentation copyright 2015 Lukas Lamm, David Lechler, Matthias Schneider, Tobias Semmelmann. Code released under the MIT license. See LICENSE.md
+Code and documentation copyright 2015 Lukas Lamm, David Lechler, Matthias Schneider, Tobias Semmelmann. Code released under the MIT license. See [LICENSE.md](LICENSE.md)
