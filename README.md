@@ -109,3 +109,7 @@ Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von 
 [15] http://www.dropzonejs.com/ 27.03.2015  
 [16] http://mudcu.be/midi-js/ 27.03.2015  
 [17] https://parall.ax/products/jspdf 27.03.2015  
+
+## Copyright and license
+
+Code and documentation copyright 2015 Lukas Lamm, David Lechler, Matthias Schneider, Tobias Semmelmann. Code released under the MIT license. See LICENSE.md
