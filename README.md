@@ -1,7 +1,7 @@
 
 #Music XML Analyzer
 
-[![Code Climate](https://codeclimate.com/repos/5519aa9d69568002f2000d6c/badges/4b713fa4c132cc6c5fa7/gpa.svg)](https://codeclimate.com/repos/5519aa9d69568002f2000d6c/feed) [![Test Coverage](https://codeclimate.com/repos/5519aa9d69568002f2000d6c/badges/4b713fa4c132cc6c5fa7/coverage.svg)](https://codeclimate.com/repos/5519aa9d69568002f2000d6c/feed)
+[![Code Climate](https://codeclimate.com/repos/5519aa9d69568002f2000d6c/badges/4b713fa4c132cc6c5fa7/gpa.svg)](https://codeclimate.com/repos/5519aa9d69568002f2000d6c/feed)
   
 http://freakimkaefig.github.io/Music-XML-Analyzer/  
   
@@ -27,7 +27,7 @@ Abbildung 1: Startseite (Screenshot)
 
 
 ### Upload
-Um dem Anwender die Möglichkeit der statistischen Analyse von Musikstücken zu bieten, müssen zunächst Dateien im MusicXML-Format hochgeladen werden. Das im XML-Standard realisierte, offene Austauschformat MusicXML wird von vielen Notensatzprogrammen unterstützt und löst das vorangehende Notation Interchange File Format (NIFF)5 ab. Zudem bieten einige Portale, wie zum Beispiel Musescore6 den kostenlosen Download von Partituren im MusicXML-Format an, wodurch eine Vielzahl von Musikstücken bereits verfügbar ist. Auf der Homepage von Musescore sind die Partituren in verschiedenen Formaten verfügbar und können nach kostenloser Registrierung heruntergeladen werden. Mit Hilfe der ebenfalls kostenlosen Software können die Partituren in andere Formate (mscx, mscz, xml, mid, ogg, wav oder pdf) umgewandelt werden. Abbildung 2 zeigt die Uploadfunktion des Music-XML-Analyzer, nachdem verschiedene Dateien hochgeladen wurden. Mit einem Klick auf ANALYZE werden die Dateien ausgewertet.  
+Um dem Anwender die Möglichkeit der statistischen Analyse von Musikstücken zu bieten, müssen zunächst Dateien im MusicXML-Format hochgeladen werden. Das im XML-Standard realisierte, offene Austauschformat MusicXML wird von vielen Notensatzprogrammen unterstützt und löst das vorangehende Notation Interchange File Format (NIFF)[5] ab. Zudem bieten einige Portale, wie zum Beispiel Musescore6 den kostenlosen Download von Partituren im MusicXML-Format an, wodurch eine Vielzahl von Musikstücken bereits verfügbar ist. Auf der Homepage von Musescore sind die Partituren in verschiedenen Formaten verfügbar und können nach kostenloser Registrierung heruntergeladen werden. Mit Hilfe der ebenfalls kostenlosen Software können die Partituren in andere Formate (mscx, mscz, xml, mid, ogg, wav oder pdf) umgewandelt werden. Abbildung 2 zeigt die Uploadfunktion des Music-XML-Analyzer, nachdem verschiedene Dateien hochgeladen wurden. Mit einem Klick auf ANALYZE werden die Dateien ausgewertet.  
 ![Upload](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/upload.png)
 Abbildung 2: Upload (Screenshot)
 
@@ -109,6 +109,9 @@ Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von 
 [15] http://www.dropzonejs.com/ 27.03.2015  
 [16] http://mudcu.be/midi-js/ 27.03.2015  
 [17] https://parall.ax/products/jspdf 27.03.2015  
+
+## Documentation
+[phpDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs)
 
 ## Copyright and license
 
