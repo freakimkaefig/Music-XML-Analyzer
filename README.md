@@ -36,8 +36,9 @@ Abbildung 2: Upload (Screenshot)
 ### Statistische Analyse
 Die hochgeladenen Dateien werden nach erfolgreichem Upload automatisch analysiert. Dabei werden neben den Noten und Pausen unter anderem auch die enthaltenen Intervalle, Taktarten und Instrumente gezählt.
 Die serverseitige Analyse von XML Dateien beginnt stets mit einem XPath-Ausdruck[8]  gefolgt vom Parsen der resultierenden Daten mittels PHP[9]. Anhand des nachfolgenden Beispiels (Abbildung 3), soll der Ablauf und die Funktionsweise kurz erläutert werden. 
-![Upload](material/screenshots/code.png)
+![Upload](material/screenshots/code.PNG)
 Abbildung 3: Code-Beispiel (Screenshot)
+
 Für die Verarbeitung von XML bietet PHP die Schnittstelle SimpleXML[10]. Das Objekt „$xml“ der Klasse SimpleXMLElement wurde vorab durch die Klassen-Funktion „simplexml_load_file()“ mit einer XML-Datei erzeugt. Dieses Objekt ermöglicht die Verwendung der eigentlichen XPath-Ausdrücke. 
 Der Name des Künstlers bzw. Komponisten eines musikalischen Werkes steckt innerhalb eines „<credit>“ – Elements, welches wiederum ein „<credit-word>“ – Element mit dem Wert „composer“ enthält. Der XPath-Ausdruck in Zeile 243 durchsucht das SimpleXMLElement („$xml“) nach allen Elementen, die diese Bedingungen erfüllen. Da die Angaben zu Künstler bzw. Komponist nach MusicXML-Konvention zu Beginn einer XML-Datei gemacht werden, wird in Zeile 245 auf das erste Element zugegriffen, dass die oben genannten Bedingungen erfüllt. Der Name des Künstlers versteckt sich letztlich in einem weiteren XML-Element „<credit-words>“. 
 Obiges Beispiel veranschaulicht die Umwandlung einer XML-Datei zu einem PHP-Simple-XML-Element-Objekt, anhand dessen XPath-Ausdrücke angewandt werden können. 
@@ -66,8 +67,10 @@ Mit Hilfe der Pfeile kann zwischen den Treffern hin und her gewechselt werden. I
 Abbildung 8 zeigt die dazu benötigte Komponente zur Generierung von Partituren aus   MusicXML-Daten. 
 ![Search result detail](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/result.png)
 Abbildung 7: Searchresult Details (Screenshot)
+
 ![Upload](material/result_extraction.png)
 Abbildung 8: Generierung von Ergebnissauschnitten(eigene Grafik)
+
 Die vom PatternController erhaltenen Suchergebnisse geben an, in welchem XML-Dokument Treffer gefunden wurden und bieten Aufschluss über den Index der Start- und Endnote, sowie darüber, in welchem Part und in welcher Stimme sich das Ergebnis befindet. Diese Objekte werden zunächst an den View ResultDetail weitergegeben. Aus Performancegründen werden von dort aus für jedes Element im oben genannten Carousel nacheinander die Ausschnitte der Partitur nachgeladen. 
 Im ResultController werden dazu mithilfe der PHP-Implementierung von DOMDocument[11] und DOMXPath[12] die jeweiligen Abschnitte extrahiert und das gefundene Pattern farbig markiert. Dabei besteht die Komplexität darin, dass im Grunde alle möglichen XML-Elemente des MusicXML-Dokuments richtig interpretiert werden müssen, um ein Ausgabeobjekt zu erhalten, das die Ausgabe der Noten mit der Javascript-Rendering-Bibliothek ermöglicht. Im Rahmen dieses Projekts beschränkte sich dies jedoch auf die wichtigsten Elemente zur Darstellung unterschiedlichster Notenlängen, Tonhöhen und rhythmischer Besonderheiten. 
 
@@ -89,9 +92,11 @@ Zur Realisation interaktiver Funktionen und Vereinfachung von Javascript-Code wu
 Abbildung 9 zeigt den Aufbau des Laravel-Frameworks im Zusammenspiel mit den jeweiligen Javascript-Komponenten. Die Laravel-Komponente kümmert sich dabei um die serverseitige Logik der Anwendung, wie die Auslieferung von HTML-Seiten über eine integrierte Templating-Engine und die Kommunikation mit der Datenbank zur persistenten Speicherung. In Abbildung 9 wird auch der Aufbau nach dem Model-View-Controller-Pattern deutlich, demzufolge die grafische Repräsentation (View) von der Logik (Controller) und der Datenschicht (Model) getrennt ist. Die Javascript-Komponente der Anwendung ist ebenso nach dem MVC-Pattern aufgebaut und kümmert sich hauptsächlich um die Interaktivität der Anwendung. Beispielsweise werden die Suchmuster in Javascript vorerst clientseitig zwischengespeichert und erst beim Absenden der Suchanfrage an den Server geleitet. Weitere Aufgabengebiete sind die grafische Aufbereitung der Analysedaten und Partitur-Ausschnitte, sowie die Wiedergabe einzelner Sequenzen. 
 ![Systemarchitektur](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/system_architektur.png)
 Abbildung 9: Systemarchitektur
+
 Um dem Nutzer die Möglichkeit zu bieten, seine Arbeit ohne zusätzliche Speicherung immer aktuell zu halten, wurde ein einfaches Datenbankschema entwickelt, welches in Abbildung 10 als ERM-Model aufgeführt ist. Den Nutzern wird dabei beim ersten Betreten der Anwendung eine ID zugewiesen, die gleichzeitig als Cookie beim Nutzer im Browser hinterlegt wird. Auf den Server geladene Dateien werden entsprechend mit dem Nutzer referenziert, ebenso wie einem Upload-Objekt nach erfolgreicher Analyse dessen Ergebnisse zugeordnet werden. Bei der Konzeption wurde bewusst auf eine aufwendige Nutzerverwaltung mit Registrierung und Anmeldung verzichtet, da dies den schnellen Einstieg oft erheblich behindert.
 ![Datenbankschema](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/database_schema.png)
 Abbildung 10: Datenbankschema
+
 
 ## Ausblick
 Im Folgenden werden einige Funktionen und Erweiterungsmöglichkeiten aufgezeigt, die nicht mehr implementiert, beziehungsweise als nice-to-have deklariert wurden. Der Grund hierfür ist, dass bei den Tests gegen Ende des Projektes noch einige Bugs auftraten und die verbliebene Zeit damit verbracht wurde, diese zu beheben. 
@@ -102,7 +107,6 @@ Auch die Darstellung der Suchergebnisse kann noch detaillierter gestaltet werden
 Ein weiteres Feature wäre ein unscharfer Filter für alle drei Such-Modi. Im Falle der Notenfolge ergäbe sich beispielsweise die Möglichkeit, oktavenunabhängig nach einer Notenfolge zu suchen, um weitere Auswertungsmöglichkeiten zu erhalten. Ähnliches ist in den anderen beiden Such-Modi vorstellbar.
 Auch die Filterung nach Instrumenten würde die Ergebnisse deutlich verfeinern und wäre als Erweiterung denkbar. Eine letzte Erweiterungsmöglichkeit für den Music-XML-Analyzer wäre, neben Triolen und punktierten Noten auch Akkorde eingeben zu können und danach suchen zu lassen.
 Letztlich gibt es eine Vielzahl weiterer musikalischer Elemente die zur Notation herangezogen werden können. Die vermeintlich wichtigsten Möglichkeiten wurden in diesem Projekt berücksichtigt und erfolgreich umgesetzt, weshalb der Music-XML-Analyzer ein solides Werkzeug zur Analyse von Musikstücken darstellt.
-
 
 
 ## Über das Projekt
