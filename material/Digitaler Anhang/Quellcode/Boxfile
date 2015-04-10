@@ -1,0 +1,14 @@
+web1:
+  document_root: public
+  php_extensions:
+    - pdo_mysql
+    - mcrypt
+    - eaccelerator
+    - memcached
+    - curl
+  before_deploy:
+    - "php artisan migrate:install"
+    - "php artisan migrate"
+  after_deploy:
+    - "rm -f storage/cache/*"
+    - "rm -f storage/views/*"
