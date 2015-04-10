@@ -37,8 +37,8 @@
 			<div id="item<?php echo $i; ?>" class="item<?php if ($i==0) echo ' active'; ?>">
 				<div class="facts-list martop30">
 					<div class="col-xs-1 col-xs-offset-1">
-						<button id="playResult" type="button" class="playResult btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
-						<button id="stopResult" type="button" class="stopResult btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
+						<button id="playResult" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Play', eventAction: 'Click' })" type="button" class="playResult btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
+						<button id="stopResult" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Stop', eventAction: 'Click' })" type="button" class="stopResult btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
 					</div>
 					<div class="col-xs-2 col-xs-offset-1 martop40">
 						<h4>About the finding:</h4>
@@ -78,11 +78,11 @@
 			<?php endfor; ?>
 		</ol>
 		<!-- Control -->
-		<a class="left carousel-control" href="#extract-carousel" role="button" data-slide="prev">
+		<a class="left carousel-control" href="#extract-carousel" role="button" data-slide="prev" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Carousel Previous', eventAction: 'Click' })">
 	        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 	        <span class="sr-only">Previous</span>
 	    </a>
-		<a class="right carousel-control" href="#extract-carousel" role="button" data-slide="next">
+		<a class="right carousel-control" href="#extract-carousel" role="button" data-slide="next" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Carousel Next', eventAction: 'Click' })">
 	        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 	        <span class="sr-only">Next</span>
 	    </a>
@@ -91,7 +91,7 @@
 </div>
 
 <div class="col-xs-6 text-left">
-	<a href="{{ URL::route('searchResults') }}">&laquo; Back to results</a>
+	<a href="{{ URL::route('searchResults') }}" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Back to results', eventAction: 'Click' })">&laquo; Back to results</a>
 </div>
 
 <?php
@@ -118,17 +118,17 @@
 	</div>
 	<div class="col-xs-2 text-left pager-previous">
 		@if ($previousPage > -1)
-			<a href="{{ URL::route('resultDetail', array('id' => $result->file_id, 'page' => $previousPage)) }}">&laquo; Previous Page ({{ $previousRangeStart }} - {{ $previousRangeEnd }})</a>
+			<a href="{{ URL::route('resultDetail', array('id' => $result->file_id, 'page' => $previousPage)) }}" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Page Previous', eventAction: 'Click' })">&laquo; Previous Page ({{ $previousRangeStart }} - {{ $previousRangeEnd }})</a>
 		@endif
 	</div>
 	<div class="col-xs-8 text-center pager-pages">
 		<?php for ($j = 0; $j < $numPages; $j++): ?>
-			<a <?php if($j == $page): ?>class="active"<?php else: ?>href="{{ URL::route('resultDetail', array('id' => $result->file_id, 'page' => $j)) }}"<?php endif; ?>>{{ $j + 1 }}</a>
+			<a <?php if($j == $page): ?>class="active"<?php else: ?>href="{{ URL::route('resultDetail', array('id' => $result->file_id, 'page' => $j)) }}"<?php endif; ?> onclick="ga('send', 'event', { eventCategory: 'Result Detail: Page <?php echo $j + 1; ?>', eventAction: 'Click' })">{{ $j + 1 }}</a>
 		<?php endfor; ?>
 	</div>
 	<div class="col-xs-2 text-right pager-next">
 		@if ($nextPage < $numPages)
-			<a href="{{ URL::route('resultDetail', array('id' => $result->file_id, 'page' => $nextPage)) }}">Next Page ({{ $nextRangeStart }} - {{ $nextRangeEnd }}) &raquo;</a>
+			<a href="{{ URL::route('resultDetail', array('id' => $result->file_id, 'page' => $nextPage)) }}" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Page Next', eventAction: 'Click' })">Next Page ({{ $nextRangeStart }} - {{ $nextRangeEnd }}) &raquo;</a>
 		@endif
 	</div>
 </div>
