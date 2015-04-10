@@ -31,13 +31,13 @@ Abbildung 1: Startseite (Screenshot)
 ### Upload
 Um dem Anwender die Möglichkeit der statistischen Analyse von Musikstücken zu bieten, müssen zunächst Dateien im MusicXML-Format hochgeladen werden. Das im XML-Standard realisierte, offene Austauschformat MusicXML wird von vielen Notensatzprogrammen unterstützt und löst das vorangehende Notation Interchange File Format (NIFF)[5] ab. Zudem bieten einige Portale, wie zum Beispiel Musescore6 den kostenlosen Download von Partituren im MusicXML-Format an, wodurch eine Vielzahl von Musikstücken bereits verfügbar ist. Auf der Homepage von Musescore sind die Partituren in verschiedenen Formaten verfügbar und können nach kostenloser Registrierung heruntergeladen werden. Mit Hilfe der ebenfalls kostenlosen Software können die Partituren in andere Formate (mscx, mscz, xml, mid, ogg, wav oder pdf) umgewandelt werden. Abbildung 2 zeigt die Uploadfunktion des Music-XML-Analyzer, nachdem verschiedene Dateien hochgeladen wurden. Mit einem Klick auf ANALYZE werden die Dateien ausgewertet.  
 ![Upload](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/upload.png)
-Abbildung 2: Upload (Screenshot)
+Abbildung 2: Upload (Screenshot)  
 
 ### Statistische Analyse
 Die hochgeladenen Dateien werden nach erfolgreichem Upload automatisch analysiert. Dabei werden neben den Noten und Pausen unter anderem auch die enthaltenen Intervalle, Taktarten und Instrumente gezählt.
 Die serverseitige Analyse von XML Dateien beginnt stets mit einem XPath-Ausdruck[8]  gefolgt vom Parsen der resultierenden Daten mittels PHP[9]. Anhand des nachfolgenden Beispiels (Abbildung 3), soll der Ablauf und die Funktionsweise kurz erläutert werden. 
 ![Upload](material/screenshots/code.PNG)
-Abbildung 3: Code-Beispiel (Screenshot)
+Abbildung 3: Code-Beispiel (Screenshot)  
 
 Für die Verarbeitung von XML bietet PHP die Schnittstelle SimpleXML[10]. Das Objekt „$xml“ der Klasse SimpleXMLElement wurde vorab durch die Klassen-Funktion „simplexml_load_file()“ mit einer XML-Datei erzeugt. Dieses Objekt ermöglicht die Verwendung der eigentlichen XPath-Ausdrücke. 
 Der Name des Künstlers bzw. Komponisten eines musikalischen Werkes steckt innerhalb eines „<credit>“ – Elements, welches wiederum ein „<credit-word>“ – Element mit dem Wert „composer“ enthält. Der XPath-Ausdruck in Zeile 243 durchsucht das SimpleXMLElement („$xml“) nach allen Elementen, die diese Bedingungen erfüllen. Da die Angaben zu Künstler bzw. Komponist nach MusicXML-Konvention zu Beginn einer XML-Datei gemacht werden, wird in Zeile 245 auf das erste Element zugegriffen, dass die oben genannten Bedingungen erfüllt. Der Name des Künstlers versteckt sich letztlich in einem weiteren XML-Element „<credit-words>“. 
@@ -61,15 +61,15 @@ Abbildung 5: Search (Screenshot)
 ### Suchergebnisse
 Ist der Benutzer mit seiner Noteneingabe zufrieden, werden durch einen Klick auf SEARCH alle hochgeladenen Musikstücke nach dem erstellten Pattern durchsucht. Abbildung 6 zeigt die Ergebnisseite der Suche. Hier wird im oberen Bereich das gesuchte Pattern noch einmal dargestellt und darunter die Musikstücke, welche das Pattern enthalten, samt jeweiliger Häufigkeit der Treffer. 
 ![Result list](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/result_list.png)
-Abbildung 6: Searchresult (Screenshot)
+Abbildung 6: Searchresult (Screenshot)  
 Klickt der User auf einen Treffer, so wird eine Detailansicht aufgerufen, wie in Abbildung 7 zu erkennen ist. Hier werden neben dem Titel des Stücks die jeweiligen Trefferstellen in einem Carousel dargestellt und farblich hervorgehoben. Im unteren Bereich wird die aktuell betrachtete Seite der Treffer angezeigt. 
 Mit Hilfe der Pfeile kann zwischen den Treffern hin und her gewechselt werden. Informationen, in welcher Stimme und in welchem Takt das Pattern gefunden wurde, werden ebenfalls dargestellt. Ein Klick auf PLAY spielt den dargestellten Auszug, der das Pattern enthält, ab. Der Nutzer hat außerdem die Möglichkeit, alle visualisierten Treffer als PDF-Dokument zu exportieren, was mit einem Klick auf den Button EXPORT AS PDF erreicht werden kann. 
 Abbildung 8 zeigt die dazu benötigte Komponente zur Generierung von Partituren aus   MusicXML-Daten. 
 ![Search result detail](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/result.png)
-Abbildung 7: Searchresult Details (Screenshot)
+Abbildung 7: Searchresult Details (Screenshot)  
 
 ![Upload](material/result_extraction.png)
-Abbildung 8: Generierung von Ergebnissauschnitten(eigene Grafik)
+Abbildung 8: Generierung von Ergebnissauschnitten(eigene Grafik)  
 
 Die vom PatternController erhaltenen Suchergebnisse geben an, in welchem XML-Dokument Treffer gefunden wurden und bieten Aufschluss über den Index der Start- und Endnote, sowie darüber, in welchem Part und in welcher Stimme sich das Ergebnis befindet. Diese Objekte werden zunächst an den View ResultDetail weitergegeben. Aus Performancegründen werden von dort aus für jedes Element im oben genannten Carousel nacheinander die Ausschnitte der Partitur nachgeladen. 
 Im ResultController werden dazu mithilfe der PHP-Implementierung von DOMDocument[11] und DOMXPath[12] die jeweiligen Abschnitte extrahiert und das gefundene Pattern farbig markiert. Dabei besteht die Komplexität darin, dass im Grunde alle möglichen XML-Elemente des MusicXML-Dokuments richtig interpretiert werden müssen, um ein Ausgabeobjekt zu erhalten, das die Ausgabe der Noten mit der Javascript-Rendering-Bibliothek ermöglicht. Im Rahmen dieses Projekts beschränkte sich dies jedoch auf die wichtigsten Elemente zur Darstellung unterschiedlichster Notenlängen, Tonhöhen und rhythmischer Besonderheiten. 
@@ -91,7 +91,7 @@ Zur Realisation interaktiver Funktionen und Vereinfachung von Javascript-Code wu
 ### Systemarchitektur
 Abbildung 9 zeigt den Aufbau des Laravel-Frameworks im Zusammenspiel mit den jeweiligen Javascript-Komponenten. Die Laravel-Komponente kümmert sich dabei um die serverseitige Logik der Anwendung, wie die Auslieferung von HTML-Seiten über eine integrierte Templating-Engine und die Kommunikation mit der Datenbank zur persistenten Speicherung. In Abbildung 9 wird auch der Aufbau nach dem Model-View-Controller-Pattern deutlich, demzufolge die grafische Repräsentation (View) von der Logik (Controller) und der Datenschicht (Model) getrennt ist. Die Javascript-Komponente der Anwendung ist ebenso nach dem MVC-Pattern aufgebaut und kümmert sich hauptsächlich um die Interaktivität der Anwendung. Beispielsweise werden die Suchmuster in Javascript vorerst clientseitig zwischengespeichert und erst beim Absenden der Suchanfrage an den Server geleitet. Weitere Aufgabengebiete sind die grafische Aufbereitung der Analysedaten und Partitur-Ausschnitte, sowie die Wiedergabe einzelner Sequenzen. 
 ![Systemarchitektur](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/system_architektur.png)
-Abbildung 9: Systemarchitektur
+Abbildung 9: Systemarchitektur  
 
 Um dem Nutzer die Möglichkeit zu bieten, seine Arbeit ohne zusätzliche Speicherung immer aktuell zu halten, wurde ein einfaches Datenbankschema entwickelt, welches in Abbildung 10 als ERM-Model aufgeführt ist. Den Nutzern wird dabei beim ersten Betreten der Anwendung eine ID zugewiesen, die gleichzeitig als Cookie beim Nutzer im Browser hinterlegt wird. Auf den Server geladene Dateien werden entsprechend mit dem Nutzer referenziert, ebenso wie einem Upload-Objekt nach erfolgreicher Analyse dessen Ergebnisse zugeordnet werden. Bei der Konzeption wurde bewusst auf eine aufwendige Nutzerverwaltung mit Registrierung und Anmeldung verzichtet, da dies den schnellen Einstieg oft erheblich behindert.
 ![Datenbankschema](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/database_schema.png)
@@ -120,37 +120,36 @@ Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von 
 
 ## Links
 
-[1]  http://www.klemm-music.de/makemusic/finale/ 27.03.2015
-[2]  https://musescore.org/de 27.03.2015
-[3]  http://my.vexflow.com/ 27.03.2015
-[4]  https://www.noteflight.com/ 27.03.2015
-[5]  http://www.musicxml.com/de/ 27.03.2015
-[6]  https://de.wikipedia.org/wiki/MusicXML 27.03.2015
-[7]  mscx, mscz, xml, mxl, mid, ogg, wav, flac, pdf, ps, png, svg und ly
-[8]  http://www.w3.org/TR/xpath/ 27.03.2015
-[9]  https://php.net/ 27.03.2015
-[10]  https://php.net/manual/de/book.simplexml.php 27.03.2015
-[11]  http://php.net/manual/de/class.domdocument.php - 01.04.2015
-[12]  http://php.net/manual/de/class.domxpath.php
-[13]  https://www.zenhub.io/ 27.03.2015
-[14]  https://kanbanflow.com/ 08.04.2015
-[15]  http://laravel.com/ 27.03.2015
-[16]  https://jquery.com/ 27.03.2015
-[17]  http://getbootstrap.com/ 27.03.2015
-[18] https://fezvrasta.github.io/bootstrap-material-design/ 27.03.2015
-[19] http://d3js.org/ 27.03.2015
-[20] http://www.vexflow.com/ 27.03.2015
-[21] http://www.mattboldt.com/demos/typed-js/ 27.03.2015
-[22] http://www.dropzonejs.com/ 27.03.2015
-[23] http://mudcu.be/midi-js/ 27.03.2015
-
-[24] https://parall.ax/products/jspdf 27.03.2015
+[1]  http://www.klemm-music.de/makemusic/finale/ 27.03.2015  
+[2]  https://musescore.org/de 27.03.2015  
+[3]  http://my.vexflow.com/ 27.03.2015  
+[4]  https://www.noteflight.com/ 27.03.2015  
+[5]  http://www.musicxml.com/de/ 27.03.2015  
+[6]  https://de.wikipedia.org/wiki/MusicXML 27.03.2015  
+[7]  mscx, mscz, xml, mxl, mid, ogg, wav, flac, pdf, ps, png, svg und ly  
+[8]  http://www.w3.org/TR/xpath/ 27.03.2015  
+[9]  https://php.net/ 27.03.2015  
+[10]  https://php.net/manual/de/book.simplexml.php 27.03.2015  
+[11]  http://php.net/manual/de/class.domdocument.php - 01.04.2015  
+[12]  http://php.net/manual/de/class.domxpath.php  
+[13]  https://www.zenhub.io/ 27.03.2015  
+[14]  https://kanbanflow.com/ 08.04.2015  
+[15]  http://laravel.com/ 27.03.2015  
+[16]  https://jquery.com/ 27.03.2015  
+[17]  http://getbootstrap.com/ 27.03.2015  
+[18] https://fezvrasta.github.io/bootstrap-material-design/ 27.03.2015  
+[19] http://d3js.org/ 27.03.2015  
+[20] http://www.vexflow.com/ 27.03.2015  
+[21] http://www.mattboldt.com/demos/typed-js/ 27.03.2015  
+[22] http://www.dropzonejs.com/ 27.03.2015  
+[23] http://mudcu.be/midi-js/ 27.03.2015  
+[24] https://parall.ax/products/jspdf 27.03.2015  
 
 ## Documentation
-[phpDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs/php)
+[phpDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs/php)  
 
-[jsDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs/js/MusicXMLAnalyzer.html)
-
+[jsDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs/js/MusicXMLAnalyzer.html)  
+  
 ## Copyright and license
 
 Code and documentation copyright 2015 Lukas Lamm, David Lechler, Matthias Schneider, Tobias Semmelmann. Code released under the MIT license. See [LICENSE.md](LICENSE.md)
