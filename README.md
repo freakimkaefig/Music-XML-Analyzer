@@ -143,10 +143,12 @@ Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von 
 [21] http://www.mattboldt.com/demos/typed-js/ 27.03.2015
 [22] http://www.dropzonejs.com/ 27.03.2015
 [23] http://mudcu.be/midi-js/ 27.03.2015
+
 [24] https://parall.ax/products/jspdf 27.03.2015
 
 ## Documentation
 [phpDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs/php)
+
 [jsDoc](http://freakimkaefig.github.io/Music-XML-Analyzer/docs/js/MusicXMLAnalyzer.html)
 
 ## Copyright and license
