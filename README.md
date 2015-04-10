@@ -61,15 +61,16 @@ Abbildung 5: Search (Screenshot)
 ### Suchergebnisse
 Ist der Benutzer mit seiner Noteneingabe zufrieden, werden durch einen Klick auf SEARCH alle hochgeladenen Musikstücke nach dem erstellten Pattern durchsucht. Abbildung 6 zeigt die Ergebnisseite der Suche. Hier wird im oberen Bereich das gesuchte Pattern noch einmal dargestellt und darunter die Musikstücke, welche das Pattern enthalten, samt jeweiliger Häufigkeit der Treffer. 
 ![Result list](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/result_list.png)
-Abbildung 6: Searchresult (Screenshot)  
+Abbildung 6: Searchresult (Screenshot)   
+
 Klickt der User auf einen Treffer, so wird eine Detailansicht aufgerufen, wie in Abbildung 7 zu erkennen ist. Hier werden neben dem Titel des Stücks die jeweiligen Trefferstellen in einem Carousel dargestellt und farblich hervorgehoben. Im unteren Bereich wird die aktuell betrachtete Seite der Treffer angezeigt. 
 Mit Hilfe der Pfeile kann zwischen den Treffern hin und her gewechselt werden. Informationen, in welcher Stimme und in welchem Takt das Pattern gefunden wurde, werden ebenfalls dargestellt. Ein Klick auf PLAY spielt den dargestellten Auszug, der das Pattern enthält, ab. Der Nutzer hat außerdem die Möglichkeit, alle visualisierten Treffer als PDF-Dokument zu exportieren, was mit einem Klick auf den Button EXPORT AS PDF erreicht werden kann. 
 Abbildung 8 zeigt die dazu benötigte Komponente zur Generierung von Partituren aus   MusicXML-Daten. 
 ![Search result detail](https://raw.githubusercontent.com/freakimkaefig/Music-XML-Analyzer/master/material/screenshots/result.png)
-Abbildung 7: Searchresult Details (Screenshot)  
+Abbildung 7: Searchresult Details (Screenshot)   
 
 ![Upload](material/result_extraction.png)
-Abbildung 8: Generierung von Ergebnissauschnitten(eigene Grafik)  
+Abbildung 8: Generierung von Ergebnissauschnitten (eigene Grafik)   
 
 Die vom PatternController erhaltenen Suchergebnisse geben an, in welchem XML-Dokument Treffer gefunden wurden und bieten Aufschluss über den Index der Start- und Endnote, sowie darüber, in welchem Part und in welcher Stimme sich das Ergebnis befindet. Diese Objekte werden zunächst an den View ResultDetail weitergegeben. Aus Performancegründen werden von dort aus für jedes Element im oben genannten Carousel nacheinander die Ausschnitte der Partitur nachgeladen. 
 Im ResultController werden dazu mithilfe der PHP-Implementierung von DOMDocument[11] und DOMXPath[12] die jeweiligen Abschnitte extrahiert und das gefundene Pattern farbig markiert. Dabei besteht die Komplexität darin, dass im Grunde alle möglichen XML-Elemente des MusicXML-Dokuments richtig interpretiert werden müssen, um ein Ausgabeobjekt zu erhalten, das die Ausgabe der Noten mit der Javascript-Rendering-Bibliothek ermöglicht. Im Rahmen dieses Projekts beschränkte sich dies jedoch auf die wichtigsten Elemente zur Darstellung unterschiedlichster Notenlängen, Tonhöhen und rhythmischer Besonderheiten. 
