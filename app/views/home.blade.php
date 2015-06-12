@@ -16,7 +16,7 @@
 			<div class="col-sm-4">
 				<div class="col-xs-12">
 					<span class="icon glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-bottom: -30px; margin-top: 15px;"></span>
-					<h2>Automatic Analyzation</h2>
+					<h2>Automatic Analysis</h2>
 					<p>Your uploaded data will be analyzed and some fancy statistics will be created.</p>
 				</div>
 			</div>
