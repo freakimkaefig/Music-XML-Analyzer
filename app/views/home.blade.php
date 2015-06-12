@@ -17,7 +17,7 @@
 				<div class="col-xs-12">
 					<span class="icon glyphicon glyphicon-eye-open" aria-hidden="true" style="margin-bottom: -30px; margin-top: 15px;"></span>
 					<h2>Automatic Analysis</h2>
-					<p>Your uploaded data will be analyzed and some fancy statistics will be created.</p>
+					<p>Your uploaded data will be analysed and some fancy statistics will be created.</p>
 				</div>
 			</div>
 
@@ -72,7 +72,31 @@
 		</div>
 
 		<div class="col-xs-12 col-md-3 col-lg-2 docs">
-			<a href="http://freakimkaefig.github.io/Music-XML-Analyzer/" class="btn btn-material-teal-400" id="documentationButton">Documentation</a>
+			<a href="http://freakimkaefig.github.io/Music-XML-Analyzer/" target="_blank" class="btn btn-material-teal-400" id="documentationButton">Documentation</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12 col-md-1 col-lg-2 text-center">
+			<h5>Supervised by: </h5>
+		</div>
+		<div class="col-sm-3 col-md-2">
+			<address>
+				<strong>Manuel Burghardt</strong><br>
+				<small><a href="mailto:manuel.burghardt@ur.de">manuel.burghardt@ur.de</a></small>
+			</address>
+		</div>
+		<div class="col-sm-6 col-md-4">
+			<address>
+				<strong>Lehrstuhl für Medieninformatik - Universität Regensburg</strong><br>
+				<small><a href="http://www.uni-regensburg.de/sprache-literatur-kultur/medieninformatik/" target="_blank">http://www.uni-regensburg.de/sprache-literatur-kultur/medieninformatik/</a></small>
+			</address>
+		</div>
+		<div class="col-sm-3 col-md-2">
+			<address>
+				<strong><a href="https://github.com/freakimkaefig/Music-XML-Analyzer/blob/master/LICENSE.md">Licensed under MIT open source license</a></strong>
+				<small>More on: <a href="https://github.com/freakimkaefig/Music-XML-Analyzer" target="_blank">GitHub</a></small>
+			</address>
 		</div>
 	</div>
 </div>

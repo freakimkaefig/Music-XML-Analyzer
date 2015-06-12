@@ -113,11 +113,16 @@ Letztlich gibt es eine Vielzahl weiterer musikalischer Elemente die zur Notation
 ## Über das Projekt
 Das Projekt wurde im Rahmen des Kurses Digital Humanities unter der Leitung von Dr. Manuel Burghardt im Wintersemester 2014/2015 an der Universität Regensburg durchgeführt.  
   
-**Kontakt:**
+**Kontakt:**  
+*Coded by:*  
 * Lukas Lamm (freak.im.kaefig@gmx.net, http://lukaslamm.de)
 * David Lechler (davidlechler@outlook.com)
 * Tobias Semmelmann (semmler1988@gmail.com)
 * Matthias Schneider (matthias.schneider89@gmail.com)
+
+*Supervised by:*  
+Manuel Burghardt (manuel.burghardt@ur.de)  
+Lehrstuhl für Medieninformatik - Universität Regensburg  
 
 ## Links
 
