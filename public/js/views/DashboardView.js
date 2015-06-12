@@ -169,9 +169,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 */
 	initCountNotes = function(results){
 		$overallStatistics.empty();
-		$overallStatistics.append('<h3 class="text-center">Overall Statistics</h3><br>');
+		$overallStatistics.append('<h3 class="text-center">Overall statistics</h3><br>');
 		$plainFacts.empty();
-		$plainFacts.append('<li><strong>Total Notes:  </strong>' + results + '</li><br><br>');
+		$plainFacts.append('<li><strong>Total notes:  </strong>' + results + '</li><br><br>');
 		$plainFacts.find('li').on('change', onFileSelectorChange);
 	},
 
@@ -183,7 +183,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 * @param {int}    results    number of total rests
 	 */
 	initCountRests = function(results){
-		$plainFacts.append('<li><strong>Total Rests:  </strong>' + results + '</li>');
+		$plainFacts.append('<li><strong>Total rests:  </strong>' + results + '</li>');
 	},
 
 	/**
@@ -195,7 +195,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 */
 	initCountMeasures = function(results){
 		$plainFacts2.empty();
-		$plainFacts2.append('<li><strong>Total Measures:  </strong>' + results + '</li><br><br>');
+		$plainFacts2.append('<li><strong>Total measures:  </strong>' + results + '</li><br><br>');
 	},
 
 	/**
@@ -206,7 +206,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 * @param {string}    results    most frequent note
 	 */
 	initMostFrequentNote = function(results){
-		$plainFacts2.append('<li><strong>Most frequent Note:  </strong>' + results + '</li>');
+		$plainFacts2.append('<li><strong>Most frequent note:  </strong>' + results + '</li>');
 	},
 
 	/**
@@ -382,7 +382,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	        .style("font-size", "23px")
 	        .style("font-weight", 300)
 	        .style("font-family", 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif')
-	        .text("Intervall distribution");
+	        .text("Interval distribution");
 
 		svg.selectAll(".bar")
 		   .data(data)
@@ -420,7 +420,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		keyDistribution = new d3pie("pie_keyDistribution", {
 			header: {
 				title: {
-					text: "Key Distribution"
+					text: "Key distribution"
 				}
 			},
 			data: {

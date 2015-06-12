@@ -9,7 +9,7 @@
 		</div>
 
 		<div class="col-sm-6">
-			<a class="btn btn-danger pull-right" href="{{ URL::route('pattern') }}" onclick="ga('send', 'event', { eventCategory: 'Dashboard: Search', eventAction: 'Click' })"><span class="glyphicon glyphicon-search"></span> <span>Search for Patterns</span></a>
+			<a class="btn btn-danger pull-right" href="{{ URL::route('pattern') }}" onclick="ga('send', 'event', { eventCategory: 'Dashboard: Search', eventAction: 'Click' })"><span class="glyphicon glyphicon-search"></span> <span>Search for patterns</span></a>
 		</div>
 	</div>
 

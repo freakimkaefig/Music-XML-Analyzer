@@ -3,7 +3,7 @@
 
 <div class="row text-center">
 	<div class="col-xs-12 marbo30">
-		<center><h4 class="no-margin">Choose Mode: </h4></center>
+		<center><h4 class="no-margin">Choose mode: </h4></center>
 		<div class="btn-group" data-toggle="buttons">
 			<label title="Create a melodiy pattern." id="melody-mode-2" onclick="ga('send', 'event', { eventCategory: 'Mode Melody', eventAction: 'Click' })" class="btn btn-mode btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 				<input type="radio" value=":melody">melody
@@ -39,7 +39,7 @@
 <div class="container">
 	<div class="row marbo20">
 		<div class="col-xs-8">
-			<p class="no-margin">Special Rhythm: </p>
+			<p class="no-margin">Special rhythm: </p>
 			<div class="btn-group" data-toggle="buttons">
 				<label title="NONE: Enter standard notes or breaks according to selected mode." id="spec-none" onclick="ga('send', 'event', { eventCategory: 'Special Rhythm: None', eventAction: 'Click' })" class="btn btn-special-ryth btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
                     <input type="radio" value=":none">None
@@ -74,7 +74,7 @@
 
 	<div class="row marbo20">
 		<div id="noteOrBreak" class="col-xs-8">
-			<p class="no-margin">Notes/Breaks: </p>
+			<p class="no-margin">Notes / Breaks: </p>
 			<div title="Select notes ranging from 'C' to 'B' or select 'REST' to create the corresponding element." class="btn-group" data-toggle="buttons">
 				<label id="c" onclick="ga('send', 'event', { eventCategory: 'Note: C', eventAction: 'Click' })" class="btn btn-note btn-material-blue-grey active" data-toggle="tooltip" data-placement="top">
 					<input type="radio" value=":c">C
