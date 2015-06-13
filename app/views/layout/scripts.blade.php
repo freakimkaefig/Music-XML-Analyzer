@@ -38,7 +38,7 @@
 {{ HTML::script('libs/midijs/inc/jasmid/replayer.js') }}
 
 <!-- jsPdf -->
-{{ HTML::script('libs/jsPDF-0.9.0rc2/dist/jspdf.source.js') }}
+{{ HTML::script('libs/jsPDF-1.0.272/dist/jspdf.debug.js') }}
 
  <!-- others -->
 {{ HTML::script('js/helpers/Route.js') }}

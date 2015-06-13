@@ -140,14 +140,13 @@ MusicXMLAnalyzer.ResultView = function(){
         img.onload = function() {
             // We create a canvas and get its context.
             var canvas = document.createElement('canvas');
-            var ctx = canvas.getContext('2d');
 
             // We set the dimensions at the wanted size.
             canvas.width = wantedWidth;
             canvas.height = wantedHeight;
 
             // We resize the image with the canvas method drawImage();
-            ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);
+            canvas.getContext('2d').drawImage(img, 0, 0, wantedWidth, wantedHeight);
 
             var dataURI = canvas.toDataURL("image/jpeg", 1.0);
 
