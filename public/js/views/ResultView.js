@@ -116,7 +116,8 @@ MusicXMLAnalyzer.ResultView = function(){
 			var origImg = new Image();
 			origImg.src = canvasImg;
 			width = 700;
-			height = parseInt((width * origImg.height) / origImg.width);
+			height = (width * origImg.height) / origImg.width;
+			console.log(width, height);
 			resultImage = resizedataURL(canvasImg, width, height, index);
 		});
 
