@@ -166,7 +166,6 @@ MusicXMLAnalyzer.ResultView = function(){
             var dataURI = can.toDataURL("image/jpeg", 1.0);
 
             // return dataURI;
-            console.log(dataURI);
         	addImageToDOM(index, dataURI);
         };
 
