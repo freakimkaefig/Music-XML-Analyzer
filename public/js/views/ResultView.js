@@ -52,6 +52,7 @@ MusicXMLAnalyzer.ResultView = function(){
      * @public
 	 */
 	setModelReady = function() {
+		console.info("MusicXMLAnalyzer.ResultView.setModelReady");
 		finishedLoading = true;
 		prepareExport();
 	},
@@ -140,6 +141,7 @@ MusicXMLAnalyzer.ResultView = function(){
         img.onload = function() {
             // We create a canvas and get its context.
             var can = document.createElement('canvas');
+            var gl = canvas.getContext("webgl", {preserveDrawingBuffer: true});
 
             // We set the dimensions at the wanted size.
             can.width = wantedWidth;
@@ -224,8 +226,9 @@ MusicXMLAnalyzer.ResultView = function(){
 			try {
 				doc.addImage(resultimg, "JPEG", 15, 100);
 			} catch (e) {
-				doc.text(15, 100, "An error occured generating the image, please try again.");
+				alert("An error occured generating the image");
 				console.error(e);
+				return false;
 			}
 		});
 
