@@ -35,28 +35,30 @@
 				$resultItem->file_url = $result->file_url;
 			?>
 			<div id="item<?php echo $i; ?>" class="item<?php if ($i==0) echo ' active'; ?>">
-				<div class="facts-list martop30">
-					<div class="col-xs-1 col-xs-offset-1">
+				<div class="row">
+					<div class="col-xs-6 col-xs-offset-3 martop30 text-center">
+						<h4>About the finding:</h4>
+					</div>
+				</div>
+				<div class="facts-list">
+					<div class="col-xs-2 col-xs-offset-1">
 						<button id="playResult" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Play', eventAction: 'Click' })" type="button" class="playResult btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
 						<button id="stopResult" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Stop', eventAction: 'Click' })" type="button" class="stopResult btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
 					</div>
-					<div class="col-xs-2 col-xs-offset-1 martop40">
-						<h4>About the finding:</h4>
-					</div>
-					<div class="col-xs-3 martop40">
+					<div class="col-xs-3">
 						<ul class="no-list">
 							<li class="partName"><strong>Part name (Instrument):</strong> {{ ResultController::_getInstrument($result->file_id, $resultItem->part_id) }}</li>
 							<li class="partId"><strong>Part ID:</strong> {{ $resultItem->part_id }}</li>
 							<li class="voice"><strong>Voice:</strong> {{ $resultItem->voice }}</li>
 						</ul>
 					</div>
-					<div class="col-xs-3 martop40">
+					<div class="col-xs-3">
 						<ul class="no-list">
 							<li class="key"><strong>Key:</strong> {{ ResultController::_getKey($result->file_id) }}</li>
 							<li class="measures"></li>
 						</ul>
 					</div>
-					<div class="col-xs-1 pull-right martop40">
+					<div class="col-xs-2 pull-right">
 						<button type="button" class="exportButton btn btn-lg btn-success pull-right"><span class="glyphicon glyphicon-file"></span> <span>Export as PDF</span></button>
 					</div>
 				</div>
