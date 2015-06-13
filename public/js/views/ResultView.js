@@ -117,7 +117,7 @@ MusicXMLAnalyzer.ResultView = function(){
 			origImg.src = canvasImg;
 			width = 700;
 			height = (parseFloat(width) * parseFloat(origImg.height)) / parseFloat(origImg.width);
-			console.log(width, height);
+			console.log("origImg.width: " + origImg.width, "origImg.height: " + origImg.height, "width: " + width, "height: " + height);
 			resultImage = resizedataURL(canvasImg, width, height, index);
 		});
 
@@ -135,7 +135,6 @@ MusicXMLAnalyzer.ResultView = function(){
 	 * @param {int}       	index    		counter
 	 */
 	resizedataURL = function(datas, wantedWidth, wantedHeight, index) {
-		console.log(wantedWidth, wantedHeight);
         // We create an image to receive the Data URI
         var img = document.createElement('img');
 
