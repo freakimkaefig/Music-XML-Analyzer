@@ -52,6 +52,7 @@ MusicXMLAnalyzer.ResultView = function(){
      * @public
 	 */
 	setModelReady = function() {
+		console.info("MusicXMLAnalyzer.ResultView.setModelReady");
 		finishedLoading = true;
 		prepareExport();
 	},
@@ -133,6 +134,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	 * @param {int}       	index    		counter
 	 */
 	resizedataURL = function(datas, wantedWidth, wantedHeight, index) {
+		console.log(wantedWidth, wantedHeight);
         // We create an image to receive the Data URI
         var img = document.createElement('img');
 
@@ -151,6 +153,7 @@ MusicXMLAnalyzer.ResultView = function(){
             var dataURI = can.toDataURL("image/jpeg", 1.0);
 
             // return dataURI;
+            console.log(dataURI);
         	addImageToDOM(index, dataURI);
         };
 
