@@ -141,7 +141,7 @@ MusicXMLAnalyzer.ResultView = function(){
         img.onload = function() {
             // We create a canvas and get its context.
             var can = document.createElement('canvas');
-            var gl = canvas.getContext("webgl", {preserveDrawingBuffer: true});
+            var gl = can.getContext("webgl", {preserveDrawingBuffer: true});
 
             // We set the dimensions at the wanted size.
             can.width = wantedWidth;
