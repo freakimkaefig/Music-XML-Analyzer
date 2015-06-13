@@ -40,7 +40,7 @@ class DownloadController extends BaseController {
 
 		$uploads = $user->uploads->toArray();
 		$filename = 'analysis_results.csv';
-		$download_path = public_path() . '\\downloads\\' . $user->id . '\\';
+		$download_path = public_path() . '/downloads/' . $user->id . '/';
 		if (!file_exists($download_path) || !is_dir($download_path)) {
 			mkdir($download_path, 0755);
 		}
