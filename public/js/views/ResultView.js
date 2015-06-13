@@ -139,16 +139,16 @@ MusicXMLAnalyzer.ResultView = function(){
         // When the event "onload" is triggered we can resize the image.
         img.onload = function() {
             // We create a canvas and get its context.
-            var canvas = document.createElement('canvas');
+            var can = document.createElement('canvas');
 
             // We set the dimensions at the wanted size.
-            canvas.width = wantedWidth;
-            canvas.height = wantedHeight;
+            can.width = wantedWidth;
+            can.height = wantedHeight;
 
             // We resize the image with the canvas method drawImage();
-            canvas.getContext('2d').drawImage(this, 0, 0, wantedWidth, wantedHeight);
+            can.getContext('2d').drawImage(img, 0, 0, wantedWidth, wantedHeight);
 
-            var dataURI = canvas.toDataURL("image/jpeg", 1.0);
+            var dataURI = can.toDataURL("image/jpeg", 1.0);
 
             // return dataURI;
             console.log(dataURI);
