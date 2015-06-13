@@ -220,7 +220,13 @@ MusicXMLAnalyzer.ResultView = function(){
 
 			// insert result extract
 			var resultimg = $(this).find('.image').val();
-			doc.addImage(resultimg, "JPEG", 15, 100);
+
+			try {
+				doc.addImage(resultimg, "JPEG", 15, 100);
+			} catch (e) {
+				doc.text(15, 100, "An error occured generating the image, please try again.");
+				console.error(e);
+			}
 		});
 
 		// save doc
