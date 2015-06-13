@@ -52,6 +52,7 @@ MusicXMLAnalyzer.ResultView = function(){
      * @public
 	 */
 	setModelReady = function() {
+		console.info("MusicXMLAnalyzer.ResultView.setModelReady");
 		finishedLoading = true;
 		prepareExport();
 	},
@@ -115,7 +116,7 @@ MusicXMLAnalyzer.ResultView = function(){
 			var origImg = new Image();
 			origImg.src = canvasImg;
 			width = 700;
-			height = (width * origImg.height) / origImg.width;
+			height = parseInt((width * origImg.height) / origImg.width);
 			resultImage = resizedataURL(canvasImg, width, height, index);
 		});
 
@@ -133,25 +134,26 @@ MusicXMLAnalyzer.ResultView = function(){
 	 * @param {int}       	index    		counter
 	 */
 	resizedataURL = function(datas, wantedWidth, wantedHeight, index) {
+		console.log(wantedWidth, wantedHeight);
         // We create an image to receive the Data URI
         var img = document.createElement('img');
 
         // When the event "onload" is triggered we can resize the image.
         img.onload = function() {
             // We create a canvas and get its context.
-            var canvas = document.createElement('canvas');
-            var ctx = canvas.getContext('2d');
+            var can = document.createElement('canvas');
 
             // We set the dimensions at the wanted size.
-            canvas.width = wantedWidth;
-            canvas.height = wantedHeight;
+            can.width = wantedWidth;
+            can.height = wantedHeight;
 
             // We resize the image with the canvas method drawImage();
-            ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);
+            can.getContext('2d').drawImage(img, 0, 0, wantedWidth, wantedHeight);
 
-            var dataURI = canvas.toDataURL("image/jpeg", 1.0);
+            var dataURI = can.toDataURL("image/jpeg", 1.0);
 
             // return dataURI;
+            console.log(dataURI);
         	addImageToDOM(index, dataURI);
         };
 
@@ -220,7 +222,14 @@ MusicXMLAnalyzer.ResultView = function(){
 
 			// insert result extract
 			var resultimg = $(this).find('.image').val();
-			doc.addImage(resultimg, "JPEG", 15, 100);
+
+			try {
+				doc.addImage(resultimg, "JPEG", 15, 100);
+			} catch (e) {
+				alert("An error occured generating the image");
+				console.error(e);
+				return false;
+			}
 		});
 
 		// save doc
