@@ -111,18 +111,31 @@ MusicXMLAnalyzer.ResultView = function(){
 	 */
 	prepareExport = function() {
 		$('.item').each(function(index) {
-			var canvas = $(this).find('.canvas')[0];
-			var canvasImg = canvas.toDataURL("image/jpeg", 1.0);
-			var origImg = new Image();
-			origImg.src = canvasImg;
-			width = 700;
-			height = (parseFloat(width) * parseFloat(origImg.height)) / parseFloat(origImg.width);
-			console.log("origImg.width: " + origImg.width, "origImg.height: " + origImg.height, "width: " + width, "height: " + height);
-			resultImage = resizedataURL(canvasImg, width, height, index);
+			var dimensions = calculateDimensions(this);
+
+			resultImage = resizedataURL(dimensions.canvasImg, dimensions.width, dimensions.height, index);
 		});
 
 		$exportButton.removeClass('disabled');
 	},
+
+	/**
+	 * Method to calculate width & height for resizing images (pdf donwload)
+	 * @function
+     * @private
+	 */
+	 calculateDimensions = function(ele) {
+	 	var itemCanvas = $(ele).find('.canvas')[0];
+	 	var canvasImg = itemCanvas.toDataURL("image/jpeg", 1.0);
+		width = 700;
+		if (itemCanvas.width > 0 || itemCanvas.height > 0) {
+			height = (parseFloat(width) * parseFloat(itemCanvas.height)) / parseFloat(itemCanvas.width);
+			return { canvasImg: canvasImg, width: width, height: height };
+		} else {
+			alert("Something went wrong. Try reloading the page.");
+		}
+	 },
+
 
 	/**
 	 * Method creates images from carousel data
@@ -226,7 +239,7 @@ MusicXMLAnalyzer.ResultView = function(){
 			try {
 				doc.addImage(resultimg, "JPEG", 15, 100);
 			} catch (e) {
-				alert("An error occured generating the image");
+				alert("An error occured generating the pdf");
 				console.error(e);
 				return false;
 			}
