@@ -52,7 +52,6 @@ MusicXMLAnalyzer.ResultView = function(){
      * @public
 	 */
 	setModelReady = function() {
-		console.info("MusicXMLAnalyzer.ResultView.setModelReady");
 		finishedLoading = true;
 		prepareExport();
 	},
@@ -116,7 +115,7 @@ MusicXMLAnalyzer.ResultView = function(){
 			var origImg = new Image();
 			origImg.src = canvasImg;
 			width = 700;
-			height = (width * origImg.height) / origImg.width;
+			height = parseInt((width * origImg.height) / origImg.width);
 			resultImage = resizedataURL(canvasImg, width, height, index);
 		});
 
@@ -141,7 +140,6 @@ MusicXMLAnalyzer.ResultView = function(){
         img.onload = function() {
             // We create a canvas and get its context.
             var can = document.createElement('canvas');
-            var gl = can.getContext("webgl", {preserveDrawingBuffer: true});
 
             // We set the dimensions at the wanted size.
             can.width = wantedWidth;
@@ -153,7 +151,6 @@ MusicXMLAnalyzer.ResultView = function(){
             var dataURI = can.toDataURL("image/jpeg", 1.0);
 
             // return dataURI;
-            console.log(dataURI);
         	addImageToDOM(index, dataURI);
         };
 
