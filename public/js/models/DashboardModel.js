@@ -262,7 +262,8 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				{ label: "F minor", value: 0 },
 				{ label: "B minor", value: 0 },
 				{ label: "E flat minor", value: 0 },
-				{ label: "A flat minor", value: 0 }
+				{ label: "A flat minor", value: 0 },
+				{ label: "Unknown", value: 0 }
 			],
 			meter: [],
 			most_frequent_note: '',

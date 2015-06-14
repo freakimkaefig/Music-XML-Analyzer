@@ -413,7 +413,8 @@ class SearchController extends BaseController {
 			(object)array("label" => "F minor", "value" => 0 ),
 			(object)array("label" => "B minor", "value" => 0 ),
 			(object)array("label" => "E flat minor", "value" => 0 ),
-			(object)array("label" => "A flat minor", "value" => 0 )
+			(object)array("label" => "A flat minor", "value" => 0 ),
+			(object)array("label" => "Unknown", "value" => 0 )
 			);
 
 		foreach($keys as $key) {
@@ -518,7 +519,9 @@ class SearchController extends BaseController {
 						$keysArray[29]->value = $keysArray[29]->value + 1;
 						break;
 				endswitch;
-
+			} else //unknown key
+			{
+				$keysArray[30]->value = $keysArray[30]->value + 1;
 			}
 	    }
 
