@@ -6,6 +6,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 	$logMessages = null,
 	dashboardMessageCounter = null,
 	$fileSelector = null,
+	$plainFacts = null,
+	$plainFacts2 = null,
+	$plainFacts3 = null,
+	$overallStatistics = null,
 
 	noteDistribution = null,
 	intervalDistribution = null,
@@ -46,6 +50,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 		"#263238",	// blue-grey-900
 	],
 
+	$scoreOpen = null,
+	$scoreClose = null,
+
 	/**
 	 * Init function
 	 * @function
@@ -60,6 +67,11 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$plainFacts2 = $('#plainFacts2');
 		$plainFacts3 = $('#plainFacts3');
 		$overallStatistics = $('#overallStatistics');
+
+		$scoreOpen = $('#score_open_button > a');
+		$scoreOpen.on('click', onScoreOpenClick);
+		$scoreClose = $('#score_close_button > a');
+		$scoreClose.on('click', onScoreCloseClick);
 
 	},
 
@@ -169,9 +181,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 */
 	initCountNotes = function(results){
 		$overallStatistics.empty();
-		$overallStatistics.append('<h3 class="text-center">Overall statistics</h3><br>');
+		$overallStatistics.append('<h3 class="text-center">Overall statistics</h3>');
 		$plainFacts.empty();
-		$plainFacts.append('<li><strong>Total notes:  </strong>' + results + '</li><br><br>');
+		$plainFacts.append('<li><strong>Total notes:  </strong>' + results + '</li>');
 		$plainFacts.find('li').on('change', onFileSelectorChange);
 	},
 
@@ -195,7 +207,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 */
 	initCountMeasures = function(results){
 		$plainFacts2.empty();
-		$plainFacts2.append('<li><strong>Total measures:  </strong>' + results + '</li><br><br>');
+		$plainFacts2.append('<li><strong>Total measures:  </strong>' + results + '</li>');
 	},
 
 	/**
@@ -525,6 +537,16 @@ MusicXMLAnalyzer.DashboardView = function(){
 				}
 			}
 		});
+	},
+
+	onScoreOpenClick = function(event) {
+		$('.canvas-wrapper').addClass('in');
+		$('body').css('overflow-x', 'hidden');
+	},
+
+	onScoreCloseClick = function(event) {
+		$('.canvas-wrapper').removeClass('in');
+		$('body').css('overflow-x', 'auto');
 	};
 
 	that.init = init;
