@@ -121,7 +121,8 @@ class SearchController extends BaseController {
 			(object)array("label" => "Dbl. oct. + Tritone", "value" => 0 ),
 			(object)array("label" => "Dbl. oct. + Perfect 5th", "value" => 0 ),
 			(object)array("label" => "Dbl. oct. + Min. 6th", "value" => 0 ),
-			(object)array("label" => "Dbl. oct. + Maj. 6th", "value" => 0 )
+			(object)array("label" => "Dbl. oct. + Maj. 6th", "value" => 0 ),
+			(object)array("label" => "Unknown", "value" => 0 )
 			);
 
 		for($i = 0; $i < count($notesArray) - 1;$i++){
@@ -230,6 +231,9 @@ class SearchController extends BaseController {
 				case 33:
 					$intervalArray[33]->value = $intervalArray[33]->value + 1;
 					break;
+				default:
+					$intervalArray[34]->value = $intervalArray[34]->value + 1;
+					break;
 			endswitch;
 		}
 
@@ -320,7 +324,8 @@ class SearchController extends BaseController {
 			(object)array("label" => "eighth", "value" => 0 ),
 			(object)array("label" => "16th", "value" => 0 ),
 			(object)array("label" => "32nd", "value" => 0 ),
-			(object)array("label" => "64th", "value" => 0 )
+			(object)array("label" => "64th", "value" => 0 ),
+			(object)array("label" => "Unknown", "value" => 0 )
 			);
 
 		foreach($notes as $note) {
@@ -349,6 +354,9 @@ class SearchController extends BaseController {
 						$noteTypesArray[6]->value = $noteTypesArray[6]->value + 1;
 						break;
 				endswitch;
+			}else //unknown note type
+			{
+				$noteTypesArray[7]->value = $noteTypesArray[7]->value + 1;
 			}
 	    }
 	    return $noteTypesArray;
@@ -369,7 +377,7 @@ class SearchController extends BaseController {
 			$meter = $beat[0] ."/". $beatType[0];
 			return $meter;
 		}else{
-			return "N/A";
+			return "Unknown";
 		}
 	}
 
@@ -683,7 +691,7 @@ class SearchController extends BaseController {
 			(object)array("label" => "G#", "value" => 0 ),
 			(object)array("label" => "Cb", "value" => 0 ),
 			(object)array("label" => "Ab", "value" => 0 ),
-
+			(object)array("label" => "Unknown", "value" => 0 )
 			);
 
 		foreach($notes as $note) {
@@ -756,6 +764,9 @@ class SearchController extends BaseController {
 					break;
 				case "Ab":
 					$notesArray[18]->value = $notesArray[18]->value + 1;
+					break;
+				default:
+					$notesArray[19]->value = $notesArray[19]->value + 1;
 					break;
 			endswitch;
 	    }

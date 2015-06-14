@@ -230,7 +230,8 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				{ label: "Dbl. oct. + Tritone", value: 0 },
 				{ label: "Dbl. oct. + Perfect 5th", value: 0 },
 				{ label: "Dbl. oct. + Min. 6th", value: 0 },
-				{ label: "Dbl. oct. + Maj. 6th", value: 0 }
+				{ label: "Dbl. oct. + Maj. 6th", value: 0 },
+				{ label: "Unknown", value: 0 }
 			],
 			key: [
 				{ label: "C major", value: 0 },
@@ -286,7 +287,8 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				{ label: "Gb", value: 0 },
 				{ label: "G#", value: 0 },
 				{ label: "Cb", value: 0 },
-				{ label: "Ab", value: 0 }
+				{ label: "Ab", value: 0 },
+				{ label: "Unknown", value: 0 }
 			],
 			note_types: [
 				{ label: "whole", value: 0 },
@@ -295,7 +297,8 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				{ label: "eighth", value: 0 },
 				{ label: "16th", value: 0 },
 				{ label: "32nd", value: 0 },
-				{ label: "64th", value: 0 }
+				{ label: "64th", value: 0 },
+				{ label: "Unknown", value: 0 }
 			],
 			title: []
 		}
