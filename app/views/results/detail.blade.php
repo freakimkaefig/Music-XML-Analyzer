@@ -6,6 +6,7 @@
 	<div class="row">
 		<div class="col-xs-12 text-center">
 			<h4>Search results for your pattern:</h4>
+			<h6><strong><u>Hint:</u></strong> Only the base note of chords will be compared to your search pattern.</h6>
 		</div>
 	</div>
 
