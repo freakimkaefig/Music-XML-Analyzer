@@ -60,7 +60,7 @@
 						</ul>
 					</div>
 					<div class="col-xs-2 pull-right">
-						<button type="button" class="exportButton btn btn-lg btn-success pull-right"><span class="glyphicon glyphicon-file"></span> <span>Export as PDF</span></button>
+						<button type="button" class="exportButton btn btn-lg btn-success pull-right" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Export', eventAction: 'Click' })"><span class="glyphicon glyphicon-file"></span> <span>Export as PDF</span></button>
 					</div>
 				</div>
 				<center id="canvasContainer<?php echo $i; ?>">

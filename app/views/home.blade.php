@@ -31,7 +31,7 @@
 		</div>
 
 		<div id="buttons_row" class="row">
-			<button type="button" class="btn btn-danger btn-xxl" data-toggle="modal" data-target="#uploadModal">Start uploading now!</button>
+			<button type="button" class="btn btn-danger btn-xxl" data-toggle="modal" data-target="#uploadModal" onclick="ga('send', 'event', { eventCategory: 'Home: Upload Button', eventAction: 'Click' })">Start uploading now!</button>
 			@include('upload.dropzone')
 		</div>
 	</div>
@@ -72,7 +72,7 @@
 		</div>
 
 		<div class="col-xs-12 col-md-3 col-lg-2 docs">
-			<a href="http://freakimkaefig.github.io/Music-XML-Analyzer/" target="_blank" class="btn btn-material-teal-400" id="documentationButton">Documentation</a>
+			<a href="http://freakimkaefig.github.io/Music-XML-Analyzer/" target="_blank" class="btn btn-material-teal-400" id="documentationButton" onclick="ga('send', 'event', { eventCategory: 'Home: Documentation Button', eventAction: 'Click' })">Documentation</a>
 		</div>
 	</div>
 
