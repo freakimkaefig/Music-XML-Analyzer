@@ -121,7 +121,6 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-		'Liebig\Cron\CronServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
 
 	),
