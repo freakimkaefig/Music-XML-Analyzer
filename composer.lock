@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d5cc57daca6ae70a07e8f833758e2bc6",
+    "hash": "7cc92bd20cdfecf1806b84221be4e8d6",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -143,16 +143,16 @@
         },
         {
             "name": "filp/whoops",
-            "version": "1.1.5",
+            "version": "1.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "c982fe62c44798c433229cb0425c61b487cc1883"
+                "reference": "72538eeb70bbfb11964412a3d098d109efd012f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/c982fe62c44798c433229cb0425c61b487cc1883",
-                "reference": "c982fe62c44798c433229cb0425c61b487cc1883",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/72538eeb70bbfb11964412a3d098d109efd012f7",
+                "reference": "72538eeb70bbfb11964412a3d098d109efd012f7",
                 "shasum": ""
             },
             "require": {
@@ -197,7 +197,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2015-03-30 15:26:59"
+            "time": "2015-06-29 05:42:04"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -295,12 +295,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "3359de6d6cd322e8a1b251c2f8d9dd42a3e4e232"
+                "reference": "deade43b4fe3db4e46e431cb3b1e092edb4073a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/3359de6d6cd322e8a1b251c2f8d9dd42a3e4e232",
-                "reference": "3359de6d6cd322e8a1b251c2f8d9dd42a3e4e232",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/deade43b4fe3db4e46e431cb3b1e092edb4073a0",
+                "reference": "deade43b4fe3db4e46e431cb3b1e092edb4073a0",
                 "shasum": ""
             },
             "require": {
@@ -402,57 +402,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-02-11 20:37:15"
-        },
-        {
-            "name": "liebig/cron",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/liebig/cron.git",
-                "reference": "39dd8fb4a580fded1c85062af4af6d8621aa05ea"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/liebig/cron/zipball/39dd8fb4a580fded1c85062af4af6d8621aa05ea",
-                "reference": "39dd8fb4a580fded1c85062af4af6d8621aa05ea",
-                "shasum": ""
-            },
-            "require": {
-                "mtdowling/cron-expression": "1.*",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "illuminate/support": "4.0.x|~5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/migrations"
-                ],
-                "psr-0": {
-                    "Liebig\\Cron": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marc Liebig",
-                    "email": "marc.liebig@gmx.eu"
-                }
-            ],
-            "description": "Job scheduling for Laravel",
-            "homepage": "http://liebig.github.io/cron",
-            "keywords": [
-                "cron",
-                "cronjob",
-                "cronmanager",
-                "laravel"
-            ],
-            "time": "2015-03-04 15:57:29"
+            "time": "2015-04-24 18:21:19"
         },
         {
             "name": "maximebf/debugbar",
@@ -460,12 +410,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "8318a65b2094afa7a7c58515e60113a1c1aad480"
+                "reference": "e5d9c677175d147b72a05087b916dfd103e1df74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/8318a65b2094afa7a7c58515e60113a1c1aad480",
-                "reference": "8318a65b2094afa7a7c58515e60113a1c1aad480",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/e5d9c677175d147b72a05087b916dfd103e1df74",
+                "reference": "e5d9c677175d147b72a05087b916dfd103e1df74",
                 "shasum": ""
             },
             "require": {
@@ -508,7 +458,7 @@
             "keywords": [
                 "debug"
             ],
-            "time": "2015-03-11 10:26:45"
+            "time": "2015-06-07 19:27:13"
         },
         {
             "name": "monolog/monolog",
@@ -516,12 +466,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "a54d460500aeaf653cabc1059cc33d07e7b544ad"
+                "reference": "cc145b85fe1d1093f0bfa2d1dffb341904a1762b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a54d460500aeaf653cabc1059cc33d07e7b544ad",
-                "reference": "a54d460500aeaf653cabc1059cc33d07e7b544ad",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/cc145b85fe1d1093f0bfa2d1dffb341904a1762b",
+                "reference": "cc145b85fe1d1093f0bfa2d1dffb341904a1762b",
                 "shasum": ""
             },
             "require": {
@@ -532,12 +482,14 @@
                 "psr/log-implementation": "1.0.0"
             },
             "require-dev": {
-                "aws/aws-sdk-php": "~2.4, >2.4.8",
+                "aws/aws-sdk-php": "^2.4.9",
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
-                "phpunit/phpunit": "~4.0",
-                "raven/raven": "~0.5",
-                "ruflin/elastica": "0.90.*",
+                "php-console/php-console": "^3.1.3",
+                "phpunit/phpunit": "~4.5",
+                "phpunit/phpunit-mock-objects": "2.3.0",
+                "raven/raven": "~0.8",
+                "ruflin/elastica": ">=0.90 <3.0",
                 "swiftmailer/swiftmailer": "~5.3",
                 "videlalvaro/php-amqplib": "~2.4"
             },
@@ -547,6 +499,7 @@
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
                 "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+                "php-console/php-console": "Allow sending log messages to Google Chrome",
                 "raven/raven": "Allow sending log messages to a Sentry server",
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
                 "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
@@ -555,7 +508,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.13.x-dev"
+                    "dev-master": "1.14.x-dev"
                 }
             },
             "autoload": {
@@ -581,51 +534,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-04-04 10:50:52"
-        },
-        {
-            "name": "mtdowling/cron-expression",
-            "version": "v1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mtdowling/cron-expression.git",
-                "reference": "fd92e883195e5dfa77720b1868cf084b08be4412"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/fd92e883195e5dfa77720b1868cf084b08be4412",
-                "reference": "fd92e883195e5dfa77720b1868cf084b08be4412",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Cron": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
-            "keywords": [
-                "cron",
-                "schedule"
-            ],
-            "time": "2015-01-11 23:07:46"
+            "time": "2015-06-22 17:09:57"
         },
         {
             "name": "nesbot/carbon",
@@ -724,12 +633,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tchwork/utf8.git",
-                "reference": "985a62a053f95da18917c6945fe1316e907e016d"
+                "reference": "927caedc65ec4f139e9d43fd2589a19a336babc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tchwork/utf8/zipball/985a62a053f95da18917c6945fe1316e907e016d",
-                "reference": "985a62a053f95da18917c6945fe1316e907e016d",
+                "url": "https://api.github.com/repos/tchwork/utf8/zipball/927caedc65ec4f139e9d43fd2589a19a336babc3",
+                "reference": "927caedc65ec4f139e9d43fd2589a19a336babc3",
                 "shasum": ""
             },
             "require": {
@@ -749,10 +658,12 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Patchwork": "class/",
-                    "Normalizer": "class/"
-                }
+                "psr-4": {
+                    "Patchwork\\": "src/Patchwork/"
+                },
+                "classmap": [
+                    "src/Normalizer.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -773,7 +684,7 @@
                 "utf-8",
                 "utf8"
             ],
-            "time": "2015-03-19 14:18:56"
+            "time": "2015-06-25 17:53:48"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -929,13 +840,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "bf2c13de4300e227d7b2fd08027673a79c519987"
+                "reference": "9e45edca52cc9c954680072c93e621f8b71fab26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/bf2c13de4300e227d7b2fd08027673a79c519987",
-                "reference": "bf2c13de4300e227d7b2fd08027673a79c519987",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/9e45edca52cc9c954680072c93e621f8b71fab26",
+                "reference": "9e45edca52cc9c954680072c93e621f8b71fab26",
                 "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
             },
             "type": "library",
             "extra": {
@@ -964,7 +878,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2015-03-26 14:39:45"
+            "time": "2015-06-02 13:48:41"
         },
         {
             "name": "stack/builder",
@@ -1021,19 +935,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "728eba28e355e081b0729b4c18cb9c13abe12560"
+                "reference": "0a6e9031371dcb384d395b1fa7bd5139a7847a60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/728eba28e355e081b0729b4c18cb9c13abe12560",
-                "reference": "728eba28e355e081b0729b4c18cb9c13abe12560",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0a6e9031371dcb384d395b1fa7bd5139a7847a60",
+                "reference": "0a6e9031371dcb384d395b1fa7bd5139a7847a60",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9.1"
+                "mockery/mockery": "~0.9.1,<0.9.4"
             },
             "type": "library",
             "extra": {
@@ -1062,10 +976,11 @@
             "description": "Swiftmailer, free feature-rich PHP mailer",
             "homepage": "http://swiftmailer.org",
             "keywords": [
+                "email",
                 "mail",
                 "mailer"
             ],
-            "time": "2015-03-30 15:09:02"
+            "time": "2015-06-28 17:20:48"
         },
         {
             "name": "symfony/browser-kit",
@@ -1342,17 +1257,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "2.7.x-dev",
-            "target-dir": "Symfony/Component/EventDispatcher",
+            "version": "2.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "186349c2966529804e38685f671e64746dde220b"
+                "reference": "d7246885b7fe4cb5a2786bda34362d2f0e40b730"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/186349c2966529804e38685f671e64746dde220b",
-                "reference": "186349c2966529804e38685f671e64746dde220b",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/d7246885b7fe4cb5a2786bda34362d2f0e40b730",
+                "reference": "d7246885b7fe4cb5a2786bda34362d2f0e40b730",
                 "shasum": ""
             },
             "require": {
@@ -1373,11 +1287,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\EventDispatcher\\": ""
                 }
             },
@@ -1387,31 +1301,30 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony EventDispatcher Component",
-            "homepage": "http://symfony.com",
-            "time": "2015-03-13 17:50:01"
+            "homepage": "https://symfony.com",
+            "time": "2015-06-24 15:32:32"
         },
         {
             "name": "symfony/filesystem",
-            "version": "2.7.x-dev",
-            "target-dir": "Symfony/Component/Filesystem",
+            "version": "2.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "0d0790beeb3bdb997a6cb2d6f4e53f607337efe5"
+                "reference": "5db575c1ad5f62363c098114cf482bbd5d15349a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/0d0790beeb3bdb997a6cb2d6f4e53f607337efe5",
-                "reference": "0d0790beeb3bdb997a6cb2d6f4e53f607337efe5",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/5db575c1ad5f62363c098114cf482bbd5d15349a",
+                "reference": "5db575c1ad5f62363c098114cf482bbd5d15349a",
                 "shasum": ""
             },
             "require": {
@@ -1423,11 +1336,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\Filesystem\\": ""
                 }
             },
@@ -1437,17 +1350,17 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony Filesystem Component",
-            "homepage": "http://symfony.com",
-            "time": "2015-03-22 16:57:18"
+            "homepage": "https://symfony.com",
+            "time": "2015-06-18 16:14:27"
         },
         {
             "name": "symfony/finder",
@@ -1556,12 +1469,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpKernel.git",
-                "reference": "7b1632cf2bdbc69c59a44942b70d5aae91034304"
+                "reference": "31652385d94eafc2103a98435d6d5bd7eea61736"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/7b1632cf2bdbc69c59a44942b70d5aae91034304",
-                "reference": "7b1632cf2bdbc69c59a44942b70d5aae91034304",
+                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/31652385d94eafc2103a98435d6d5bd7eea61736",
+                "reference": "31652385d94eafc2103a98435d6d5bd7eea61736",
                 "shasum": ""
             },
             "require": {
@@ -1621,7 +1534,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "http://symfony.com",
-            "time": "2015-04-01 16:01:45"
+            "time": "2015-05-26 23:43:20"
         },
         {
             "name": "symfony/process",
@@ -1859,17 +1772,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "2.7.x-dev",
-            "target-dir": "Symfony/Component/VarDumper",
+            "version": "2.8.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "90811d8e4e215e62944e63c885ebd8112e646331"
+                "reference": "9ada116fec9147e97ce6dfdfad82695bcccf6faa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/90811d8e4e215e62944e63c885ebd8112e646331",
-                "reference": "90811d8e4e215e62944e63c885ebd8112e646331",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/9ada116fec9147e97ce6dfdfad82695bcccf6faa",
+                "reference": "9ada116fec9147e97ce6dfdfad82695bcccf6faa",
                 "shasum": ""
             },
             "require": {
@@ -1884,14 +1796,14 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
                 "files": [
                     "Resources/functions/dump.php"
                 ],
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\VarDumper\\": ""
                 }
             },
@@ -1901,29 +1813,27 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Nicolas Grekas",
                     "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony mechanism for exploring and dumping PHP variables",
-            "homepage": "http://symfony.com",
+            "homepage": "https://symfony.com",
             "keywords": [
                 "debug",
                 "dump"
             ],
-            "time": "2015-04-05 07:48:59"
+            "time": "2015-06-19 15:09:14"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "liebig/cron": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
