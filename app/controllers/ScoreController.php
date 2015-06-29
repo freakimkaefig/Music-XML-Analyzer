@@ -53,10 +53,20 @@ class ScoreController
 
 
 			// calculate beat type
-			$partBeats = $part->getElementsByTagName('beats')->item(0)->nodeValue;
-			$curBeats = $partBeats;
-			$partBeatType = $part->getElementsByTagName('beat-type')->item(0)->nodeValue;
-			$curBeatType = $partBeatType;
+			$beats = $part->getElementsByTagName('beats');
+			if ($beats->length) {
+				$partBeats = $beats->item(0)->nodeValue;
+				$curBeats = $partBeats;
+			} else {
+				$curBeats = "4";
+			}
+			$beat_type = $part->getElementsByTagName('beat-type');
+			if ($beat_type->length) {
+				$partBeatType = $beat_type->item(0)->nodeValue;
+				$curBeatType = $partBeatType;
+			} else {
+				$curBeatType = "4";
+			}
 
 			$measures = $part->getElementsByTagName('measure');
 			$measureCounter = 0;
