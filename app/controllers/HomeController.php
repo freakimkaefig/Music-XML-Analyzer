@@ -104,6 +104,12 @@ class HomeController extends BaseController {
     		echo "Deleting user " . $user->id . ".<br>";
 		    $user->delete();
 		    echo "<hr>";
+
+		    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+		    DB::table('users')->truncate();
+		    DB::table('uploads')->truncate();
+		    DB::table('results')->truncate();
+		    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 		}
 	}
 
