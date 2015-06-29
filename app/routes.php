@@ -89,6 +89,16 @@ Route::group(array('before' => 'uploads'), function()
 	));
 
 	/**
+	 * Route for score view
+	 *
+	 * @uses 	Route::get()
+	 */
+	Route::get('/score/{id}/{part?}', array(
+		'as' => 'score',
+		'uses' => 'DashboardController@renderScore'
+	));
+
+	/**
 	 * Route for JSON upload ids (ajax)
 	 *
 	 * @uses 	Route::get()

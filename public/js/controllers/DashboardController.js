@@ -70,6 +70,7 @@ MusicXMLAnalyzer.DashboardController = function() {
 	 */
 	onFileSelectorChange = function(event, id) {
 		var result = model.getResults(id);
+		view.initScoreButton(id);
 		view.initNoteDistribution(result.value.note_distribution);
 		view.initIntervalDistribution(result.value.intervals);
 		view.initKeyDistribution(result.value.key);

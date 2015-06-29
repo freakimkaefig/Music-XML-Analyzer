@@ -6,6 +6,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 	$logMessages = null,
 	dashboardMessageCounter = null,
 	$fileSelector = null,
+	$plainFacts = null,
+	$plainFacts2 = null,
+	$plainFacts3 = null,
+	$overallStatistics = null,
 
 	noteDistribution = null,
 	intervalDistribution = null,
@@ -46,6 +50,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 		"#263238",	// blue-grey-900
 	],
 
+	$scoreButtonContainer = null,
+
 	/**
 	 * Init function
 	 * @function
@@ -61,6 +67,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$plainFacts3 = $('#plainFacts3');
 		$overallStatistics = $('#overallStatistics');
 
+		$scoreButtonContainer = $('#score_button_container');
 	},
 
 	/**
@@ -169,9 +176,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 */
 	initCountNotes = function(results){
 		$overallStatistics.empty();
-		$overallStatistics.append('<h3 class="text-center">Overall statistics</h3><br>');
+		$overallStatistics.append('<h3 class="text-center">Overall statistics</h3>');
 		$plainFacts.empty();
-		$plainFacts.append('<li><strong>Total notes:  </strong>' + results + '</li><br><br>');
+		$plainFacts.append('<li><strong>Total notes:  </strong>' + results + '</li>');
 		$plainFacts.find('li').on('change', onFileSelectorChange);
 	},
 
@@ -195,7 +202,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 */
 	initCountMeasures = function(results){
 		$plainFacts2.empty();
-		$plainFacts2.append('<li><strong>Total measures:  </strong>' + results + '</li><br><br>');
+		$plainFacts2.append('<li><strong>Total measures:  </strong>' + results + '</li>');
 	},
 
 	/**
@@ -525,6 +532,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 				}
 			}
 		});
+	},
+
+	initScoreButton = function(id) {
+		console.log("initScoreButton", id);
+		var button = '<a class="btn btn-success" target="_blank" href="/score/' + id + '" onclick="ga(\'send\', \'event\', { eventCategory: \'Dashboard: View Score\', eventAction: \'Click\' })"><span>Show Score</span></a>';
+		$scoreButtonContainer.append(button);
 	};
 
 	that.init = init;
@@ -542,6 +555,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.initCountMeasures = initCountMeasures;
 	that.initMostFrequentNote = initMostFrequentNote;
 	that.initInstruments = initInstruments;
+
+	that.initScoreButton = initScoreButton;
 
 	return that;
 }
