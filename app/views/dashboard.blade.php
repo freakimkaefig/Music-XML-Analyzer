@@ -39,9 +39,7 @@
 				<div id="fileSelector" onclick="ga('send', 'event', { eventCategory: 'Dashboard: File Change', eventAction: 'Change' })" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3"></div>
 			</div>
 
-			<div class="text-center" id="score_button_container">
-				
-			</div>
+			<div class="text-center" id="score_button_container"></div>
 
 			<div id='overallStatistics'></div>
 

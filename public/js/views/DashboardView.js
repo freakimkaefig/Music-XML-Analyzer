@@ -536,7 +536,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 
 	initScoreButton = function(id) {
 		console.log("initScoreButton", id);
-		var button = '<a class="btn btn-success" href="/score/' + id + '" onclick="ga(\'send\', \'event\', { eventCategory: \'Dashboard: View Score\', eventAction: \'Click\' })"><span>Show Score</span></a>';
+		var button = '<a class="btn btn-success" target="_blank" href="/score/' + id + '" onclick="ga(\'send\', \'event\', { eventCategory: \'Dashboard: View Score\', eventAction: \'Click\' })"><span>Show Score</span></a>';
 		$scoreButtonContainer.append(button);
 	};
 

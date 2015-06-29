@@ -13,6 +13,32 @@ class ScoreController
 		return $this->upload;
 	}
 
+	public function getPartsList($partId) {
+		if ($this->upload) {
+			$doc = new DOMDocument();
+			$doc->load($this->upload->url);
+			$xPath = new DOMXPath($doc);
+
+			$partsList = array();
+			$parts = $xPath->query('//part');
+			foreach ($parts as $part) {
+				$partObject = new stdClass();
+				$partObject->part_id = $part->getAttribute('id');
+				$partObject->part_name = $this->_getInstrument($this->upload->id, $partObject->part_id);
+				if ($partObject->part_id == $partId) {
+					$partObject->selected = true;
+				} else {
+					$partObject->selected = false;
+				}
+				$partsList[] = $partObject;
+			}
+
+			return $partsList;
+		} else {
+			throw new Exception('No upload specified.');
+		}
+	}
+
 	public function generateScore($partId) {
 		if ($this->upload) {
 			$doc = new DOMDocument();
@@ -28,6 +54,7 @@ class ScoreController
 			}
 
 			$this->resultObject = new stdClass();
+			$this->resultObject->file_id = $this->upload->id;
 			$this->resultObject->part_id = $partId;
 			$this->resultObject->measures = array();
 
@@ -256,6 +283,25 @@ class ScoreController
 		} else {
 			// catch strange values (FALLBACK)
 			return "64th";	// set to lowest possible value
+		}
+	}
+
+	/**
+	 * Static helper function to retrieve the part name for a given upload id and part_id
+	 *
+	 * @param 	int 	$id 		the uploads id
+	 * @param 	int 	$part_id 	the part id
+	 *
+	 * @return 	string 	The title for given upload id
+	 *
+	 */
+	public static function _getInstrument($id, $part_id) {
+		$xml = simplexml_load_file(Upload::find($id)->url);
+		$part = $xml->xpath('//score-part[@id="' . $part_id . '"]');
+		if ($part) {
+			return (string) $part[0]->{'part-name'}->{0};
+		} else {
+			return "Unknown Instrument";
 		}
 	}
 }
