@@ -3,20 +3,12 @@
 class ScoreController
 {
 	private $upload;
-	private $resultObject;
 
-	public function setUpload($upload) {
-		$this->upload = $upload;
-	}
-
-	public function getUpload() {
-		return $this->upload;
-	}
-
-	public function getPartsList($partId) {
-		if ($this->upload) {
+	public function getPartsList($uploadId, $partId) {
+		$upload = Upload::find($uploadId);
+		if ($upload) {
 			$doc = new DOMDocument();
-			$doc->load($this->upload->url);
+			$doc->load($upload->url);
 			$xPath = new DOMXPath($doc);
 
 			$partsList = array();
@@ -24,7 +16,7 @@ class ScoreController
 			foreach ($parts as $part) {
 				$partObject = new stdClass();
 				$partObject->part_id = $part->getAttribute('id');
-				$partObject->part_name = $this->_getInstrument($this->upload->id, $partObject->part_id);
+				$partObject->part_name = $this->_getInstrument($uploadId, $partObject->part_id);
 				if ($partObject->part_id == $partId) {
 					$partObject->selected = true;
 				} else {
@@ -39,10 +31,11 @@ class ScoreController
 		}
 	}
 
-	public function generateScore($partId) {
-		if ($this->upload) {
+	public function generateScore($uploadId, $partId) {
+		$upload = Upload::find($uploadId);
+		if ($upload) {
 			$doc = new DOMDocument();
-			$doc->load($this->upload->url);
+			$doc->load($upload->url);
 			$xPath = new DOMXPath($doc);
 
 			if ($partId === null) {
@@ -53,10 +46,10 @@ class ScoreController
 				$part = $xPath->query('//part[@id="' . $partId . '"]')->item(0);
 			}
 
-			$this->resultObject = new stdClass();
-			$this->resultObject->file_id = $this->upload->id;
-			$this->resultObject->part_id = $partId;
-			$this->resultObject->measures = array();
+			$resultObject = new stdClass();
+			$resultObject->file_id = $upload->id;
+			$resultObject->part_id = $partId;
+			$resultObject->measures = array();
 
 
 			// calculate beat type
@@ -233,11 +226,11 @@ class ScoreController
 					$measureObject->notes[] = $noteObject;
 					$noteCounter++;
 				}
-				$this->resultObject->measures[] = $measureObject;
+				$resultObject->measures[] = $measureObject;
 				$measureCounter++;
 			}
 
-			return $this->resultObject;
+			return $resultObject;
 		} else {
 			throw new Exception('No upload specified.');
 		}

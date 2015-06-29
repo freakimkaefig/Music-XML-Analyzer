@@ -28,14 +28,12 @@ class DashboardController extends BaseController {
 		Cache::forget('score');
 		Cache::forget('parts');
 		$time = 60*24;
-		$upload = Upload::find($id);
 		$scoreController = new ScoreController();
-		$scoreController->setUpload($upload);
 
-		$parts = $scoreController->getPartsList($part);
+		$parts = $scoreController->getPartsList($id, $part);
 		Cache::put('parts', $parts, $time);
 
-		$score = $scoreController->generateScore($part);
+		$score = $scoreController->generateScore($id, $part);
 		Cache::put('score', $score, $time);
 
 		return View::make('score');
