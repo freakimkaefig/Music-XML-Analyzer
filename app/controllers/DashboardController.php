@@ -18,6 +18,24 @@ class DashboardController extends BaseController {
 		return View::make('dashboard');
 	}
 
+	/**
+	 * Function to handle GET request for score view
+	 *
+	 * @return 	\Illuminate\View\View 	The dashboard view
+	 *
+	 */
+	public function renderScore($id, $part = null) {
+		Cache::forget('score');
+		$time = 60*24;
+		$upload = Upload::find($id);
+		$scoreController = new ScoreController();
+		$scoreController->setUpload($upload);
+		$score = $scoreController->generateScore($part);
+
+		Cache::put('score', $score, $time);
+		return View::make('score');
+	}
+
 
 	/**
 	 * Function to get all upload ids for current user (Ajax)

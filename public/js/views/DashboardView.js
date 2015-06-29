@@ -50,8 +50,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		"#263238",	// blue-grey-900
 	],
 
-	$scoreOpen = null,
-	$scoreClose = null,
+	$scoreButtonContainer = null,
 
 	/**
 	 * Init function
@@ -68,11 +67,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$plainFacts3 = $('#plainFacts3');
 		$overallStatistics = $('#overallStatistics');
 
-		$scoreOpen = $('#score_open_button > a');
-		$scoreOpen.on('click', onScoreOpenClick);
-		$scoreClose = $('#score_close_button > a');
-		$scoreClose.on('click', onScoreCloseClick);
-
+		$scoreButtonContainer = $('#score_button_container');
 	},
 
 	/**
@@ -539,14 +534,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 		});
 	},
 
-	onScoreOpenClick = function(event) {
-		$('.canvas-wrapper').addClass('in');
-		$('body').css('overflow-x', 'hidden');
-	},
-
-	onScoreCloseClick = function(event) {
-		$('.canvas-wrapper').removeClass('in');
-		$('body').css('overflow-x', 'auto');
+	initScoreButton = function(id) {
+		console.log("initScoreButton", id);
+		var button = '<a class="btn btn-success" href="/score/' + id + '" onclick="ga(\'send\', \'event\', { eventCategory: \'Dashboard: View Score\', eventAction: \'Click\' })"><span>Show Score</span></a>';
+		$scoreButtonContainer.append(button);
 	};
 
 	that.init = init;
@@ -564,6 +555,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.initCountMeasures = initCountMeasures;
 	that.initMostFrequentNote = initMostFrequentNote;
 	that.initInstruments = initInstruments;
+
+	that.initScoreButton = initScoreButton;
 
 	return that;
 }
