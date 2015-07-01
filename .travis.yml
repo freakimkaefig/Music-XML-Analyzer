@@ -1,12 +1,14 @@
 language: php
 
 php:
-  - 5.6.3
+  - 5.6
 
 before_script:
   - composer self-update
+  - mysql -e "create database IF NOT EXISTS music_xml_analyzer;" -uroot
+
+install:
   - composer install --prefer-source --no-interaction --dev
-  - mysql -e "create database IF NOT EXISTS test;" -uroot
 
 sudo: false
 
