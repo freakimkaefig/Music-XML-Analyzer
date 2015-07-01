@@ -29,8 +29,7 @@ deploy:
   app: music-xml-analyzer
   on: deploy
   run:
-    - "pg:reset d2htlpsclvbnqt"
-    - "php artisan migrate"
+    - "php artisan migrate:refresh"
 
 services: mysql
 
