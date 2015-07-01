@@ -1,7 +1,7 @@
 
 #Music XML Analyzer
 
-[![Build Status](https://travis-ci.org/freakimkaefig/Music-XML-Analyzer.svg?branch=master)](https://travis-ci.org/freakimkaefig/Music-XML-Analyzer)
+[![Build Status](https://travis-ci.org/freakimkaefig/Music-XML-Analyzer.svg?branch=deploy)](https://travis-ci.org/freakimkaefig/Music-XML-Analyzer)
   
 http://freakimkaefig.github.io/Music-XML-Analyzer/  
   
