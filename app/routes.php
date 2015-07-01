@@ -28,21 +28,6 @@ Route::get('/', array(
 ));
 
 
-/**
- * Route to clear database after deploy (used for heroku deploy hook)
- *
- * @uses 	Route::post()
- */
-Route::post('/clear', array(
-	'as' => 'postClear',
-	'uses' => 'HomeController@getClear'
-));
-Route::get('/clear', array(
-	'as' => 'postClear',
-	'uses' => 'HomeController@getClear'
-));
-
-
 /*
 |--------------------------------------------------------------------------
 | Routes only available, when user is recognized
