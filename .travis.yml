@@ -6,23 +6,10 @@ php:
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
-
-env:
-  global:
-    - setup=basic
-
-matrix:
-  include:
-    - php: 5.6.3
-      env: setup=lowest
-    - php: 5.6.3
-      env: setup=stable
+  - mysql -e "create database IF NOT EXISTS test;" -uroot
 
 sudo: false
 
-install:
-  - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-source; fi
-  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-source --no-interaction --prefer-stable; fi
-  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-source --no-interaction --prefer-lowest --prefer-stable; fi
+services: mysql
 
 script: vendor/bin/phpunit
