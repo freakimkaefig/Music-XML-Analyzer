@@ -9,6 +9,9 @@
 		"barryvdh/laravel-debugbar": "1.8",
 		"jenssegers/rollbar": "dev-master"
 	},
+	"require-dev": {
+		"phpunit/phpunit": "4.7.*"
+	},
 	"autoload": {
 		"classmap": [
 			"app/commands",
