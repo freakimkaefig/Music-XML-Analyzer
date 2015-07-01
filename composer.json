@@ -6,7 +6,8 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"barryvdh/laravel-debugbar": "1.8"
+		"barryvdh/laravel-debugbar": "1.8",
+		"jenssegers/rollbar": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

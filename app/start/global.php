@@ -79,34 +79,3 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
-
-
-/*
-|--------------------------------------------------------------------------
-| Register Cron Event Listener
-|--------------------------------------------------------------------------
-|
-| Next we will register the cronjobs used for garbage collector
-|
-| Manually called via
-| http://music-xml-analyzer.local/cron.php?key=VIs1AGmBKoMhBmY7RWpWMtAXdD3FTLPF
-|
-*/
-Event::listen('cron.collectJobs', function() {
-	foreach (User::where('last_activity', '<', date('Y-m-d H:m:s', time() - 24*60*60*7))->get() as $user)
-	{
-	    $user->uploads->each(function($upload) {
-
-			if (count($upload->result)) {
-				$upload->result->delete();
-			}
-			$upload->delete();
-	    });
-
-		$upload_directory = public_path() . '/uploads/' . $user->id;
-		$success = Upload::delTree($upload_directory);
-		$download_directory = public_path() . '/downloads/' . $user->id;
-		$success = Upload::delTree($download_directory);
-	    $user->delete();
-	}
-});

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7cc92bd20cdfecf1806b84221be4e8d6",
+    "hash": "1d09a78cc0334d726a26d9d50823f0e9",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -242,6 +242,56 @@
             "time": "2014-11-20 19:18:42"
         },
         {
+            "name": "jenssegers/rollbar",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jenssegers/laravel-rollbar.git",
+                "reference": "063f9c317ab0314a457dbd19bf4ed81deee1d8d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jenssegers/laravel-rollbar/zipball/063f9c317ab0314a457dbd19bf4ed81deee1d8d1",
+                "reference": "063f9c317ab0314a457dbd19bf4ed81deee1d8d1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "4.*|5.*",
+                "php": ">=5.3",
+                "rollbar/rollbar": "~0.11"
+            },
+            "require-dev": {
+                "mockery/mockery": "*",
+                "orchestra/testbench": "3.0.*",
+                "satooshi/php-coveralls": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jenssegers\\Rollbar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jens Segers",
+                    "homepage": "http://jenssegers.be"
+                }
+            ],
+            "description": "Rollbar error monitoring integration for Laravel projects",
+            "keywords": [
+                "error",
+                "laravel",
+                "logging",
+                "monitoring",
+                "rollbar"
+            ],
+            "time": "2015-06-06 08:23:36"
+        },
+        {
             "name": "jeremeamia/SuperClosure",
             "version": "1.0.x-dev",
             "source": {
@@ -466,12 +516,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "cc145b85fe1d1093f0bfa2d1dffb341904a1762b"
+                "reference": "ceeb33f5213d8ef383bb8f1d46a5922b4666c8aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/cc145b85fe1d1093f0bfa2d1dffb341904a1762b",
-                "reference": "cc145b85fe1d1093f0bfa2d1dffb341904a1762b",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/ceeb33f5213d8ef383bb8f1d46a5922b4666c8aa",
+                "reference": "ceeb33f5213d8ef383bb8f1d46a5922b4666c8aa",
                 "shasum": ""
             },
             "require": {
@@ -534,7 +584,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-06-22 17:09:57"
+            "time": "2015-06-30 22:26:19"
         },
         {
             "name": "nesbot/carbon",
@@ -879,6 +929,55 @@
                 "psr-3"
             ],
             "time": "2015-06-02 13:48:41"
+        },
+        {
+            "name": "rollbar/rollbar",
+            "version": "v0.14.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rollbar/rollbar-php.git",
+                "reference": "ff00d5cd676f1afeed73313f7d15572d2622214a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/ff00d5cd676f1afeed73313f7d15572d2622214a",
+                "reference": "ff00d5cd676f1afeed73313f7d15572d2622214a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "4.5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/rollbar.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rollbar, Inc.",
+                    "email": "support@rollbar.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Monitors errors and exceptions and reports them to Rollbar",
+            "homepage": "http://github.com/rollbar/rollbar-php",
+            "keywords": [
+                "debugging",
+                "errors",
+                "exceptions",
+                "logging",
+                "monitoring"
+            ],
+            "time": "2015-06-23 00:24:54"
         },
         {
             "name": "stack/builder",
@@ -1319,12 +1418,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "5db575c1ad5f62363c098114cf482bbd5d15349a"
+                "reference": "27a79f4691ea266511bbe6f33350bde22b61b965"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/5db575c1ad5f62363c098114cf482bbd5d15349a",
-                "reference": "5db575c1ad5f62363c098114cf482bbd5d15349a",
+                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/27a79f4691ea266511bbe6f33350bde22b61b965",
+                "reference": "27a79f4691ea266511bbe6f33350bde22b61b965",
                 "shasum": ""
             },
             "require": {
@@ -1360,7 +1459,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2015-06-18 16:14:27"
+            "time": "2015-07-01 14:16:54"
         },
         {
             "name": "symfony/finder",
@@ -1776,12 +1875,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "9ada116fec9147e97ce6dfdfad82695bcccf6faa"
+                "reference": "4afba318e2b4dd868717d04e5ca21636d7ed6950"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/9ada116fec9147e97ce6dfdfad82695bcccf6faa",
-                "reference": "9ada116fec9147e97ce6dfdfad82695bcccf6faa",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/4afba318e2b4dd868717d04e5ca21636d7ed6950",
+                "reference": "4afba318e2b4dd868717d04e5ca21636d7ed6950",
                 "shasum": ""
             },
             "require": {
@@ -1827,13 +1926,15 @@
                 "debug",
                 "dump"
             ],
-            "time": "2015-06-19 15:09:14"
+            "time": "2015-07-01 14:16:54"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "jenssegers/rollbar": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
