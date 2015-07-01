@@ -535,9 +535,12 @@ MusicXMLAnalyzer.DashboardView = function(){
 	},
 
 	initScoreButton = function(id) {
-		console.log("initScoreButton", id);
-		var button = '<a class="btn btn-success" target="_blank" href="/score/' + id + '" onclick="ga(\'send\', \'event\', { eventCategory: \'Dashboard: View Score\', eventAction: \'Click\' })"><span>Show Score (Beta)</span></a>';
-		$scoreButtonContainer.append(button);
+		$scoreButtonContainer.empty();
+		if (id !== 'all') {
+			console.log("initScoreButton", id);
+			var button = '<a class="btn btn-success" target="_blank" href="/score/' + id + '" onclick="ga(\'send\', \'event\', { eventCategory: \'Dashboard: View Score\', eventAction: \'Click\' })"><span>Show Score (Beta)</span></a>';
+			$scoreButtonContainer.append(button);
+		}
 	};
 
 	that.init = init;
