@@ -19,6 +19,15 @@ cache:
     - vendor
     - $HOME/.composer/cache
 
+deploy:
+  provider: heroku
+  api_key: ba42860f-c45d-4c88-8f7e-f7df15b88444
+  app: music-xml-analyzer
+  on: deploy
+  run:
+    - "pg:reset DATABASE"
+    - "php artisan migrate"
+
 services: mysql
 
 script: vendor/bin/phpunit
