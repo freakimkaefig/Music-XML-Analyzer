@@ -41,7 +41,6 @@ class ScoreController
 			if ($partId === null) {
 				$part = $xPath->query('//part')->item(0);
 				$partId = $part->getAttribute('id');
-				Debugbar::info($partId);
 			} else {
 				$part = $xPath->query('//part[@id="' . $partId . '"]')->item(0);
 			}
