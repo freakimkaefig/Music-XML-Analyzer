@@ -102,7 +102,6 @@ class ResultController extends BaseController {
 	 */
 	private function generateResultExtract($upload_id, $part_id, $voice, $startMeasure, $start, $endMeasure, $end) {
 		set_time_limit(300);
-		Log::info("Upload: " . $upload_id . ", Part: " . $part_id . ", Voice: " . $voice . ", StartMeasure: " . $startMeasure . ", Start: " . $start . ", EndMeasure: " . $endMeasure . ", End: ". $end);
 		$upload = Upload::find($upload_id);
 
 		$doc = new DOMDocument();
@@ -126,7 +125,6 @@ class ResultController extends BaseController {
 			$end_extract++;
 		}
 		if ($end_extract - $start_extract < 3){
-			Log::info($end_extract - $start_extract);
 			if ($numMeasures > $end_extract + 1) {
 				$end_extract++;
 			} elseif ($startMeasure > $firstMeasureNumber) {
