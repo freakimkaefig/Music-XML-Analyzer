@@ -62,7 +62,6 @@ class UploadController extends BaseController {
 	 *
 	 */
 	private function xslTransform($url) {
-		// $url = 'http://music-xml-analyzer.local/uploads/130/MahlerLiedVon_timewise_.xml';
 		$simpleXml = simplexml_load_file($url);
 		$timewise = $simpleXml->xpath("//score-timewise");
 		if ($timewise) {

@@ -105,7 +105,7 @@ class ResultController extends BaseController {
 		$upload = Upload::find($upload_id);
 
 		$doc = new DOMDocument();
-		$doc->loadXML(base64_decode(gzuncompress($upload->content)));
+		$doc->loadXML(gzuncompress($upload->content));
 		$xPath = new DOMXPath($doc);
 
 		$part = $xPath->query('//part[@id="' . $part_id . '"]')->item(0);
@@ -407,7 +407,7 @@ class ResultController extends BaseController {
 	 *
 	 */
 	public static function _getArtist($id) {
-		$xml = simplexml_load_string(base64_decode(gzuncompress(Upload::find($id)->content)));
+		$xml = simplexml_load_string(gzuncompress(Upload::find($id)->content));
 		$artist = $xml->xpath("//credit[credit-type='composer']");
 		if ($artist) {
 			return $artist[0]->{'credit-words'}->{0};
@@ -426,7 +426,7 @@ class ResultController extends BaseController {
 	 *
 	 */
 	public static function _getTitle($id) {
-		$xml = simplexml_load_string(base64_decode(gzuncompress(Upload::find($id)->content)));
+		$xml = simplexml_load_string(gzuncompress(Upload::find($id)->content));
 		$title = $xml->xpath("//credit[credit-type='title']");
 		if ($title) {
 			return $title[0]->{'credit-words'}->{0};
@@ -459,7 +459,7 @@ class ResultController extends BaseController {
 	 *
 	 */
 	public static function _getInstrument($id, $part_id) {
-		$xml = simplexml_load_string(base64_decode(gzuncompress(Upload::find($id)->content)));
+		$xml = simplexml_load_string(gzuncompress(Upload::find($id)->content));
 		$part = $xml->xpath('//score-part[@id="' . $part_id . '"]');
 		if ($part) {
 			return $part[0]->{'part-name'}->{0};
@@ -478,7 +478,7 @@ class ResultController extends BaseController {
 	 *
 	 */
 	public static function _getKey($id){
-		$xml = simplexml_load_string(base64_decode(gzuncompress(Upload::find($id)->content)));
+		$xml = simplexml_load_string(gzuncompress(Upload::find($id)->content));
 		$keys = $xml->xpath("//key");
 		$key = $keys[0];
 
