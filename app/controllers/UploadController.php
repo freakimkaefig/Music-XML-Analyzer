@@ -102,7 +102,7 @@ class UploadController extends BaseController {
 		Log::info("Created upload");
 		$upload->url = $this->xslTransform($url);
 		Log::info("xsl transform");
-		$content = gzcompress(file_get_contents($upload->url));
+		$content = base64_encode(gzcompress(file_get_contents($upload->url)));
 		Log::info("content");
 		$upload->content = $content;
 		$upload->user()->associate($user);
