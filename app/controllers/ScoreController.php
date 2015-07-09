@@ -8,7 +8,7 @@ class ScoreController
 		$upload = Upload::find($uploadId);
 		if ($upload) {
 			$doc = new DOMDocument();
-			$doc->loadXML(base64_decode(gzuncompress($upload->content)));
+			$doc->loadXML(gzuncompress($upload->content));
 			$xPath = new DOMXPath($doc);
 
 			$partsList = array();
@@ -35,7 +35,7 @@ class ScoreController
 		$upload = Upload::find($uploadId);
 		if ($upload) {
 			$doc = new DOMDocument();
-			$doc->loadXML(base64_decode(gzuncompress($upload->content)));
+			$doc->loadXML(gzuncompress($upload->content));
 			$xPath = new DOMXPath($doc);
 
 			if ($partId === null) {
@@ -298,7 +298,7 @@ class ScoreController
 	 *
 	 */
 	public static function _getInstrument($id, $part_id) {
-		$xml = simplexml_load_string(base64_decode(gzuncompress(Upload::find($id)->content)));
+		$xml = simplexml_load_string(gzuncompress(Upload::find($id)->content));
 		$part = $xml->xpath('//score-part[@id="' . $part_id . '"]');
 		if ($part) {
 			return (string) $part[0]->{'part-name'}->{0};
