@@ -11,6 +11,7 @@ before_script:
   - cp .travis.composer.config.json ~/.composer/config.json
 
 install:
+  - compser self-update
   - composer update --prefer-source
 
 sudo: false
