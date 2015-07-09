@@ -100,6 +100,8 @@ class UploadController extends BaseController {
 	private function _saveFile($user, $url) {
 		$upload = new Upload;
 		$upload->url = $this->xslTransform($url);
+		$content = gzcompress(file_get_contents($upload->url));
+		$upload->content = $content;
 		$upload->user()->associate($user);
 		$upload->save();
 	}

@@ -64,12 +64,12 @@ class MelodyController {
 		$user = User::find(Cookie::get('user_id'));
 		$user->uploads->each(function($upload) {
 
-			$xml = simplexml_load_file($upload->url);
+			$xml = simplexml_load_string(gzuncompress($upload->content));
 			$file_id = $upload->id;
 			$file_url = $upload->url;
 
 			$doc = new DOMDocument();
-			$doc->load($file_url);
+			$doc->loadXML(gzuncompress($upload->content));
 			$xPath = new DOMXPath($doc);
 
 			self::$once = true;
