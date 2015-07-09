@@ -7,10 +7,10 @@ before_script:
   - mysql -e "drop database IF EXISTS music_xml_analyzer;" -uroot
   - mysql -e "create database IF NOT EXISTS music_xml_analyzer;" -uroot
   - php artisan migrate
-  - "mkdir -p ~/.composer"
-  - cp .travis.composer.config.json ~/.composer/config.json
 
 install:
+  - "mkdir -p ~/.composer"
+  - cp .travis.composer.config.json ~/.composer/config.json
   - composer self-update
   - composer update --prefer-source
 
