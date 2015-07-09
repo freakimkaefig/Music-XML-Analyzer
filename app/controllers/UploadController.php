@@ -99,8 +99,11 @@ class UploadController extends BaseController {
 	 */
 	private function _saveFile($user, $url) {
 		$upload = new Upload;
+		Log::info("Created upload");
 		$upload->url = $this->xslTransform($url);
+		Log::info("xsl transform");
 		$content = gzcompress(file_get_contents($upload->url));
+		Log::info("content");
 		$upload->content = $content;
 		$upload->user()->associate($user);
 		$upload->save();
