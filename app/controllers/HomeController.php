@@ -15,6 +15,7 @@ class HomeController extends BaseController {
 	 *
 	 */
 	public function getHome() {
+		Debugbar::info("Rollbar successful");
 		if (Cookie::get('user_id')) {
 			$user = User::find(Cookie::get('user_id'));
 			if ($user) {
