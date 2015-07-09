@@ -16,7 +16,7 @@ sudo: false
 
 branches:
   only:
-    - deploy
+    - staging
 
 cache:
   directories:
@@ -26,9 +26,10 @@ cache:
 deploy:
   provider: heroku
   api_key: ba42860f-c45d-4c88-8f7e-f7df15b88444
-  app: music-xml-analyzer
-  on: deploy
+  app: music-xml-analyzer-staging
+  on: staging
   run:
+    - "php artisan migrate"
     - "php artisan migrate:refresh"
 
 services: mysql
