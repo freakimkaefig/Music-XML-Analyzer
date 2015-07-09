@@ -9,7 +9,6 @@ before_script:
   - php artisan migrate
 
 install:
-  - composer self-update
   - composer update --prefer-source
 
 sudo: false
