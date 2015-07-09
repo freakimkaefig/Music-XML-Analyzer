@@ -26,7 +26,7 @@ class SearchController extends BaseController {
 				// if a result for upload already exists, get result and overwrite value
 				$result = $upload->result;
 			}
-			$xml = simplexml_load_string(gzuncompress($upload->content));
+			$xml = simplexml_load_string(base64_decode(gzuncompress($upload->content)));
 			$resultObject = new stdClass();
 			$resultObject->file_url = $upload->url;
 			$resultObject->artist = array((string) $this->_determineArtist($xml));
