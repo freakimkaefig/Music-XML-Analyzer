@@ -10,7 +10,7 @@ before_script:
 
 install:
   - composer self-update
-  - composer update
+  - composer update --prefer-source
 
 sudo: false
 
