@@ -12,7 +12,7 @@ install:
   - "mkdir -p ~/.composer"
   - cp .travis.composer.config.json ~/.composer/config.json
   - composer self-update
-  - composer update --prefer-source
+  - composer update
 
 sudo: false
 
