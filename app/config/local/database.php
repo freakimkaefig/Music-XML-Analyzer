@@ -18,6 +18,8 @@ return array(
 	|
 	*/
 
+	'default' => 'pgsql',
+
 	'connections' => array(
 
 		'mysql' => array(
@@ -29,6 +31,17 @@ return array(
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
+		),
+
+		'pgsql' => array(
+			'driver'    => 'pgsql',
+			'host'      => 'localhost',
+			'database'  => 'music-xml-analyzer',
+			'username'  => 'postgres',
+			'password'  => 'postgres',
+			'charset'   => 'utf8',
+			'prefix'    => '',
+			'schema' 	=> 'public',
 		),
 
 	),
