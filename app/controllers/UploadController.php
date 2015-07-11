@@ -99,7 +99,7 @@ class UploadController extends BaseController {
 	private function _saveFile($user, $url) {
 		$upload = new Upload;
 		$upload->url = $this->xslTransform($url);
-		$content = gzcompress(file_get_contents($upload->url));
+		$content = utf8_encode(gzcompress(file_get_contents($upload->url)));
 		$upload->content = $content;
 		$content2 = gzuncompress($upload->content);
 		Log::info($content2);
