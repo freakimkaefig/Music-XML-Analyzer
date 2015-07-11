@@ -8,7 +8,7 @@ class ScoreController
 		$upload = Upload::find($uploadId);
 		if ($upload) {
 			$doc = new DOMDocument();
-			$doc->load($upload->url);
+			$doc->loadXML($upload->content);
 			$xPath = new DOMXPath($doc);
 
 			$partsList = array();
@@ -35,13 +35,12 @@ class ScoreController
 		$upload = Upload::find($uploadId);
 		if ($upload) {
 			$doc = new DOMDocument();
-			$doc->load($upload->url);
+			$doc->loadXML($upload->content);
 			$xPath = new DOMXPath($doc);
 
 			if ($partId === null) {
 				$part = $xPath->query('//part')->item(0);
 				$partId = $part->getAttribute('id');
-				Debugbar::info($partId);
 			} else {
 				$part = $xPath->query('//part[@id="' . $partId . '"]')->item(0);
 			}
@@ -299,7 +298,7 @@ class ScoreController
 	 *
 	 */
 	public static function _getInstrument($id, $part_id) {
-		$xml = simplexml_load_file(Upload::find($id)->url);
+		$xml = simplexml_load_string(Upload::find($id)->content);
 		$part = $xml->xpath('//score-part[@id="' . $part_id . '"]');
 		if ($part) {
 			return (string) $part[0]->{'part-name'}->{0};
