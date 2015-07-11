@@ -5,7 +5,7 @@ php:
 
 before_script:
   - psql -c 'drop database IF EXISTS music_xml_analyzer;' -U postgres
-  - psql -c 'create database IF NOT EXISTS music_xml_analyzer;' -U postgres
+  - psql -c 'create database music_xml_analyzer;' -U postgres
   - php artisan migrate
 
 install:
