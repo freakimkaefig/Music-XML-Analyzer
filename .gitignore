@@ -29,3 +29,6 @@ push.sh
 public/uploads
 public/downloads
 sftp-config.json
+
+app/config/local/database.php
+composer.lock
