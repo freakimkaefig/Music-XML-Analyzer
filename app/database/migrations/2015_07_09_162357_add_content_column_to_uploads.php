@@ -14,7 +14,7 @@ class AddContentColumnToUploads extends Migration {
 	{
 		Schema::table('uploads', function(Blueprint $table)
 		{
-			$table->binary('content');
+			$table->text('content');
 		});
 	}
 

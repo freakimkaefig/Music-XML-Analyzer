@@ -43,12 +43,12 @@ class SoundSequenzController {
 		//get user uploads & file_id's & file_url
 		$user = User::find(Cookie::get('user_id'));
 		$user->uploads->each(function($upload) {
-			$xml = simplexml_load_string(gzuncompress($upload->content));
+			$xml = simplexml_load_string($upload->content);
 			$file_id = $upload->id;
 			$file_url = $upload->url;
 
 			$doc = new DOMDocument();
-			$doc->loadXML(gzuncompress($upload->content));
+			$doc->loadXML($upload->content);
 			$xPath = new DOMXPath($doc);
 
 			self::$once = true;
