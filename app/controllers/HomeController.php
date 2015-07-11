@@ -82,33 +82,4 @@ class HomeController extends BaseController {
 		Cookie::queue($name, $value, $minutes);
 	}
 
-
-	/**
-	 * Function to handle GET and POST request to clear database.
-	 * This function is used when deploying to remote
-	 */
-	public function getClear()
-	{
-		foreach (User::all() as $user)
-		{
-			echo "Checking uploads for User " . $user->id . ".<br>";
-		    $user->uploads->each(function($upload) {
-				if (count($upload->result)) {
-		    		echo "Deleting result " . $upload->result->id . " for upload " . $upload->id . ".<br>";
-					$upload->result->delete();
-				}
-	    		echo "Deleting result " . $upload->id . " (" . $upload->url . ").<br>";
-				$upload->delete();
-		    });
-
-    		echo "Deleting user " . $user->id . ".<br>";
-		    $user->delete();
-		    echo "<hr>";
-
-		    DB::table('users')->truncate();
-		    DB::table('uploads')->truncate();
-		    DB::table('results')->truncate();
-		}
-	}
-
 }

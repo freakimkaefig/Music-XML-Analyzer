@@ -4,11 +4,12 @@ php:
   - 5.6
 
 before_script:
-  - mysql -e "drop database IF EXISTS music_xml_analyzer;" -uroot
-  - mysql -e "create database IF NOT EXISTS music_xml_analyzer;" -uroot
+  - psql -c 'create database music_xml_analyzer;' -U postgres
   - php artisan migrate
 
 install:
+  - "mkdir -p ~/.composer"
+  - cp .travis.composer.config.json ~/.composer/config.json
   - composer self-update
   - composer update
 
@@ -16,6 +17,7 @@ sudo: false
 
 branches:
   only:
+    - staging
     - deploy
 
 cache:
@@ -26,11 +28,11 @@ cache:
 deploy:
   provider: heroku
   api_key: ba42860f-c45d-4c88-8f7e-f7df15b88444
-  app: music-xml-analyzer
-  on: deploy
+  app:
+    staging: music-xml-analyzer-staging
+    deploy: music-xml-analyzer
   run:
+    - "php artisan migrate"
     - "php artisan migrate:refresh"
-
-services: mysql
 
 script: vendor/bin/phpunit
