@@ -36,7 +36,7 @@ return array(
 		'pgsql' => array(
 			'driver'    => 'pgsql',
 			'host'      => 'localhost',
-			'database'  => 'music-xml-analyzer',
+			'database'  => 'music_xml_analyzer',
 			'username'  => 'postgres',
 			'password'  => 'postgres',
 			'charset'   => 'utf8',
