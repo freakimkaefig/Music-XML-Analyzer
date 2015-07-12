@@ -24,8 +24,11 @@
         <whitelist>
             <directory suffix=".php">./app</directory>
             <exclude>
-                <directory>./app/tests</directory>
+                <directory>./app/config</directory>
+                <directory>./app/database</directory>
+                <directory>./app/database</directory>
                 <directory>./app/storage</directory>
+                <directory>./app/lang</directory>
             </exclude>
         </whitelist>
     </filter>
