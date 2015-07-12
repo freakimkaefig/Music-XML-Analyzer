@@ -39,4 +39,3 @@ deploy:
     deploy: music-xml-analyzer
   run:
     - "php artisan migrate"
-    - "php artisan migrate:refresh"

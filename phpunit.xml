@@ -26,9 +26,9 @@
             <exclude>
                 <directory>./app/config</directory>
                 <directory>./app/database</directory>
-                <directory>./app/database</directory>
-                <directory>./app/storage</directory>
                 <directory>./app/lang</directory>
+                <directory>./app/storage</directory>
+                <directory>./app/tests</directory>
             </exclude>
         </whitelist>
     </filter>
