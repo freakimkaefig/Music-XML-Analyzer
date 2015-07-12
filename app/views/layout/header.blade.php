@@ -1,6 +1,6 @@
 <nav class="navbar navbar-material-blue-grey-800 navbar-fixed-top">
     <div class="navbar-header">
-        <a class="navbar-brand" href="{{ URL::route('home') }}">Music XML Analyzer</a>
+        <a class="navbar-brand" href="{{ URL::route('home') }}" onclick="ga('send', 'event', { eventCategory: 'Header: Logo', eventAction: 'Click' })">Music XML Analyzer</a>
     </div>
 
 	<div class="container-fluid">
@@ -42,16 +42,16 @@
 	     		@include('upload.dropzone')
 	     	</li>
 	      	<li class="btn-flat btn-material-grey-200">
-                <a href="{{ URL::route('dashboard') }}">Dashboard</a>
+                <a href="{{ URL::route('dashboard') }}" onclick="ga('send', 'event', { eventCategory: 'Header: Dashboard', eventAction: 'Click' })">Dashboard</a>
             </li>
 		        <li class="btn-flat btn-material-grey-200">
-                <a href="{{ URL::route('pattern') }}">Search</a>
+                <a href="{{ URL::route('pattern') }}" onclick="ga('send', 'event', { eventCategory: 'Header: Search', eventAction: 'Click' })">Search</a>
             </li>
             <li class="divider">
                 <p class="navbar-text"></p>
             </li>
             <li class="btn-flat btn-material-red-A100">
-                <a id="deleteMeLink" href="/delete/me">Reset</a>
+                <a id="deleteMeLink" href="/delete/me" onclick="ga('send', 'event', { eventCategory: 'Header: Reset', eventAction: 'Click' })">Reset</a>
             </li>
                 <?php endif; ?>
 			  	</ul>

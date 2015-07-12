@@ -53,7 +53,6 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			return results['all'];
 		} else {
 			var result = $.grep(results, function(e){ return e.id == id; });
-			console.log(result);
 			return result[0];
 		}
 	},
