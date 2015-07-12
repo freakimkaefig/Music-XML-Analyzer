@@ -1,0 +1,13 @@
+languages:
+  Ruby: false
+  JavaScript: true
+  PHP: true
+exclude_paths:
+	- "app/storage/*"
+	- "build/*"
+	- "docs/*"
+	- "logs/*"
+	- "material/*"
+	- "public/libs/*"
+	- "public/packages/*"
+	- "vendor/*"
