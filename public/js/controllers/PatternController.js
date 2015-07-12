@@ -119,7 +119,7 @@ MusicXMLAnalyzer.PatternController = function() {
 
 		//get notes of current extract:
 		var currentPatternNotes = patternModel.getAllNoteElements();
-
+		console.log("notes: ",currentPatternNotes);
 		MIDI.setVolume(0, 127);
 
 		//determine MIDI values for currentPatternNotes
