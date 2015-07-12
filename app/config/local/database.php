@@ -31,6 +31,7 @@ return array(
 			'prefix'    => '',
 		),
 
+			'password'  => 'postgres',
 	),
 
 );
