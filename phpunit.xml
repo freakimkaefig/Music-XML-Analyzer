@@ -19,4 +19,15 @@
     <logging>
         <log type="coverage-clover" target="build/logs/clover.xml" />
     </logging>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./app</directory>
+            <exclude>
+                <directory>./app/tests</directory>
+                <directory>./app/storage</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
 </phpunit>
