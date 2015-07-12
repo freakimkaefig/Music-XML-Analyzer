@@ -12,7 +12,7 @@ MusicXMLAnalyzer.ScoreView = function(){
 		$scoreValue = $('#scoreValue');
 
 		scoreData = JSON.parse($scoreValue.val());
-
+		console.log("scoreData: ",scoreData.measures);
 		// initialize canvas
 		var canvas = document.createElement('canvas');
 		canvas.id = "canvas";
