@@ -80,6 +80,7 @@ class HomeController extends BaseController {
 		$value = $user->id;
 		$minutes = 60*24*7;
 		Cookie::queue($name, $value, $minutes);
+		Log::info("Created new user with id: " . $user->id);
 	}
 
 }
