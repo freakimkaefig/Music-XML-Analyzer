@@ -11,6 +11,7 @@
 		"jenssegers/rollbar": "dev-master"
 	},
 	"require-dev": {
+		"satooshi/php-coveralls": "dev-master",
 		"phpspec/phpspec": "~2.0",
 		"phpunit/phpunit": "4.7.*"
 	},
