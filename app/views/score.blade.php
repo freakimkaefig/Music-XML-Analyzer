@@ -14,6 +14,13 @@
 				<span>Part</span> <span class="partId">{{ Cache::get('score')->part_id }}</span> - <span id="instrument">{{ ResultController::_getInstrument(Cache::get('score')->file_id, Cache::get('score')->part_id) }}</span>
 			</h2>
 
+			<div class="row text-center">
+				<div class="col-xs-12">
+					<button title="Start playing the score." id="playScore" onclick="ga('send', 'event', { eventCategory: 'Play Score', eventAction: 'Click' })" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-play"></span> <span>Play</span></button>
+					<button title="Stop playing the score." id="stopScore" onclick="ga('send', 'event', { eventCategory: 'Stop Score', eventAction: 'Click' })" type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"></span> <span>Stop</span></button>
+				</div>
+			</div>
+
 			@if (Cache::has('parts'))
 				<div id="partSelectorContainer">
 					<select id="partSelector">
