@@ -10,6 +10,10 @@ http://music-xml-analyzer.herokuapp.com/
 
 ## Changelog
 
+### v1.2
+* MIDI sequencing on score view
+* Add coveralls service for test coverage
+
 ### v1.1
 * saving xml content to database (cause: herokus ephemeral file system)
 
