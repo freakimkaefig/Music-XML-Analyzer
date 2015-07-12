@@ -28,17 +28,6 @@ Route::get('/', array(
 ));
 
 
-/**
- * Route to clear database after deploy (used for heroku deploy hook)
- *
- * @uses 	Route::post()
- */
-Route::post('/clear', array(
-	'as' => 'postClear',
-	'uses' => 'HomeController@getClear'
-));
-
-
 /*
 |--------------------------------------------------------------------------
 | Routes only available, when user is recognized
@@ -86,6 +75,16 @@ Route::group(array('before' => 'uploads'), function()
 	Route::get('/dashboard', array(
 		'as' => 'dashboard',
 		'uses' => 'DashboardController@getToDashboard'
+	));
+
+	/**
+	 * Route for score view
+	 *
+	 * @uses 	Route::get()
+	 */
+	Route::get('/score/{id}/{part?}', array(
+		'as' => 'score',
+		'uses' => 'DashboardController@renderScore'
 	));
 
 	/**

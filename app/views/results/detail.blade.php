@@ -6,6 +6,7 @@
 	<div class="row">
 		<div class="col-xs-12 text-center">
 			<h4>Search results for your pattern:</h4>
+			<h6><strong><u>Hint:</u></strong> Only the base note of chords will be compared to your search pattern.</h6>
 		</div>
 	</div>
 
@@ -59,7 +60,7 @@
 						</ul>
 					</div>
 					<div class="col-xs-2 pull-right">
-						<button type="button" class="exportButton btn btn-lg btn-success pull-right"><span class="glyphicon glyphicon-file"></span> <span>Export as PDF</span></button>
+						<button type="button" class="exportButton btn btn-lg btn-success pull-right" onclick="ga('send', 'event', { eventCategory: 'Result Detail: Export', eventAction: 'Click' })"><span class="glyphicon glyphicon-file"></span> <span>Export as PDF</span></button>
 					</div>
 				</div>
 				<center id="canvasContainer<?php echo $i; ?>">

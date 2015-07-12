@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <div class="col-xs-12">
 	<div class="row">
 		<div class="col-sm-6">
@@ -21,18 +22,20 @@
 		<div id="fileSelector" onclick="ga('send', 'event', { eventCategory: 'Dashboard: File Change', eventAction: 'Change' })" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3"></div>
 	</div>
 
+	<div class="text-center" id="score_button_container"></div>
+
 	<div id='overallStatistics'></div>
 
 	<div class="row">
-		<div id="overallStatistics" class="col-xs-3 col-xs-offset-2">
+		<div class="col-xs-3 col-xs-offset-2">
 			<ul id="plainFacts" class="no-list"></ul>
 		</div>
 
-		<div id="overallStatistics" class="col-xs-3">
+		<div class="col-xs-3">
 			<ul id="plainFacts2" class="no-list"></ul>
 		</div>
 
-		<div id="overallStatistics" class="col-xs-3">
+		<div class="col-xs-3">
 			<ul id="plainFacts3" class="no-list inline-list"></ul>
 		</div>
 	</div>
@@ -54,8 +57,5 @@
 	</div>
 </div>
 
-<div class="col-xs-6 "id="chart"></div>
-
-<div class="col-xs-6 "id="resultlist"></div>
 
 @stop

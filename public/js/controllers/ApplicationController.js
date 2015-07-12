@@ -7,6 +7,7 @@ MusicXMLAnalyzer.ApplicationController = function() {
 	dashboardController = null,
 	patternController = null,
 	resultController = null,
+	scoreController = null,
 
 	/**
 	 * Init function of ApplicationController
@@ -32,6 +33,11 @@ MusicXMLAnalyzer.ApplicationController = function() {
 		if (Route.check('/results')) {
 			resultController = MusicXMLAnalyzer.ResultController();
 			resultController.init();
+		}
+
+		if (Route.check('/score')) {
+			scoreController = MusicXMLAnalyzer.ScoreController();
+			scoreController.init();
 		}
 	};
 

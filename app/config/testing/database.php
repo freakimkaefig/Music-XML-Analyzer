@@ -44,7 +44,6 @@ return array(
 			'schema' 	=> 'public',
 		),
 
-			'password'  => 'postgres',
 	),
 
 );

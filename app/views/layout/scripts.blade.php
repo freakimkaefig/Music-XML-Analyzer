@@ -56,6 +56,7 @@
 {{ HTML::script('js/views/PatternView.js') }}
 {{ HTML::script('js/views/NotationView.js') }}
 {{ HTML::script('js/views/ResultView.js') }}
+{{ HTML::script('js/views/ScoreView.js') }}
 
 <!-- === Controller === -->
 {{ HTML::script('js/controllers/HeaderController.js') }}
@@ -63,6 +64,7 @@
 {{ HTML::script('js/controllers/DashboardController.js') }}
 {{ HTML::script('js/controllers/PatternController.js') }}
 {{ HTML::script('js/controllers/ResultController.js') }}
+{{ HTML::script('js/controllers/ScoreController.js') }}
 {{ HTML::script('js/controllers/ApplicationController.js') }}
 
 <script type="text/javascript">
