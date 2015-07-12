@@ -14,18 +14,9 @@ return array(
 	|
 	*/
 
-	'mailgun' => array(
-		'domain' => '',
-		'secret' => '',
-	),
-
-	'mandrill' => array(
-		'secret' => '',
-	),
-
-	'stripe' => array(
-		'model'  => 'User',
-		'secret' => '',
-	),
+    'rollbar' => array(
+        'access_token' => 'f0fdd3e090d54a119853653b270b2de6',
+        'level' => 'debug'
+    ),
 
 );
