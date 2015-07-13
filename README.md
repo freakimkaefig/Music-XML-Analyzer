@@ -1,6 +1,7 @@
 
 #Music XML Analyzer
 
+[![Project Status](https://stillmaintained.com/freakimkaefig/Music-XML-Analyzer.png)](https://stillmaintained.com/freakimkaefig/Music-XML-Analyzer)
 [![Build Status](https://travis-ci.org/freakimkaefig/Music-XML-Analyzer.svg?branch=deploy)](https://travis-ci.org/freakimkaefig/Music-XML-Analyzer)
 [![Coverage Status](https://coveralls.io/repos/freakimkaefig/Music-XML-Analyzer/badge.svg?branch=deploy&service=github)](https://coveralls.io/github/freakimkaefig/Music-XML-Analyzer?branch=deploy)
 [![Code Climate](https://codeclimate.com/github/freakimkaefig/Music-XML-Analyzer/badges/gpa.svg)](https://codeclimate.com/github/freakimkaefig/Music-XML-Analyzer)
