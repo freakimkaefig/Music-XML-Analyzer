@@ -55,7 +55,7 @@ MusicXMLAnalyzer.ResultModel = function() {
 	/**
 	 * This method loads extracts of the result
 	 * @function
-     * @private
+     * @public
 	 *
 	 */
 	loadResultExtracts = function() {
@@ -73,7 +73,7 @@ MusicXMLAnalyzer.ResultModel = function() {
 	/**
 	 * This method gets called when the result extracts have been loaded successfully
 	 * @function
-     * @private
+     * @public
 	 *
 	 */
 	_onLoadResultExtract = function(index, data, textStatus, jqXHR) {

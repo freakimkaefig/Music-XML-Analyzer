@@ -79,6 +79,7 @@ MusicXMLAnalyzer.ResultView = function(){
      * @public
 	 */
 	setModelReady = function() {
+		console.info("MusicXMLAnalyzer.ResultView.setModelReady");
 		finishedLoading = true;
 		prepareExport();
 	},
@@ -86,7 +87,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Method inits result items
 	 * @function
-     * @private
+     * @public
 	 */
 	initResultItems = function() {
 		var numItems = $carousel.find('.item').length;
@@ -133,26 +134,40 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Method prepares pdf export
 	 * @function
-     * @private
+     * @public
 	 */
 	prepareExport = function() {
 		$('.item').each(function(index) {
-			var canvas = $(this).find('.canvas')[0];
-			var canvasImg = canvas.toDataURL("image/jpeg", 1.0);
-			var origImg = new Image();
-			origImg.src = canvasImg;
-			width = 700;
-			height = (width * origImg.height) / origImg.width;
-			resultImage = resizedataURL(canvasImg, width, height, index);
+			var dimensions = calculateDimensions(this);
+
+			resultImage = resizedataURL(dimensions.canvasImg, dimensions.width, dimensions.height, index);
 		});
 
 		$exportButton.removeClass('disabled');
 	},
 
 	/**
+	 * Method to calculate width & height for resizing images (pdf donwload)
+	 * @function
+     * @public
+	 */
+	 calculateDimensions = function(ele) {
+	 	var itemCanvas = $(ele).find('.canvas')[0];
+	 	var canvasImg = itemCanvas.toDataURL("image/jpeg", 1.0);
+		width = 700;
+		if (itemCanvas.width > 0 || itemCanvas.height > 0) {
+			height = (parseFloat(width) * parseFloat(itemCanvas.height)) / parseFloat(itemCanvas.width);
+			return { canvasImg: canvasImg, width: width, height: height };
+		} else {
+			alert("Something went wrong. Try reloading the page.");
+		}
+	 },
+
+
+	/**
 	 * Method creates images from carousel data
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {URI}    		datas   		carousel image uri
 	 * @param {float}       wantedWidth    	width of the image
@@ -166,17 +181,16 @@ MusicXMLAnalyzer.ResultView = function(){
         // When the event "onload" is triggered we can resize the image.
         img.onload = function() {
             // We create a canvas and get its context.
-            var canvas = document.createElement('canvas');
-            var ctx = canvas.getContext('2d');
+            var can = document.createElement('canvas');
 
             // We set the dimensions at the wanted size.
-            canvas.width = wantedWidth;
-            canvas.height = wantedHeight;
+            can.width = wantedWidth;
+            can.height = wantedHeight;
 
             // We resize the image with the canvas method drawImage();
-            ctx.drawImage(this, 0, 0, wantedWidth, wantedHeight);
+            can.getContext('2d').drawImage(img, 0, 0, wantedWidth, wantedHeight);
 
-            var dataURI = canvas.toDataURL("image/jpeg", 1.0);
+            var dataURI = can.toDataURL("image/jpeg", 1.0);
 
             // return dataURI;
         	addImageToDOM(index, dataURI);
@@ -189,7 +203,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Method adds image to dom
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {int}    		index   	counter
 	 * @param {string}      dataURI    	uri to image data
@@ -201,7 +215,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Method generates pdf export
 	 * @function
-     * @private
+     * @public
 	 */
 	generateExportPdf = function() {
 		var doc = new jsPDF();
@@ -247,7 +261,14 @@ MusicXMLAnalyzer.ResultView = function(){
 
 			// insert result extract
 			var resultimg = $(this).find('.image').val();
-			doc.addImage(resultimg, "JPEG", 15, 100);
+
+			try {
+				doc.addImage(resultimg, "JPEG", 15, 100);
+			} catch (e) {
+				alert("An error occured generating the pdf");
+				console.error(e);
+				return false;
+			}
 		});
 
 		// save doc
@@ -257,7 +278,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Method renders pattern canvas above result carousel
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {object}    	pattern   user created pattern
 	 */
@@ -275,7 +296,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Method renders result extract
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {array}    		measures    array containing the measures of result extract
 	 * @param {object}     		canvas      the canvas proportions
@@ -404,7 +425,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Method generates vexflow notes
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {object}     		pattern     the user pattern
 	 * @param {object}     		result      search result
@@ -627,7 +648,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	 * Method checks if the following note belongs to current chord
 	 * Also handles highlighting of chords in results
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {object}    		pattern    array containing notes
 	 * @param {Vex.Flow.Note}   note       the current vexflow note
@@ -667,7 +688,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Method converts duration from string to number values as 1/64
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {string}    	duration    string of note duration
 	 *
@@ -698,7 +719,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Method returns the note duration in vexflow style
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {string}    		duration    duration of note
 	 * @param {number}     		type      	type of note (0 = note, 1 = rest, 2 = dotted note)
@@ -769,7 +790,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Method returns key description for vexflow
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {string}    step    	note name
 	 * @param {string}    octave    octave number
@@ -799,7 +820,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Gets called when a list item has been clicked
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {Event}    event    the triggered click event
 	 *
@@ -828,7 +849,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Inits the log messages
 	 * @function
-     * @private
+     * @public
 	 *
 	 */
 	initLogMessages = function() {
@@ -842,7 +863,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Disposes log messages
 	 * @function
-     * @private
+     * @public
 	 *
 	 */
 	disposeLogMessages = function() {
@@ -861,7 +882,7 @@ MusicXMLAnalyzer.ResultView = function(){
 	/**
 	 * Adds a log message
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {string}    msg    log message
 	 *
@@ -896,13 +917,13 @@ MusicXMLAnalyzer.ResultView = function(){
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.ScoreController.html">ScoreController</a></li><li><a href="MusicXMLAnalyzer.ScoreView.html">ScoreView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Apr 09 2015 21:47:56 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 13 2015 20:31:06 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

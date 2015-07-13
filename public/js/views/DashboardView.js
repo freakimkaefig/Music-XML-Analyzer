@@ -73,7 +73,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	/**
 	 * Method to initiate log messages
 	 * @function
-     * @private
+     * @public
 	 */
 	initLogMessages = function() {
 		dashboardMessageCounter = 0;
@@ -159,7 +159,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	/**
 	 * Method description
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {Event}    event    The triggered event
 	 */

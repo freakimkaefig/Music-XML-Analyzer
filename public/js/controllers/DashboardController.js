@@ -24,7 +24,7 @@ MusicXMLAnalyzer.DashboardController = function() {
 	/**
 	 * Callback function when log message revceived
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {Event} 	event 	The triggered event
 	 * @param {string} 	msg 	The log message
@@ -37,7 +37,7 @@ MusicXMLAnalyzer.DashboardController = function() {
 	/**
 	 * Callback function when model loaded all results and merged them
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {Event} 	event 	 	the triggered event
 	 * @param {array}	results 	the list of results
@@ -63,7 +63,7 @@ MusicXMLAnalyzer.DashboardController = function() {
 	/**
 	 * Callback function for change event on dashboards file selector
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{Event} 	event 	The triggered event
 	 * @param 	{number} 	id 		the id of the selected file

@@ -57,7 +57,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	/**
 	 * This method sets the upload submit button active or disabled
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {boolean}    value    boolean value for active or disabled
 	 *
@@ -75,7 +75,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	/**
 	 * Disables all input buttons
 	 * @function
-     * @private
+     * @public
 	 *
 	 */
 	disableAllInputs = function() {
@@ -86,7 +86,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	/**
 	 * Gets called when upload hast been started
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event}    event    the triggered click event
 	 *
@@ -105,7 +105,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	/**
 	 * Gets called when uploading data is done
 	 * @function
-     * @private
+     * @public
 	 *
 	 */
 	onUploadClose = function() {
@@ -115,7 +115,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	/**
 	 * Gets called when an error occurs
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {file}    file    		the file to upload
 	 * @param {string}  errorMessage    error message
@@ -128,7 +128,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	/**
 	 * Gets called when uploading data has been successful
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {file}    file    	the file to upload
 	 * @param {string}  respone     the uplaod response message
@@ -153,7 +153,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	/**
 	 * Gets called when upload queue is complete
 	 * @function
-     * @private
+     * @public
 	 *
 	 */
 	onQueueComplete = function() {
@@ -165,7 +165,7 @@ MusicXMLAnalyzer.UploadView = function(){
 	/**
 	 * Inits the log messages
 	 * @function
-     * @private
+     * @public
 	 *
 	 */
 	initLogMessages = function() {

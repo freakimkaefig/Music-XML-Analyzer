@@ -55,7 +55,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Adds log message
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {string}    log message
 	 *
@@ -80,7 +80,6 @@ MusicXMLAnalyzer.DashboardModel = function(){
 			return results['all'];
 		} else {
 			var result = $.grep(results, function(e){ return e.id == id; });
-			console.log(result);
 			return result[0];
 		}
 	},
@@ -101,7 +100,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Ajax callback for {@link loadUploadIds}
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {json}    the returned data from ajax call
 	 * @param {string}  status message
@@ -119,7 +118,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Method loads ids of all results
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{json} 	the json data from ajax call
 	 *
@@ -134,7 +133,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Ajax callback for {@link loadResultIds}
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {json}    the returned data from ajax call
 	 * @param {string}  status message
@@ -157,7 +156,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Method laads results by given id
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {int}    the result id
 	 *
@@ -174,7 +173,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Ajax callback for {@link loadResultById}
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {int} 	id of result
 	 * @param {json}    the returned json data from ajax call
@@ -210,7 +209,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Method merges all retrieved results for overall statistics
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {array} 	the array containing the results for every single upload
 	 *
@@ -257,7 +256,8 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				{ label: "Dbl. oct. + Tritone", value: 0 },
 				{ label: "Dbl. oct. + Perfect 5th", value: 0 },
 				{ label: "Dbl. oct. + Min. 6th", value: 0 },
-				{ label: "Dbl. oct. + Maj. 6th", value: 0 }
+				{ label: "Dbl. oct. + Maj. 6th", value: 0 },
+				{ label: "Unknown", value: 0 }
 			],
 			key: [
 				{ label: "C major", value: 0 },
@@ -289,7 +289,8 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				{ label: "F minor", value: 0 },
 				{ label: "B minor", value: 0 },
 				{ label: "E flat minor", value: 0 },
-				{ label: "A flat minor", value: 0 }
+				{ label: "A flat minor", value: 0 },
+				{ label: "Unknown", value: 0 }
 			],
 			meter: [],
 			most_frequent_note: '',
@@ -312,7 +313,8 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				{ label: "Gb", value: 0 },
 				{ label: "G#", value: 0 },
 				{ label: "Cb", value: 0 },
-				{ label: "Ab", value: 0 }
+				{ label: "Ab", value: 0 },
+				{ label: "Unknown", value: 0 }
 			],
 			note_types: [
 				{ label: "whole", value: 0 },
@@ -321,7 +323,8 @@ MusicXMLAnalyzer.DashboardModel = function(){
 				{ label: "eighth", value: 0 },
 				{ label: "16th", value: 0 },
 				{ label: "32nd", value: 0 },
-				{ label: "64th", value: 0 }
+				{ label: "64th", value: 0 },
+				{ label: "Unknown", value: 0 }
 			],
 			title: []
 		}
@@ -442,13 +445,13 @@ MusicXMLAnalyzer.DashboardModel = function(){
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.ScoreController.html">ScoreController</a></li><li><a href="MusicXMLAnalyzer.ScoreView.html">ScoreView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Apr 09 2015 21:47:56 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 13 2015 20:31:06 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

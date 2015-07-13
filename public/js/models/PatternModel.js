@@ -68,7 +68,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	/**
 	 * This method empties the notes arrays and sets the val first to true.
 	 * @function
-     * @private
+     * @public
 	 */
 	emptyNoteArrays = function() {
 		noteElements = [];
@@ -218,7 +218,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	/**
 	 * This method sets vals for accidentials, dots and beams for noteElements-Array
 	 * @function
-     * @private
+     * @public
 	 *
 	 */
 	setValuesForNoteElement = function() {
@@ -511,7 +511,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	/**
 	 * Sets the default values when you change to sound sequence mode
 	 * @function
-     * @private
+     * @public
 	 */
 	setDefaultValsForSoundSequenceMode = function() {
 		curName = "c";
@@ -533,7 +533,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	/**
 	 * Sets the default values when you change to rhythm mode
 	 * @function
-     * @private
+     * @public
 	 */
 	setDefaultValsForRhythmMode = function() {
 		curDuration = "quarter";
@@ -554,7 +554,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	/**
 	 * Sets the default values when you change to melody mode
 	 * @function
-     * @private
+     * @public
 	 */
 	setDefaultValsForMelodyMode = function() {
 		curMode = 2;
@@ -581,7 +581,7 @@ MusicXMLAnalyzer.PatternModel = function(){
 	/**
 	 * Returns an Array with triplet end positions
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @return {Array.<number>}    Array with trilet end positions
 	 */

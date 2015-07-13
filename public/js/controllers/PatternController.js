@@ -66,7 +66,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Function to get Duration of Notes
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{string} 	type 	The note type
 	 *
@@ -97,7 +97,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method to get MIDI-Values
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{string} 	step 	The note step
 	 * @param 	{string} 	octave 	The notes octave
@@ -112,7 +112,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	* Method to play the created Pattern
 	 * @function
-     * @private
+     * @public
 	*/
 	playPattern = function() {
 		var notesToBePlayed = [];
@@ -205,7 +205,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates notes in notationView
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 						event    		update event
 	 * @param {Array.<Vex.Flow.StaveNote>} 	vexflowNotes 	The current notes
@@ -217,7 +217,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates note selection
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 	event    			update event
 	 * @param {string} 	selectedNoteName 	the selected note name
@@ -229,7 +229,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates octave selection
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 	event    		update event
 	 * @param {string} 	selectedOctave 	the selected octave
@@ -241,7 +241,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates accidential selection
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 	event    		update event
 	 * @param {string} 	selectedAcc 	the selected accidential
@@ -253,7 +253,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates duration selection
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 	event    		update event
 	 * @param {string} 	selectedDur 	the selected duration
@@ -265,7 +265,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates rhythm selection
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 	event    			update event
 	 * @param {string} 	selectedSpecRyth 	the selected rhythmic special
@@ -368,7 +368,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method clears the canvas
 	 * @function
-     * @private
+     * @public
 	 */
 	onCanvasClear = function() {
 		notationView.clearCanvas();
@@ -386,7 +386,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method enables triplet input
 	 * @function
-     * @private
+     * @public
 	 */
 	onTripletEnterModeStart = function() {
 		patternView.startTripletEnterMode();
@@ -395,7 +395,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method ends triplet input
 	 * @function
-     * @private
+     * @public
 	 */
 	onTripletEnterModeEnd = function() {
 		patternView.endTripletEnterMode();
@@ -415,7 +415,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method changes state of SearchPatternButton
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event}    event 		The triggered event
 	 * @param {object}   pattern 	The current configured patter
@@ -441,7 +441,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method changes current mode
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event}   event 	The triggered event
 	 * @param {int} 	mode 	The selected mode

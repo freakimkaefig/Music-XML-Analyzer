@@ -55,7 +55,7 @@ MusicXMLAnalyzer.ScoreController = function(){
 	/**
 	 * Function to get Duration of Notes
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{string} 	type 	The note type
 	 *
@@ -86,7 +86,7 @@ MusicXMLAnalyzer.ScoreController = function(){
 		/**
 	 * Method to get MIDI-Values
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{string} 	step 	The note step
 	 * @param 	{string} 	octave 	The notes octave
@@ -101,7 +101,7 @@ MusicXMLAnalyzer.ScoreController = function(){
 	/**
 	* Method to play the created Pattern
 	 * @function
-     * @private
+     * @public
 	*/
 	playScore = function() {
 		var notesToBePlayed = [];

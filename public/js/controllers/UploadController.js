@@ -19,7 +19,7 @@ MusicXMLAnalyzer.UploadController = function() {
 	/**
 	 * Callback function for upload submit button
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{Event} 	event 	The triggered event
 	 */

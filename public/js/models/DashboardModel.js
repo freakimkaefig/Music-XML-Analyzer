@@ -28,7 +28,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Adds log message
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {string}    log message
 	 *
@@ -73,7 +73,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Ajax callback for {@link loadUploadIds}
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {json}    the returned data from ajax call
 	 * @param {string}  status message
@@ -91,7 +91,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Method loads ids of all results
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{json} 	the json data from ajax call
 	 *
@@ -106,7 +106,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Ajax callback for {@link loadResultIds}
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {json}    the returned data from ajax call
 	 * @param {string}  status message
@@ -129,7 +129,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Method laads results by given id
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {int}    the result id
 	 *
@@ -146,7 +146,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Ajax callback for {@link loadResultById}
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {int} 	id of result
 	 * @param {json}    the returned json data from ajax call
@@ -182,7 +182,7 @@ MusicXMLAnalyzer.DashboardModel = function(){
 	/**
 	 * Method merges all retrieved results for overall statistics
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {array} 	the array containing the results for every single upload
 	 *

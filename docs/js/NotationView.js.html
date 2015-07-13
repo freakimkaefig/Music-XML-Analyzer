@@ -63,7 +63,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * This method inits canvas and context and sets canvas top and left to variable
 	 * @function
-     * @private
+     * @public
 	 */
 	initCanvas = function() {
 		canvas = document.getElementById('myCanvas');
@@ -80,7 +80,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method clears canvas, creates new stave and adds a new clef on mode change
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event}    event    the triggered event
 	 *
@@ -95,7 +95,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method adds a clef according to mode
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {int}    mode    current selected mode
 	 */
@@ -110,7 +110,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method registers listener to canvas
 	 * @function
-     * @private
+     * @public
 	 */
 	registerListener = function() {
 		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
@@ -173,7 +173,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method renders preview note on canvas at mouseover
 	 * @function
-     * @private
+     * @public
 	 */
 	renderVexFlowNotePreview = function() {
 		// delete canvas
@@ -276,7 +276,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method calculates the position of the notes
 	 * @function
-     * @private
+     * @public
 	 */
 	setTopNoteValues = function() {
 		spaceBetweenLines = (canvas.height/16);
@@ -285,7 +285,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method handels the mouseover event on canvas
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{Event} 	The triggered event
 	 */
@@ -312,7 +312,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method handels mouseclick event on canvas
 	 * @function
-     * @private
+     * @public
 	 */
 	onMouseClickCanvas = function() {
 
@@ -333,7 +333,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method checks on which horitiontal position the mousecursor is and saves the corresponding note
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {int}    		y    		 horizontal position of cursor
 	 *
@@ -458,13 +458,13 @@ MusicXMLAnalyzer.NotationView = function(){
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.ScoreController.html">ScoreController</a></li><li><a href="MusicXMLAnalyzer.ScoreView.html">ScoreView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Apr 09 2015 21:47:56 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 13 2015 20:31:06 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

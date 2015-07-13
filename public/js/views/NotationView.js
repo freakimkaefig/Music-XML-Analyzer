@@ -36,7 +36,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * This method inits canvas and context and sets canvas top and left to variable
 	 * @function
-     * @private
+     * @public
 	 */
 	initCanvas = function() {
 		canvas = document.getElementById('myCanvas');
@@ -53,7 +53,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method clears canvas, creates new stave and adds a new clef on mode change
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event}    event    the triggered event
 	 *
@@ -68,7 +68,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method adds a clef according to mode
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {int}    mode    current selected mode
 	 */
@@ -83,7 +83,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method registers listener to canvas
 	 * @function
-     * @private
+     * @public
 	 */
 	registerListener = function() {
 		$("#myCanvas").on("mousemove", onMouseMoveCanvas);
@@ -146,7 +146,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method renders preview note on canvas at mouseover
 	 * @function
-     * @private
+     * @public
 	 */
 	renderVexFlowNotePreview = function() {
 		// delete canvas
@@ -249,7 +249,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method calculates the position of the notes
 	 * @function
-     * @private
+     * @public
 	 */
 	setTopNoteValues = function() {
 		spaceBetweenLines = (canvas.height/16);
@@ -258,7 +258,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method handels the mouseover event on canvas
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{Event} 	The triggered event
 	 */
@@ -285,7 +285,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method handels mouseclick event on canvas
 	 * @function
-     * @private
+     * @public
 	 */
 	onMouseClickCanvas = function() {
 
@@ -306,7 +306,7 @@ MusicXMLAnalyzer.NotationView = function(){
 	/**
 	 * Method checks on which horitiontal position the mousecursor is and saves the corresponding note
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {int}    		y    		 horizontal position of cursor
 	 *

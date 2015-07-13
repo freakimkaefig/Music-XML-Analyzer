@@ -19,7 +19,7 @@ MusicXMLAnalyzer.HeaderView = function(){
 	/**
 	 * Resets the page and removes current work
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event}    event    the triggered click event
 	 *

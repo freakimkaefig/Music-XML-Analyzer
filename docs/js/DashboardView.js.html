@@ -33,6 +33,10 @@ MusicXMLAnalyzer.DashboardView = function(){
 	$logMessages = null,
 	dashboardMessageCounter = null,
 	$fileSelector = null,
+	$plainFacts = null,
+	$plainFacts2 = null,
+	$plainFacts3 = null,
+	$overallStatistics = null,
 
 	noteDistribution = null,
 	intervalDistribution = null,
@@ -73,6 +77,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 		"#263238",	// blue-grey-900
 	],
 
+	$scoreButtonContainer = null,
+
 	/**
 	 * Init function
 	 * @function
@@ -88,12 +94,13 @@ MusicXMLAnalyzer.DashboardView = function(){
 		$plainFacts3 = $('#plainFacts3');
 		$overallStatistics = $('#overallStatistics');
 
+		$scoreButtonContainer = $('#score_button_container');
 	},
 
 	/**
 	 * Method to initiate log messages
 	 * @function
-     * @private
+     * @public
 	 */
 	initLogMessages = function() {
 		dashboardMessageCounter = 0;
@@ -179,7 +186,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	/**
 	 * Method description
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {Event}    event    The triggered event
 	 */
@@ -196,9 +203,9 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 */
 	initCountNotes = function(results){
 		$overallStatistics.empty();
-		$overallStatistics.append('&lt;h3 class="text-center">Overall Statistics&lt;/h3>&lt;br>');
+		$overallStatistics.append('&lt;h3 class="text-center">Overall statistics&lt;/h3>');
 		$plainFacts.empty();
-		$plainFacts.append('&lt;li>&lt;strong>Total Notes:  &lt;/strong>' + results + '&lt;/li>&lt;br>&lt;br>');
+		$plainFacts.append('&lt;li>&lt;strong>Total notes:  &lt;/strong>' + results + '&lt;/li>');
 		$plainFacts.find('li').on('change', onFileSelectorChange);
 	},
 
@@ -210,7 +217,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 * @param {int}    results    number of total rests
 	 */
 	initCountRests = function(results){
-		$plainFacts.append('&lt;li>&lt;strong>Total Rests:  &lt;/strong>' + results + '&lt;/li>');
+		$plainFacts.append('&lt;li>&lt;strong>Total rests:  &lt;/strong>' + results + '&lt;/li>');
 	},
 
 	/**
@@ -222,7 +229,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 */
 	initCountMeasures = function(results){
 		$plainFacts2.empty();
-		$plainFacts2.append('&lt;li>&lt;strong>Total Measures:  &lt;/strong>' + results + '&lt;/li>&lt;br>&lt;br>');
+		$plainFacts2.append('&lt;li>&lt;strong>Total measures:  &lt;/strong>' + results + '&lt;/li>');
 	},
 
 	/**
@@ -233,7 +240,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	 * @param {string}    results    most frequent note
 	 */
 	initMostFrequentNote = function(results){
-		$plainFacts2.append('&lt;li>&lt;strong>Most frequent Note:  &lt;/strong>' + results + '&lt;/li>');
+		$plainFacts2.append('&lt;li>&lt;strong>Most frequent note:  &lt;/strong>' + results + '&lt;/li>');
 	},
 
 	/**
@@ -409,7 +416,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 	        .style("font-size", "23px")
 	        .style("font-weight", 300)
 	        .style("font-family", 'RobotoDraft','Roboto','Helvetica Neue','Helvetica','Arial','sans-serif')
-	        .text("Intervall distribution");
+	        .text("Interval distribution");
 
 		svg.selectAll(".bar")
 		   .data(data)
@@ -447,7 +454,7 @@ MusicXMLAnalyzer.DashboardView = function(){
 		keyDistribution = new d3pie("pie_keyDistribution", {
 			header: {
 				title: {
-					text: "Key Distribution"
+					text: "Key distribution"
 				}
 			},
 			data: {
@@ -552,6 +559,15 @@ MusicXMLAnalyzer.DashboardView = function(){
 				}
 			}
 		});
+	},
+
+	initScoreButton = function(id) {
+		$scoreButtonContainer.empty();
+		if (id !== 'all') {
+			console.log("initScoreButton", id);
+			var button = '&lt;a class="btn btn-success" target="_blank" href="/score/' + id + '" onclick="ga(\'send\', \'event\', { eventCategory: \'Dashboard: View Score\', eventAction: \'Click\' })">&lt;span>Show Score&lt;/span>&lt;/a>';
+			$scoreButtonContainer.append(button);
+		}
 	};
 
 	that.init = init;
@@ -570,6 +586,8 @@ MusicXMLAnalyzer.DashboardView = function(){
 	that.initMostFrequentNote = initMostFrequentNote;
 	that.initInstruments = initInstruments;
 
+	that.initScoreButton = initScoreButton;
+
 	return that;
 }
 </code></pre>
@@ -582,13 +600,13 @@ MusicXMLAnalyzer.DashboardView = function(){
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.ScoreController.html">ScoreController</a></li><li><a href="MusicXMLAnalyzer.ScoreView.html">ScoreView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Apr 09 2015 21:47:56 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 13 2015 20:31:06 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

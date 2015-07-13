@@ -59,7 +59,7 @@ MusicXMLAnalyzer.ResultController = function(){
 	/**
 	 * Method to add results to model
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event}    event 		the triggered event
 	 * @param {int}      numItems   number of items
@@ -73,7 +73,7 @@ MusicXMLAnalyzer.ResultController = function(){
 	/**
 	 * Method to pass result to view
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event}	event 	the triggered event
 	 * @param {int}    	index 	the result index
@@ -86,7 +86,7 @@ MusicXMLAnalyzer.ResultController = function(){
 	/**
 	 * Callback when model has loaded results
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{Event} 	event 	The triggered event
 	 */
@@ -97,7 +97,7 @@ MusicXMLAnalyzer.ResultController = function(){
 	/**
 	 * Function to get note durations
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{string} 	type 	The note type
 	 */
@@ -126,7 +126,7 @@ MusicXMLAnalyzer.ResultController = function(){
 	/**
 	 * Function to get MIDI values
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {int}    step 	the notes step
 	 * @param {int}    octave 	the notes octave
@@ -141,7 +141,7 @@ MusicXMLAnalyzer.ResultController = function(){
 	/**
 	 * Function to play the found Pattern
 	 * @function
-     * @private
+     * @public
 	 */
 	playResult = function(){
 		var notesToBePlayed = [];

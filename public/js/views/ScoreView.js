@@ -6,6 +6,11 @@ MusicXMLAnalyzer.ScoreView = function(){
 	$scoreValue = null,
 	$partSelectorContainer = null,
 
+	/**
+	 * Init function
+	 * @function
+     * @public
+	 */
 	init = function() {
 		console.info("MusicXMLAnalyzer.ScoreView.init");
 
@@ -35,6 +40,11 @@ MusicXMLAnalyzer.ScoreView = function(){
 		$partSelector.on('change', onPartSelectorChange);
 	},
 
+	/**
+	 * Callback function for part selector on change event
+	 * @function
+     * @public
+	 */
 	onPartSelectorChange = function(event) {
 		var url = $partSelector.val();
 		window.location.href = url;
@@ -43,12 +53,14 @@ MusicXMLAnalyzer.ScoreView = function(){
 	/**
 	 * Method renders result extract
 	 * @function
-     * @private
+	 * @public
 	 *
 	 * @param {array}    		measures    array containing the measures of result extract
 	 * @param {object}     		canvas      the canvas proportions
+	 * @param {object}     		renderer    the vexflow renderer
 	 * @param {canvas}     		context     the canvas context
-	 * @param {object}     		score     the user score
+	 * @param {object}     		stave     	the note stave
+	 * @param {object}     		score     	the user score
 	 */
 	renderNotes = function(measures, canvas, renderer, context, stave, score) {
 
@@ -168,7 +180,7 @@ MusicXMLAnalyzer.ScoreView = function(){
 	/**
 	 * Method generates vexflow notes
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {object}     		score     the user score
 	 * @param {object}     		result      search result
@@ -288,7 +300,7 @@ MusicXMLAnalyzer.ScoreView = function(){
 	/**
 	 * Method converts duration from string to number values as 1/64
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {string}    	duration    string of note duration
 	 *
@@ -319,7 +331,7 @@ MusicXMLAnalyzer.ScoreView = function(){
 	/**
 	 * Method returns the note duration in vexflow style
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {string}    		duration    duration of note
 	 * @param {number}     		type      	type of note (0 = note, 1 = rest, 2 = dotted note)
@@ -390,7 +402,7 @@ MusicXMLAnalyzer.ScoreView = function(){
 	/**
 	 * Method returns key description for vexflow
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {string}    step    	note name
 	 * @param {string}    octave    octave number
