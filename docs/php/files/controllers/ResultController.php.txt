@@ -102,11 +102,10 @@ class ResultController extends BaseController {
 	 */
 	private function generateResultExtract($upload_id, $part_id, $voice, $startMeasure, $start, $endMeasure, $end) {
 		set_time_limit(300);
-		Log::info("Upload: " . $upload_id . ", Part: " . $part_id . ", Voice: " . $voice . ", StartMeasure: " . $startMeasure . ", Start: " . $start . ", EndMeasure: " . $endMeasure . ", End: ". $end);
 		$upload = Upload::find($upload_id);
 
 		$doc = new DOMDocument();
-		$doc->load($upload->url);
+		$doc->loadXML($upload->content);
 		$xPath = new DOMXPath($doc);
 
 		$part = $xPath->query('//part[@id="' . $part_id . '"]')->item(0);
@@ -126,7 +125,6 @@ class ResultController extends BaseController {
 			$end_extract++;
 		}
 		if ($end_extract - $start_extract < 3){
-			Log::info($end_extract - $start_extract);
 			if ($numMeasures > $end_extract + 1) {
 				$end_extract++;
 			} elseif ($startMeasure > $firstMeasureNumber) {
@@ -409,7 +407,7 @@ class ResultController extends BaseController {
 	 *
 	 */
 	public static function _getArtist($id) {
-		$xml = simplexml_load_file(Upload::find($id)->url);
+		$xml = simplexml_load_string(Upload::find($id)->content);
 		$artist = $xml->xpath("//credit[credit-type='composer']");
 		if ($artist) {
 			return $artist[0]->{'credit-words'}->{0};
@@ -428,7 +426,7 @@ class ResultController extends BaseController {
 	 *
 	 */
 	public static function _getTitle($id) {
-		$xml = simplexml_load_file(Upload::find($id)->url);
+		$xml = simplexml_load_string(Upload::find($id)->content);
 		$title = $xml->xpath("//credit[credit-type='title']");
 		if ($title) {
 			return $title[0]->{'credit-words'}->{0};
@@ -461,7 +459,7 @@ class ResultController extends BaseController {
 	 *
 	 */
 	public static function _getInstrument($id, $part_id) {
-		$xml = simplexml_load_file(Upload::find($id)->url);
+		$xml = simplexml_load_string(Upload::find($id)->content);
 		$part = $xml->xpath('//score-part[@id="' . $part_id . '"]');
 		if ($part) {
 			return $part[0]->{'part-name'}->{0};
@@ -480,7 +478,7 @@ class ResultController extends BaseController {
 	 *
 	 */
 	public static function _getKey($id){
-		$xml = simplexml_load_file(Upload::find($id)->url);
+		$xml = simplexml_load_string(Upload::find($id)->content);
 		$keys = $xml->xpath("//key");
 		$key = $keys[0];
 

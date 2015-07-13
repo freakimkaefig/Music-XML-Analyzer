@@ -93,7 +93,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Function to get Duration of Notes
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{string} 	type 	The note type
 	 *
@@ -124,7 +124,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method to get MIDI-Values
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param 	{string} 	step 	The note step
 	 * @param 	{string} 	octave 	The notes octave
@@ -139,14 +139,14 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	* Method to play the created Pattern
 	 * @function
-     * @private
+     * @public
 	*/
 	playPattern = function() {
 		var notesToBePlayed = [];
 
 		//get notes of current extract:
 		var currentPatternNotes = patternModel.getAllNoteElements();
-
+		console.log("notes: ",currentPatternNotes);
 		MIDI.setVolume(0, 127);
 
 		//determine MIDI values for currentPatternNotes
@@ -232,7 +232,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates notes in notationView
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 						event    		update event
 	 * @param {Array.&lt;Vex.Flow.StaveNote>} 	vexflowNotes 	The current notes
@@ -244,7 +244,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates note selection
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 	event    			update event
 	 * @param {string} 	selectedNoteName 	the selected note name
@@ -256,7 +256,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates octave selection
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 	event    		update event
 	 * @param {string} 	selectedOctave 	the selected octave
@@ -268,7 +268,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates accidential selection
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 	event    		update event
 	 * @param {string} 	selectedAcc 	the selected accidential
@@ -280,7 +280,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates duration selection
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 	event    		update event
 	 * @param {string} 	selectedDur 	the selected duration
@@ -292,7 +292,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method updates rhythm selection
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event} 	event    			update event
 	 * @param {string} 	selectedSpecRyth 	the selected rhythmic special
@@ -395,7 +395,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method clears the canvas
 	 * @function
-     * @private
+     * @public
 	 */
 	onCanvasClear = function() {
 		notationView.clearCanvas();
@@ -413,7 +413,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method enables triplet input
 	 * @function
-     * @private
+     * @public
 	 */
 	onTripletEnterModeStart = function() {
 		patternView.startTripletEnterMode();
@@ -422,7 +422,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method ends triplet input
 	 * @function
-     * @private
+     * @public
 	 */
 	onTripletEnterModeEnd = function() {
 		patternView.endTripletEnterMode();
@@ -442,7 +442,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method changes state of SearchPatternButton
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event}    event 		The triggered event
 	 * @param {object}   pattern 	The current configured patter
@@ -468,7 +468,7 @@ MusicXMLAnalyzer.PatternController = function() {
 	/**
 	 * Method changes current mode
 	 * @function
-     * @private
+     * @public
 	 *
 	 * @param {event}   event 	The triggered event
 	 * @param {int} 	mode 	The selected mode
@@ -513,13 +513,13 @@ MusicXMLAnalyzer.PatternController = function() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="MusicXMLAnalyzer.html">MusicXMLAnalyzer</a></li><li><a href="MusicXMLAnalyzer.ApplicationController.html">ApplicationController</a></li><li><a href="MusicXMLAnalyzer.DashboardController.html">DashboardController</a></li><li><a href="MusicXMLAnalyzer.DashboardModel.html">DashboardModel</a></li><li><a href="MusicXMLAnalyzer.DashboardView.html">DashboardView</a></li><li><a href="MusicXMLAnalyzer.HeaderController.html">HeaderController</a></li><li><a href="MusicXMLAnalyzer.HeaderView.html">HeaderView</a></li><li><a href="MusicXMLAnalyzer.NotationView.html">NotationView</a></li><li><a href="MusicXMLAnalyzer.PatternController.html">PatternController</a></li><li><a href="MusicXMLAnalyzer.PatternModel.html">PatternModel</a></li><li><a href="MusicXMLAnalyzer.PatternView.html">PatternView</a></li><li><a href="MusicXMLAnalyzer.ResultController.html">ResultController</a></li><li><a href="MusicXMLAnalyzer.ResultModel.html">ResultModel</a></li><li><a href="MusicXMLAnalyzer.ResultView.html">ResultView</a></li><li><a href="MusicXMLAnalyzer.ScoreController.html">ScoreController</a></li><li><a href="MusicXMLAnalyzer.ScoreView.html">ScoreView</a></li><li><a href="MusicXMLAnalyzer.UploadController.html">UploadController</a></li><li><a href="MusicXMLAnalyzer.UploadView.html">UploadView</a></li><li><a href="Route.html">Route</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Apr 09 2015 21:47:56 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Mon Jul 13 2015 20:31:06 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>
