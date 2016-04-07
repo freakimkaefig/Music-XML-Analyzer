@@ -1,0 +1,42 @@
+language: php
+php:
+  - 5.6
+
+install:
+  - "mkdir -p ~/.composer"
+  - cp .travis.composer.config.json ~/.composer/config.json
+  - composer self-update
+  - composer update
+
+before_script:
+  - psql -c 'create database music_xml_analyzer;' -U postgres
+  - php artisan migrate
+
+script:
+  - mkdir -p build/logs
+  - php vendor/bin/phpunit -c phpunit.xml
+
+after_script:
+  - php vendor/bin/coveralls -v
+
+sudo: false
+
+branches:
+  only:
+    - staging
+    - master
+
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: hvz7KsRgLRb7qvoXNRlV2A8VeBbQa532jeJbmvTxoO82kG+24HBfNIn42w/s68SoHb2ANBh/omd5qom2vXTQpxorWTyVYLtgIf+h+hPAX07SAWPtvEhuFkMqHDx8/9gX1Bx0vC90ZvTMpX7RLlk+cZvDTr5DTbvZkBlmWB6vt0owj2mfWIvBNmS5LAlfOT6NOpdpqvxLVkpKNlO9eeI2cew6Ph+jb9wB/Iy8U+MTNmLfT12CPYMYwNJcMJN0dEh3Ns2W888cKdJhy6ia2UzgUbZq7uTqqguz/P644FkjgWYvCl+mPNb+SB7FIPD30QTogB3CdjbNHOT/y7US12CvmeePxexm3+DX0Aeemq9JVKWHf5KhFXWwg3s3ARdgYbo6Y1PzL/vvcJCqCPdHZsTGUHrJT/bH1owK3+U1KA1LBSfdw5MQPHYEKXzu4DU0DRfMLfCRpm2na7Jnpp0uW9Laar/D0tFnCvWm0xumb2HM3gql8AgXfNruPyWZWatiMmJvDF1ezGWdqf/dXffNzBLBzSse1+AbcCORYyLQFmyNM7jist2WjntTEtZBIBLdRdzxTpnualhaI6wGTeu/kx5n9hjbw6Rd907p1TKhNiNk4x/WmZJOzixNlkL9muQ1RWASuBxiBcmPR6L0mIAdUuTAl6N8wJLSPUkD0Tb14yilS9I=
+  app:
+    staging: music-xml-analyzer-staging
+    master: music-xml-analyzer
+  run:
+    - "php artisan migrate"
